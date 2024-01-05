@@ -1,7 +1,7 @@
 /* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
-
+/*  */
 html,
 body {
   min-height: 100%;
@@ -9,7 +9,7 @@ body {
 /* screen loader style */
 .loader {
   display: inline-block;
-  width: 220px;  /* Adjust based on image size + padding */
+  width: 220px; /* Adjust based on image size + padding */
   height: 220px; /* Adjust based on image size + padding */
   border-radius: 50%;
   padding: 10px;
@@ -21,10 +21,10 @@ body {
 
 @keyframes spin {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -34,7 +34,6 @@ body {
   height: auto;
   border-radius: 50%;
 }
-
 
 #__next {
   height: 100%;
@@ -72,10 +71,10 @@ code[class*='language-'] {
 /*end scrollbar styling  */
 
 /* fixing drawer and table on top */
-.layout-navbar{
+.layout-navbar {
   z-index: 100 !important;
 }
-.MuiDrawer-paperAnchorDockedLeft{
+.MuiDrawer-paperAnchorDockedLeft {
   z-index: 100 !important;
 }
 /* .css-11ui1ji-MuiDrawer-docked {
@@ -90,7 +89,12 @@ code[class*='language-'] {
 .css-34b9xr {
   z-index: 110 !important;
 }
-.custom-scrollbar .MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-186vso5-MuiPaper-root{
+.custom-scrollbar
+  .MuiPaper-root
+  MuiPaper-elevation
+  MuiPaper-rounded
+  MuiPaper-elevation2
+  css-186vso5-MuiPaper-root {
   z-index: 120 !important;
 }
 /* .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2 {
@@ -99,11 +103,10 @@ code[class*='language-'] {
 } */
 /* end fixing drawer and table on top */
 
-
 /* scrollbar table */
 /* Customizing scrollbar for Chrome, Safari, and Edge */
 .MuiTableContainer-root::-webkit-scrollbar {
-  height:8px;
+  height: 8px;
 }
 .MuiTableContainer-root::-webkit-scrollbar-track {
   background: #f1f1f1;
@@ -116,7 +119,6 @@ code[class*='language-'] {
 
 /* Customizing scrollbar for Firefox */
 .MuiTableContainer-root {
-  
   scrollbar-width: thin;
   scrollbar-color: darkgrey #f1f1f1;
 }
@@ -134,19 +136,15 @@ code[class*='language-'] {
 }
 /* MenuItem form scroll */
 .MuiButtonBase-root::-webkit-scrollbar {
-  height:4px;
+  height: 4px;
 }
 /* table filter icon color */
-.css-1buxjf4-MuiSvgIcon-root{
-  color:#1852fe
+.css-1buxjf4-MuiSvgIcon-root {
+  color: #1852fe;
 }
-
 
 /* ////////////// */
 /* sidepanel */
-.css-185anww-MuiTypography-root{
-  color:black!important;
+.css-185anww-MuiTypography-root {
+  color: black !important;
 }
-
-
-

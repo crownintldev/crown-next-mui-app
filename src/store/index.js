@@ -13,6 +13,7 @@ import passport from './apps/booking/passport'
 // import visaService from './apps/services/visaService'
 import account from './apps/account'
 import createApp from './apps/createApp'
+import myInvoice from './apps/myInvoice'
 
 import visaCategory from './apps/services/id/visaCategory'
 import generate from './generate'
@@ -46,6 +47,7 @@ export const store = configureStore({
     calendar,
     permissions,
     passport,
+    myInvoice,
     visaBooking: generate('visaBooking', fetchVisaBooking),
     visaService:generate('visaService', fetchVisaService),
     account,

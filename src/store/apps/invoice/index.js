@@ -39,7 +39,7 @@ export const appInvoiceSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
-      state.data = action.payload.invoices
+      // state.data = action.payload.invoices
       state.params = action.payload.params
       state.allData = action.payload.allData
       state.total = action.payload.total

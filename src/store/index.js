@@ -49,7 +49,7 @@ export const store = configureStore({
     passport,
     myInvoice,
     visaBooking: generate('visaBooking', fetchVisaBooking),
-    visaService:generate('visaService', fetchVisaService),
+    visaService: generate('visaService', fetchVisaService),
     account,
     createApp,
     visaCategory: generate('visaCategory', fetchVisaCategory),

@@ -8,8 +8,10 @@ export const ChildTable = ({
   row,
   childColumns,
   childRowSelection,
-  handleChildRowSelectionChange
+  handleChildRowSelectionChange,
+  visaBookingIds
 }) => {
+  console.log('++++++++++++++', visaBookingIds)
   const [globalFilter, setGlobalFilter] = useState('')
   const [showSearchBar, setShowSearchBar] = useState(false)
   const parentRowId = row.original._id
@@ -74,21 +76,22 @@ export const ChildTable = ({
       {/* <IconButton onClick={() => setShowSearchBar(!showSearchBar)}>
         <SearchIcon />
       </IconButton> */}
-
-      <TextField
-        value={globalFilter}
-        onChange={e => setGlobalFilter(e.target.value)}
-        placeholder='Search...'
-        variant='outlined'
-        size='small'
-        style={{ marginBottom: '10px' }}
-        sx={{
-          marginBottom: '10px',
-          '& .MuiOutlinedInput-input': {
-            padding: '4.5px 14px !important'
-          }
-        }}
-      />
+      {visaBookingIds && visaBookingIds.length > 6 && (
+        <TextField
+          value={globalFilter}
+          onChange={e => setGlobalFilter(e.target.value)}
+          placeholder='Search...'
+          variant='outlined'
+          size='small'
+          style={{ marginBottom: '10px' }}
+          sx={{
+            marginBottom: '10px',
+            '& .MuiOutlinedInput-input': {
+              padding: '4.5px 14px !important'
+            }
+          }}
+        />
+      )}
 
       <MRT_Table table={childTable} />
     </Box>

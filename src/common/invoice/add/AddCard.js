@@ -1,6 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
 // ** MUI Imports
 import Card from '@mui/material/Card'
 
@@ -48,6 +47,11 @@ const AddCard = props => {
 
   // ** Deletes form
   const data = useSelector(state => state.invoice.data)
+
+  useEffect(() => {
+    console.log('Updated invoices', data)
+  }, [data])
+
   return (
     <Card>
       {/* Header ---------------------------------------------------------------*/}

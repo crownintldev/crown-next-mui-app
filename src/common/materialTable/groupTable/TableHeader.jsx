@@ -21,7 +21,7 @@ const TableHeader = props => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const accountData = useSelector(state => state.account.data)
-  console.log(accountData)
+  // console.log(accountData)
   // ** Props
   const {
     toggle,
@@ -34,7 +34,7 @@ const TableHeader = props => {
     table,
     tableData
   } = props
-  console.log(selectionRow)
+  // console.log(selectionRow)
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)

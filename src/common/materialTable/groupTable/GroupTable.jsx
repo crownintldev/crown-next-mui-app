@@ -2,12 +2,13 @@ import { useMemo, useState, useEffect } from 'react'
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { Box, LinearProgress, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { muiLinearProgressProps,tableProps } from '../functions'
+import { muiLinearProgressProps, tableProps } from '../functions'
 import { Button, Grid } from '@mui/material'
 import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
 import FormDrawer from '../../drawer/FormDrawer'
 import TableHeader from './TableHeader'
 import { ChildTable } from './ChildTable'
+import { useTheme } from '@emotion/react'
 
 const Example = ({
   columns,
@@ -27,6 +28,7 @@ const Example = ({
     CreateForm,
     multiSelected = false
   } = drawerProps
+  const theme = useTheme()
   const dispatch = useDispatch()
   const accountItems = useSelector(state => state.account.data)
   const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
@@ -110,7 +112,6 @@ const Example = ({
     setParentId(parentRowId)
   }
 
-
   //row selection method end
 
   const renderCustomActions = ({ table }) => {
@@ -162,7 +163,7 @@ const Example = ({
   const table = useMaterialReactTable({
     columns,
     data,
-    ...tableProps,
+    ...tableProps(theme),
     renderTopToolbarCustomActions: renderCustomActions,
     getRowId: row => row._id, // Adjust based on your data's unique identifier
     manualFiltering: true,
@@ -175,9 +176,9 @@ const Example = ({
         }
       : undefined,
     enableRowSelection: true,
-    enableFilters: false,
+    enableFilters: true,
     onRowSelectionChange: setRowSelection,
-    initialState: { showColumnFilters: false, density: 'compact' },
+    initialState: { showColumnFilters: true, density: 'compact' },
     rowSelection,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
@@ -188,7 +189,7 @@ const Example = ({
       rowSelection,
       columnFilters,
       globalFilter,
-      isLoading:false,
+      isLoading: false,
       pagination,
       showAlertBanner: isError,
       showProgressBars: false,
@@ -202,6 +203,7 @@ const Example = ({
         childColumns={childColumns}
         childRowSelection={childRowSelection}
         handleChildRowSelectionChange={handleChildRowSelectionChange}
+        visaBookingIds={accountItems[0]?.visaBookingIds}
       />
     ),
     //  ({ row }) => {
@@ -251,14 +253,14 @@ const Example = ({
     <>
       {cards()}
       <div className='custom-scrollbar'>
-      {isLoading && (
+        {isLoading && (
           <LinearProgress
             sx={{
               height: '3px'
             }}
           />
         )}
-        <MaterialReactTable table={table}/>
+        <MaterialReactTable table={table} />
         {isLoading && (
           <LinearProgress
             sx={{

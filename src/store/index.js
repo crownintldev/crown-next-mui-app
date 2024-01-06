@@ -47,7 +47,7 @@ export const store = configureStore({
     permissions,
     passport,
     visaBooking: generate('visaBooking', fetchVisaBooking),
-    visaService:generate('visaService', fetchVisaService),
+    visaService: generate('visaService', fetchVisaService),
     account,
     createApp,
     visaCategory: generate('visaCategory', fetchVisaCategory),

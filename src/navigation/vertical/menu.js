@@ -138,11 +138,6 @@ export const accountArrays = () => [
   },
   {
     title: 'Invoice',
-    path: '/invoice',
-    icon: 'arcticons:booking'
-  },
-  {
-    title: 'Invoice',
     icon: 'tabler:file-dollar',
     children: [
       {
@@ -164,50 +159,25 @@ export const accountArrays = () => [
     ]
   },
 
-  {
-    sectionTitle: 'Apps & Pages'
-  },
-  {
-    title: 'Email',
-    icon: 'tabler:mail',
-    path: '/apps/email'
-  },
-  {
-    title: 'Chat',
-    icon: 'tabler:messages',
-    path: '/chat'
-  },
-  {
-    title: 'Calendar',
-    icon: 'tabler:calendar',
-    path: '/apps/calendar'
-  },
-  {
-    title: 'Vuexy Invoice',
-    icon: 'tabler:file-dollar',
-    children: [
-      {
-        title: 'Passport',
-        path: '/dashboards/analytics/'
-      },
-      {
-        title: 'Visa',
-        path: '/invoice/preview'
-      },
-      {
-        title: 'Suppliers',
-        path: '/invoice/add'
-      },
-      {
-        title: 'Expense',
-        path: '/invoice/add'
-      },
-      {
-        title: 'Billing',
-        path: '/invoice/edit'
-      }
-    ]
-  },
+  // {
+  //   sectionTitle: 'Apps & Pages'
+  // },
+  // {
+  //   title: 'Email',
+  //   icon: 'tabler:mail',
+  //   path: '/apps/email'
+  // },
+  // {
+  //   title: 'Chat',
+  //   icon: 'tabler:messages',
+  //   path: '/chat'
+  // },
+  // {
+  //   title: 'Calendar',
+  //   icon: 'tabler:calendar',
+  //   path: '/apps/calendar'
+  // },
+  
   // {
   //   sectionTitle: 'Apps & Pages'
   // },

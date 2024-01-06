@@ -218,6 +218,7 @@ const VisaServiceForm = ({
           options={category ?? []}
           label='Category'
           placeholder='Choose Category'
+          
         />
         {/* type */}
         <SelectHookField

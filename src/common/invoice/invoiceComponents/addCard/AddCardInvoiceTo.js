@@ -49,7 +49,6 @@ const AddCardInvoiceTo = ({
   setSelectUser
 }) => {
   //getting values to search passport list from backend
-
   //getting values end
   const [users, setUsers] = useState([])
   const [selected, setSelected] = useState('')
@@ -112,71 +111,7 @@ const AddCardInvoiceTo = ({
         <Typography variant='h6' sx={{ mb: 6 }}>
           Invoice To:
         </Typography>
-        <Box className='flex space-x-4'>
-          {/* <Autocomplete
-            size='small'
-            sx={{ width: 250 }}
-            options={userCategoryOption}
-            id='autocomplete-outlined'
-            getOptionLabel={option => option}
-            onChange={handleUserCategory}
-            renderOption={(props, option) => (
-              <Box component='li' {...props}>
-                {option}
-              </Box>
-            )}
-            renderInput={params => <TextField {...params} label='User Category' />}
-          /> */}
-          {/* <MuiAutoComplete
-            size='small'
-            options={userCategoryOption}
-            label='User Category'
-            onChange={handleUserCategory}
-          />
-          <MuiAutoComplete
-            options={users}
-            value={selectUser}
-            getOptionLabel={option => (option.fullName ? option.fullName : option.companyName)}
-            label='Select User'
-            onChange={handleUserSelect}
-          /> */}
 
-          {/* <CustomTextField
-          select
-          sx={{
-            mb: 4,
-            '& .MuiFilledInput-input.MuiSelect-select': { minWidth: '8rem !important' }
-          }}
-          SelectProps={{ value: selected, onChange: e => handleInvoiceChange(e) }}
-        >
-          <CustomSelectItem value='' onClick={handleAddNewCustomer}>
-            <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 2 } }}>
-              <Icon icon='tabler:plus' fontSize='1.125rem' />
-              Add New Customer
-            </Box>
-          </CustomSelectItem>
-          {clients !== undefined &&
-            clients.map(client => (
-              <MenuItem key={client.name} value={client.name}>
-                {client.name}
-              </MenuItem>
-            ))}
-        </CustomTextField> */}
-        </Box>
-        {/* {selectUser !== null && selectUser._id ? (
-          <>
-            <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
-              {selectUser.fullName && `Name:  ${selectUser.fullName}`}
-              {selectUser.companyName && `Company:  ${selectUser.companyName}`}
-            </Typography>
-            <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
-              Address: {selectUser.address}
-            </Typography>
-            <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
-              Contact: {selectUser.phone}
-            </Typography>
-          </>
-        ) : null} */}
         {values.map(item => (
           <Box key={item._id}>
             <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>

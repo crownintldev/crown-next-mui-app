@@ -18,10 +18,9 @@ const toQueryString = params => {
 export const fetchData = createAsyncThunk('appAccounts/fetchData', async params => {
   const queryString = toQueryString(params)
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/accounts?${queryString}`)
-  console.log(response)
+  // console.log(response)
   return response.data
 })
-
 
 // ** Add Passport
 // export const addPassport = createAsyncThunk(

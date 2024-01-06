@@ -12,20 +12,20 @@ import Button from '@mui/material/Button'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import Icon from 'src/@core/components/icon'
 import { useDispatch, useSelector } from 'react-redux'
-import { setInvoice } from 'src/store/apps/myInvoice'
+// import { setInvoice } from 'src/store/apps/myInvoice'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
 import ExportButton from '../tableHeader/ExportButton'
+import { getReducer } from 'src/store/apps/sliceActionReducer'
 
 const TableHeader = props => {
   const router = useRouter()
   const theme = useTheme()
   const dispatch = useDispatch()
+  const setInvoice = getReducer('myInvoice')
+  // useSelector
   const accountData = useSelector(state => state.account.data)
-  // console.log(accountData)
 
-  const data = useSelector(state => state.myInvoice.data)
-  console.log("data",data)
-
+  const data = useSelector(state => state?.myInvoice?.data)
 
   // ** Props
   const {

@@ -13,10 +13,11 @@ import passport from './apps/booking/passport'
 // import visaService from './apps/services/visaService'
 import account from './apps/account'
 import createApp from './apps/createApp'
-import myInvoice from './apps/myInvoice'
+// import myInvoice from './apps/myInvoice'
 
 import visaCategory from './apps/services/id/visaCategory'
 import generate from './generate'
+import { generateReducer } from './apps/sliceActionReducer'
 // Usage example
 export const fetchVisaCategory = createFetchDataThunk('visaCategory', 'visa-category')
 export const fetchVisaDestination = createFetchDataThunk('visaDestination', 'visa-destination')
@@ -47,11 +48,10 @@ export const store = configureStore({
     calendar,
     permissions,
     passport,
-    myInvoice,
-    visaBooking: generate('visaBooking', fetchVisaBooking),
-    visaService: generate('visaService', fetchVisaService),
     account,
     createApp,
+    visaBooking: generate('visaBooking', fetchVisaBooking),
+    visaService: generate('visaService', fetchVisaService),
     visaCategory: generate('visaCategory', fetchVisaCategory),
     visaDestination: generate('visaDestination', fetchVisaDestination),
     visaDuration: generate('visaDuration', fetchVisaDuration),
@@ -65,7 +65,8 @@ export const store = configureStore({
     expense: generate('expense', fetchExpense),
     expenseCategory: generate('expenseCategory', fetchExpenseCategory),
     expenseType: generate('expenseType', fetchExpenseType),
-    invoice: generate('invoice', fetchInvoice)
+    // invoice: generate('invoice', fetchInvoice),
+    myInvoice: generateReducer('myInvoice').reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

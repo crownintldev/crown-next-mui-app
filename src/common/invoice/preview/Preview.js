@@ -27,6 +27,7 @@ const InvoicePreview = ({ id }) => {
     axios
       .get('/apps/invoice/single-invoice', { params: { id } })
       .then(res => {
+        console.log('response output', res.data)
         setData(res.data)
         setError(false)
       })
@@ -35,6 +36,7 @@ const InvoicePreview = ({ id }) => {
         setError(true)
       })
   }, [id])
+
   const toggleSendInvoiceDrawer = () => setSendInvoiceOpen(!sendInvoiceOpen)
   const toggleAddPaymentDrawer = () => setAddPaymentOpen(!addPaymentOpen)
   if (data) {

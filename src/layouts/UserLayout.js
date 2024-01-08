@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Layout Imports

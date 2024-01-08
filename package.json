@@ -1,5 +1,5 @@
 {
-  "name": "vuexy-nextjs-admin-template",
+  "name": "Travokey",
   "version": "1.2.0",
   "private": true,
   "scripts": {
@@ -10,9 +10,9 @@
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
-    "gitpush": "git add . && git commit -m 'salik' && git push origin salik",
-    "gitmerge": "git checkout main && git pull origin main && git checkout salik && git merge main",
-    "gitpushmain": "git add . && git commit -m 'main' && git push origin main"
+    "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
+    "gitmerge": "git checkout main && git pull origin main && git checkout hamail && git merge main",
+    "gitpushmain": "git checkout main && git add . && git commit -m 'main' && git push origin main"
   },
   "dependencies": {
     "@babel/core": "7.21.5",

@@ -18,11 +18,7 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
     paddingRight: `${theme.spacing(2)} !important`
   }
 }))
-const AddCardInvoiceTo = ({ data: values }) => {
-  const invoiceDataArray = useSelector(state => state.myInvoice.data)
-  console.log('invoice data ary', invoiceDataArray)
-
-  const { by: clientData, fee } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
+const AddCardInvoiceTo = ({ clientData, fee }) => {
 
   const theme = useTheme()
 

@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 
 const AddCardItemSelect = () => {
   const invoiceDataArray = useSelector(state => state.myInvoice.data)
+  console.log('invoice ary data', invoiceDataArray)
   const { visaBookingIds } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
   console.log('visa IDs', visaBookingIds)
 

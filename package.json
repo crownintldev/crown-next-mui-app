@@ -10,7 +10,7 @@
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
-    "gitpushhamail": "git add . && git commit -m 'gitpushhamail' && git push origin hamail && git checkout main && git pull origin main && git merge hamail --no-edit && git add . && git commit -m 'gitpushmainhamail' && git push origin main && git checkout hamail",
+    "gitpushhamail": "git checkout hamail && git add . && git commit -m 'gitpushhamail' && git push origin hamail && git checkout main && git pull origin main && git merge hamail --no-edit && git add . && git commit -m 'gitpushmainhamail' && git push origin main && git checkout hamail",
     "githamailmergemain": "git checkout main && git pull origin main && git checkout hamail && git merge main --no-edit"
   },
   "dependencies": {

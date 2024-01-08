@@ -8,12 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { useSelector } from 'react-redux'
 
-const AddCardItemSelect = () => {
-  const invoiceDataArray = useSelector(state => state.myInvoice.data)
-  console.log('invoice ary data', invoiceDataArray)
-  const { visaBookingIds } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
-  console.log('visa IDs', visaBookingIds)
-
+const AddCardItemSelect = ({visaBookingIds}) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='invoice table'>

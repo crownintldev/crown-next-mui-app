@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid'
 import { styled, alpha, useTheme } from '@mui/material/styles'
 
 import CustomTextField from 'src/@core/components/mui/text-field'
+import { useSelector } from 'react-redux'
 
 const CalcWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -26,12 +27,20 @@ const now = new Date()
 const tomorrowDate = now.setDate(now.getDate() + 7)
 
 const AddCardItemWithTotal = ({ data, invoiceNumber, invoiceData }) => {
+  let feeTotal, feePaid, feeRemaining
   const { accountDetails, grandFee } = invoiceData
   console.log(data)
   // ** Hook
   const theme = useTheme()
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : []
+  const feeData = useSelector(state => state.myInvoice.data)
+  feeData.map(item => console.log('item', item))
+  console.log('fee data ary', feeData)
+  // calculating total Invoices
+  feeData.map(feeItem => {
+    console.log('fee item', feeItem.fee)
+  })
 
   return (
     <Grid container>
@@ -74,19 +83,19 @@ const AddCardItemWithTotal = ({ data, invoiceNumber, invoiceData }) => {
       >
         <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
           <CalcWrapper>
-            <Typography sx={{ color: 'text.secondary' }}>Subtotal:</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Total: </Typography>
             <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
               Rs {data[0]?.fee?.total}
             </Typography>
           </CalcWrapper>
           <CalcWrapper>
-            <Typography sx={{ color: 'text.secondary' }}>Total Paid:</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Paid: </Typography>
             <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
               Rs {data[0]?.fee?.paid}
             </Typography>
           </CalcWrapper>
           <CalcWrapper sx={{ mb: '0 !important' }}>
-            <Typography sx={{ color: 'text.secondary' }}>Total Due</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Remaining: </Typography>
             <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
               Rs {data[0]?.fee?.remaining}
             </Typography>

@@ -21,10 +21,6 @@ import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
 
 import { useSelector } from 'react-redux'
-
-const now = new Date()
-const tomorrowDate = now.setDate(now.getDate() + 7)
-
 const AddCard = props => {
   // ** Props
   const { clients, invoiceNumber, selectedClient, setSelectedClient, toggleAddCustomerDrawer } =
@@ -37,17 +33,20 @@ const AddCard = props => {
   const [invoiceData, setInvoiceData] = useState([])
   //**end AddCardInvoiceTo states
 
-  const [count, setCount] = useState(1)
-  const [selected, setSelected] = useState('')
-  const [issueDate, setIssueDate] = useState(new Date())
-  const [dueDate, setDueDate] = useState(new Date(tomorrowDate))
-
   // ** Hook
   const theme = useTheme()
 
   // ** Deletes form
   const data = useSelector(state => state.invoice.data)
+  const invoiceDataArray = useSelector(state => state.myInvoice.data)
+  invoiceDataArray.map(item => console.log('item', item))
+  console.log('invoice data ary', invoiceDataArray)
 
+  const {
+    by: clientData,
+    fee,
+    visaBookingIds
+  } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
   useEffect(() => {
     console.log('Updated invoices', data)
   }, [data])
@@ -67,30 +66,40 @@ const AddCard = props => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        <AddCardInvoiceTo
-          data={data}
-          selectedClient={selectedClient}
-          setSelectedClient={setSelectedClient}
-          toggleAddCustomerDrawer={toggleAddCustomerDrawer}
-          clients={clients}
-          setInvoiceData={setInvoiceData}
-          invoiceData={invoiceData}
-          setUserCategory={setUserCategory}
-          selectUser={selectUser}
-          setSelectUser={setSelectUser}
-        />
-      </CardContent>
+        {invoiceDataArray.map(item => {
+          const { by: clientData, fee, visaBookingIds } = item
+          console.log('item output', clientData, fee, visaBookingIds)
 
-      <Divider />
-      {/* Item Select ------------------------------------------------------- */}
-      <AddCardItemSelect
-        data={data}
-        clients={clients}
-        invoiceData={invoiceData}
-        setInvoiceData={setInvoiceData}
-        userCategory={userCategory}
-        selectUser={selectUser}
-      />
+          return (
+            <>
+              <AddCardInvoiceTo
+                data={data}
+                selectedClient={selectedClient}
+                setSelectedClient={setSelectedClient}
+                toggleAddCustomerDrawer={toggleAddCustomerDrawer}
+                clients={clients}
+                setInvoiceData={setInvoiceData}
+                invoiceData={invoiceData}
+                setUserCategory={setUserCategory}
+                selectUser={selectUser}
+                setSelectUser={setSelectUser}
+                clientData={clientData}
+                fee={fee}
+              />
+              <Divider />
+              <AddCardItemSelect
+                data={data}
+                clients={clients}
+                invoiceData={invoiceData}
+                setInvoiceData={setInvoiceData}
+                userCategory={userCategory}
+                selectUser={selectUser}
+                visaBookingIds={visaBookingIds}
+              />
+            </>
+          )
+        })}
+      </CardContent>
 
       <Divider />
       {/* ItemWithTotal ------------------------------------------------------- */}

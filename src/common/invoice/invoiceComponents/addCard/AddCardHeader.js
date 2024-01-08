@@ -2,30 +2,14 @@
 import { useState, forwardRef } from 'react'
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Table from '@mui/material/Table'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Tooltip from '@mui/material/Tooltip'
-import TableRow from '@mui/material/TableRow'
-import Collapse from '@mui/material/Collapse'
-import TableBody from '@mui/material/TableBody'
 import Typography from '@mui/material/Typography'
-import InputLabel from '@mui/material/InputLabel'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import Grid from '@mui/material/Grid'
 import InputAdornment from '@mui/material/InputAdornment'
-import TableContainer from '@mui/material/TableContainer'
 import { styled, alpha, useTheme } from '@mui/material/styles'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import CardContent from '@mui/material/CardContent'
-
-import { top100Films } from 'src/@fake-db/autocomplete'
-
-// ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
@@ -34,9 +18,7 @@ import DatePicker from 'react-datepicker'
 import themeConfig from 'src/configs/themeConfig'
 
 // ** Custom Component Imports
-import Repeater from 'src/@core/components/repeater'
 import CustomTextField from 'src/@core/components/mui/text-field'
-import { Autocomplete, TextField } from '@mui/material'
 
 const CustomInput = forwardRef(({ ...props }, ref) => {
   return (

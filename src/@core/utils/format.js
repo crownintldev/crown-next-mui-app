@@ -16,10 +16,7 @@ const isToday = date => {
   )
 }
 
-export const formatDate = (
-  value,
-  formatting = { month: 'short', day: 'numeric', year: 'numeric' }
-) => {
+export const formatDate = (value, formatting = { month: 'short', day: 'numeric', year: 'numeric' }) => {
   if (!value) return value
 
   return new Intl.DateTimeFormat('en-US', formatting).format(new Date(value))
@@ -58,10 +55,10 @@ export const formatCreditCardNumber = (value, Payment) => {
       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(4, 10)} ${clearValue.slice(10, 14)}`
       break
     default:
-      nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(4, 8)} ${clearValue.slice(
-        8,
-        12
-      )} ${clearValue.slice(12, 19)}`
+      nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(4, 8)} ${clearValue.slice(8, 12)} ${clearValue.slice(
+        12,
+        19
+      )}`
       break
   }
 
@@ -90,34 +87,4 @@ export const formatCVC = (value, cardNumber, Payment) => {
   const maxLength = issuer === 'amex' ? 4 : 3
 
   return clearValue.slice(0, maxLength)
-}
-
-export const isValidCardNumber = (value, Payment) => {
-  if (!value) return false
-  const clearValue = clearNumber(value)
-  const issuer = Payment.fns.cardType(clearValue)
-
-  switch (issuer) {
-    case 'amex':
-      return clearValue.length === 15
-    case 'dinersclub':
-      return clearValue.length === 14
-    default:
-      return clearValue.length === 16
-  }
-}
-export const isValidExpirationDate = value => {
-  if (!value || value.length !== 5) return false
-
-  const [month, year] = value.split('/').map(num => parseInt(num, 10))
-  const expirationDate = new Date(year + 2000, month - 1)
-  const currentDate = new Date()
-
-  return expirationDate > currentDate
-}
-export const isValidCVC = (value, cardNumber, Payment) => {
-  if (!value) return false
-  const issuer = Payment.fns.cardType(cardNumber)
-
-  return (issuer === 'amex' && value.length === 4) || (issuer !== 'amex' && value.length === 3)
 }

@@ -117,12 +117,7 @@ const Navigation = props => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Drawer
-        {...props}
-        navHover={navHover}
-        setNavHover={setNavHover}
-        navigationBorderWidth={navigationBorderWidth}
-      >
+      <Drawer {...props} navHover={navHover} setNavHover={setNavHover} navigationBorderWidth={navigationBorderWidth}>
         <VerticalNavHeader {...props} navHover={navHover} />
         {beforeNavMenuContent && beforeVerticalNavMenuContentPosition === 'fixed'
           ? beforeNavMenuContent(navMenuContentProps)

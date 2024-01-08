@@ -103,10 +103,7 @@ const CrmBrowserStates = () => {
                       value={100}
                       thickness={5}
                       variant='determinate'
-                      sx={{
-                        position: 'absolute',
-                        color: theme => theme.palette.customColors.trackBg
-                      }}
+                      sx={{ position: 'absolute', color: theme => theme.palette.customColors.trackBg }}
                     />
                     <CircularProgress
                       size={28}

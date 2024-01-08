@@ -50,13 +50,10 @@ const LayoutAppBar = props => {
       mask: theme =>
         `linear-gradient(${theme.palette.background.default}, ${theme.palette.background.default} 18%, transparent 100%)`,
       background: theme =>
-        `linear-gradient(180deg,${hexToRGBA(
+        `linear-gradient(180deg,${hexToRGBA(theme.palette.background.default, 0.7)} 44%, ${hexToRGBA(
           theme.palette.background.default,
-          0.7
-        )} 44%, ${hexToRGBA(theme.palette.background.default, 0.43)} 73%, ${hexToRGBA(
-          theme.palette.background.default,
-          0
-        )})`
+          0.43
+        )} 73%, ${hexToRGBA(theme.palette.background.default, 0)})`
     }
   }
   if (appBar === 'hidden') {
@@ -83,15 +80,10 @@ const LayoutAppBar = props => {
         sx={{
           ...(appBarBlur && { backdropFilter: 'blur(6px)' }),
           minHeight: theme => `${theme.mixins.toolbar.minHeight}px !important`,
-          backgroundColor: theme =>
-            hexToRGBA(theme.palette.background.paper, appBarBlur ? 0.95 : 1),
-          ...(skin === 'bordered'
-            ? { border: theme => `1px solid ${theme.palette.divider}` }
-            : { boxShadow: 2 }),
+          backgroundColor: theme => hexToRGBA(theme.palette.background.paper, appBarBlur ? 0.95 : 1),
+          ...(skin === 'bordered' ? { border: theme => `1px solid ${theme.palette.divider}` } : { boxShadow: 2 }),
           ...(contentWidth === 'boxed' && {
-            '@media (min-width:1440px)': {
-              maxWidth: theme => `calc(1440px - ${theme.spacing(6 * 2)})`
-            }
+            '@media (min-width:1440px)': { maxWidth: theme => `calc(1440px - ${theme.spacing(6 * 2)})` }
           })
         }}
       >

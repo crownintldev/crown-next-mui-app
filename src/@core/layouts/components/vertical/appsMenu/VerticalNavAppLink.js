@@ -21,8 +21,8 @@ import Translations from 'src/layouts/components/Translations'
 // ** Util Imports
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 import { extractSegment, handleURLQueries, handleURLQueriess } from 'src/@core/layouts/utils'
-import MouseOverPopover from 'src/@core/components/MouseOverPopover'
-import CanViewNavApp from 'src/layouts/components/acl/CanViewNavApp'
+// import MouseOverPopover from 'src/@core/components/MouseOverPopover'
+import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
 
 // ** Styled Components
 const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
@@ -38,13 +38,9 @@ const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
     '&, &:hover': {
       boxShadow: `0px 2px 6px ${hexToRGBA(theme.palette.primary.main, 0.48)}`,
       background: `linear-gradient(72.47deg, ${
-        theme.direction === 'ltr'
-          ? theme.palette.primary.main
-          : hexToRGBA(theme.palette.primary.main, 0.7)
+        theme.direction === 'ltr' ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.7)
       } 22.16%, ${
-        theme.direction === 'ltr'
-          ? hexToRGBA(theme.palette.primary.main, 0.7)
-          : theme.palette.primary.main
+        theme.direction === 'ltr' ? hexToRGBA(theme.palette.primary.main, 0.7) : theme.palette.primary.main
       } 76.47%)`,
       '&.Mui-focusVisible': {
         background: `linear-gradient(72.47deg, ${theme.palette.primary.dark} 22.16%, ${hexToRGBA(
@@ -97,7 +93,7 @@ const VerticalNavAppLink = ({
   }
 
   return (
-    <CanViewNavApp navLink={item}>
+    <CanViewNavLink navLink={item}>
       <ListItem
         disablePadding
         className='nav-link'
@@ -122,10 +118,7 @@ const VerticalNavAppLink = ({
           sx={{
             py: 2,
             ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
-            px:
-              navCollapsed && !navHover
-                ? (collapsedNavWidth - navigationBorderWidth - 22 - 28) / 8
-                : 4,
+            px: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 22 - 28) / 8 : 4,
             '& .MuiTypography-root, & svg': {
               color: 'text.secondary'
             }
@@ -170,7 +163,7 @@ const VerticalNavAppLink = ({
           </MenuItemTextMetaWrapper> */}
         </MenuNavLink>
       </ListItem>
-    </CanViewNavApp>
+    </CanViewNavLink>
   )
 }
 

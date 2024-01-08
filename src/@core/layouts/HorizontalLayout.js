@@ -85,10 +85,7 @@ const HorizontalLayout = props => {
 
   return (
     <HorizontalLayoutWrapper className='layout-wrapper'>
-      <MainContentWrapper
-        className='layout-content-wrapper'
-        sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }) }}
-      >
+      <MainContentWrapper className='layout-content-wrapper' sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }) }}>
         {/* Navbar (or AppBar) and Navigation Menu Wrapper */}
         <AppBar
           color='default'
@@ -102,11 +99,8 @@ const HorizontalLayout = props => {
             ...(appBar === 'static' && { zIndex: 13 }),
             transition: 'border-bottom 0.2s ease-in-out',
             ...(appBarBlur && { backdropFilter: 'blur(6px)' }),
-            backgroundColor: theme =>
-              hexToRGBA(theme.palette.background.paper, appBarBlur ? 0.95 : 1),
-            ...(skin === 'bordered' && {
-              borderBottom: theme => `1px solid ${theme.palette.divider}`
-            }),
+            backgroundColor: theme => hexToRGBA(theme.palette.background.paper, appBarBlur ? 0.95 : 1),
+            ...(skin === 'bordered' && { borderBottom: theme => `1px solid ${theme.palette.divider}` }),
             ...userAppBarStyle
           }}
           {...userAppBarProps}
@@ -123,9 +117,7 @@ const HorizontalLayout = props => {
               className='navbar-content-container'
               sx={{
                 mx: 'auto',
-                ...(contentWidth === 'boxed' && {
-                  '@media (min-width:1440px)': { maxWidth: 1440 }
-                }),
+                ...(contentWidth === 'boxed' && { '@media (min-width:1440px)': { maxWidth: 1440 } }),
                 minHeight: theme => `${theme.mixins.toolbar.minHeight - 2}px !important`
               }}
             >
@@ -141,28 +133,18 @@ const HorizontalLayout = props => {
           </Box>
           {/* Navigation Menu */}
           {navHidden ? null : (
-            <Box
-              className='layout-horizontal-nav'
-              sx={{ width: '100%', ...horizontalLayoutProps?.navMenu?.sx }}
-            >
+            <Box className='layout-horizontal-nav' sx={{ width: '100%', ...horizontalLayoutProps?.navMenu?.sx }}>
               <Toolbar
                 className='horizontal-nav-content-container'
                 sx={{
                   mx: 'auto',
-                  ...(contentWidth === 'boxed' && {
-                    '@media (min-width:1440px)': { maxWidth: 1440 }
-                  }),
+                  ...(contentWidth === 'boxed' && { '@media (min-width:1440px)': { maxWidth: 1440 } }),
                   minHeight: theme =>
-                    `${
-                      theme.mixins.toolbar.minHeight - 4 - (skin === 'bordered' ? 1 : 0)
-                    }px !important`
+                    `${theme.mixins.toolbar.minHeight - 4 - (skin === 'bordered' ? 1 : 0)}px !important`
                 }}
               >
                 {(userNavMenuContent && userNavMenuContent(props)) || (
-                  <Navigation
-                    {...props}
-                    horizontalNavItems={horizontalLayoutProps.navMenu?.navItems}
-                  />
+                  <Navigation {...props} horizontalNavItems={horizontalLayoutProps.navMenu?.navItems} />
                 )}
               </Toolbar>
             </Box>

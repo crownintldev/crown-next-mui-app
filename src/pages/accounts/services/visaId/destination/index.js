@@ -8,7 +8,7 @@ import VisaServiceIdForm from 'src/common/forms/visaServiceIdForm/visaServiceIdF
 import { fetchVisaDestination } from 'src/store'
 
 const index = ({ apiData }) => {
-  const columns = useNameIdTableColumns("Destination")
+  const columns = useNameIdTableColumns('Destination')
   return (
     <div>
       <MaterialTable
@@ -24,7 +24,7 @@ const index = ({ apiData }) => {
           buttonTitle: 'Add Visa Destination',
           editButtonTitle: 'Edit Visa Destination',
           CreateForm: VisaServiceIdForm,
-          EditForm: VisaServiceIdForm,
+          EditForm: VisaServiceIdForm
         }}
       />
     </div>

@@ -41,8 +41,6 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
-import toast from 'react-hot-toast'
-import { FormControl, FormHelperText, FormLabel, Radio, RadioGroup } from '@mui/material'
 
 // ** Styled Components
 const LoginIllustration = styled('img')(({ theme }) => ({
@@ -84,14 +82,12 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().min(5).required(),
-  accountType: yup.string().required()
+  password: yup.string().min(5).required()
 })
 
 const defaultValues = {
-  password: '',
-  email: '',
-  accountType: 'administrative'
+  password: 'admin',
+  email: 'admin@vuexy.com'
 }
 
 const LoginPage = () => {
@@ -115,51 +111,20 @@ const LoginPage = () => {
     formState: { errors }
   } = useForm({
     defaultValues,
-    // mode: 'onBlur',
+    mode: 'onBlur',
     resolver: yupResolver(schema)
   })
 
   const onSubmit = data => {
-    const { email, password, accountType } = data
-    auth.login({ email, password, rememberMe, accountType }, err => {
-      if (err && err.response) {
-        if (
-          err.response.data &&
-          err.response.data.status === 'ERROR' &&
-          err.response.status === 400
-        ) {
-          toast.error(`${err.response.data.message}`, {
-            duration: 2000
-          })
-        }
-        if (
-          err.response.data &&
-          err.response.data.status === 'ERROR' &&
-          err.response.status === 403
-        ) {
-          toast.error(`${err.response.data.message}`, {
-            duration: 2000
-          })
-        }
-
-        if (
-          err.response.data &&
-          err.response.data.status === 'ERROR' &&
-          err.response.status === 401
-        ) {
-          toast.error(`${err.response.data.message}`, {
-            duration: 2000
-          })
-          // setError('email', {
-          //   type: 'manual',
-          //   message: 'Email or Password is invalid '
-          // })
-        }
-      }
+    const { email, password } = data
+    auth.login({ email, password, rememberMe }, () => {
+      setError('email', {
+        type: 'manual',
+        message: 'Email or Password is invalid'
+      })
     })
   }
-  const imageSource =
-    skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
+  const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
   return (
     <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
@@ -176,10 +141,7 @@ const LoginPage = () => {
             margin: theme => theme.spacing(8, 0, 8, 8)
           }}
         >
-          <LoginIllustration
-            alt='login-illustration'
-            src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
-          />
+          <LoginIllustration alt='login-illustration' src={`/images/pages/${imageSource}-${theme.palette.mode}.png`} />
           <FooterIllustrationsV2 />
         </Box>
       ) : null}
@@ -194,7 +156,7 @@ const LoginPage = () => {
           }}
         >
           <Box sx={{ width: '100%', maxWidth: 400 }}>
-            {/* <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
+            <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
@@ -221,7 +183,7 @@ const LoginPage = () => {
                 fill={theme.palette.primary.main}
                 d='M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z'
               />
-            </svg> */}
+            </svg>
             <Box sx={{ my: 6 }}>
               <Typography variant='h3' sx={{ mb: 1.5 }}>
                 {`Welcome to ${themeConfig.templateName}! 👋🏻`}
@@ -230,55 +192,15 @@ const LoginPage = () => {
                 Please sign-in to your account and start the adventure
               </Typography>
             </Box>
-
+            <Alert icon={false} sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}>
+              <Typography variant='body2' sx={{ mb: 2, color: 'primary.main' }}>
+                Admin: <strong>admin@vuexy.com</strong> / Pass: <strong>admin</strong>
+              </Typography>
+              <Typography variant='body2' sx={{ color: 'primary.main' }}>
+                Client: <strong>client@vuexy.com</strong> / Pass: <strong>client</strong>
+              </Typography>
+            </Alert>
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-              <Box sx={{ mb: 4 }}>
-                <FormControl error={Boolean(errors.radio)}>
-                  <Controller
-                    name='accountType'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <RadioGroup row {...field} aria-label='accountType' name='accountType'>
-                        <FormControlLabel
-                          value='administrative'
-                          label='Admin'
-                          sx={errors.accountType ? { color: 'error.main' } : null}
-                          control={
-                            <Radio
-                              disabled={auth.spinner}
-                              sx={errors.accountType ? { color: 'error.main' } : null}
-                            />
-                          }
-                        />
-                        <FormControlLabel
-                          value='staff'
-                          label='Staff'
-                          sx={errors.accountType ? { color: 'error.main' } : null}
-                          control={
-                            <Radio
-                              disabled={auth.spinner}
-                              sx={errors.accountType ? { color: 'error.main' } : null}
-                            />
-                          }
-                        />
-                      </RadioGroup>
-                    )}
-                  />
-                  {errors.accountType && (
-                    <FormHelperText
-                      id='validation-basic-radio'
-                      sx={{
-                        mx: 0,
-                        color: 'error.main',
-                        fontSize: theme => theme.typography.body2.fontSize
-                      }}
-                    >
-                      Account Type is Required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Box>
               <Box sx={{ mb: 4 }}>
                 <Controller
                   name='email'
@@ -288,12 +210,11 @@ const LoginPage = () => {
                     <CustomTextField
                       fullWidth
                       autoFocus
-                      disabled={auth.spinner}
                       label='Email'
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
-                      placeholder='Enter your email'
+                      placeholder='admin@vuexy.com'
                       error={Boolean(errors.email)}
                       {...(errors.email && { helperText: errors.email.message })}
                     />
@@ -312,9 +233,7 @@ const LoginPage = () => {
                       onBlur={onBlur}
                       label='Password'
                       onChange={onChange}
-                      disabled={auth.spinner}
                       id='auth-login-v2-password'
-                      placeholder='Enter your password'
                       error={Boolean(errors.password)}
                       {...(errors.password && { helperText: errors.password.message })}
                       type={showPassword ? 'text' : 'password'}
@@ -326,10 +245,7 @@ const LoginPage = () => {
                               onMouseDown={e => e.preventDefault()}
                               onClick={() => setShowPassword(!showPassword)}
                             >
-                              <Icon
-                                fontSize='1.25rem'
-                                icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
-                              />
+                              <Icon fontSize='1.25rem' icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
                             </IconButton>
                           </InputAdornment>
                         )
@@ -349,39 +265,18 @@ const LoginPage = () => {
               >
                 <FormControlLabel
                   label='Remember Me'
-                  control={
-                    <Checkbox
-                      disabled={auth.spinner}
-                      checked={rememberMe}
-                      onChange={e => setRememberMe(e.target.checked)}
-                    />
-                  }
+                  control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
                 />
-                <Typography component={LinkStyled} href={auth.spinner ? '' : '/forgot-password'}>
+                <Typography component={LinkStyled} href='/forgot-password'>
                   Forgot Password?
                 </Typography>
               </Box>
-              <Button
-                fullWidth
-                disabled={auth.spinner}
-                type='submit'
-                variant='contained'
-                sx={{ mb: 4 }}
-              >
-                login
+              <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
+                Login
               </Button>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center'
-                }}
-              >
-                <Typography sx={{ color: 'text.secondary', mr: 2 }}>
-                  New on our platform?
-                </Typography>
-                <Typography href={auth.spinner ? '' : '/register'} component={LinkStyled}>
+              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <Typography sx={{ color: 'text.secondary', mr: 2 }}>New on our platform?</Typography>
+                <Typography href='/register' component={LinkStyled}>
                   Create an account
                 </Typography>
               </Box>
@@ -396,20 +291,10 @@ const LoginPage = () => {
                 or
               </Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#497ce2' }}
-                  onClick={e => e.preventDefault()}
-                >
+                <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:facebook' />
                 </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#1da1f2' }}
-                  onClick={e => e.preventDefault()}
-                >
+                <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:twitter' />
                 </IconButton>
                 <IconButton
@@ -420,12 +305,7 @@ const LoginPage = () => {
                 >
                   <Icon icon='mdi:github' />
                 </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#db4437' }}
-                  onClick={e => e.preventDefault()}
-                >
+                <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:google' />
                 </IconButton>
               </Box>

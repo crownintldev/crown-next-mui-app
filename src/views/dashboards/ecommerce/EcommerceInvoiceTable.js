@@ -50,9 +50,7 @@ const defaultColumns = [
     field: 'id',
     minWidth: 90,
     headerName: '# ID',
-    renderCell: ({ row }) => (
-      <LinkStyled href={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</LinkStyled>
-    )
+    renderCell: ({ row }) => <LinkStyled href={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</LinkStyled>
   },
   {
     flex: 0.15,
@@ -61,10 +59,7 @@ const defaultColumns = [
     renderHeader: () => <Icon icon='tabler:trending-up' fontSize={20} />,
     renderCell: ({ row }) => {
       const { dueDate, balance, invoiceStatus } = row
-
-      const color = invoiceStatusObj[invoiceStatus]
-        ? invoiceStatusObj[invoiceStatus].color
-        : 'primary'
+      const color = invoiceStatusObj[invoiceStatus] ? invoiceStatusObj[invoiceStatus].color : 'primary'
 
       return (
         <Tooltip
@@ -98,18 +93,14 @@ const defaultColumns = [
     minWidth: 90,
     field: 'total',
     headerName: 'Total',
-    renderCell: ({ row }) => (
-      <Typography sx={{ color: 'text.secondary' }}>${row.total || 0}</Typography>
-    )
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>${row.total || 0}</Typography>
   },
   {
     flex: 0.3,
     minWidth: 125,
     field: 'issuedDate',
     headerName: 'Issued Date',
-    renderCell: ({ row }) => (
-      <Typography sx={{ color: 'text.secondary' }}>{row.issuedDate}</Typography>
-    )
+    renderCell: ({ row }) => <Typography sx={{ color: 'text.secondary' }}>{row.issuedDate}</Typography>
   }
 ]
 
@@ -178,34 +169,16 @@ const EcommerceInvoiceTable = () => {
   return (
     <Card>
       <CardContent
-        sx={{
-          gap: 4,
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
+        sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}
       >
-        <Button
-          component={Link}
-          variant='contained'
-          href='/apps/invoice/add'
-          startIcon={<Icon icon='tabler:plus' />}
-        >
+        <Button component={Link} variant='contained' href='/apps/invoice/add' startIcon={<Icon icon='tabler:plus' />}>
           Create Invoice
         </Button>
         <Box sx={{ gap: 4, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-          <CustomTextField
-            value={value}
-            placeholder='Search Invoice'
-            onChange={e => setValue(e.target.value)}
-          />
+          <CustomTextField value={value} placeholder='Search Invoice' onChange={e => setValue(e.target.value)} />
           <CustomTextField
             select
-            sx={{
-              pr: 4,
-              '& .MuiFilledInput-input.MuiSelect-select': { minWidth: '8rem !important' }
-            }}
+            sx={{ pr: 4, '& .MuiFilledInput-input.MuiSelect-select': { minWidth: '8rem !important' } }}
             SelectProps={{
               displayEmpty: true,
               value: statusValue,

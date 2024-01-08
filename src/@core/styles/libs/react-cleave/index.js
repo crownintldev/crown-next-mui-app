@@ -27,9 +27,7 @@ const CleaveWrapper = styled(Box)(({ theme }) => ({
     },
     '&::placeholder': {
       opacity: 0.42,
-      transition: theme.transitions.create(['transform'], {
-        duration: theme.transitions.duration.shorter
-      })
+      transition: theme.transitions.create(['transform'], { duration: theme.transitions.duration.shorter })
     }
   }
 }))

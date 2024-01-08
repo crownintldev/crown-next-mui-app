@@ -86,14 +86,8 @@ const CardStatsWithAreaChart = props => {
 
   return (
     <Card sx={{ ...sx }}>
-      <CardContent
-        sx={{ pb: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
-      >
-        <CustomAvatar
-          skin='light'
-          color={avatarColor}
-          sx={{ mb: 2.5, width: avatarSize, height: avatarSize }}
-        >
+      <CardContent sx={{ pb: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <CustomAvatar skin='light' color={avatarColor} sx={{ mb: 2.5, width: avatarSize, height: avatarSize }}>
           <Icon icon={avatarIcon} fontSize={avatarIconSize} />
         </CustomAvatar>
         <Typography variant='h5'>{stats}</Typography>

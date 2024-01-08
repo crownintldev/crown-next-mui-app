@@ -21,10 +21,9 @@ const Card = skin => {
       styleOverrides: {
         root: ({ theme }) => ({
           padding: theme.spacing(6),
-          '& + .MuiCardContent-root, & + .MuiCardActions-root, & + .MuiCollapse-root .MuiCardContent-root':
-            {
-              paddingTop: 0
-            },
+          '& + .MuiCardContent-root, & + .MuiCardActions-root, & + .MuiCollapse-root .MuiCardContent-root': {
+            paddingTop: 0
+          },
           '& .MuiCardHeader-subheader': {
             marginTop: theme.spacing(0.5),
             color: theme.palette.text.disabled,

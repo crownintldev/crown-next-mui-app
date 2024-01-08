@@ -163,8 +163,7 @@ const VerticalNavGroup = props => {
         >
           <ListItemButton
             className={clsx({
-              'Mui-selected':
-                groupActive.includes(item.title) || currentActiveGroup.includes(item.title)
+              'Mui-selected': groupActive.includes(item.title) || currentActiveGroup.includes(item.title)
             })}
             sx={{
               py: 2,
@@ -172,10 +171,7 @@ const VerticalNavGroup = props => {
               borderRadius: 1,
               width: theme => `calc(100% - ${theme.spacing(3.5 * 2)})`,
               transition: 'padding-left .25s ease-in-out, padding-right .25s ease-in-out',
-              px:
-                navCollapsed && !navHover
-                  ? (collapsedNavWidth - navigationBorderWidth - 22 - 28) / 8
-                  : 4,
+              px: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 22 - 28) / 8 : 4,
               '&:hover': {
                 backgroundColor: 'action.hover'
               },
@@ -212,12 +208,9 @@ const VerticalNavGroup = props => {
             >
               <UserIcon icon={icon} {...(parent && { fontSize: '0.625rem' })} />
             </ListItemIcon>
-            <MenuItemTextWrapper
-              sx={{ ...menuGroupCollapsedStyles, ...(isSubToSub ? { ml: 2 } : {}) }}
-            >
+            <MenuItemTextWrapper sx={{ ...menuGroupCollapsedStyles, ...(isSubToSub ? { ml: 2 } : {}) }}>
               <Typography
-                {...((themeConfig.menuTextTruncate ||
-                  (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
+                {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
                   noWrap: true
                 })}
               >
@@ -250,10 +243,7 @@ const VerticalNavGroup = props => {
                     }}
                   />
                 ) : null}
-                <Icon
-                  fontSize='1.125rem'
-                  icon={direction === 'ltr' ? 'tabler:chevron-right' : 'tabler:chevron-left'}
-                />
+                <Icon fontSize='1.125rem' icon={direction === 'ltr' ? 'tabler:chevron-right' : 'tabler:chevron-left'} />
               </Box>
             </MenuItemTextWrapper>
           </ListItemButton>

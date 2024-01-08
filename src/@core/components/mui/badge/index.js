@@ -23,9 +23,7 @@ const Badge = props => {
   return (
     <MuiBadge
       {...props}
-      sx={
-        skin === 'light' && color ? Object.assign({ '& .MuiBadge-badge': colors[color] }, sx) : sx
-      }
+      sx={skin === 'light' && color ? Object.assign({ '& .MuiBadge-badge': colors[color] }, sx) : sx}
     />
   )
 }

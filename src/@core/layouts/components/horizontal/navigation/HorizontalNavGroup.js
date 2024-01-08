@@ -83,9 +83,7 @@ const HorizontalNavGroup = props => {
   const router = useRouter()
   const currentURL = router.asPath
   const { skin, direction } = settings
-
-  const { navSubItemIcon, menuTextTruncate, horizontalMenuToggle, horizontalMenuAnimation } =
-    themeConfig
+  const { navSubItemIcon, menuTextTruncate, horizontalMenuToggle, horizontalMenuAnimation } = themeConfig
   const popperOffsetHorizontal = direction === 'rtl' ? 16 : -16
   const popperPlacement = direction === 'rtl' ? 'bottom-end' : 'bottom-start'
   const popperPlacementSubMenu = direction === 'rtl' ? 'left-start' : 'right-start'
@@ -164,12 +162,8 @@ const HorizontalNavGroup = props => {
 
   return (
     <CanViewNavGroup navGroup={item}>
-      {/* @ts-CanViewNavGroupignore */}
-      <MainWrapper
-        {...(WrapperCondition
-          ? { onClickAway: handleGroupClose }
-          : { onMouseLeave: handleGroupClose })}
-      >
+      {/* @ts-ignore */}
+      <MainWrapper {...(WrapperCondition ? { onClickAway: handleGroupClose } : { onMouseLeave: handleGroupClose })}>
         <ChildWrapper>
           <List component='div' sx={{ py: skin === 'bordered' ? 2.625 : 2.75 }}>
             <ListItem
@@ -220,10 +214,7 @@ const HorizontalNavGroup = props => {
                   }}
                 >
                   <ListItemIcon sx={{ mr: 2, color: menuOpen ? 'text.primary' : 'text.secondary' }}>
-                    <UserIcon
-                      icon={icon}
-                      fontSize={icon === navSubItemIcon ? '0.625rem' : '1.375rem'}
-                    />
+                    <UserIcon icon={icon} fontSize={icon === navSubItemIcon ? '0.625rem' : '1.375rem'} />
                   </ListItemIcon>
                   <Typography
                     {...(menuTextTruncate && { noWrap: true })}
@@ -233,11 +224,7 @@ const HorizontalNavGroup = props => {
                   </Typography>
                 </Box>
                 <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    color: menuOpen ? 'text.secondary' : 'text.disabled'
-                  }}
+                  sx={{ display: 'flex', alignItems: 'center', color: menuOpen ? 'text.secondary' : 'text.disabled' }}
                 >
                   {item.badgeContent ? (
                     <Chip
@@ -256,9 +243,7 @@ const HorizontalNavGroup = props => {
                 </Box>
               </Box>
             </ListItem>
-            <AnimationWrapper
-              {...(horizontalMenuAnimation && { in: menuOpen, timeout: { exit: 300, enter: 400 } })}
-            >
+            <AnimationWrapper {...(horizontalMenuAnimation && { in: menuOpen, timeout: { exit: 300, enter: 400 } })}>
               <Box
                 style={styles.popper}
                 ref={setPopperElement}
@@ -268,20 +253,12 @@ const HorizontalNavGroup = props => {
                   ...(!horizontalMenuAnimation && { display: menuOpen ? 'block' : 'none' }),
                   pl: childMenuGroupStyles() === 'left' ? (skin === 'bordered' ? 1.5 : 1.25) : 0,
                   pr: childMenuGroupStyles() === 'right' ? (skin === 'bordered' ? 1.5 : 1.25) : 0,
-                  ...(hasParent
-                    ? { position: 'fixed !important' }
-                    : { pt: skin === 'bordered' ? 5.25 : 5.5 })
+                  ...(hasParent ? { position: 'fixed !important' } : { pt: skin === 'bordered' ? 5.25 : 5.5 })
                 }}
               >
                 <NavigationMenu
                   sx={{
-                    ...(hasParent
-                      ? {
-                          overflowY: 'auto',
-                          overflowX: 'visible',
-                          maxHeight: 'calc(100vh - 21rem)'
-                        }
-                      : {}),
+                    ...(hasParent ? { overflowY: 'auto', overflowX: 'visible', maxHeight: 'calc(100vh - 21rem)' } : {}),
                     ...(skin === 'bordered'
                       ? { boxShadow: 0, border: `1px solid ${theme.palette.divider}` }
                       : { boxShadow: 6 })

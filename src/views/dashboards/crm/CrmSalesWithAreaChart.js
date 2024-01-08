@@ -82,15 +82,7 @@ const CrmSalesWithAreaChart = () => {
       </CardContent>
       <ReactApexcharts type='area' height={96} series={series} options={options} />
       <CardContent sx={{ pt: 0 }}>
-        <Box
-          sx={{
-            gap: 2,
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
+        <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography variant='h4'>175k</Typography>
           <Typography variant='body2' sx={{ color: 'error.main' }}>
             -17.3%

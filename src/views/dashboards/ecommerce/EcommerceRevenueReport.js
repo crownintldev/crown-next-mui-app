@@ -25,11 +25,7 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 // ** Util Import
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
-const yearOptions = [
-  new Date().getFullYear() - 1,
-  new Date().getFullYear() - 2,
-  new Date().getFullYear() - 3
-]
+const yearOptions = [new Date().getFullYear() - 1, new Date().getFullYear() - 2, new Date().getFullYear() - 3]
 
 const barSeries = [
   { name: 'Earning', data: [252, 203, 152, 173, 235, 299, 235, 252, 106] },
@@ -289,14 +285,8 @@ const EcommerceRevenueReport = () => {
               anchorEl={anchorEl}
               onClose={handleClose}
               open={Boolean(anchorEl)}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: direction === 'ltr' ? 'right' : 'left'
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: direction === 'ltr' ? 'right' : 'left'
-              }}
+              anchorOrigin={{ vertical: 'bottom', horizontal: direction === 'ltr' ? 'right' : 'left' }}
+              transformOrigin={{ vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left' }}
             >
               {yearOptions.map(year => (
                 <MenuItem key={year} onClick={handleClose}>
@@ -306,14 +296,7 @@ const EcommerceRevenueReport = () => {
             </Menu>
             <Typography variant='h3'>$25,825</Typography>
             <Box
-              sx={{
-                mb: 8,
-                gap: 1,
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              sx={{ mb: 8, gap: 1, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}
             >
               <Typography variant='h6'>Budget:</Typography>
               <Typography sx={{ color: 'text.secondary' }}>56,800</Typography>

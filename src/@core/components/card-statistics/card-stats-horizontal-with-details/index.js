@@ -28,24 +28,17 @@ const CardStatsHorizontalWithDetails = props => {
       <CardContent sx={{ gap: 3, display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Typography sx={{ mb: 1, color: 'text.secondary' }}>{title}</Typography>
-          <Box
-            sx={{ mb: 1, columnGap: 1.5, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}
-          >
-            <Typography variant='h4'>{stats?stats :0}</Typography>
-            {/* <Typography
+          <Box sx={{ mb: 1, columnGap: 1.5, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Typography variant='h4'>{stats}</Typography>
+            <Typography
               sx={{ color: trend === 'negative' ? 'error.main' : 'success.main' }}
-            >{`(${trendDiff})%`}</Typography> */}
+            >{`(${trendDiff})%`}</Typography>
           </Box>
           <Typography variant='h6' sx={{ color: 'text.secondary' }}>
             {subtitle}
           </Typography>
         </Box>
-        <CustomAvatar
-          skin='light'
-          variant='rounded'
-          color={avatarColor}
-          sx={{ width: avatarSize, height: avatarSize }}
-        >
+        <CustomAvatar skin='light' variant='rounded' color={avatarColor} sx={{ width: avatarSize, height: avatarSize }}>
           <Icon icon={icon} fontSize={iconSize} />
         </CustomAvatar>
       </CardContent>

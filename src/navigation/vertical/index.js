@@ -1,11 +1,4 @@
-import {
-  accountArrays,
-  automationArray,
-  databaseArray,
-  homeArray,
-  settingsArray,
-  ticketingArrays
-} from './menu'
+import { accountArrays, automationArray, databaseArray, homeArray, settingsArray, ticketingArrays } from './menu'
 
 const navigation = () => {
   return [
@@ -14,7 +7,7 @@ const navigation = () => {
       key: 'home',
       icon: 'iconoir:home',
       path: '/home',
-      activeChildPath: '/dashboards/analytics',
+      activeChildPath: '/',
       children: homeArray()
     },
     {

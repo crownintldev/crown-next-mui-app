@@ -1,1 +1,0 @@
-//footer section  :  src/@core/layout/components/shared-component/footer/FooterContent

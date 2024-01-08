@@ -19,23 +19,20 @@ const GlobalStyles = theme => {
       right: '0 !important',
       left: 'auto !important',
       '&:hover, &:focus, &.ps--clicking': {
-        backgroundColor:
-          theme.palette.mode === 'light' ? '#F1F0F5 !important' : '#393D55 !important'
+        backgroundColor: theme.palette.mode === 'light' ? '#F1F0F5 !important' : '#393D55 !important'
       },
       '& .ps__thumb-y': {
         right: '3px !important',
         left: 'auto !important',
         backgroundColor:
-          theme.palette.mode === 'light'
-            ? 'rgba(93, 89, 108, 0.2) !important'
-            : 'rgba(207, 211, 236, 0.3) !important'
+          theme.palette.mode === 'light' ? 'rgba(93, 89, 108, 0.2) !important' : 'rgba(207, 211, 236, 0.3) !important'
       },
       '.layout-vertical-nav &': {
         '& .ps__thumb-y': {
           width: 4
         },
         '&:hover, &:focus, &.ps--clicking': {
-          backgroundColor: 'transparent!important',
+          backgroundColor: 'transparent !important',
           '& .ps__thumb-y': {
             width: 6
           }

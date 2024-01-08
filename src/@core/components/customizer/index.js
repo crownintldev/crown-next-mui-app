@@ -61,8 +61,7 @@ const ColorBox = styled(Box)(({ theme }) => ({
   cursor: 'pointer',
   margin: theme.spacing(2.5, 1.75, 1.75),
   borderRadius: theme.shape.borderRadius,
-  transition:
-    'margin .25s ease-in-out, width .25s ease-in-out, height .25s ease-in-out, box-shadow .25s ease-in-out',
+  transition: 'margin .25s ease-in-out, width .25s ease-in-out, height .25s ease-in-out, box-shadow .25s ease-in-out',
   '&:hover': {
     boxShadow: theme.shadows[4]
   }
@@ -97,9 +96,9 @@ const Customizer = () => {
 
   return (
     <div className='customizer'>
-      {/* <Toggler className='customizer-toggler' onClick={() => setOpen(true)}>
+      <Toggler className='customizer-toggler' onClick={() => setOpen(true)}>
         <Icon icon='tabler:settings' />
-      </Toggler> */}
+      </Toggler>
       <Drawer open={open} hideBackdrop anchor='right' variant='persistent'>
         <Box
           className='customizer-header'
@@ -220,9 +219,7 @@ const Customizer = () => {
                   onClick={() => handleChange('themeColor', 'info')}
                   sx={{
                     backgroundColor: 'info.main',
-                    ...(themeColor === 'info'
-                      ? { width: 53, height: 53, m: theme => theme.spacing(1.5, 0.75, 0) }
-                      : {})
+                    ...(themeColor === 'info' ? { width: 53, height: 53, m: theme => theme.spacing(1.5, 0.75, 0) } : {})
                   }}
                 />
               </Box>
@@ -346,14 +343,7 @@ const Customizer = () => {
 
             {/* Menu Collapsed */}
             {navHidden || layout === 'horizontal' ? null : (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  mb: 5
-                }}
-              >
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 5 }}>
                 <Typography>Menu Collapsed</Typography>
                 <Switch
                   name='navCollapsed'
@@ -388,9 +378,7 @@ const Customizer = () => {
             </Typography>
 
             {/* RTL */}
-            <Box
-              sx={{ mb: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-            >
+            <Box sx={{ mb: 5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography>RTL</Typography>
               <Switch
                 name='direction'

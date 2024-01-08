@@ -11,18 +11,16 @@ import Translations from 'src/layouts/components/Translations'
 import CanViewNavSectionTitle from 'src/layouts/components/acl/CanViewNavSectionTitle'
 
 // ** Styled Components
-const ListSubheader = styled(props => <MuiListSubheader component='li' {...props} />)(
-  ({ theme }) => ({
-    lineHeight: 1,
-    display: 'flex',
-    position: 'static',
-    marginTop: theme.spacing(3.5),
-    paddingTop: theme.spacing(1.5),
-    backgroundColor: 'transparent',
-    paddingBottom: theme.spacing(1.5),
-    transition: 'padding-left .25s ease-in-out'
-  })
-)
+const ListSubheader = styled(props => <MuiListSubheader component='li' {...props} />)(({ theme }) => ({
+  lineHeight: 1,
+  display: 'flex',
+  position: 'static',
+  marginTop: theme.spacing(3.5),
+  paddingTop: theme.spacing(1.5),
+  backgroundColor: 'transparent',
+  paddingBottom: theme.spacing(1.5),
+  transition: 'padding-left .25s ease-in-out'
+}))
 
 const VerticalNavSectionTitle = props => {
   // ** Props

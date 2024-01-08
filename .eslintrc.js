@@ -23,30 +23,22 @@ module.exports = {
     '@next/next/no-img-element': 'off',
     'react/no-unescaped-entities': 'off',
     'import/no-anonymous-default-export': 'off',
-    'newline-before-return': 'off', // Disabled newline before return
-    'padding-line-between-statements': 'off', // Disabled padding line between statements
-    'import/newline-after-import': [
+
+    // add new line above comment
+    'lines-around-comment': [
       'error',
       {
-        count: 1
+        beforeLineComment: true,
+        beforeBlockComment: true,
+        allowBlockStart: true,
+        allowClassStart: true,
+        allowObjectStart: true,
+        allowArrayStart: true
       }
     ],
 
-    // add new line above comment
-    // 'lines-around-comment': [
-    //   'error',
-    //   {
-    //     beforeLineComment: true,
-    //     beforeBlockComment: true,
-    //     allowBlockStart: true,
-    //     allowClassStart: true,
-    //     allowObjectStart: true,
-    //     allowArrayStart: true
-    //   }
-    // ],
-
     // add new line above return
-    // 'newline-before-return': 'error',
+    'newline-before-return': 'error',
 
     // add new line below import
     'import/newline-after-import': [
@@ -60,11 +52,7 @@ module.exports = {
     'padding-line-between-statements': [
       'error',
       { blankLine: 'always', prev: ['export'], next: ['*'] },
-      {
-        blankLine: 'always',
-        prev: ['*'],
-        next: ['multiline-const', 'multiline-let', 'multiline-var', 'export']
-      }
+      { blankLine: 'always', prev: ['*'], next: ['multiline-const', 'multiline-let', 'multiline-var', 'export'] }
     ]
   }
 }

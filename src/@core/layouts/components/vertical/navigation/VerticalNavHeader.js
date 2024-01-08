@@ -1,5 +1,6 @@
 // ** Next Import
 import Link from 'next/link'
+
 // ** MUI Imports
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
@@ -74,7 +75,7 @@ const VerticalNavHeader = props => {
         userNavMenuBranding(props)
       ) : (
         <LinkStyled href='/'>
-<img src="/images/favicon.svg" alt="Logo" width={40}/>
+          <img src='/images/favicon.svg' alt='Logo' width={40} />
           {/* <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path
               fillRule='evenodd'
@@ -103,10 +104,7 @@ const VerticalNavHeader = props => {
               d='M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z'
             />
           </svg> */}
-          <HeaderTitle
-            variant='h4'
-            sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2.5 }) }}
-          >
+          <HeaderTitle variant='h4' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2.5 }) }}>
             {themeConfig.templateName}
           </HeaderTitle>
         </LinkStyled>

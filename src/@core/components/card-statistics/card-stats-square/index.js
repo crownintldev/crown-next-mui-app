@@ -14,11 +14,7 @@ const CardStatsSquare = props => {
   return (
     <Card sx={{ ...sx }}>
       <CardContent sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <CustomAvatar
-          skin='light'
-          color={avatarColor}
-          sx={{ mb: 2, width: avatarSize, height: avatarSize }}
-        >
+        <CustomAvatar skin='light' color={avatarColor} sx={{ mb: 2, width: avatarSize, height: avatarSize }}>
           <Icon icon={icon} fontSize={iconSize} />
         </CustomAvatar>
         <Typography variant='h5' sx={{ mb: 2 }}>

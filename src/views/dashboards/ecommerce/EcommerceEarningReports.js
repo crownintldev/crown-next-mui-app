@@ -190,32 +190,21 @@ const EcommerceEarningReports = () => {
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      '& svg': {
-                        mr: 1,
-                        color: item.trend === 'negative' ? 'error.main' : 'success.main'
-                      }
+                      '& svg': { mr: 1, color: item.trend === 'negative' ? 'error.main' : 'success.main' }
                     }}
                   >
                     <Icon
                       fontSize='1.25rem'
                       icon={item.trend === 'negative' ? 'tabler:chevron-down' : 'tabler:chevron-up'}
                     />
-                    <Typography
-                      variant='body2'
-                      sx={{ color: 'text.disabled' }}
-                    >{`${item.trendNumber}%`}</Typography>
+                    <Typography variant='body2' sx={{ color: 'text.disabled' }}>{`${item.trendNumber}%`}</Typography>
                   </Box>
                 </Box>
               </Box>
             </Box>
           )
         })}
-        <ReactApexcharts
-          type='bar'
-          height={213}
-          options={options}
-          series={[{ data: [32, 98, 61, 41, 88, 47, 71] }]}
-        />
+        <ReactApexcharts type='bar' height={213} options={options} series={[{ data: [32, 98, 61, 41, 88, 47, 71] }]} />
       </CardContent>
     </Card>
   )

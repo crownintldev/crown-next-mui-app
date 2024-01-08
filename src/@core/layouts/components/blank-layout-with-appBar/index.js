@@ -40,9 +40,7 @@ const BlankLayoutAppBar = () => {
         sx={{
           justifyContent: 'space-between',
           p: theme => `${theme.spacing(0, 6)} !important`,
-          minHeight: `${
-            theme.mixins.toolbar.minHeight - (skin === 'bordered' ? 1 : 0)
-          }px !important`
+          minHeight: `${theme.mixins.toolbar.minHeight - (skin === 'bordered' ? 1 : 0)}px !important`
         }}
       >
         <LinkStyled href='/'>

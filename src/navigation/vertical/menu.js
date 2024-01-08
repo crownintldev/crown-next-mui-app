@@ -1,23 +1,9 @@
 export const homeArray = () => [
   {
-    title: 'Dashboards',
-    icon: 'tabler:smart-home',
-    badgeContent: 'new',
-    badgeColor: 'error',
-    children: [
-      {
-        title: 'Analytics',
-        path: '/dashboards/analytics'
-      },
-      {
-        title: 'CRM',
-        path: '/dashboards/crm'
-      },
-      {
-        title: 'eCommerce',
-        path: '/dashboards/ecommerce'
-      }
-    ]
+    title: 'Home',
+    icon: 'tabler:smart-home'
+    // badgeContent: 'new',
+    // badgeColor: 'error',
   }
 ]
 export const accountArrays = () => [
@@ -177,7 +163,7 @@ export const accountArrays = () => [
   //   icon: 'tabler:calendar',
   //   path: '/apps/calendar'
   // },
-  
+
   // {
   //   sectionTitle: 'Apps & Pages'
   // },

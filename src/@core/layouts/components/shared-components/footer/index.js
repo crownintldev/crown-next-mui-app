@@ -53,9 +53,7 @@ const Footer = props => {
           ...(footer === 'fixed' && {
             ...(contentWidth === 'boxed' &&
               layout === 'vertical' && {
-                '@media (min-width:1440px)': {
-                  maxWidth: theme => `calc(1440px - ${theme.spacing(6)} * 2)`
-                }
+                '@media (min-width:1440px)': { maxWidth: theme => `calc(1440px - ${theme.spacing(6)} * 2)` }
               }),
             ...(layout === 'vertical' && {
               ...(skin === 'bordered'
@@ -65,7 +63,7 @@ const Footer = props => {
           })
         }}
       >
-        {/* {userFooterContent ? userFooterContent(props) : <FooterContent />} */}
+        {userFooterContent ? userFooterContent(props) : <FooterContent />}
       </Box>
     </Box>
   )

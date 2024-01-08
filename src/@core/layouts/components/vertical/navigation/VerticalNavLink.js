@@ -37,13 +37,9 @@ const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
     '&, &:hover': {
       boxShadow: `0px 2px 6px ${hexToRGBA(theme.palette.primary.main, 0.48)}`,
       background: `linear-gradient(72.47deg, ${
-        theme.direction === 'ltr'
-          ? theme.palette.primary.main
-          : hexToRGBA(theme.palette.primary.main, 0.7)
+        theme.direction === 'ltr' ? theme.palette.primary.main : hexToRGBA(theme.palette.primary.main, 0.7)
       } 22.16%, ${
-        theme.direction === 'ltr'
-          ? hexToRGBA(theme.palette.primary.main, 0.7)
-          : theme.palette.primary.main
+        theme.direction === 'ltr' ? hexToRGBA(theme.palette.primary.main, 0.7) : theme.palette.primary.main
       } 76.47%)`,
       '&.Mui-focusVisible': {
         background: `linear-gradient(72.47deg, ${theme.palette.primary.dark} 22.16%, ${hexToRGBA(
@@ -81,16 +77,14 @@ const VerticalNavLink = ({
 }) => {
   // ** Hooks
   const router = useRouter()
-
   let activeAppRoute = extractSegment(router)
-
   // ** Vars
   const { navCollapsed } = settings
   const icon = parent && !item.icon ? themeConfig.navSubItemIcon : item.icon
 
   const isNavLinkActive = () => {
     let route = `${activeAppRoute}${item.path}`
-    if (router.pathname === route || handleURLQueries(router, route)) {
+    if (router.pathname === route || handleURLQueries(router, item.path)) {
       return true
     } else {
       return false
@@ -123,10 +117,7 @@ const VerticalNavLink = ({
           sx={{
             py: 2,
             ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
-            px:
-              navCollapsed && !navHover
-                ? (collapsedNavWidth - navigationBorderWidth - 22 - 28) / 8
-                : 4,
+            px: navCollapsed && !navHover ? (collapsedNavWidth - navigationBorderWidth - 22 - 28) / 8 : 4,
             '& .MuiTypography-root, & svg': {
               color: 'text.secondary'
             }
@@ -154,8 +145,7 @@ const VerticalNavLink = ({
             }}
           >
             <Typography
-              {...((themeConfig.menuTextTruncate ||
-                (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
+              {...((themeConfig.menuTextTruncate || (!themeConfig.menuTextTruncate && navCollapsed && !navHover)) && {
                 noWrap: true
               })}
             >
@@ -166,11 +156,7 @@ const VerticalNavLink = ({
                 size='small'
                 label={item.badgeContent}
                 color={item.badgeColor || 'primary'}
-                sx={{
-                  height: 22,
-                  minWidth: 22,
-                  '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' }
-                }}
+                sx={{ height: 22, minWidth: 22, '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' } }}
               />
             ) : null}
           </MenuItemTextMetaWrapper>

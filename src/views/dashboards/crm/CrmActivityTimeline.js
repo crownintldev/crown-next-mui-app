@@ -148,34 +148,14 @@ const CrmActivityTimeline = () => {
               <Typography variant='body2' sx={{ mb: 2.5 }}>
                 Sent by Mollie Dixon
               </Typography>
-              <Box
-                sx={{
-                  rowGap: 1,
-                  columnGap: 3,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center'
-                }}
-              >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    '& svg': { mr: 2, color: 'warning.main' }
-                  }}
-                >
+              <Box sx={{ rowGap: 1, columnGap: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 2, color: 'warning.main' } }}>
                   <Icon fontSize='1.25rem' icon='tabler:file-text' />
                   <Typography variant='body2' sx={{ fontWeight: 500, color: 'text.primary' }}>
                     App Guidelines
                   </Typography>
                 </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    '& svg': { mr: 2, color: 'success.main' }
-                  }}
-                >
+                <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 2, color: 'success.main' } }}>
                   <Icon fontSize='1.25rem' icon='tabler:table' />
                   <Typography variant='body2' sx={{ fontWeight: 500, color: 'text.primary' }}>
                     Testing Results

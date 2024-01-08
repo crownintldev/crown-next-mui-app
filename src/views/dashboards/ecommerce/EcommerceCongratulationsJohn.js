@@ -27,11 +27,7 @@ const EcommerceCongratulationsJohn = () => {
           $48.9k
         </Typography>
         <Button variant='contained'>View Sales</Button>
-        <Illustration
-          width={116}
-          alt='congratulations john'
-          src='/images/cards/congratulations-john.png'
-        />
+        <Illustration width={116} alt='congratulations john' src='/images/cards/congratulations-john.png' />
       </CardContent>
     </Card>
   )

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Layout Imports
@@ -19,17 +18,14 @@ import HorizontalAppBarContent from './components/horizontal/AppBarContent'
 
 // ** Hook Import
 import { useSettings } from 'src/@core/hooks/useSettings'
-import { Button } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { extractSegment } from 'src/@core/layouts/utils'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
-
   const router = useRouter()
-
   // ** Vars for server side navigation
   // const { menuItems: verticalMenuItems } = ServerSideVerticalNavItems()
   // const { menuItems: horizontalMenuItems } = ServerSideHorizontalNavItems()
@@ -45,7 +41,6 @@ const UserLayout = ({ children, contentHeightFixed }) => {
   if (hidden && settings.layout === 'horizontal') {
     settings.layout = 'vertical'
   }
-
   const DummyArray = [
     {
       title: 'Dashboards',
@@ -68,8 +63,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
       ]
     }
   ]
-  const [navItems, setNavItems] = useState(DummyArray)
-
+  const [navItems, setNavItems] = useState([])
   const renderArray = activeAppRoute => {
     const arr = VerticalNavItems()
     if (activeAppRoute && arr.length > 0) {
@@ -93,6 +87,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
         navApps: VerticalNavItems(),
         navMenu: {
           navItems: navItems
+
           // Uncomment the below line when using server-side menu in vertical layout and comment the above line
           // navItems: verticalMenuItems
         },
@@ -116,20 +111,11 @@ const UserLayout = ({ children, contentHeightFixed }) => {
             // navItems: horizontalMenuItems
           },
           appBar: {
-            content: () => (
-              <HorizontalAppBarContent
-                hidden={hidden}
-                settings={settings}
-                saveSettings={saveSettings}
-              />
-            )
+            content: () => <HorizontalAppBarContent settings={settings} saveSettings={saveSettings} />
           }
         }
       })}
     >
-      {/* <Button variant='text' onClick={() => setClick(!click)}>
-        Text
-      </Button> */}
       {children}
     </Layout>
   )

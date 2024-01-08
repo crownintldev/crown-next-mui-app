@@ -1,7 +1,7 @@
 // ** Next Imports
 import Head from 'next/head'
 import { Router } from 'next/router'
-import { useEffect } from 'react'
+
 // ** Store Imports
 import { store } from 'src/store'
 import { Provider } from 'react-redux'
@@ -13,7 +13,7 @@ import NProgress from 'nprogress'
 import { CacheProvider } from '@emotion/react'
 
 // ** Config Imports
-import 'src/configs/i18n'
+
 import { defaultACLObj } from 'src/configs/acl'
 import themeConfig from 'src/configs/themeConfig'
 
@@ -89,33 +89,22 @@ const App = props => {
   const contentHeightFixed = Component.contentHeightFixed ?? false
 
   const getLayout =
-    Component.getLayout ??
-    (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
+    Component.getLayout ?? (page => <UserLayout contentHeightFixed={contentHeightFixed}>{page}</UserLayout>)
   const setConfig = Component.setConfig ?? undefined
   const authGuard = Component.authGuard ?? true
   const guestGuard = Component.guestGuard ?? false
   const aclAbilities = Component.acl ?? defaultACLObj
 
-  useEffect(() => {
-    // Function to remove background-color property
-    const removeButtonBackgroundColor = () => {
-      const buttons = document.querySelectorAll('button, input[type="button"]')
-      buttons.forEach(button => {
-        button.style.removeProperty('background-color')
-      })
-    }
-
-    // Call the function
-    removeButtonBackgroundColor()
-  }, [])
-
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>{`${themeConfig.templateName} `}</title>
-          <meta name='description' content={`${themeConfig.templateName} `} />
-          <meta name='keywords' content='Travokey' />
+          <title>{`${themeConfig.templateName} - Material Design React Admin Template`}</title>
+          <meta
+            name='description'
+            content={`${themeConfig.templateName} – Material Design React Admin Dashboard Template – is the most developer friendly & highly customizable Admin Dashboard Template based on MUI v5.`}
+          />
+          <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
 
@@ -126,19 +115,12 @@ const App = props => {
                 return (
                   <ThemeComponent settings={settings}>
                     <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                      <AclGuard
-                        aclAbilities={aclAbilities}
-                        guestGuard={guestGuard}
-                        authGuard={authGuard}
-                      >
+                      <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard} authGuard={authGuard}>
                         {getLayout(<Component {...pageProps} />)}
                       </AclGuard>
                     </Guard>
                     <ReactHotToast>
-                      <Toaster
-                        position={settings.toastPosition}
-                        toastOptions={{ className: 'react-hot-toast' }}
-                      />
+                      <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
                     </ReactHotToast>
                   </ThemeComponent>
                 )

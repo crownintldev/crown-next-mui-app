@@ -16,10 +16,9 @@ const Slider = () => {
             '& .MuiSlider-thumb.Mui-active': {
               boxShadow: `0 0 0 10px ${hexToRGBA(theme.palette.primary.main, 0.16)}`
             },
-            '& .MuiSlider-thumbSizeSmall:hover, &.MuiSlider-sizeSmall .MuiSlider-thumb.Mui-focusVisible':
-              {
-                boxShadow: `0 0 0 6px ${hexToRGBA(theme.palette.primary.main, 0.16)}`
-              },
+            '& .MuiSlider-thumbSizeSmall:hover, &.MuiSlider-sizeSmall .MuiSlider-thumb.Mui-focusVisible': {
+              boxShadow: `0 0 0 6px ${hexToRGBA(theme.palette.primary.main, 0.16)}`
+            },
             '& .MuiSlider-thumbSizeSmall.Mui-active': {
               boxShadow: `0 0 0 8px ${hexToRGBA(theme.palette.primary.main, 0.16)} !important`
             }
@@ -28,10 +27,9 @@ const Slider = () => {
             '& .MuiSlider-thumb.Mui-active': {
               boxShadow: `0 0 0 10px ${hexToRGBA(theme.palette.secondary.main, 0.16)}`
             },
-            '& .MuiSlider-thumbSizeSmall:hover, &.MuiSlider-sizeSmall .MuiSlider-thumb.Mui-focusVisible':
-              {
-                boxShadow: `0 0 0 6px ${hexToRGBA(theme.palette.secondary.main, 0.16)}`
-              },
+            '& .MuiSlider-thumbSizeSmall:hover, &.MuiSlider-sizeSmall .MuiSlider-thumb.Mui-focusVisible': {
+              boxShadow: `0 0 0 6px ${hexToRGBA(theme.palette.secondary.main, 0.16)}`
+            },
             '& .MuiSlider-thumbSizeSmall.Mui-active': {
               boxShadow: `0 0 0 8px ${hexToRGBA(theme.palette.secondary.main, 0.16)} !important`
             }

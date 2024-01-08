@@ -8,28 +8,12 @@
 export const handleURLQueries = (router, path) => {
   if (Object.keys(router.query).length && path) {
     const arr = Object.keys(router.query)
-    return (
-      router.asPath.includes(path) && router.asPath.includes(router.query[arr[0]]) && path !== '/'
-    )
+
+    return router.asPath.includes(path) && router.asPath.includes(router.query[arr[0]]) && path !== '/'
   }
 
   return false
 }
-
-// Updated handleURLQueries to handle an array of paths
-export const handleURLQueriess = (router, paths) => {
-  if (Object.keys(router.query).length && paths.length) {
-    const queryKey = Object.keys(router.query)[0]
-    return paths.some(
-      path =>
-        router.asPath.includes(path) &&
-        router.asPath.includes(router.query[queryKey]) &&
-        path !== '/'
-    )
-  }
-  return false
-}
-
 export const extractSegment = (router, sliceIndex) => {
   const pathSegments = router.pathname.split('/')
 
@@ -45,7 +29,6 @@ export const extractSegment = (router, sliceIndex) => {
  * @param item
  * @param currentURL
  */
-
 export const hasActiveChild = (item, currentURL) => {
   const { children } = item
   if (!children) {

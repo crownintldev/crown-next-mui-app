@@ -13,11 +13,7 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
 const series = [
-  {
-    data: [
-      2000, 2000, 4000, 4000, 3050, 3050, 2050, 2050, 3050, 3050, 4700, 4700, 2750, 2750, 5700, 5700
-    ]
-  }
+  { data: [2000, 2000, 4000, 4000, 3050, 3050, 2050, 2050, 3050, 3050, 4700, 4700, 2750, 2750, 5700, 5700] }
 ]
 
 const data = [
@@ -110,12 +106,7 @@ const CrmProjectStatus = () => {
       />
       <CardContent sx={{ pb: 0 }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <CustomAvatar
-            skin='light'
-            color='warning'
-            variant='rounded'
-            sx={{ mr: 3, width: 34, height: 34 }}
-          >
+          <CustomAvatar skin='light' color='warning' variant='rounded' sx={{ mr: 3, width: 34, height: 34 }}>
             <Icon icon='tabler:currency-dollar' />
           </CustomAvatar>
           <Box
@@ -155,12 +146,7 @@ const CrmProjectStatus = () => {
             <Typography variant='h6'>{item.title}</Typography>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography sx={{ mr: 4, color: 'text.secondary' }}>{item.amount}</Typography>
-              <Typography
-                sx={{
-                  fontWeight: 500,
-                  color: `${item.trend === 'negative' ? 'error' : 'success'}.main`
-                }}
-              >
+              <Typography sx={{ fontWeight: 500, color: `${item.trend === 'negative' ? 'error' : 'success'}.main` }}>
                 {`${item.trend === 'negative' ? '-' : '+'}${item.trendDiff}`}
               </Typography>
             </Box>

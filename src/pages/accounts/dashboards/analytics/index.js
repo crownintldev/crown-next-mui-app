@@ -22,13 +22,13 @@ const AnalyticsDashboard = () => {
     <ApexChartWrapper>
       <KeenSliderWrapper>
         <Grid container spacing={6}>
-          {/* <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={6}>
             <AnalyticsWebsiteAnalyticsSlider />
-          </Grid> */}
-          {/* <Grid item xs={12} sm={6} lg={3}>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
             <AnalyticsOrderVisits />
-          </Grid> */}
-          {/* <Grid item xs={12} sm={6} lg={3}>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={3}>
             <CardStatsWithAreaChart
               stats='97.5k'
               chartColor='success'
@@ -37,7 +37,7 @@ const AnalyticsDashboard = () => {
               avatarIcon='tabler:credit-card'
               chartSeries={[{ data: [6, 35, 25, 61, 32, 84, 70] }]}
             />
-          </Grid> */}
+          </Grid>
           <Grid item xs={12} md={6}>
             <AnalyticsEarningReports />
           </Grid>

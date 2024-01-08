@@ -3,7 +3,6 @@ import { useContext } from 'react'
 
 // ** Component Imports
 import { AbilityContext } from 'src/layouts/components/acl/Can'
-import AbilityProvider from './AbilityProvider'
 
 const CanViewNavSectionTitle = props => {
   // ** Props
@@ -14,7 +13,7 @@ const CanViewNavSectionTitle = props => {
   if (navTitle && navTitle.auth === false) {
     return <>{children}</>
   } else {
-    return ability && AbilityProvider(navTitle, 'CanViewNavSectionTitle') ? <>{children}</> : null
+    return ability && ability.can(navTitle?.action, navTitle?.subject) ? <>{children}</> : null
   }
 }
 

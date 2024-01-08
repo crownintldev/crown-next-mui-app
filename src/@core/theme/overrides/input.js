@@ -50,10 +50,9 @@ const input = () => {
           '&:not(.MuiInputBase-sizeSmall)': {
             borderRadius: 8
           },
-          '&:hover:not(.Mui-focused):not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline':
-            {
-              borderColor: `rgba(${theme.palette.customColors.main}, 0.28)`
-            },
+          '&:hover:not(.Mui-focused):not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
+            borderColor: `rgba(${theme.palette.customColors.main}, 0.28)`
+          },
           '&:hover.Mui-error .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.error.main
           },

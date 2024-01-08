@@ -72,18 +72,11 @@ const renderTabs = (value, theme) => {
             <RenderAvatar
               variant='rounded'
               {...(item.type === value && { skin: 'light' })}
-              sx={{
-                mb: 2,
-                width: 34,
-                height: 34,
-                ...(item.type !== value && { backgroundColor: 'action.selected' })
-              }}
+              sx={{ mb: 2, width: 34, height: 34, ...(item.type !== value && { backgroundColor: 'action.selected' }) }}
             >
               <Icon icon={item.avatarIcon} />
             </RenderAvatar>
-            <Typography
-              sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}
-            >
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary', textTransform: 'capitalize' }}>
               {item.type}
             </Typography>
           </Box>
@@ -97,19 +90,11 @@ const renderTabPanels = (value, theme, options, colors) => {
   return tabData.map((item, index) => {
     const max = Math.max(...item.series[0].data)
     const seriesIndex = item.series[0].data.indexOf(max)
-
-    const finalColors = colors.map((color, i) =>
-      seriesIndex === i ? hexToRGBA(theme.palette.primary.main, 1) : color
-    )
+    const finalColors = colors.map((color, i) => (seriesIndex === i ? hexToRGBA(theme.palette.primary.main, 1) : color))
 
     return (
       <TabPanel key={index} value={item.type}>
-        <ReactApexcharts
-          type='bar'
-          height={263}
-          options={{ ...options, colors: finalColors }}
-          series={item.series}
-        />
+        <ReactApexcharts type='bar' height={263} options={{ ...options, colors: finalColors }} series={item.series} />
       </TabPanel>
     )
   })
@@ -230,12 +215,7 @@ const CrmEarningReportsWithTabs = () => {
             sx={{
               border: '0 !important',
               '& .MuiTabs-indicator': { display: 'none' },
-              '& .MuiTab-root': {
-                p: 0,
-                minWidth: 0,
-                borderRadius: '10px',
-                '&:not(:last-child)': { mr: 4 }
-              }
+              '& .MuiTab-root': { p: 0, minWidth: 0, borderRadius: '10px', '&:not(:last-child)': { mr: 4 } }
             }}
           >
             {renderTabs(value, theme)}
@@ -255,10 +235,7 @@ const CrmEarningReportsWithTabs = () => {
                     border: `1px dashed ${theme.palette.divider}`
                   }}
                 >
-                  <Avatar
-                    variant='rounded'
-                    sx={{ width: 34, height: 34, backgroundColor: 'action.selected' }}
-                  >
+                  <Avatar variant='rounded' sx={{ width: 34, height: 34, backgroundColor: 'action.selected' }}>
                     <Icon icon='tabler:plus' />
                   </Avatar>
                 </Box>

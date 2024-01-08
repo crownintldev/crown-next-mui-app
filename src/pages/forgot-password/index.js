@@ -125,9 +125,7 @@ const ForgotPassword = () => {
               />
             </svg>
             <Box sx={{ my: 6 }}>
-              <Typography
-                sx={{ mb: 1.5, fontWeight: 500, fontSize: '1.625rem', lineHeight: 1.385 }}
-              >
+              <Typography sx={{ mb: 1.5, fontWeight: 500, fontSize: '1.625rem', lineHeight: 1.385 }}>
                 Forgot Password? 🔒
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
@@ -135,24 +133,11 @@ const ForgotPassword = () => {
               </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-              <CustomTextField
-                fullWidth
-                autoFocus
-                type='email'
-                label='Email'
-                sx={{ display: 'flex', mb: 4 }}
-              />
+              <CustomTextField fullWidth autoFocus type='email' label='Email' sx={{ display: 'flex', mb: 4 }} />
               <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
                 Send reset link
               </Button>
-              <Typography
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  '& svg': { mr: 1 }
-                }}
-              >
+              <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', '& svg': { mr: 1 } }}>
                 <LinkStyled href='/login'>
                   <Icon fontSize='1.25rem' icon='tabler:chevron-left' />
                   <span>Back to login</span>

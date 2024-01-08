@@ -46,15 +46,7 @@ const ContentWrapper = styled('main')(({ theme }) => ({
 
 const VerticalLayout = props => {
   // ** Props
-  const {
-    hidden,
-    settings,
-    children,
-    scrollToTop,
-    footerProps,
-    contentHeightFixed,
-    verticalLayoutProps
-  } = props
+  const { hidden, settings, children, scrollToTop, footerProps, contentHeightFixed, verticalLayoutProps } = props
 
   // ** Vars
   const { skin, navHidden, contentWidth } = settings
@@ -73,7 +65,6 @@ const VerticalLayout = props => {
     <>
       <VerticalLayoutWrapper className='layout-wrapper'>
         {/* Navigation Menu */}
-
         {navHidden && !(navHidden && settings.lastLayout === 'horizontal') ? null : (
           <>
             <AppsMenu

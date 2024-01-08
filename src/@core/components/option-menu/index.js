@@ -94,9 +94,7 @@ const OptionsMenu = props => {
                 {...(option.href && { sx: { p: 0 } })}
                 onClick={e => {
                   handleClose()
-                  option.menuItemProps && option.menuItemProps.onClick
-                    ? option.menuItemProps.onClick(e)
-                    : null
+                  option.menuItemProps && option.menuItemProps.onClick ? option.menuItemProps.onClick(e) : null
                 }}
               >
                 <MenuItemWrapper option={option}>

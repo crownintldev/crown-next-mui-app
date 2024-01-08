@@ -18,10 +18,9 @@ const CalendarWrapper = styled(Box)(({ theme }) => {
     borderRadius: theme.shape.borderRadius,
     '& .fc': {
       zIndex: 1,
-      '.fc-col-header, .fc-daygrid-body, .fc-scrollgrid-sync-table, .fc-timegrid-body, .fc-timegrid-body table':
-        {
-          width: '100% !important'
-        },
+      '.fc-col-header, .fc-daygrid-body, .fc-scrollgrid-sync-table, .fc-timegrid-body, .fc-timegrid-body table': {
+        width: '100% !important'
+      },
 
       // ** Toolbar
       '& .fc-toolbar': {
@@ -103,21 +102,20 @@ const CalendarWrapper = styled(Box)(({ theme }) => {
               marginLeft: 0
             }
           },
-          '.fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button, & .fc-listMonth-button':
-            {
-              padding: theme.spacing(2.2, 6),
-              '&:last-of-type, &:first-of-type': {
-                borderRadius: theme.shape.borderRadius
-              },
-              '&:first-of-type': {
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0
-              },
-              '&:last-of-type': {
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0
-              }
+          '.fc-dayGridMonth-button, .fc-timeGridWeek-button, .fc-timeGridDay-button, & .fc-listMonth-button': {
+            padding: theme.spacing(2.2, 6),
+            '&:last-of-type, &:first-of-type': {
+              borderRadius: theme.shape.borderRadius
+            },
+            '&:first-of-type': {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0
+            },
+            '&:last-of-type': {
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0
             }
+          }
         },
         '& > * > :not(:first-of-type)': {
           marginLeft: 0

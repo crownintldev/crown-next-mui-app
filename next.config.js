@@ -6,9 +6,6 @@ const path = require('path')
 // Remove this if you're not using Fullcalendar features
 
 module.exports = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   trailingSlash: true,
   reactStrictMode: false,
   webpack: config => {

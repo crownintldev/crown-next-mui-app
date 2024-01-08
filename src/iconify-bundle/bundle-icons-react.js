@@ -14,13 +14,7 @@ const { promises: fs } = require('fs')
 const { dirname } = require('path')
 
 // Installation: npm install --save-dev @iconify/tools @iconify/utils @iconify/json @iconify/iconify
-const {
-  importDirectory,
-  cleanupSVG,
-  parseColors,
-  isEmptyColor,
-  runSVGO
-} = require('@iconify/tools')
+const { importDirectory, cleanupSVG, parseColors, isEmptyColor, runSVGO } = require('@iconify/tools')
 const { getIcons, stringToIcon, minifyIconSet } = require('@iconify/utils')
 
 /* eslint-enable */
@@ -31,7 +25,7 @@ const sources = {
 
     // Custom file with only few icons
 
-    /* 
+/* 
      {
       filename: require.resolve('@iconify/json/json/line-md.json'),
       icons: ['home-twotone-alt', 'github', 'document-list', 'document-code', 'image-twotone']
@@ -39,27 +33,18 @@ const sources = {
  */
     {
       filename: require.resolve('@iconify/json/json/mdi.json'),
-      icons: [
-        'star',
-        'heart',
-        'circle',
-        'github',
-        'google',
-        'twitter',
-        'facebook',
-        'star-outline',
-        'heart-outline'
-      ]
+      icons: ['star', 'heart', 'circle', 'github', 'google', 'twitter', 'facebook', 'star-outline', 'heart-outline']
     }
 
     // Custom JSON file
     // 'json/gg.json'
   ],
 
-  /* 
+/* 
    icons: ['bx:basket', 'bi:airplane-engines', 'uit:adobe-alt', 'fa6-regular:comment', 'twemoji:auto-rickshaw'],
 */
   svg: [
+
     /*
         {
             dir: 'src/iconify-bundle/svg',
@@ -142,10 +127,7 @@ const target = 'src/iconify-bundle/icons-bundle-react.js'
       for (const key in content) {
         if (key === 'prefix' && content.prefix === 'tabler') {
           for (const key in content.icons) {
-            content.icons[key].body = content.icons[key].body.replace(
-              /stroke-width="2"/g,
-              'stroke-width="1.5"'
-            )
+            content.icons[key].body = content.icons[key].body.replace(/stroke-width="2"/g, 'stroke-width="1.5"')
           }
         }
       }

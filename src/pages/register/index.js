@@ -3,10 +3,7 @@ import { useState } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
-// ** Third Party Imports
-import * as yup from 'yup'
-import { useForm, Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+
 // ** MUI Components
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
@@ -33,7 +30,6 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
-import { useAuth } from 'src/hooks/useAuth'
 
 // ** Styled Components
 const RegisterIllustration = styled('img')(({ theme }) => ({
@@ -78,75 +74,15 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const Register = () => {
   // ** States
   const [showPassword, setShowPassword] = useState(false)
-  const schema = yup.object().shape({
-    fullName: yup.string().required('Full name is required'),
-    email: yup.string().email('Enter a valid email').required('Email is required'),
-    phoneNumber: yup
-      .string()
-      .min(10, 'Phone number should be at least 10 digits')
-      .required('Phone number is required'),
-    password: yup
-      .string()
-      .min(5, 'Password should be at least 5 characters')
-      .required('Password is required'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password'), null], 'Passwords must match')
-      .required('Confirm Password is required')
-  })
-  const defaultValues = {
-    fullName: '',
-    password: '',
-    phoneNumber: '',
-    email: ''
-  }
+
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
-  const {
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    clearErrors
-  } = useForm({
-    defaultValues,
-    mode: 'onSubmit', // or 'onChange' or 'onSubmit'
-    resolver: yupResolver(schema)
-  })
+
   // ** Vars
   const { skin } = settings
-  const auth = useAuth()
-
-  const imageSource =
-    skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
-  const onSubmit = data => {
-    data['role'] = 'admin'
-
-    const { fullName, email, password, role, phoneNumber } = data
-    auth.register({ fullName, email, password, role, phoneNumber }, err => {
-      if (err && err.response) {
-        toast.error(`Error occurred`, {
-          duration: 2000
-        })
-        if (
-          err.response.data &&
-          err.response.data.status === 'ERROR' &&
-          err.response.status === 401
-        ) {
-          toast.error(`${err.response.data.message}`, {
-            duration: 4000
-          })
-          // setError('email', {
-          //   type: 'manual',
-          //   message: 'Email or Password is invalid '
-          // })
-        }
-      }
-    })
-  }
+  const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
   return (
     <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
@@ -181,7 +117,7 @@ const Register = () => {
           }}
         >
           <Box sx={{ width: '100%', maxWidth: 400 }}>
-            {/* <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
+            <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
                 fillRule='evenodd'
                 clipRule='evenodd'
@@ -208,171 +144,42 @@ const Register = () => {
                 fill={theme.palette.primary.main}
                 d='M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z'
               />
-            </svg> */}
+            </svg>
             <Box sx={{ my: 6 }}>
               <Typography variant='h3' sx={{ mb: 1.5 }}>
-                Register yourself on Travokey 🚀
+                Adventure starts here 🚀
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>
-                Make your app management easy and fun!
-              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Make your app management easy and fun!</Typography>
             </Box>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-              <Box sx={{ mb: 4 }}>
-                <Controller
-                  disabled={auth.spinner}
-                  name='fullName'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <CustomTextField
-                      fullWidth
-                      label='Username'
-                      disabled={auth.spinner}
-                      value={value}
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      placeholder='Enter your fullname'
-                      error={Boolean(errors.fullName)}
-                      {...(errors.fullName && { helperText: errors.fullName.message })}
-                    />
-                  )}
-                />
-              </Box>
-              <Box sx={{ mb: 4 }}>
-                <Controller
-                  disabled={auth.spinner}
-                  name='email'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <CustomTextField
-                      fullWidth
-                      label='Email'
-                      disabled={auth.spinner}
-                      value={value}
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      placeholder='Enter your email'
-                      error={Boolean(errors.email)}
-                      {...(errors.email && { helperText: errors.email.message })}
-                    />
-                  )}
-                />
-              </Box>
-              <Box sx={{ mb: 4 }}>
-                <Controller
-                  name='phoneNumber'
-                  disabled={auth.spinner}
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <CustomTextField
-                      fullWidth
-                      disabled={auth.spinner}
-                      label='Phone Number'
-                      value={value}
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      placeholder='Enter your phone number'
-                      error={Boolean(errors.phoneNumber)}
-                      {...(errors.phoneNumber && { helperText: errors.phoneNumber.message })}
-                    />
-                  )}
-                />
-              </Box>
-              <Box sx={{ mb: 4 }}>
-                <Controller
-                  name='password'
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <CustomTextField
-                      disabled={auth.spinner}
-                      fullWidth
-                      label='Password'
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder='Enter your password'
-                      error={Boolean(errors.password)}
-                      helperText={errors.password?.message}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position='end'>
-                            <IconButton
-                              edge='end'
-                              onMouseDown={e => e.preventDefault()}
-                              onClick={() => setShowPassword(!showPassword)}
-                            >
-                              <Icon
-                                fontSize='1.25rem'
-                                icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
-                              />
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-              <Box sx={{ mb: 4 }}>
-                <Controller
-                  name='confirmPassword'
-                  control={control}
-                  render={({ field }) => (
-                    <CustomTextField
-                      disabled={auth.spinner}
-                      fullWidth
-                      label='Confirm Password'
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder='Confirm your password'
-                      error={Boolean(errors.confirmPassword)}
-                      helperText={errors.confirmPassword?.message}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position='end'>
-                            <IconButton
-                              edge='end'
-                              onMouseDown={e => e.preventDefault()}
-                              onClick={() => setShowPassword(!showPassword)}
-                            >
-                              <Icon
-                                fontSize='1.25rem'
-                                icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
-                              />
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-              <FormControlLabel
-                control={<Checkbox disabled={auth.spinner} />}
-                sx={{
-                  mb: 4,
-                  mt: 1.5,
-                  '& .MuiFormControlLabel-label': { fontSize: theme.typography.body2.fontSize }
+            <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
+              <CustomTextField autoFocus fullWidth sx={{ mb: 4 }} label='Username' placeholder='johndoe' />
+              <CustomTextField fullWidth label='Email' sx={{ mb: 4 }} placeholder='user@email.com' />
+              <CustomTextField
+                fullWidth
+                label='Password'
+                id='auth-login-v2-password'
+                type={showPassword ? 'text' : 'password'}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        edge='end'
+                        onMouseDown={e => e.preventDefault()}
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        <Icon fontSize='1.25rem' icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
+                      </IconButton>
+                    </InputAdornment>
+                  )
                 }}
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                sx={{ mb: 4, mt: 1.5, '& .MuiFormControlLabel-label': { fontSize: theme.typography.body2.fontSize } }}
                 label={
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                      justifyContent: 'center'
-                    }}
-                  >
+                  <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <Typography sx={{ color: 'text.secondary' }}>I agree to</Typography>
-                    <Typography
-                      component={LinkStyled}
-                      href='/'
-                      onClick={e => e.preventDefault()}
-                      sx={{ ml: 1 }}
-                    >
+                    <Typography component={LinkStyled} href='/' onClick={e => e.preventDefault()} sx={{ ml: 1 }}>
                       privacy policy & terms
                     </Typography>
                   </Box>
@@ -381,18 +188,9 @@ const Register = () => {
               <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
                 Sign up
               </Button>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center'
-                }}
-              >
-                <Typography sx={{ color: 'text.secondary', mr: 2 }}>
-                  Already have an account?
-                </Typography>
-                <Typography component={LinkStyled} href={auth.spinner ? '' : '/login'}>
+              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <Typography sx={{ color: 'text.secondary', mr: 2 }}>Already have an account?</Typography>
+                <Typography component={LinkStyled} href='/login'>
                   Sign in instead
                 </Typography>
               </Box>
@@ -407,20 +205,10 @@ const Register = () => {
                 or
               </Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#497ce2' }}
-                  onClick={e => e.preventDefault()}
-                >
+                <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:facebook' />
                 </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#1da1f2' }}
-                  onClick={e => e.preventDefault()}
-                >
+                <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:twitter' />
                 </IconButton>
                 <IconButton
@@ -431,12 +219,7 @@ const Register = () => {
                 >
                   <Icon icon='mdi:github' />
                 </IconButton>
-                <IconButton
-                  href='/'
-                  component={Link}
-                  sx={{ color: '#db4437' }}
-                  onClick={e => e.preventDefault()}
-                >
+                <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
                   <Icon icon='mdi:google' />
                 </IconButton>
               </Box>

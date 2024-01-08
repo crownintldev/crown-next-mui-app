@@ -77,9 +77,7 @@ const TextFieldStyled = styled(TextField)(({ theme }) => ({
       padding: '7.5px 13px'
     },
     '&:not(.MuiInputBase-readOnly):not([readonly])::placeholder': {
-      transition: theme.transitions.create(['opacity', 'transform'], {
-        duration: theme.transitions.duration.shorter
-      })
+      transition: theme.transitions.create(['opacity', 'transform'], { duration: theme.transitions.duration.shorter })
     },
 
     // ** For Autocomplete
@@ -159,18 +157,14 @@ const TextFieldStyled = styled(TextField)(({ theme }) => ({
 
 const CustomTextField = forwardRef((props, ref) => {
   // ** Props
-  const { size = 'small',required=false, disabled, inputName, InputLabelProps, ...rest } = props
+  const { size = 'small', InputLabelProps, ...rest } = props
 
   return (
     <TextFieldStyled
-      name={inputName}
       size={size}
-      autoComplete="off"
-      disabled={disabled}
       inputRef={ref}
       {...rest}
       variant='filled'
-      required={required}
       InputLabelProps={{ ...InputLabelProps, shrink: true }}
     />
   )

@@ -6,44 +6,55 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein }
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
-]
+import { useSelector } from 'react-redux'
 
 const AddCardItemSelect = () => {
+  const invoiceDataArray = useSelector(state => state.myInvoice.data)
+  console.log('invoice ary data', invoiceDataArray)
+  const { visaBookingIds } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
+  console.log('visa IDs', visaBookingIds)
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table sx={{ minWidth: 650 }} aria-label='invoice table'>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align='right'>Calories</TableCell>
-            <TableCell align='right'>Fat&nbsp;(g)</TableCell>
-            <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
-            <TableCell align='right'>Protein&nbsp;(g)</TableCell>
+            <TableCell align='right'>Passport Number</TableCell>
+            <TableCell align='right'>Given Name</TableCell>
+            <TableCell align='right'>Status</TableCell>
+            <TableCell align='right'>Visa Category</TableCell>
+            <TableCell align='right'>Visa Confirmation / Processing</TableCell>
+            <TableCell align='right'>Visa Destination</TableCell>
+            <TableCell align='right'>Visa Duration</TableCell>
+            <TableCell align='right'>Visa Type</TableCell>
+            {/* Add more headers as needed */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component='th' scope='row'>
-                {row.name}
-              </TableCell>
-              <TableCell align='right'>{row.calories}</TableCell>
-              <TableCell align='right'>{row.fat}</TableCell>
-              <TableCell align='right'>{row.carbs}</TableCell>
-              <TableCell align='right'>{row.protein}</TableCell>
+          {visaBookingIds ? (
+            visaBookingIds.map((invoice, index) => (
+              <TableRow key={index}>
+                <TableCell align='right'>{invoice.passportId.passportNumber}</TableCell>
+                <TableCell align='right'>{invoice.passportId.givenName}</TableCell>
+                <TableCell align='right'>{invoice.status}</TableCell>
+                <TableCell align='right'>{invoice.visaId.category}</TableCell>
+                {invoice.visaId.confirmed && (
+                  <TableCell align='right'>{invoice.visaId.confirmed.totalFee}</TableCell>
+                )}
+                {invoice.visaId.processing && (
+                  <>
+                    <TableCell align='right'>{invoice.visaId.processing.processingFee}</TableCell>
+                    <TableCell align='right'>{invoice.visaId.processing.visaFee}</TableCell>
+                  </>
+                )}
+                <TableCell align='right'>{invoice.visaId.category}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell align='center'>No Invoice Data Created ...</TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </TableContainer>

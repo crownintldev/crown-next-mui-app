@@ -18,10 +18,10 @@ export const useTableColumns = () =>
       },
       { accessorKey: 'by.phone', header: 'Refer Phone #' },
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
-      { accessorKey: 'fee.paid', header: 'Paid Fee', size: 100 },
-      { accessorKey: 'fee.remaining', header: 'Remaining Fee', size: 100 },
-      { accessorKey: 'fee.total', header: 'Total Fee', size: 100 },
-      { accessorKey: 'fee.discount', header: 'Discount', size: 100 },
+      { accessorKey: 'amount.paid', header: 'Paid Amount', size: 100 },
+      { accessorKey: 'amount.remaining', header: 'Remaining Amount', size: 100 },
+      { accessorKey: 'amount.total', header: 'Total Amount', size: 100 },
+      { accessorKey: 'amount.discount', header: 'Discount', size: 100 },
       { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
     ],
     []

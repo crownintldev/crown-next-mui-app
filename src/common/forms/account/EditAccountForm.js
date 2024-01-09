@@ -57,34 +57,34 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   accountIds: [],
-  paid: '',
-  total: '',
-  discount: ''
+  paid: 0,
+  total: 0,
+  discount: 0
 }
 
 // ------------------visaBooking Form-----------------------
-const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
+const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   const theme = useTheme()
   // ** State
   const dispatch = useDispatch()
   const accountItems = useSelector(state =>
     ids
-      .map(id => state.account.data.length>0 && state.account.data.find(item => item._id === id))
+      .map(id => state.account.data.length > 0 && state.account.data.find(item => item._id === id))
       .map(item => {
         return {
           visaBookingDetails: item?.visaBookingIds?.map(visaBooking => ({
             passportNumber: visaBooking.passportId?.passportNumber,
             givenName: visaBooking.passportId?.givenName
           })),
-          fee: item?.fee,
+          amount: item?.amount,
           _id: item?._id,
-          ReferName:item?.by?.fullName ? item?.by?.fullName : item?.by?.companyName,
+          ReferName: item?.by?.fullName ? item?.by?.fullName : item?.by?.companyName,
           onModel: item?.onModel
         }
       })
   )
   const testValidityRefer = isAllSameinArray(accountItems, 'ReferName')
-  // console.log(accountItems)
+  // console.log('account item', accountItems)
 
   const {
     reset,
@@ -99,47 +99,39 @@ const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
-  const [discount, setDiscount] = useState(false)
-  // const [feeRemaining, setFeeRemaining] = useState(0)
 
-  const [fee, setFee] = useState({
+  const [amount, setAmount] = useState({
     total: 0,
     paid: 0
   })
-  const { total, paid } = fee
 
-  const handleFeeChange = event => {
+  const handleAmountChange = event => {
     const { name, value: newValue } = event.target
-    setFee({ ...fee, [name]: newValue })
+    setAmount({ ...amount, [name]: newValue })
   }
-  const totalFee = watch('total')
-  const paidFee = watch('paid')
-  const discountFee = watch('discount')
+  const totalAmount = Number(watch('total'))
+  const paidAmount = Number(watch('paid'))
+  const discountAmount = watch('discount') ? Number(watch('discount')) : 0
 
-  const feeRemaining = totalFee - (paidFee + discountFee)
+  const amountRemaining = totalAmount - (paidAmount + discountAmount)
 
-  // useEffect(() => {
-  //   if (total !== undefined && paid !== undefined) {
-  //     setFeeRemaining(Number(total) - Number(paid))
-  //   }
-  // }, [fee, total, paid])
-
+  console.log('reming data', paidAmount, discountAmount, typeof paidAmount, typeof discountAmount)
   useEffect(() => {
     if (ids.length > 0) {
       setValue('accountIds', ids)
       const data = accountItems.reduce(
         (acc, item) => {
-          acc.totalFee += item.fee.total
-          acc.paidFee += item.fee.paid
-          acc.discount += item.fee.discount
+          acc.totalAmount += item.amount.total
+          acc.paidAmount += item.amount.paid
+          acc.discount += item.amount.discount
           return acc
         },
-        { totalFee: 0, paidFee: 0, remainingFee: 0, discount: 0 }
+        { totalAmount: 0, paidAmount: 0, remainingAmount: 0, discount: 0 }
       )
 
-      setValue('paid', data.paidFee)
-      setValue('total', data.totalFee)
-      setValue('remaining', data.remainingFee)
+      console.log('data', data)
+      setValue('paid', data.paidAmount)
+      setValue('total', data.totalAmount)
       setValue('discount', data.discount)
     }
   }, [ids, setValue])
@@ -212,7 +204,9 @@ const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
                 </MenuItem>
                 {accountItems.map((item, index) => (
                   <MenuItem key={index} value={`${item._id}`} className='!overflow-auto'>
-                    {item.visaBookingDetails && item.visaBookingDetails.length>0 && item.visaBookingDetails.map((item, index) => `${item.passportNumber} `)}
+                    {item.visaBookingDetails &&
+                      item.visaBookingDetails.length > 0 &&
+                      item.visaBookingDetails.map((item, index) => `${item.passportNumber} `)}
                   </MenuItem>
                 ))}
               </CustomTextField>
@@ -245,12 +239,12 @@ const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
                 type='number'
                 value={field.value} // Use field.value from 'react-hook-form'
                 sx={{ mb: 4 }}
-                label='Total Fee'
+                label='Total Amount'
                 onChange={e => {
                   field.onChange(e)
-                  handleFeeChange(e) // Call your custom handler
+                  handleAmountChange(e) // Call your custom handler
                 }}
-                placeholder='Enter Total Fee'
+                placeholder='Enter Total Amount'
               />
             )}
           />
@@ -264,12 +258,12 @@ const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
                 type='number'
                 value={field.value} // Use field.value from 'react-hook-form'
                 sx={{ mb: 4 }}
-                label='Paid Fee'
+                label='Paid Amount'
                 onChange={e => {
                   field.onChange(e)
-                  handleFeeChange(e) // Call your custom handler
+                  handleAmountChange(e) // Call your custom handler
                 }}
-                placeholder='Enter Paid Fee'
+                placeholder='Enter Paid Amount'
               />
             )}
           />
@@ -283,8 +277,8 @@ const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
                 type={'number'}
                 value={field.value}
                 sx={{ mb: 4 }}
-                label={'Discount Fee'}
-                placeholder={'Enter Discount Fee'}
+                label={'Discount Amount'}
+                placeholder={'Enter Discount Amount'}
               />
             )}
           />
@@ -297,10 +291,10 @@ const EditAccountForm = ({ toggle, _id: ids,removeSelection }) => {
                 disabled
                 fullWidth
                 type={'number'}
-                value={feeRemaining}
+                value={amountRemaining}
                 sx={{ mb: 4 }}
-                label={'Remaining Fee'}
-                placeholder={'Enter Remaining Fee'}
+                label={'Remaining Amount'}
+                placeholder={'Enter Remaining Amount'}
               />
             )}
           />

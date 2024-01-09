@@ -1,6 +1,3 @@
-// ** React Imports
-import { useState } from 'react'
-
 // ** MUI Imports
 
 import Divider from '@mui/material/Divider'
@@ -9,9 +6,8 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 
-import { styled, alpha, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 
-import CustomTextField from 'src/@core/components/mui/text-field'
 import { useSelector } from 'react-redux'
 
 const CalcWrapper = styled(Box)(({ theme }) => ({
@@ -23,15 +19,14 @@ const CalcWrapper = styled(Box)(({ theme }) => ({
   }
 }))
 
-const now = new Date()
-const tomorrowDate = now.setDate(now.getDate() + 7)
+const AddCardItemWithTotal = ({ data, invoiceData }) => {
+  let total = 0,
+    paid = 0,
+    remaining = 0,
+    discount = 0
 
-const AddCardItemWithTotal = ({ data, invoiceNumber, invoiceData }) => {
-  let feeTotal, feePaid, feeRemaining
-  const { accountDetails, grandFee } = invoiceData
   console.log(data)
   // ** Hook
-  const theme = useTheme()
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : []
   const feeData = useSelector(state => state.myInvoice.data)
@@ -39,19 +34,16 @@ const AddCardItemWithTotal = ({ data, invoiceNumber, invoiceData }) => {
   console.log('fee data ary', feeData)
   // calculating total Invoices
   feeData.map(feeItem => {
-    console.log('fee item', feeItem.fee)
+    total += feeItem.amount.total
+    paid += feeItem.amount.paid
+    remaining += feeItem.amount.remaining
+    discount += feeItem.amount.discount
+    console.log('require output', total, paid, remaining, discount)
   })
 
   return (
     <Grid container>
       <Grid item xs={12} sm={7} lg={6} sx={{ order: { sm: 1, xs: 2 } }}>
-        {/* <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
-          <Typography variant='body2' sx={{ mr: 2, fontWeight: 600, lineHeight: 'normal' }}>
-            Salesperson:
-          </Typography>
-          <CustomTextField fullWidth defaultValue='Tommy Shelby' />
-        </Box> */}
-        {/* <CustomTextField fullWidth placeholder='Thanks for your business' /> */}
         {visaBookingIds?.length > 0 &&
           visaBookingIds.map((item, index) => {
             return (
@@ -84,27 +76,21 @@ const AddCardItemWithTotal = ({ data, invoiceNumber, invoiceData }) => {
         <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
           <CalcWrapper>
             <Typography sx={{ color: 'text.secondary' }}>Total: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Rs {data[0]?.fee?.total}
-            </Typography>
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>Rs {total}</Typography>
           </CalcWrapper>
           <CalcWrapper>
             <Typography sx={{ color: 'text.secondary' }}>Paid: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Rs {data[0]?.fee?.paid}
-            </Typography>
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>Rs {paid}</Typography>
           </CalcWrapper>
           <CalcWrapper sx={{ mb: '0 !important' }}>
             <Typography sx={{ color: 'text.secondary' }}>Remaining: </Typography>
             <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Rs {data[0]?.fee?.remaining}
+              Rs {remaining}
             </Typography>
           </CalcWrapper>
           <CalcWrapper sx={{ mb: '0 !important' }}>
             <Typography sx={{ color: 'text.secondary' }}>Discount</Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Rs {data[0]?.fee?.discount}
-            </Typography>
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>Rs {discount}</Typography>
           </CalcWrapper>
         </Box>
       </Grid>

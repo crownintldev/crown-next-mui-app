@@ -44,7 +44,7 @@ const AddCard = props => {
 
   const {
     by: clientData,
-    fee,
+    amount,
     visaBookingIds
   } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
   useEffect(() => {
@@ -67,8 +67,8 @@ const AddCard = props => {
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
         {invoiceDataArray.map(item => {
-          const { by: clientData, fee, visaBookingIds } = item
-          console.log('item output', clientData, fee, visaBookingIds)
+          const { by: clientData, amount, visaBookingIds } = item
+          console.log('item output', clientData, amount, visaBookingIds)
 
           return (
             <>
@@ -84,7 +84,7 @@ const AddCard = props => {
                 selectUser={selectUser}
                 setSelectUser={setSelectUser}
                 clientData={clientData}
-                fee={fee}
+                amount={amount}
               />
               <Divider />
               <AddCardItemSelect

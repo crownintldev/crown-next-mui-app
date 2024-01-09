@@ -1,14 +1,16 @@
+// NEXT Imports
+import Link from 'next/link'
+
 // ** React Imports
 import { useState, useEffect } from 'react'
 // ** MUI Imports
 import Card from '@mui/material/Card'
-
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
-
 import InputLabel from '@mui/material/InputLabel'
-
 import { useTheme } from '@mui/material/styles'
-
 import CardContent from '@mui/material/CardContent'
 
 // ** Custom Component Imports
@@ -42,11 +44,6 @@ const AddCard = props => {
   invoiceDataArray.map(item => console.log('item', item))
   console.log('invoice data ary', invoiceDataArray)
 
-  const {
-    by: clientData,
-    amount,
-    visaBookingIds
-  } = invoiceDataArray.length > 0 ? invoiceDataArray[0] : {}
   useEffect(() => {
     console.log('Updated invoices', data)
   }, [data])
@@ -62,43 +59,54 @@ const AddCard = props => {
 
       <Divider />
 
-      {/* Invoice To ------------------------------------------------------- */}
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        {invoiceDataArray.map(item => {
-          const { by: clientData, amount, visaBookingIds } = item
-          console.log('item output', clientData, amount, visaBookingIds)
+        {!invoiceDataArray || invoiceDataArray.length === 0 ? (
+          // Error message
+          <Box sx={{ textAlign: 'center', p: theme.spacing(4) }}>
+            <Typography variant='h2' sx={{ mb: 1.5 }}>
+              No Invoices Created, Invoices create first...
+            </Typography>
+            <Button href='/accounts/account' component={Link} variant='contained'>
+              Create Invoice
+            </Button>
+          </Box>
+        ) : (
+          // Normal rendering
+          invoiceDataArray.map(item => {
+            const { by: clientData, amount, visaBookingIds } = item
 
-          return (
-            <>
-              <AddCardInvoiceTo
-                data={data}
-                selectedClient={selectedClient}
-                setSelectedClient={setSelectedClient}
-                toggleAddCustomerDrawer={toggleAddCustomerDrawer}
-                clients={clients}
-                setInvoiceData={setInvoiceData}
-                invoiceData={invoiceData}
-                setUserCategory={setUserCategory}
-                selectUser={selectUser}
-                setSelectUser={setSelectUser}
-                clientData={clientData}
-                amount={amount}
-              />
-              <Divider />
-              <AddCardItemSelect
-                data={data}
-                clients={clients}
-                invoiceData={invoiceData}
-                setInvoiceData={setInvoiceData}
-                userCategory={userCategory}
-                selectUser={selectUser}
-                visaBookingIds={visaBookingIds}
-              />
-            </>
-          )
-        })}
+            return (
+              <>
+                <AddCardInvoiceTo
+                  data={data}
+                  selectedClient={selectedClient}
+                  setSelectedClient={setSelectedClient}
+                  toggleAddCustomerDrawer={toggleAddCustomerDrawer}
+                  clients={clients}
+                  setInvoiceData={setInvoiceData}
+                  invoiceData={invoiceData}
+                  setUserCategory={setUserCategory}
+                  selectUser={selectUser}
+                  setSelectUser={setSelectUser}
+                  clientData={clientData}
+                  amount={amount}
+                />
+                <Divider />
+                <AddCardItemSelect
+                  data={data}
+                  clients={clients}
+                  invoiceData={invoiceData}
+                  setInvoiceData={setInvoiceData}
+                  userCategory={userCategory}
+                  selectUser={selectUser}
+                  visaBookingIds={visaBookingIds}
+                />
+              </>
+            )
+          })
+        )}
       </CardContent>
 
       <Divider />

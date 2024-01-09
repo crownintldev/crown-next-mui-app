@@ -84,20 +84,8 @@ const AddActions = () => {
 
         {paymentMethod !== 'Bank Transfer' && (
           <Box>
-            <TextField
-              fullWidth
-              label='Title'
-              sx={{ mb: 2 }}
-              // Add other props as needed
-            />
-            <TextField
-              fullWidth
-              label='Description'
-              multiline
-              rows={4}
-              sx={{ mb: 2 }}
-              // Add other props as needed
-            />
+            <TextField fullWidth label='Title' sx={{ mb: 2 }} />
+            <TextField fullWidth label='Description' multiline rows={4} sx={{ mb: 2 }} />
             <Button variant='contained' component='label' sx={{ mb: 2 }}>
               Upload File
               <input type='file' hidden />

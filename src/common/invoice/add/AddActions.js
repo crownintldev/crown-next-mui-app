@@ -1,3 +1,6 @@
+// *** React Import
+import React, { useState } from 'react'
+
 // ** Next Import
 import Link from 'next/link'
 
@@ -11,6 +14,8 @@ import { styled } from '@mui/material/styles'
 import InputLabel from '@mui/material/InputLabel'
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
+import TextField from '@mui/material/TextField' // Replace with CustomTextField if needed
+// ... other necessary imports
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -25,6 +30,12 @@ const OptionsWrapper = styled(Box)(() => ({
 }))
 
 const AddActions = () => {
+  const [paymentMethod, setPaymentMethod] = useState('Bank Transfer')
+
+  const handlePaymentMethodChange = event => {
+    setPaymentMethod(event.target.value)
+  }
+
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
@@ -55,7 +66,8 @@ const AddActions = () => {
           select
           fullWidth
           label='Accept payments via'
-          defaultValue='Internet Banking'
+          value={paymentMethod}
+          onChange={handlePaymentMethodChange}
           sx={{
             mb: 4,
             '& .MuiInputLabel-root': {
@@ -64,12 +76,35 @@ const AddActions = () => {
             }
           }}
         >
-          <MenuItem value='Internet Banking'>Internet Banking</MenuItem>
+          <MenuItem value='Bank Transfer'>Bank Transfer</MenuItem>
           <MenuItem value='Debit Card'>Debit Card</MenuItem>
           <MenuItem value='Credit Card'>Credit Card</MenuItem>
-          <MenuItem value='Paypal'>Paypal</MenuItem>
-          <MenuItem value='UPI Transfer'>UPI Transfer</MenuItem>
+          <MenuItem value='Cash'>Cash</MenuItem>
         </CustomTextField>
+
+        {paymentMethod !== 'Bank Transfer' && (
+          <Box>
+            <TextField
+              fullWidth
+              label='Title'
+              sx={{ mb: 2 }}
+              // Add other props as needed
+            />
+            <TextField
+              fullWidth
+              label='Description'
+              multiline
+              rows={4}
+              sx={{ mb: 2 }}
+              // Add other props as needed
+            />
+            <Button variant='contained' component='label' sx={{ mb: 2 }}>
+              Upload File
+              <input type='file' hidden />
+            </Button>
+          </Box>
+        )}
+
         <OptionsWrapper>
           <InputLabel
             sx={{ cursor: 'pointer', lineHeight: 1.467 }}

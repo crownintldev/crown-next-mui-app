@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/booking/passport'
 
-
 //get by data
 import axios from 'axios'
 import { agentList } from 'src/action/users/agent'
@@ -223,7 +222,7 @@ const EditPassportForm = ({ toggle, _id, removeSelection }) => {
       toast.success('Update Successfully', { position: 'top-center' })
     } catch (err) {
       const errorMessage =
-      err.response && err.response.data && err.response.data.message
+        err.response && err.response.data && err.response.data.message
           ? err.response.data.message
           : 'An unexpected error occurred'
       console.log(errorMessage)

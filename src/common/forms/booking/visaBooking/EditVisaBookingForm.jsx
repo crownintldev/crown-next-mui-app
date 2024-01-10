@@ -26,6 +26,9 @@ import { capitalizeValue } from 'src/utils/helperfunction'
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
 
+// reuse function
+import { removeUndefined } from 'src/utils/helperfunction'
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -147,8 +150,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       if (visa && visa.length === 0) {
         setValue('visaId', '')
       }
-      if(visa._id){
-        
+      if (visa._id) {
+
       }
     }
   }, [ids, setValue])
@@ -173,17 +176,17 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     }
     setValue('visaId', visa._id)
     const paymentType = watch('paymentType')
-    if(paymentType==="confirmed"){
+    if (paymentType === "confirmed") {
       setValue(paymentType, visa.confirmed)
       setValue("processing", undefined)
     }
-    if(paymentType==="processing"){
+    if (paymentType === "processing") {
       setValue(paymentType, visa.processing)
       setValue("confirmed", undefined)
     }
-  
+    removeUndefined(data)
     console.log(data)
-    
+
     try {
       const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/visa-booking/update`, data)
       if (response) {
@@ -293,14 +296,14 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     return selectedIds
       .map(id => {
         const item = visaBookingItems.find(item => item._id === id)
-        
-return item ? `${item.passportNumber} ${item.givenName}` : ''
+
+        return item ? `${item.passportNumber} ${item.givenName}` : ''
       })
       .filter(Boolean) // Removes any undefined or empty values
       .join(', ')
   }
-  
-return (
+
+  return (
     <div>
       <FormDrawer
         open={drawerOpen}

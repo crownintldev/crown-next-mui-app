@@ -2,8 +2,8 @@ import toast from 'react-hot-toast'
 
 export const capitalizeCamelSpace = name => {
   const capitalized = name.charAt(0).toUpperCase() + name.slice(1)
-  
-return capitalized.replace(/([A-Z])/g, ' $1').trim()
+
+  return capitalized.replace(/([A-Z])/g, ' $1').trim()
 }
 
 
@@ -30,16 +30,16 @@ export const axiosErrorToast = data => {
 export const isAllSameinArray = (dataArray, name) => {
   if (dataArray.length === 0) return false // or true, based on how you want to treat an empty array
   const firstElementName = dataArray[0][name]
-  
-return dataArray.every(item => item[name] === firstElementName)
+
+  return dataArray.every(item => item[name] === firstElementName)
 }
 
 
 // export const capitalizeValue = value => <div style={{ textTransform: 'capitalize' }}>{value}</div>
 export const capitalizeValue = (str) => {
   if (typeof str !== 'string' || !str) return str;
-  
-return str
+
+  return str
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
@@ -50,6 +50,16 @@ return str
 export function capitalizeSplitDash(str) {
   return str.replace(/-/g, ' ').replace(/\b\w/g, match => match.toUpperCase())
 }
+
+// remove undefined
+export const removeUndefined = (data) => {
+  for (let key in data) {
+    if (data[key] === undefined || data[key] === "") {
+      delete data[key];
+    }
+  }
+};
+
 
 
 export const hasAdministrativeManageAll = (user, ability) => {

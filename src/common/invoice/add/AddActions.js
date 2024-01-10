@@ -31,10 +31,12 @@ const OptionsWrapper = styled(Box)(() => ({
 
 const AddActions = () => {
   const [paymentMethod, setPaymentMethod] = useState('Bank Transfer')
+  const [action, setActions] = useState('pdf')
 
   const handlePaymentMethodChange = event => {
     setPaymentMethod(event.target.value)
   }
+  const handleActionMethodChange = event => setActions(event.target.value)
 
   return (
     <Grid container spacing={6}>
@@ -45,7 +47,31 @@ const AddActions = () => {
               <Icon fontSize='1.125rem' icon='tabler:send' />
               Send Invoice
             </Button>
-            <Button
+            <CustomTextField
+              select
+              fullWidth
+              label='Set Action'
+              value={action}
+              onChange={handleActionMethodChange}
+              sx={{
+                mb: 4,
+                '& .MuiInputLabel-root': {
+                  fontSize: theme => theme.typography.body1.fontSize,
+                  lineHeight: theme => theme.typography.body1.lineHeight
+                }
+              }}
+            >
+              <MenuItem value='pdf'>Generate PDF</MenuItem>
+              <MenuItem value='preview'>Preview</MenuItem>
+              <MenuItem value='print'>Print Out</MenuItem>
+              <MenuItem value='screenshot'>Take Screenshot</MenuItem>
+            </CustomTextField>
+            <Button fullWidth variant='contained' sx={{ mb: 2, '& svg': { mr: 2 } }}>
+              <Icon fontSize='1.125rem' icon='tabler:submit' />
+              Action
+            </Button>
+
+            {/* <Button
               fullWidth
               sx={{ mb: 2 }}
               variant='tonal'
@@ -57,7 +83,7 @@ const AddActions = () => {
             </Button>
             <Button fullWidth variant='tonal' color='secondary'>
               Save
-            </Button>
+            </Button> */}
           </CardContent>
         </Card>
       </Grid>
@@ -65,7 +91,7 @@ const AddActions = () => {
         <CustomTextField
           select
           fullWidth
-          label='Accept payments via'
+          label='Set Action'
           value={paymentMethod}
           onChange={handlePaymentMethodChange}
           sx={{

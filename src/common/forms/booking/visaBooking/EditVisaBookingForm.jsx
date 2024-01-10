@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Theme, useTheme } from '@mui/material/styles'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -10,6 +11,7 @@ import { Box, Radio, Grid, Typography } from '@mui/material'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 import { useDispatch, useSelector } from 'react-redux'
+
 // ** Actions Imports
 import { fetchVisaBooking } from 'src/store'
 
@@ -23,6 +25,9 @@ import { capitalizeValue } from 'src/utils/helperfunction'
 //custom vuexy select style
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
+
+// reuse function
+import { removeUndefined } from 'src/utils/helperfunction'
 
 const MenuProps = {
   PaperProps: {
@@ -68,8 +73,10 @@ const defaultValues = {
 const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
+
   // ** State
   const dispatch = useDispatch()
+
   const visaBookingItems = useSelector(
     state =>
       ids &&
@@ -88,6 +95,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   useEffect(() => {
     setFormSize(400)
   }, [])
+
   // selectIds
   const [destination, setDestination] = useState([])
   const [type, setType] = useState([])
@@ -120,6 +128,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       fetchActionData(() => findVisaId({ destination, category, type, duration }), setVisa)
     }
   }, [findVisa])
+
   const {
     reset,
     control,
@@ -141,8 +150,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       if (visa && visa.length === 0) {
         setValue('visaId', '')
       }
-      if(visa._id){
-        
+      if (visa._id) {
+
       }
     }
   }, [ids, setValue])
@@ -160,23 +169,24 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     toggle()
     reset()
   }
+
   const onSubmit = async data => {
     if (!visa._id) {
       return toast.error('add Visa Must', { position: 'top-center' })
     }
     setValue('visaId', visa._id)
     const paymentType = watch('paymentType')
-    if(paymentType==="confirmed"){
+    if (paymentType === "confirmed") {
       setValue(paymentType, visa.confirmed)
       setValue("processing", undefined)
     }
-    if(paymentType==="processing"){
+    if (paymentType === "processing") {
       setValue(paymentType, visa.processing)
       setValue("confirmed", undefined)
     }
-  
+    removeUndefined(data)
     console.log(data)
-    
+
     try {
       const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/visa-booking/update`, data)
       if (response) {
@@ -193,6 +203,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           removeSelection()
         }
       }
+
       // console.log(response)
       toast.success('Update Successfully', { position: 'top-center' })
     } catch (err) {
@@ -285,11 +296,13 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     return selectedIds
       .map(id => {
         const item = visaBookingItems.find(item => item._id === id)
+
         return item ? `${item.passportNumber} ${item.givenName}` : ''
       })
       .filter(Boolean) // Removes any undefined or empty values
       .join(', ')
   }
+
   return (
     <div>
       <FormDrawer

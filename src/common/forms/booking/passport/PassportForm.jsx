@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -9,6 +10,7 @@ import Box, { BoxProps } from '@mui/material/Box'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
+
 // import DatePickerComponent from 'src/common/dataEntry/DatePickerComponent'
 // import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -17,6 +19,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAgent, fetchCompany, fetchClient } from 'src/store'
+
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/booking/passport'
 
@@ -40,39 +43,18 @@ import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 import SelectField from 'src/common/dataEntry/SelectField'
 import SelectHookField from 'src/common/dataEntry/SelectHookField'
 
-const requiredError = []
+const requiredError = ["cnic", "city", "country", "dob", "doi", "doe", "pob", "gender", "givenName", "fatherName", "nationality", "passportNumber", "religion", "remarks", "surname", "onModel", "by"]
+
 const yupField = requiredError.reduce((acc, item) => {
   acc[item] = yup
     .string()
     .typeError('Field Should not be empty')
     .required('Field Should not be empty')
+
   return acc
 }, {})
 
 const schema = yup.object().shape(yupField)
-// const schema = yup.object().shape({
-// bookletNumber: yup.number().required('Booklet Number is required'),
-// cnic: yup.number().required('Cnic Number is required'),
-// city: yup.string().required('City is required.'),
-// country: yup.string().required('Country is required'),
-// dob: yup.date().required('Date of Birth is required'),
-// doi: yup.string().required('Digital Object Identifier'),
-// doe: yup.date().required('Date of Expiry is required'),
-// pob: yup.string().required('Place of Birth is required'),
-// gender: yup.string().required('Gender is required'),
-// givenName: yup.string().required('Given Name is required'),
-// fatherName: yup.string().required('Father name is required'),
-// issuingAuthority: yup.string().required('Issuing Authority is required'),
-// nationality: yup.string().required('Nationality is required'),
-// passportNumber: yup.string().required('Passport Number is required'),
-// religion: yup.string().required('Religion is required'),
-// remarks: yup.string().required('Remarks is required'),
-// surname: yup.string().required('Surname is required'),
-// trackingNumber: yup.number().required('Tracking Number is required'),
-// onModel: yup.string().required('Refer Category is required'),
-// by: yup.string().required('Refer is required'),
-// files: yup.array().required('Files Are Missing')
-// })
 
 const defaultValues = {
   bookletNumber: '',
@@ -92,6 +74,7 @@ const defaultValues = {
   surname: '',
   trackingNumber: '',
   onModel: 'Agent',
+  recievedPassport: '',
   files: [],
   by: ''
 }
@@ -141,28 +124,38 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
 
   const passportField1 = [
     {
+      name: 'givenName',
+      required: true
+    },
+    {
+      name: 'surname',
+      required: true
+    },
+    {
       name: 'passportNumber',
       required: true
     },
     {
-      name: 'bookletNumber'
-    },
-    {
-      name: 'city',
-      required: true
-    },
+      name: "recievedPassport",
+      type: 'number',
+    }
+
+  ]
+
+  const passportField2 = [
     {
       name: 'cnic',
       type: 'number',
       required: true
     },
     {
+      name: 'city',
+      required: true
+    },
+    {
       name: 'country',
       required: true
-    }
-  ]
-
-  const passportField2 = [
+    },
     {
       name: 'doi',
       required: true
@@ -170,10 +163,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     {
       name: 'gender'
     },
-    {
-      name: 'givenName',
-      required: true
-    },
+
     {
       name: 'fatherName',
       required: true
@@ -196,8 +186,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     },
 
     {
-      name: 'surname',
-      required: true
+      name: 'bookletNumber'
     },
     {
       name: 'trackingNumber',
@@ -230,7 +219,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
           <Grid item md={6} lg={4} sx={{ mb: 4 }}>
             <DatePickerHookField
               name='doe'
-              placeholder='Date of Expirt'
+              placeholder='Date of Expiry'
               required={true}
               control={control}
               errors={errors}
@@ -251,8 +240,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
               placeholder='Select Refer'
             />
           </Grid>
-          
-         
+
+
           <Grid item md={6} lg={4}>
             <Controller
               name='by'

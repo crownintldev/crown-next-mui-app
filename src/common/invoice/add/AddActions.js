@@ -71,7 +71,7 @@ const AddActions = () => {
               Action
             </Button>
 
-            {/* <Button
+            <Button
               fullWidth
               sx={{ mb: 2 }}
               variant='tonal'
@@ -83,7 +83,7 @@ const AddActions = () => {
             </Button>
             <Button fullWidth variant='tonal' color='secondary'>
               Save
-            </Button> */}
+            </Button>
           </CardContent>
         </Card>
       </Grid>
@@ -91,7 +91,7 @@ const AddActions = () => {
         <CustomTextField
           select
           fullWidth
-          label='Set Action'
+          label='Payment method via'
           value={paymentMethod}
           onChange={handlePaymentMethodChange}
           sx={{
@@ -106,7 +106,7 @@ const AddActions = () => {
           <MenuItem value='Debit Card'>Debit Card</MenuItem>
           <MenuItem value='Credit Card'>Credit Card</MenuItem>
           <MenuItem value='Cash'>Cash</MenuItem>
-        </CustomTextField>
+        </CustomTextField>  
 
         {paymentMethod !== 'Bank Transfer' && (
           <Box>

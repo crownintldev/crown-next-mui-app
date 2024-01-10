@@ -1,24 +1,18 @@
+//  ** React Imports
 import React, { useEffect, useState } from 'react'
-import { useTheme } from '@mui/material/styles'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
-import toast from 'react-hot-toast'
 
 import Box, { BoxProps } from '@mui/material/Box'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
-// import DatePickerComponent from 'src/common/dataEntry/DatePickerComponent'
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAgent, fetchCompany, fetchClient } from 'src/store'
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/booking/passport'
 
 // components
 import PassportSubmitButton from './SubmitButton'
@@ -33,46 +27,33 @@ import FilesUploader from 'src/common/fileUpload/FilesUploader'
 
 //
 import { Grid } from '@mui/material'
-import { capitalizeCamelSpace } from 'src/utils/helperfunction'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
-import SelectField from 'src/common/dataEntry/SelectField'
-import SelectHookField from 'src/common/dataEntry/SelectHookField'
 
-const requiredError = []
-const yupField = requiredError.reduce((acc, item) => {
-  acc[item] = yup
-    .string()
-    .typeError('Field Should not be empty')
-    .required('Field Should not be empty')
-  return acc
-}, {})
-
-const schema = yup.object().shape(yupField)
-// const schema = yup.object().shape({
-// bookletNumber: yup.number().required('Booklet Number is required'),
-// cnic: yup.number().required('Cnic Number is required'),
-// city: yup.string().required('City is required.'),
-// country: yup.string().required('Country is required'),
-// dob: yup.date().required('Date of Birth is required'),
-// doi: yup.string().required('Digital Object Identifier'),
-// doe: yup.date().required('Date of Expiry is required'),
-// pob: yup.string().required('Place of Birth is required'),
-// gender: yup.string().required('Gender is required'),
-// givenName: yup.string().required('Given Name is required'),
-// fatherName: yup.string().required('Father name is required'),
-// issuingAuthority: yup.string().required('Issuing Authority is required'),
-// nationality: yup.string().required('Nationality is required'),
-// passportNumber: yup.string().required('Passport Number is required'),
-// religion: yup.string().required('Religion is required'),
-// remarks: yup.string().required('Remarks is required'),
-// surname: yup.string().required('Surname is required'),
-// trackingNumber: yup.number().required('Tracking Number is required'),
-// onModel: yup.string().required('Refer Category is required'),
-// by: yup.string().required('Refer is required'),
-// files: yup.array().required('Files Are Missing')
-// })
+const schema = yup.object().shape({
+  bookletNumber: yup.string().required('Booklet Number is required'),
+  cnic: yup.string().required('Cnic Number is required'),
+  city: yup.string().required('City is required.'),
+  country: yup.string().required('Country is required'),
+  dob: yup.date().required('Date of Birth is required'),
+  doi: yup.string().required('Digital Object Identifier'),
+  doe: yup.date().required('Date of Expiry is required'),
+  pob: yup.string().required('Place of Birth is required'),
+  gender: yup.string().required('Gender is required'),
+  givenName: yup.string().required('Given Name is required'),
+  fatherName: yup.string().required('Father name is required'),
+  issuingAuthority: yup.string().required('Issuing Authority is required'),
+  nationality: yup.string().required('Nationality is required'),
+  passportNumber: yup.string().required('Passport Number is required'),
+  religion: yup.string().required('Religion is required'),
+  remarks: yup.string().required('Remarks is required'),
+  surname: yup.string().required('Surname is required'),
+  trackingNumber: yup.string().required('Tracking Number is required'),
+  onModel: yup.string().required('Refer Category is required'),
+  by: yup.string().required('Refer is required'),
+  files: yup.array().required('Files Are Missing')
+})
 
 const defaultValues = {
   bookletNumber: '',
@@ -103,21 +84,38 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const [files, setFiles] = useState([])
   const [date, setDate] = useState(new Date())
 
-  const yupField = requiredError.reduce((acc, item) => {
-    acc[item] = yup
+  const schema = yup.object().shape({
+    bookletNumber: yup.string().required('Booklet Number is required'),
+    city: yup.string().required('City is required.'),
+    cnic: yup
       .string()
-      .typeError('Field Should not be empty')
-      .required('Field Should not be empty')
-
-    // Add validation for number fields
-    if (['passportNumber', 'bookletNumber', 'cnic'].includes(item)) {
-      acc[item] = acc[item].matches(/^[0-9]+$/, 'Only 0 and positive numbers are allowed')
-    }
-
-    return acc
-  }, {})
-
-  const schema = yup.object().shape(yupField)
+      .required('CNIC Number is required')
+      .matches(/^[0-9]{13}$|^[0-9]{5}-[0-9]{7}-[0-9]$/, 'Invalid CNIC format')
+      .test('is-numeric', 'Invalid CNIC format, only numbers are allowed', value => {
+        if (!value) return true // Skip validation if value is empty
+        return /^\d+$/.test(value.replace(/-/g, ''))
+      })
+      .max(15, 'CNIC must be 15 numbers or less')
+      .typeError('Invalid CNIC format, only numbers are allowed'),
+    country: yup.string().required('Country is required'),
+    dob: yup.date().required('Date of Birth is required'),
+    doi: yup.string().required('Digital Object Identifier'),
+    doe: yup.date().required('Date of Expiry is required'),
+    pob: yup.string().required('Place of Birth is required'),
+    gender: yup.string().required('Gender is required'),
+    givenName: yup.string().required('Given Name is required'),
+    fatherName: yup.string().required('Father name is required'),
+    issuingAuthority: yup.string().required('Issuing Authority is required'),
+    nationality: yup.string().required('Nationality is required'),
+    passportNumber: yup.string().required('Passport Number is required'),
+    religion: yup.string().required('Religion is required'),
+    remarks: yup.string().required('Remarks is required'),
+    surname: yup.string().required('Surname is required'),
+    trackingNumber: yup.string().required('Tracking Number is required'),
+    onModel: yup.string().required('Refer Category is required'),
+    by: yup.string().required('Refer is required'),
+    files: yup.array().required('Files Are Missing')
+  })
 
   useEffect(() => {
     setFormSize(1200)
@@ -158,13 +156,10 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const passportField1 = [
     {
       name: 'passportNumber',
-      required: true,
-      type: 'number'
+      required: true
     },
     {
-      name: 'bookletNumber',
-      required: true,
-      type: 'number'
+      name: 'bookletNumber'
     },
     {
       name: 'city',
@@ -172,7 +167,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     },
     {
       name: 'cnic',
-      type: 'number',
+      type: 'text',
       required: true
     },
     {
@@ -220,7 +215,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     },
     {
       name: 'trackingNumber',
-      type: 'number'
+      required: true
     },
     {
       name: 'remarks',
@@ -268,6 +263,11 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
               options={['Client', 'Company', 'Agent']}
               label={'Refer'}
               placeholder='Select Refer'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
             />
           </Grid>
 

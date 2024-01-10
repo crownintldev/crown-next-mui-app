@@ -18,9 +18,9 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
     paddingRight: `${theme.spacing(2)} !important`
   }
 }))
-const AddCardInvoiceTo = ({ clientData, fee }) => {
-
+const AddCardInvoiceTo = ({ clientData, amount }) => {
   const theme = useTheme()
+  console.log('amount', amount)
 
   return (
     <Grid container>
@@ -60,7 +60,7 @@ const AddCardInvoiceTo = ({ clientData, fee }) => {
               <TableBody
                 sx={{ '& .MuiTableCell-root': { py: `${theme.spacing(0.75)} !important` } }}
               >
-                {fee && (
+                {amount && (
                   <>
                     <TableRow>
                       <MUITableCell>
@@ -68,7 +68,7 @@ const AddCardInvoiceTo = ({ clientData, fee }) => {
                       </MUITableCell>
                       <MUITableCell>
                         <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {fee.total}
+                          Rs: {amount.total}
                         </Typography>
                       </MUITableCell>
                     </TableRow>
@@ -78,7 +78,7 @@ const AddCardInvoiceTo = ({ clientData, fee }) => {
                       </MUITableCell>
                       <MUITableCell>
                         <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {fee.paid}
+                          Rs: {amount.paid}
                         </Typography>
                       </MUITableCell>
                     </TableRow>
@@ -88,7 +88,7 @@ const AddCardInvoiceTo = ({ clientData, fee }) => {
                       </MUITableCell>
                       <MUITableCell>
                         <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {fee.remaining}
+                          Rs: {amount.remaining}
                         </Typography>
                       </MUITableCell>
                     </TableRow>
@@ -98,7 +98,7 @@ const AddCardInvoiceTo = ({ clientData, fee }) => {
                       </MUITableCell>
                       <MUITableCell>
                         <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {fee.discount}
+                          Rs: {amount.discount}
                         </Typography>
                       </MUITableCell>
                     </TableRow>

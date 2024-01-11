@@ -1,8 +1,6 @@
 // *** React Import
 import React, { useState } from 'react'
-
-// ** Next Import
-import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -32,8 +30,8 @@ const OptionsWrapper = styled(Box)(() => ({
 
 const AddActions = () => {
   const [paymentMethod, setPaymentMethod] = useState('Bank Transfer')
-  const [action, setActions] = useState('pdf')
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
+  const invoiceDataArray = useSelector(state => state.myInvoice.data)
 
   const handlePaymentMethodChange = event => {
     setPaymentMethod(event.target.value)
@@ -46,16 +44,6 @@ const AddActions = () => {
   const handleClosePreviewModal = () => {
     // Set the state to close the modal
     setPreviewModalOpen(false)
-  }
-  // Sample fake data for the preview
-  const fakeData = {
-    invoiceNumber: 'INV123',
-    customer: 'John Doe',
-    amount: 100.0,
-    items: [
-      { name: 'Item 1', quantity: 2, price: 50.0 },
-      { name: 'Item 2', quantity: 1, price: 50.0 }
-    ]
   }
 
   return (
@@ -81,22 +69,9 @@ const AddActions = () => {
             <ActionsHandlers
               open={isPreviewModalOpen}
               onClose={handleClosePreviewModal}
-              data={fakeData}
+              data={invoiceDataArray}
             />
 
-            {/* <Button
-              fullWidth
-              sx={{ mb: 2 }}
-              variant='tonal'
-              // component={Link}
-              color='secondary'
-              // href='/apps/invoice/preview/4987'
-            >
-              Preview
-            </Button>
-            <Button fullWidth variant='tonal' color='secondary'>
-              Save
-            </Button> */}
           </CardContent>
         </Card>
       </Grid>

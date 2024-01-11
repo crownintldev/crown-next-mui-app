@@ -223,6 +223,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     }
   ]
 
+  console.log('files output', files)
+
   return (
     <div>
       <form>

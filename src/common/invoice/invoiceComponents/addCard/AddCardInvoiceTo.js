@@ -23,7 +23,7 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
   console.log('amount', amount)
 
   return (
-    <Grid container>
+    <Grid container xl={{ mt: 5 }} xs={{ mt: 5 }} sx={{ mt: 5 }}>
       <Grid item xs={12} sm={12} md={6} sx={{ mb: { lg: 0, xs: 4 } }}>
         <Typography variant='h6' sx={{ mb: 6 }}>
           Invoice To:

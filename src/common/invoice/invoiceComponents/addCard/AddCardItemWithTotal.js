@@ -28,8 +28,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : []
   const feeData = useSelector(state => state.myInvoice.data)
-  feeData.map(item => console.log('item', item))
-  console.log('fee data ary', feeData)
+
   // calculating total Invoices
   feeData.map(feeItem => {
     total += feeItem.amount.total
@@ -40,7 +39,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
   })
 
   return (
-    <Grid container>
+    <Grid container  xl={{ mb: 5 }} xs={{ mb: 5 }} sx={{ mb: 5 }}>
       <Grid item xs={12} sm={7} lg={6} sx={{ order: { sm: 1, xs: 2 } }}>
         {visaBookingIds?.length > 0 &&
           visaBookingIds.map((item, index) => {

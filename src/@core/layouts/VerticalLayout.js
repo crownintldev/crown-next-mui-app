@@ -115,7 +115,7 @@ const VerticalLayout = props => {
         )}
         <MainContentWrapper
           className='layout-content-wrapper'
-          sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }) }}
+          sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }), background: '#8080801c' }}
         >
           {/* AppBar Component */}
           <AppBar

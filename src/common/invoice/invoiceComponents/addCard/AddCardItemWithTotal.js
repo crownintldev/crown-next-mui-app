@@ -24,6 +24,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
     discount = 0
 
   console.log(data)
+
   // ** Hook
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : []
@@ -39,7 +40,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
   })
 
   return (
-    <Grid container  xl={{ mb: 5 }} xs={{ mb: 5 }} sx={{ mb: 5 }}>
+    <Grid container xl={{ mb: 5 }} xs={{ mb: 5 }} sx={{ mb: 5 }}>
       <Grid item xs={12} sm={7} lg={6} sx={{ order: { sm: 1, xs: 2 } }}>
         {visaBookingIds?.length > 0 &&
           visaBookingIds.map((item, index) => {

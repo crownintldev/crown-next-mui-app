@@ -16,7 +16,10 @@ const isToday = date => {
   )
 }
 
-export const formatDate = (value, formatting = { month: 'short', day: 'numeric', year: 'numeric' }) => {
+export const formatDate = (
+  value,
+  formatting = { month: 'short', day: 'numeric', year: 'numeric' }
+) => {
   if (!value) return value
 
   return new Intl.DateTimeFormat('en-US', formatting).format(new Date(value))
@@ -55,10 +58,10 @@ export const formatCreditCardNumber = (value, Payment) => {
       nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(4, 10)} ${clearValue.slice(10, 14)}`
       break
     default:
-      nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(4, 8)} ${clearValue.slice(8, 12)} ${clearValue.slice(
-        12,
-        19
-      )}`
+      nextValue = `${clearValue.slice(0, 4)} ${clearValue.slice(4, 8)} ${clearValue.slice(
+        8,
+        12
+      )} ${clearValue.slice(12, 19)}`
       break
   }
 

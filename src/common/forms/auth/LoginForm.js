@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+
 // ** Third Party Imports
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
@@ -43,7 +44,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   password: 'admin',
-  email: 'admin@vuexy.com'
+  email: 'admin@crown.com'
 }
 
 const LoginForm = () => {
@@ -51,6 +52,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false)
   const auth = useAuth()
   const theme = useTheme()
+
   const {
     control,
     setError,

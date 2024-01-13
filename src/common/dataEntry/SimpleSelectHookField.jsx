@@ -1,9 +1,17 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
+import React from 'react'
+import { Controller } from 'react-hook-form'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
-const SimpleSelectHookField = ({ control, errors,name, options, label, placeholder, disableClearable,  }) => {
+const SimpleSelectHookField = ({
+  control,
+  errors,
+  name,
+  options,
+  label,
+  placeholder,
+  disableClearable
+}) => {
   return (
     <Controller
       name={name}
@@ -17,9 +25,9 @@ const SimpleSelectHookField = ({ control, errors,name, options, label, placehold
           value={value}
           getOptionLabel={option => option || ''}
           onChange={(event, newValue) => {
-            onChange(newValue);
+            onChange(newValue)
           }}
-          disableClearable={disableClearable?disableClearable:""}
+          disableClearable={disableClearable ? disableClearable : ''}
           renderInput={params => (
             <CustomTextField
               {...params}
@@ -33,7 +41,7 @@ const SimpleSelectHookField = ({ control, errors,name, options, label, placehold
         />
       )}
     />
-  );
-};
+  )
+}
 
-export default SimpleSelectHookField;
+export default SimpleSelectHookField

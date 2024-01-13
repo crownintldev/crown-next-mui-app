@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { defaultCellRenderer } from 'src/common/materialTable/tableColumnFunction'
 import { dateFormat } from 'src/common/materialTable/tableColumnFunction'
 
-const useNameIdTableColumns = (header="title") =>
+const useNameIdTableColumns = (header = 'title') =>
   useMemo(
     () => [
       { accessorKey: 'name', header: header, Cell: defaultCellRenderer },
@@ -12,4 +12,5 @@ const useNameIdTableColumns = (header="title") =>
     ],
     []
   )
+
 export default useNameIdTableColumns

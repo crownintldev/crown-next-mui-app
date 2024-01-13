@@ -6,7 +6,6 @@ export const capitalizeCamelSpace = name => {
   return capitalized.replace(/([A-Z])/g, ' $1').trim()
 }
 
-
 export const axiosErrorMessage = err =>
   err.response && err.response.data && err.response.data.message
     ? err.response.data.message
@@ -34,17 +33,15 @@ export const isAllSameinArray = (dataArray, name) => {
   return dataArray.every(item => item[name] === firstElementName)
 }
 
-
 // export const capitalizeValue = value => <div style={{ textTransform: 'capitalize' }}>{value}</div>
-export const capitalizeValue = (str) => {
-  if (typeof str !== 'string' || !str) return str;
+export const capitalizeValue = str => {
+  if (typeof str !== 'string' || !str) return str
 
   return str
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    .join(' ')
 }
-
 
 //relace dash (-) with space and ever next word is capital,
 export function capitalizeSplitDash(str) {
@@ -52,15 +49,13 @@ export function capitalizeSplitDash(str) {
 }
 
 // remove undefined
-export const removeUndefined = (data) => {
+export const removeUndefined = data => {
   for (let key in data) {
-    if (data[key] === undefined || data[key] === "") {
-      delete data[key];
+    if (data[key] === undefined || data[key] === '') {
+      delete data[key]
     }
   }
-};
-
-
+}
 
 export const hasAdministrativeManageAll = (user, ability) => {
   if (user && ability.rules.length > 0) {

@@ -10,18 +10,32 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 
 const CardStatsHorizontal = props => {
   // ** Props
-  const { sx, icon, stats, title, avatarSize = 42, iconSize = '1.625rem', avatarColor = 'primary' } = props
+  const {
+    sx,
+    icon,
+    stats,
+    title,
+    avatarSize = 42,
+    iconSize = '1.625rem',
+    avatarColor = 'primary'
+  } = props
 
   return (
     <Card sx={{ ...sx }}>
-      <CardContent sx={{ gap: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <CardContent
+        sx={{ gap: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+      >
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <Typography variant='h5' sx={{ mb: 0.5 }}>
             {stats}
           </Typography>
           <Typography variant='body2'>{title}</Typography>
         </Box>
-        <CustomAvatar skin='light' color={avatarColor} sx={{ width: avatarSize, height: avatarSize }}>
+        <CustomAvatar
+          skin='light'
+          color={avatarColor}
+          sx={{ width: avatarSize, height: avatarSize }}
+        >
           <Icon icon={icon} fontSize={iconSize} />
         </CustomAvatar>
       </CardContent>

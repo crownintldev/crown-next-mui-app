@@ -16,7 +16,15 @@ const AnalyticsOrderVisits = () => {
   return (
     <Card>
       <CardContent sx={{ p: theme => `${theme.spacing(5)} !important` }}>
-        <Box sx={{ gap: 2, mb: 5, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            gap: 2,
+            mb: 5,
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between'
+          }}
+        >
           <div>
             <Typography variant='body2' sx={{ color: 'text.disabled' }}>
               Sales Overview
@@ -25,10 +33,23 @@ const AnalyticsOrderVisits = () => {
           </div>
           <Typography sx={{ fontWeight: 500, color: 'success.main' }}>+18.2%</Typography>
         </Box>
-        <Box sx={{ mb: 3.5, gap: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            mb: 3.5,
+            gap: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
           <Box sx={{ py: 2.25, display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ mb: 2.5, display: 'flex', alignItems: 'center' }}>
-              <CustomAvatar skin='light' color='info' variant='rounded' sx={{ mr: 1.5, height: 24, width: 24 }}>
+              <CustomAvatar
+                skin='light'
+                color='info'
+                variant='rounded'
+                sx={{ mr: 1.5, height: 24, width: 24 }}
+              >
                 <Icon icon='tabler:shopping-cart' fontSize='1.125rem' />
               </CustomAvatar>
               <Typography sx={{ color: 'text.secondary' }}>Order</Typography>

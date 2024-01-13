@@ -22,6 +22,29 @@ import FormDrawer from 'src/common/drawer/FormDrawer'
 import VisaServiceForm from '../../services/visaService/VisaServiceForm'
 import { capitalizeValue } from 'src/utils/helperfunction'
 
+//get by data
+import axios from 'axios'
+import { listVisaCategory } from 'src/action/visaIdSelector/visaCategory'
+import { listVisaDestination } from 'src/action/visaIdSelector/visaDestination'
+import { listVisaDuration } from 'src/action/visaIdSelector/visaDuration'
+import { listVisaType } from 'src/action/visaIdSelector/visaType'
+import { findVisaId } from 'src/action/visaService'
+
+// ** Third Party Imports
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm, Controller } from 'react-hook-form'
+
+// action function common
+import toast from 'react-hot-toast'
+import { fetchActionData } from 'src/action/fetchData'
+import { axiosErrorMessage } from 'src/utils/helperfunction'
+
+const schema = yup.object().shape({
+  visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
+  status: yup.string().required('Status is required.')
+})
+
 //custom vuexy select style
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -37,29 +60,6 @@ const MenuProps = {
     }
   }
 }
-
-// components
-
-//get by data
-import axios from 'axios'
-import { listVisaCategory } from 'src/action/visaIdSelector/visaCategory'
-import { listVisaDestination } from 'src/action/visaIdSelector/visaDestination'
-import { listVisaDuration } from 'src/action/visaIdSelector/visaDuration'
-import { listVisaType } from 'src/action/visaIdSelector/visaType'
-import { findVisaId } from 'src/action/visaService'
-
-// ** Third Party Imports
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, Controller } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { fetchActionData } from 'src/action/fetchData'
-import { axiosErrorMessage } from 'src/utils/helperfunction'
-
-const schema = yup.object().shape({
-  visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
-  status: yup.string().required('Status is required.')
-})
 
 const defaultValues = {
   visaBookingIds: [],
@@ -82,13 +82,13 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       ids &&
       ids.length > 0 &&
       ids
-        .map(id => state.visaBooking.data.find(item => item._id === id))
+        .map(id => state?.visaBooking?.data.find(item => item?._id === id))
         .map(item => {
           return {
-            passportNumber: item.passportId.passportNumber,
-            status: item.status,
-            givenName: item.passportId.givenName,
-            _id: item._id
+            passportNumber: item?.passportId?.passportNumber,
+            status: item?.status,
+            givenName: item?.passportId?.givenName,
+            _id: item?._id
           }
         })
   )
@@ -475,9 +475,6 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           </Button>
           <Button variant='tonal' color='secondary' onClick={handleClose} sx={{ mr: 3 }}>
             Cancel
-          </Button>
-          <Button variant='tonal' color='success'>
-            Back
           </Button>
         </Box>
       </form>

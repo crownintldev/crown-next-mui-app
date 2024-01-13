@@ -1,5 +1,6 @@
 // ** Redux Imports
 import { Dispatch } from 'redux'
+
 // import { API } from '../../../../config'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -22,6 +23,7 @@ let token = null
 // ** Fetch Visa Booking
 export const fetchData = createAsyncThunk('createAppSlice/fetchData', async params => {
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/accounts?${params}`)
+
   return response.data
 })
 
@@ -32,9 +34,11 @@ export const addCardDetails = createAsyncThunk(
     const headers = {
       Authorization: `${token}`
     }
+
     const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/user/createApp`, data, {
       headers
     })
+
     // dispatch(
     //   fetchData({
     //     limit: 20,
@@ -85,6 +89,7 @@ export const createAppSlice = createSlice({
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.data = action.payload.data
       state.total = action.payload.total
+
       // state.params = action.payload.params
       // state.allData = action.payload.allData
     })

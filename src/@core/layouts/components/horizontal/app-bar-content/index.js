@@ -24,7 +24,9 @@ const AppBarContent = props => {
   const theme = useTheme()
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <Box
+      sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+    >
       {userAppBarBranding ? (
         userAppBarBranding(props)
       ) : (

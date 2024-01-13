@@ -6,6 +6,7 @@ const toQueryString = params => {
   const query = Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&')
+
   return query
 }
 
@@ -30,11 +31,13 @@ export const createFetchDataThunk = (name, api) => {
         // If updateItem exists, merge it with the existing item
         return updateItem ? { ...item, ...updateItem } : item
       })
+
       return { data: updatedData }
     }
 
     const queryString = toQueryString(params)
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/${api}?${queryString}`)
+
     // console.log(api, response);
     return response.data
   })
@@ -63,6 +66,7 @@ const generateSlice = ({ name, fetchData }) => {
       isLoading: false,
       isError: false
     },
+
     // reducers,
     extraReducers: builder => {
       builder.addCase(fetchData.pending, state => {
@@ -81,6 +85,7 @@ const generateSlice = ({ name, fetchData }) => {
       })
     }
   })
+
   return slice.reducer //// Return only the reducer part of the slice
   // return slice; //// Return the entire slice object, if reducers defined
 }

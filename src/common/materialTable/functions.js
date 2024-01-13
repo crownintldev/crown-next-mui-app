@@ -10,15 +10,18 @@ const csvConfig = mkConfig({
   decimalSeparator: '.',
   useKeysAsHeaders: true
 })
+
 export const handleExportRows = rows => {
   const rowData = rows.map(row => row.original)
   const csv = generateCsv(csvConfig)(rowData)
   download(csvConfig)(csv)
 }
+
 export const handleExportData = data => {
   const csv = generateCsv(csvConfig)(data)
   download(csvConfig)(csv)
 }
+
 //end export csv,pdf function
 
 //style

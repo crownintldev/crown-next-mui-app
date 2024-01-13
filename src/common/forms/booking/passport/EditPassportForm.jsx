@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
 import dayjs from 'dayjs'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -14,6 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { useDispatch, useSelector } from 'react-redux'
+
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/booking/passport'
 
@@ -31,6 +33,11 @@ import { useForm, Controller } from 'react-hook-form'
 // vuexy components
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
 import toast from 'react-hot-toast'
+import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
+import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
+import { Grid } from '@mui/material'
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
+import FilesUploader from 'src/common/fileUpload/FilesUploader'
 
 const showErrors = (field, valueLen, min) => {
   if (valueLen === 0) {
@@ -89,8 +96,12 @@ const defaultValues = {
 }
 
 // ------------------Passport Form-----------------------
-const EditPassportForm = ({ toggle, _id, removeSelection }) => {
+const EditPassportForm = ({ toggle, _id, removeSelection, setFormSize }) => {
   // ** State
+  useEffect(() => {
+    setFormSize(1200)
+  }, [])
+
   const [files, setFiles] = useState([])
   const [previousFiles, setPreviousFiles] = useState([])
   const [removeFiles, setRemoveFiles] = useState([])
@@ -164,6 +175,7 @@ const EditPassportForm = ({ toggle, _id, removeSelection }) => {
         setValue('dob', dayjs(passportId.dob))
         setValue('doe', dayjs(passportId.doe))
         setValue(key, passportId[key])
+
         // @ts-ignore
         // fetchFiles(passportId?.files)
       })
@@ -175,6 +187,7 @@ const EditPassportForm = ({ toggle, _id, removeSelection }) => {
     // setPlan('basic')
     // setRole('subscriber')
     toggle()
+
     // reset()
   }
 
@@ -228,6 +241,7 @@ const EditPassportForm = ({ toggle, _id, removeSelection }) => {
       console.log(errorMessage)
       toast.error(errorMessage, { position: 'top-center' })
     }
+
     // const responseAction = await dispatch(editPassport(formData))
     // console.log(responseAction.type)
     // if (responseAction.type === 'appPassports/editPassport/fulfilled') {
@@ -236,248 +250,327 @@ const EditPassportForm = ({ toggle, _id, removeSelection }) => {
     // }
   }
 
-  const addPassportFields = [
+  // const addPassportFields = [
+  //   {
+  //     name: 'passportNumber',
+  //     type: 'number'
+  //   },
+  //   {
+  //     name: 'bookletNumber',
+  //     type: 'number'
+  //   },
+  //   {
+  //     name: 'city'
+  //   },
+  //   {
+  //     name: 'cnic',
+  //     type: 'number'
+  //   },
+  //   {
+  //     name: 'country'
+  //   },
+  //   {
+  //     name: 'dob',
+  //     placeholder: 'Date of Birth'
+  //   },
+  //   {
+  //     name: 'doe',
+  //     placeholder: 'Date of Expiry'
+  //   },
+  //   {
+  //     name: 'doi'
+  //   },
+  //   {
+  //     name: 'gender'
+  //   },
+  //   {
+  //     name: 'givenName'
+  //   },
+  //   {
+  //     name: 'fatherName'
+  //   },
+  //   {
+  //     name: 'issuingAuthority'
+  //   },
+  //   {
+  //     name: 'nationality'
+  //   },
+  //   {
+  //     name: 'pob',
+  //     placeholder: 'Place of Birth'
+  //   },
+  //   {
+  //     name: 'religion'
+  //   },
+
+  //   {
+  //     name: 'surname'
+  //   },
+  //   {
+  //     name: 'trackingNumber',
+  //     type: 'number'
+  //   },
+  //   {
+  //     name: 'remarks'
+  //   }
+  // ]
+  const passportField1 = [
     {
       name: 'passportNumber',
-      type: 'number'
+      required: true
     },
     {
-      name: 'bookletNumber',
-      type: 'number'
-    },
-    {
-      name: 'city'
+      name: 'bookletNumber'
     },
     {
       name: 'cnic',
-      type: 'number'
+      type: 'text',
+      required: true
+    }
+  ]
+
+  const passportField2 = [
+    {
+      name: 'doi',
+      required: true
     },
     {
-      name: 'country'
+      name: 'givenName',
+      required: true
     },
     {
-      name: 'dob',
-      placeholder: 'Date of Birth'
-    },
-    {
-      name: 'doe',
-      placeholder: 'Date of Expiry'
-    },
-    {
-      name: 'doi'
-    },
-    {
-      name: 'gender'
-    },
-    {
-      name: 'givenName'
-    },
-    {
-      name: 'fatherName'
+      name: 'fatherName',
+      required: true
     },
     {
       name: 'issuingAuthority'
     },
     {
-      name: 'nationality'
-    },
-    {
       name: 'pob',
-      placeholder: 'Place of Birth'
+      placeholder: 'Place of Birth',
+      required: true
     },
     {
-      name: 'religion'
-    },
-
-    {
-      name: 'surname'
+      name: 'surname',
+      required: true
     },
     {
       name: 'trackingNumber',
-      type: 'number'
+      required: true
     },
     {
-      name: 'remarks'
+      name: 'remarks',
+      required: true
     }
   ]
 
-  const capitalizeCamelSpace = name => {
-    const capitalized = name.charAt(0).toUpperCase() + name.slice(1)
-    return capitalized.replace(/([A-Z])/g, ' $1').trim()
-  }
-  const theme = useTheme()
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {addPassportFields.map(item => {
-          const { name, label, placeholder, type } = item
-          return (
-            <>
-              {name === 'dob' || name === 'doe' ? (
-                <Box sx={{ mb: 4 }}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Controller
-                      name={name}
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field }) => (
-                        <DatePicker
-                          label={placeholder}
-                          inputFormat='MM/DD/YYYY'
-                          {...field}
-                          renderInput={params => (
-                            <TextField
-                              {...params}
-                              size='small'
-                              fullWidth
-                              error={Boolean(errors.datePicker)}
-                              helperText={errors.datePicker?.message}
-                            />
-                          )}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
-                </Box>
-              ) : (
-                <Controller
-                  key={name}
-                  name={name}
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomTextField
-                      fullWidth
-                      type={type ? type : 'text'}
-                      value={value}
-                      sx={{ mb: 4 }}
-                      label={label ? label : capitalizeCamelSpace(name)}
-                      onChange={onChange}
-                      placeholder={
-                        placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`
-                      }
-                      error={Boolean(errors[name])}
-                      helperText={errors[name]?.message || ''}
-                    />
-                  )}
-                />
+    <form>
+      <Grid container spacing={6}>
+        {passportField1.map(item => (
+          <Grid item md={6} lg={4} key={item.name}>
+            <CustomHookTextField item={item} control={control} errors={errors} required={true} />
+          </Grid>
+        ))}
+        <Grid item md={6} lg={4}>
+          <SimpleSelectHookField
+            control={control}
+            errors={errors}
+            name={'country'}
+            options={['Pakistan', 'Iran', 'Afghanistan', 'Saudi Arbia', 'Turki']}
+            label={'Country'}
+            placeholder='Search Countries'
+            select={true}
+            MenuProps={{
+              disablePortal: true,
+              disableCloseOnSelect: true
+            }}
+          />
+        </Grid>
+        <Grid item md={6} lg={4}>
+          <SimpleSelectHookField
+            control={control}
+            errors={errors}
+            name={'city'}
+            options={['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Peshawar']}
+            label={'City'}
+            placeholder='Search Cities'
+            select={true}
+            MenuProps={{
+              disablePortal: true,
+              disableCloseOnSelect: true
+            }}
+          />
+        </Grid>
+        <Grid item md={6} lg={4} sx={{ mb: 4 }}>
+          <DatePickerHookField
+            name='dob'
+            placeholder='Date of Birth'
+            required={true}
+            control={control}
+            errors={errors}
+          />
+        </Grid>
+        <Grid item md={6} lg={4} sx={{ mb: 4 }}>
+          <DatePickerHookField
+            name='doe'
+            placeholder='Date of Expire'
+            required={true}
+            control={control}
+            errors={errors}
+          />
+        </Grid>
+        <Grid item md={6} lg={4}>
+          <SimpleSelectHookField
+            control={control}
+            errors={errors}
+            name={'gender'}
+            options={['Male', 'Female', 'Other']}
+            label={'Gender'}
+            placeholder='Search Gender'
+            select={true}
+            MenuProps={{
+              disablePortal: true,
+              disableCloseOnSelect: true
+            }}
+          />
+        </Grid>
+        <Grid item md={6} lg={4}>
+          <SimpleSelectHookField
+            control={control}
+            errors={errors}
+            name={'nationality'}
+            options={['Pakistani', 'Indian', 'Afghani']}
+            label={'Nationality'}
+            placeholder='Search Nationality'
+            select={true}
+            MenuProps={{
+              disablePortal: true,
+              disableCloseOnSelect: true
+            }}
+          />
+        </Grid>
+        <Grid item md={6} lg={4}>
+          <SimpleSelectHookField
+            control={control}
+            errors={errors}
+            name={'religion'}
+            options={['Islam', 'Christan', 'Hindu', 'Sikh']}
+            label={'Religion'}
+            placeholder='Search Religion'
+            select={true}
+            MenuProps={{
+              disablePortal: true,
+              disableCloseOnSelect: true
+            }}
+          />
+        </Grid>
+        {passportField2.map(item => (
+          <Grid item md={6} lg={4} key={item.name}>
+            <CustomHookTextField item={item} control={control} errors={errors} required={true} />
+          </Grid>
+        ))}
+        <Grid item md={6} lg={4}>
+          <SimpleSelectHookField
+            control={control}
+            errors={errors}
+            name={'onModel'}
+            options={['Client', 'Company', 'Agent']}
+            label={'Refer'}
+            placeholder='Select Refer'
+            select={true}
+            MenuProps={{
+              disablePortal: true,
+              disableCloseOnSelect: true
+            }}
+          />
+        </Grid>
+
+        <Grid item md={6} lg={4}>
+          <Controller
+            name='by'
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { value, onChange } }) => (
+              <CustomTextField
+                select
+                fullWidth
+                label='Select Refer To'
+                error={Boolean(errors.by)}
+                helperText={errors.by?.message}
+                SelectProps={{
+                  value: value,
+                  onChange: e => onChange(e)
+                }}
+                sx={{ mb: 4 }}
+              >
+                <MenuItem value='' disabled>
+                  Select refer
+                </MenuItem>
+                {watchedOnModel === 'Client' &&
+                  clients?.map(item => (
+                    <MenuItem key={item} value={item._id}>
+                      <div>
+                        <div>Phone: {item.phone && item.phone}</div>
+                        <div>Name: {item.fullName && item.fullName}</div>
+                      </div>
+                    </MenuItem>
+                  ))}
+                {watchedOnModel === 'Agent' &&
+                  agents?.map(item => (
+                    <MenuItem key={item} value={item._id}>
+                      <div>
+                        <div>Phone: {item.phone && item.phone}</div>
+                        <div>Name: {item.fullName && item.fullName}</div>
+                      </div>
+                    </MenuItem>
+                  ))}
+                {watchedOnModel === 'Company' &&
+                  company?.map(item => (
+                    <MenuItem key={item} value={item._id}>
+                      <div>
+                        <div>Phone: {item.phone && item.phone}</div>
+                        <div>Name: {item.companyName && item.companyName}</div>
+                      </div>
+                    </MenuItem>
+                  ))}
+              </CustomTextField>
+            )}
+          />
+        </Grid>
+        <Grid item md={6}>
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
+                </>
               )}
-            </>
-          )
-        })}
-        {/* <Controller
-          name='doe'
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { value, onChange } }) => ( */}
-        <Box sx={{ display: 'flex', flexWrap: 'wrap' }} className='demo-space-x'></Box>
-        {/* )}
-        /> */}
-        <Controller
-          name='onModel'
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <CustomTextField
-              disabled={passportId?.status === 'booked' ? true : false}
-              select
-              fullWidth
-              label='Refer Title'
-              error={Boolean(errors.onModel)}
-              helperText={errors.onModel?.message}
-              // {...field} // Spread the field object
-              SelectProps={{
-                value: field.value,
-                onChange: e => field.onChange(e)
-              }}
-              sx={{ mb: 4 }}
-            >
-              <MenuItem value='Client'>Client</MenuItem>
-              <MenuItem value='Company'>Company</MenuItem>
-              <MenuItem value='Agent'>Agent</MenuItem>
-            </CustomTextField>
-          )}
-        />
-        <Controller
-          name='by'
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { value, onChange } }) => (
-            <CustomTextField
-              disabled={passportId?.status === 'booked' ? true : false}
-              select
-              fullWidth
-              label='Select Refer To'
-              error={Boolean(errors.by)}
-              helperText={errors.by?.message}
-              SelectProps={{
-                value: value,
-                onChange: e => onChange(e)
-              }}
-              sx={{ mb: 4 }}
-            >
-              {watchedOnModel === 'Client' &&
-                clients?.map(item => (
-                  <MenuItem key={item} value={item._id}>
-                    <div>
-                      <div>Phone: {item.phone && item.phone}</div>
-                      <div>Name: {item.fullName && item.fullName}</div>
-                    </div>
-                  </MenuItem>
-                ))}
-              {watchedOnModel === 'Agent' &&
-                agents?.map(item => (
-                  <MenuItem key={item} value={item._id}>
-                    <div>
-                      <div>Phone: {item.phone && item.phone}</div>
-                      <div>Name: {item.fullName && item.fullName}</div>
-                    </div>
-                  </MenuItem>
-                ))}
-              {watchedOnModel === 'Company' &&
-                company?.map(item => (
-                  <MenuItem key={item} value={item._id}>
-                    <div>
-                      <div>Phone: {item.phone && item.phone}</div>
-                      <div>Name: {item.companyName && item.companyName}</div>
-                    </div>
-                  </MenuItem>
-                ))}
-            </CustomTextField>
-          )}
-        />
-
-        <Controller
-          name='files'
-          control={control}
-          defaultValue={[]}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <>
-              <label htmlFor='files'>Upload Files</label>
-              <EditFilesUploader
-                setFiles={setFiles}
-                previousFiles={previousFiles}
-                setPreviousFiles={setPreviousFiles}
-                removeFiles={removeFiles}
-                setRemoveFiles={setRemoveFiles}
-                files={files}
-                prevFiles={passportId?.files}
-                onChange={onChange}
-              />
-            </>
-          )}
-        />
-
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button type='submit' variant='contained' sx={{ mr: 3 }}>
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        {/* <PassportSubmitButton
+            dispatch={dispatch}
+            watch={watch}
+            toggle={toggle}
+            setFiles={setFiles}
+            reset={reset}
+            removeSelection={removeSelection}
+          /> */}
+        {/* <Button type='submit' variant='contained' sx={{ mr: 3 }} onClick={()=>{console.log("sdfsdf")}}>
             Submit
-          </Button>
-          <Button variant='tonal' color='secondary' onClick={handleClose}>
-            Cancel
-          </Button>
-        </Box>
-      </form>
-    </div>
+          </Button> */}
+        <Button variant='tonal' color='secondary' onClick={handleClose}>
+          Cancel
+        </Button>
+      </Box>
+    </form>
   )
 }
 

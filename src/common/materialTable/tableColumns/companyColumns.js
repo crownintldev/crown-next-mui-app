@@ -18,4 +18,5 @@ const useCompanyColumns = () =>
     ],
     []
   )
+
 export default useCompanyColumns

@@ -77,7 +77,9 @@ const TextFieldStyled = styled(TextField)(({ theme }) => ({
       padding: '7.5px 13px'
     },
     '&:not(.MuiInputBase-readOnly):not([readonly])::placeholder': {
-      transition: theme.transitions.create(['opacity', 'transform'], { duration: theme.transitions.duration.shorter })
+      transition: theme.transitions.create(['opacity', 'transform'], {
+        duration: theme.transitions.duration.shorter
+      })
     },
 
     // ** For Autocomplete

@@ -26,6 +26,7 @@ export const useTableColumns = () =>
     ],
     []
   )
+
 export const useChildTableColumns = () =>
   useMemo(() => [
     { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
@@ -54,4 +55,5 @@ export const useChildTableColumns = () =>
       Cell: defaultCellRenderer
     }
   ])
+
 // export default useTableColumns

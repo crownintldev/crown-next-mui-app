@@ -97,8 +97,17 @@ const EcommerceGeneratedLeads = () => {
   return (
     <Card>
       <CardContent>
-        <Box sx={{ gap: 2, display: 'flex', alignItems: 'stretch', justifyContent: 'space-between' }}>
-          <Box sx={{ gap: 1.75, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Box
+          sx={{ gap: 2, display: 'flex', alignItems: 'stretch', justifyContent: 'space-between' }}
+        >
+          <Box
+            sx={{
+              gap: 1.75,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}
+          >
             <div>
               <Typography variant='h5' sx={{ mb: 0.5 }}>
                 Generated Leads
@@ -107,7 +116,13 @@ const EcommerceGeneratedLeads = () => {
             </div>
             <div>
               <Typography variant='h3'>4,350</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 1, color: 'success.main' } }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '& svg': { mr: 1, color: 'success.main' }
+                }}
+              >
                 <Icon icon='tabler:chevron-up' fontSize='1.25rem' />
                 <Typography variant='h6' sx={{ color: 'success.main' }}>
                   15.8%
@@ -115,7 +130,13 @@ const EcommerceGeneratedLeads = () => {
               </Box>
             </div>
           </Box>
-          <ReactApexcharts type='donut' width={150} height={165} series={series} options={options} />
+          <ReactApexcharts
+            type='donut'
+            width={150}
+            height={165}
+            series={series}
+            options={options}
+          />
         </Box>
       </CardContent>
     </Card>

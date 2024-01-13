@@ -36,6 +36,7 @@ const AddActions = () => {
   const handlePaymentMethodChange = event => {
     setPaymentMethod(event.target.value)
   }
+
   const handleActionMethodChange = () => {
     // Set the state to open the modal
     setPreviewModalOpen(true)
@@ -71,7 +72,6 @@ const AddActions = () => {
               onClose={handleClosePreviewModal}
               data={invoiceDataArray}
             />
-
           </CardContent>
         </Card>
       </Grid>

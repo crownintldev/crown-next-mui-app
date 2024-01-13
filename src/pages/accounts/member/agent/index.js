@@ -2,13 +2,16 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
 import useAgentAndClientColumns from 'src/common/materialTable/tableColumns/agentAndClient'
+
 //Forms
 import AgentandClientForm from 'src/common/forms/member/AgentandClientForm'
+
 // redux
 import { fetchAgent } from 'src/store'
 
 const index = ({ apiData }) => {
   const columns = useAgentAndClientColumns()
+
   return (
     <div>
       <MaterialTable
@@ -20,6 +23,7 @@ const index = ({ apiData }) => {
         drawerProps={{
           formTitle: 'Add Agent',
           editFormTitle: 'Edit Agent',
+
           //header buttons drawer
           buttonTitle: 'Add Agent',
           editButtonTitle: 'Edit Agent',

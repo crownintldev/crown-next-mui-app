@@ -12,6 +12,7 @@ const statusObj = {
 
 export const renderStatusCell = ({ cell }) => {
   const value = cell.getValue()
+
   return (
     statusObj.hasOwnProperty(value) && (
       <CustomChip
@@ -25,10 +26,13 @@ export const renderStatusCell = ({ cell }) => {
     )
   )
 }
+
 const capitalize = value => <div style={{ textTransform: 'capitalize' }}>{value}</div>
 const uppercase = value => <div style={{ textTransform: 'uppercase' }}>{value}</div>
+
 export const defaultCellRenderer = ({ row, column }) => {
   const value = column.id.split('.').reduce((acc, curr) => acc?.[curr], row.original)
+
   // Check if the value is not undefined and not null
   return value !== undefined && value !== null ? (
     capitalize(value)
@@ -36,8 +40,10 @@ export const defaultCellRenderer = ({ row, column }) => {
     <span style={{ color: '#ffa600ff' }}>N/A</span>
   )
 }
+
 export const defaultCellUpperCase = ({ row, column }) => {
   const value = column.id.split('.').reduce((acc, curr) => acc?.[curr], row.original)
+
   // Check if the value is not undefined and not null
   return value !== undefined && value !== null ? (
     uppercase(value)
@@ -48,14 +54,17 @@ export const defaultCellUpperCase = ({ row, column }) => {
 
 export const conditionValue = ({ cell }) => {
   const data = cell.getValue()
+
   return data?.fullName ? capitalize(data?.fullName) : capitalize(data?.companyName)
 }
+
 export const dateFormat = ({ cell }) => {
   return dayjs(cell.getValue()).format('YYYY-MM-DD')
 }
 
 export const ArrayCellRenderer = ({ cell }) => {
   const data = cell.getValue()
+
   return (
     <div>
       {data.map(service => (

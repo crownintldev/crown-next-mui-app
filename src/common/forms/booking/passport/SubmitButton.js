@@ -12,6 +12,7 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   let data = watch()
+
   const onSubmit = async () => {
     try {
       console.log('============', data)
@@ -24,6 +25,7 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
       data?.files?.forEach(file => {
         formData.append('files', file)
       })
+
       //   const responseAction = await dispatch(addPassport(formData))
       //   console.log(responseAction)
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API}/passport/create`, formData)
@@ -37,6 +39,7 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
           newData: res.data.data
         })
       )
+
       //   reset()
       if (removeSelection) {
         removeSelection()
@@ -58,6 +61,7 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
         toggle={toggleDrawer}
         drawerTitle={'Add Visa'}
         Form={EditVisaBookingForm}
+
         // fetchApi={fetchApi}
         formName={'Add Visa'}
         _id={response ? [response[0]._id] : undefined}

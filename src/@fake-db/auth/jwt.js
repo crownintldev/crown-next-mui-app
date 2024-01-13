@@ -14,16 +14,33 @@ const users = [
     password: 'admin',
     fullName: 'John Doe',
     username: 'johndoe',
-    email: 'admin@vuexy.com'
+    email: 'admin@crown.com'
   },
+
   {
     id: 2,
     role: 'client',
     password: 'client',
     fullName: 'Jane Doe',
     username: 'janedoe',
-    email: 'client@vuexy.com'
-  }
+    email: 'client@crown.com'
+  },
+  {
+    id: 3,
+    role: 'admin',
+    password: 'admin',
+    fullName: 'Shafqat Rasool',
+    username: 'shafqat',
+    email: 'shafqat@crown.com'
+  },
+  {
+    id: 4,
+    role: 'admin',
+    password: 'admin',
+    fullName: 'Mubashir Nazir',
+    username: 'mubashir',
+    email: 'mubashir@crown.com'
+  },
 ]
 
 // ! These two secrets should be in .env file and not in any other file
@@ -40,7 +57,9 @@ mock.onPost('/jwt/login').reply(request => {
   }
   const user = users.find(u => u.email === email && u.password === password)
   if (user) {
-    const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, { expiresIn: jwtConfig.expirationTime })
+    const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
+      expiresIn: jwtConfig.expirationTime
+    })
 
     const response = {
       accessToken,

@@ -83,6 +83,7 @@ const VerticalLayout = props => {
               toggleNavVisibility={toggleNavVisibility}
               navigationBorderWidth={navigationBorderWidth}
               verticalNavItems={verticalLayoutProps.navApps}
+
               // ========
               // navMenuContent={verticalLayoutProps.navMenu.content}
               // navMenuBranding={verticalLayoutProps.navMenu.branding}

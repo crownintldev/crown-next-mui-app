@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+
 // ** Third Party Imports
 import * as yup from 'yup'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 
@@ -8,8 +10,10 @@ import Box from '@mui/material/Box'
 
 // yup
 import { yupResolver } from '@hookform/resolvers/yup'
+
 // hookform
 import { useForm } from 'react-hook-form'
+
 //redux
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -27,18 +31,21 @@ import { createApi, updateApi } from 'src/action/function'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 import SelectHookField from 'src/common/dataEntry/SelectHookField'
+
 //form
 import SelectField from 'src/common/dataEntry/SelectField'
 import SupplierForm from 'src/common/forms/supplier/SupplierForm'
 import axios from 'axios'
 import { fetchActionData } from 'src/action/fetchData'
 
-const requiredError = ['category', 'destination', 'duration', 'type', ]
+const requiredError = ['category', 'destination', 'duration', 'type']
+
 const yupField = requiredError.reduce((acc, item) => {
   acc[item] = yup
     .string()
     .typeError('Field Should not be empty')
     .required('Field Should not be empty')
+
   return acc
 }, {})
 
@@ -82,7 +89,6 @@ const VisaServiceForm = ({
   const type = useSelector(state => state?.visaType?.data)
   const duration = useSelector(state => state?.visaDuration?.data)
 
-
   useEffect(() => {
     dispatch(fetchVisaCategory({}))
     dispatch(fetchVisaDestination({}))
@@ -90,6 +96,7 @@ const VisaServiceForm = ({
     dispatch(fetchVisaDuration({}))
     dispatch(fetchSupplier({}))
   }, [])
+
   const {
     reset,
     control,
@@ -110,6 +117,7 @@ const VisaServiceForm = ({
   const selectCategory = watch('category')
   const selectDuration = watch('duration')
   const selectType = watch('type')
+
   // console.log(selectDestination, selectCategory, selectDuration, selectType)
 
   useEffect(() => {
@@ -121,12 +129,13 @@ const VisaServiceForm = ({
     }
   }, [selectDestination, selectCategory, selectDuration, selectType])
 
-  useEffect(()=>{
-   setValue("confirmed.totalFee",supplierVisa?.confirmed?.totalFee)
-   setValue("processing.visaFee",supplierVisa?.processing?.visaFee)
-   setValue("processing.processingFee",supplierVisa?.processing?.processingFee)
-   setValue("supplierVisaService",supplierVisa?._id)
-  },[supplierVisa])
+  useEffect(() => {
+    setValue('confirmed.totalFee', supplierVisa?.confirmed?.totalFee)
+    setValue('processing.visaFee', supplierVisa?.processing?.visaFee)
+    setValue('processing.processingFee', supplierVisa?.processing?.processingFee)
+    setValue('supplierVisaService', supplierVisa?._id)
+  }, [supplierVisa])
+
   // -- end find supplier visa service
 
   // editId handle
@@ -149,6 +158,7 @@ const VisaServiceForm = ({
     toggle()
     reset()
   }
+
   const onSubmit = async data => {
     // console.log(data)
     if (editId) {
@@ -218,7 +228,6 @@ const VisaServiceForm = ({
           options={category ?? []}
           label='Category'
           placeholder='Choose Category'
-          
         />
         {/* type */}
         <SelectHookField

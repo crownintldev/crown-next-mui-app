@@ -145,7 +145,9 @@ const EcommerceOrders = () => {
                       </TimelineDot>
                       <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent sx={{ mt: 0, pt: 0, mb: theme => `${theme.spacing(1)} !important` }}>
+                    <TimelineContent
+                      sx={{ mt: 0, pt: 0, mb: theme => `${theme.spacing(1)} !important` }}
+                    >
                       <Typography
                         variant='body2'
                         sx={{
@@ -187,11 +189,15 @@ const EcommerceOrders = () => {
                       <Typography sx={{ mb: 0.5 }} variant='h6'>
                         {item.receiver.name}
                       </Typography>
-                      <Typography sx={{ color: 'text.disabled' }}>{item.receiver.address}</Typography>
+                      <Typography sx={{ color: 'text.disabled' }}>
+                        {item.receiver.address}
+                      </Typography>
                     </TimelineContent>
                   </TimelineItem>
                 </Timeline>
-                {index !== data[value].length - 1 && <Divider sx={{ my: 4, borderStyle: 'dashed' }} />}
+                {index !== data[value].length - 1 && (
+                  <Divider sx={{ my: 4, borderStyle: 'dashed' }} />
+                )}
               </Fragment>
             )
           })}

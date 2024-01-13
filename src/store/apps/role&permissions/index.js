@@ -23,6 +23,7 @@ export const addPermission = createAsyncThunk(
       if (recordName && response.data) {
         if (response.data.status === 'SUCCESS') {
           dispatch(setSuccess(true)) // Set success to true on successful response
+
           return { [recordName]: response.data, recordName: recordName }
         }
       }
@@ -53,6 +54,7 @@ export const addUserRole = createAsyncThunk(
       if (recordName && response.data) {
         if (response.data.status === 'SUCCESS') {
           dispatch(setSuccess(true)) // Set success to true on successful response
+
           return { [recordName]: response.data, recordName: recordName }
         }
       }
@@ -84,6 +86,7 @@ export const fetchData = createAsyncThunk('appPermissions/fetchData', async ({ q
         }
       }
     )
+
     return response.data
   } catch (error) {
     throw error
@@ -105,6 +108,7 @@ export const fetchUserRoles = createAsyncThunk(
     }
     try {
       dispatch(setSpinner(true)) // Ensure spinner is turned off in case of an error
+
       const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}/role/getRole${params}`, {
         headers: {
           Authorization: authorization
@@ -124,6 +128,7 @@ export const fetchUserRoles = createAsyncThunk(
     }
   }
 )
+
 export const fetchModules = createAsyncThunk(
   'appPermissions/fetchModules',
   async ({ data, token, recordName }, { dispatch }) => {
@@ -139,6 +144,7 @@ export const fetchModules = createAsyncThunk(
     }
     try {
       dispatch(setSpinner(true)) // Ensure spinner is turned off in case of an error
+
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_URL}/module/getModuleList${params}`,
         {
@@ -161,11 +167,13 @@ export const fetchModules = createAsyncThunk(
     }
   }
 )
+
 export const fetchUserPermissions = createAsyncThunk(
   'appPermissions/fetchUserPermissions',
   async ({ limit, page, token, recordName }, { dispatch }) => {
     let authorization
     let params
+
     const query = {
       limit: limit,
       pageNumber: page
@@ -179,6 +187,7 @@ export const fetchUserPermissions = createAsyncThunk(
     }
     try {
       dispatch(setSpinner(true)) // Ensure spinner is turned off in case of an error
+
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_URL}/permission/getPermission${params}`,
         {
@@ -201,6 +210,7 @@ export const fetchUserPermissions = createAsyncThunk(
     }
   }
 )
+
 export const fetchPermissionsWithId = createAsyncThunk(
   'appPermissions/fetchPermissionsWithId',
   async ({ data, token, recordName }, { dispatch }) => {
@@ -215,6 +225,7 @@ export const fetchPermissionsWithId = createAsyncThunk(
     }
     try {
       dispatch(setSpinner(true)) // Ensure spinner is turned off in case of an error
+
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_URL}/permission/getPermissionDetailsWithId${params}`,
         {
@@ -288,6 +299,7 @@ export const appPermissionsSlice = createSlice({
       .addCase(addPermission.rejected, state => {
         state.spinner = false
         state.success = false
+
         // axiosErrorToast(state.message)
       })
       .addCase(fetchUserPermissions.fulfilled, (state, action) => {
@@ -328,6 +340,7 @@ export const appPermissionsSlice = createSlice({
       .addCase(addUserRole.rejected, state => {
         state.spinner = false
         state.success = false
+
         // axiosErrorToast(state.message)
       })
       .addCase(fetchUserRoles.fulfilled, (state, action) => {
@@ -354,4 +367,5 @@ export const appPermissionsSlice = createSlice({
 })
 
 export const { setSpinner, setMessage, setSuccess } = appPermissionsSlice.actions
+
 export default appPermissionsSlice.reducer

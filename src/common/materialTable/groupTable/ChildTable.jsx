@@ -15,6 +15,7 @@ export const ChildTable = ({
   const [globalFilter, setGlobalFilter] = useState('')
   const [showSearchBar, setShowSearchBar] = useState(false)
   const parentRowId = row.original._id
+
   const handleChildRowSelectionChangeParentId = selection => {
     handleChildRowSelectionChange(selection, parentRowId)
   }

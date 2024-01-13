@@ -141,7 +141,11 @@ const AnalyticsSupportTracker = () => {
             {data.map((item, index) => (
               <Box
                 key={index}
-                sx={{ display: 'flex', alignItems: 'center', mb: index !== data.length - 1 ? 4 : undefined }}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  mb: index !== data.length - 1 ? 4 : undefined
+                }}
               >
                 <CustomAvatar
                   skin='light'
@@ -160,7 +164,12 @@ const AnalyticsSupportTracker = () => {
               </Box>
             ))}
           </Grid>
-          <Grid item xs={12} sm={7} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Grid
+            item
+            xs={12}
+            sm={7}
+            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
             <ReactApexcharts type='radialBar' height={325} options={options} series={[85]} />
           </Grid>
         </Grid>

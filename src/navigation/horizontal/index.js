@@ -2,6 +2,7 @@ const navigation = () => [
   {
     title: 'Dashboards',
     icon: 'tabler:smart-home',
+
     // badgeContent: 'new',
     badgeColor: 'error',
     children: [
@@ -9,6 +10,7 @@ const navigation = () => [
         title: 'Analytics',
         path: '/dashboards/analytics'
       },
+
       // {
       //   title: 'CRM',
       //   path: '/dashboards/crm'

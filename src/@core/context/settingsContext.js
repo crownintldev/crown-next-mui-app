@@ -18,7 +18,10 @@ const initialSettings = {
   contentWidth: themeConfig.contentWidth,
   toastPosition: themeConfig.toastPosition,
   verticalNavToggleType: themeConfig.verticalNavToggleType,
-  appBar: themeConfig.layout === 'horizontal' && themeConfig.appBar === 'hidden' ? 'fixed' : themeConfig.appBar
+  appBar:
+    themeConfig.layout === 'horizontal' && themeConfig.appBar === 'hidden'
+      ? 'fixed'
+      : themeConfig.appBar
 }
 
 const staticSettings = {
@@ -92,7 +95,11 @@ export const SettingsProvider = ({ children, pageSettings }) => {
     setSettings(updatedSettings)
   }
 
-  return <SettingsContext.Provider value={{ settings, saveSettings }}>{children}</SettingsContext.Provider>
+  return (
+    <SettingsContext.Provider value={{ settings, saveSettings }}>
+      {children}
+    </SettingsContext.Provider>
+  )
 }
 
 export const SettingsConsumer = SettingsContext.Consumer

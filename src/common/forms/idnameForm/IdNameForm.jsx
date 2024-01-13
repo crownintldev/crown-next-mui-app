@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+
 // ** Third Party Imports
 import * as yup from 'yup'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 
@@ -8,10 +10,13 @@ import Box from '@mui/material/Box'
 
 // yup
 import { yupResolver } from '@hookform/resolvers/yup'
+
 // hookform
 import { useForm } from 'react-hook-form'
+
 //redux
 import { useDispatch, useSelector } from 'react-redux'
+
 // action
 import { createApi, updateApi } from 'src/action/function'
 
@@ -21,21 +26,14 @@ import axios from 'axios'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
 
 const schema = yup.object().shape({
-  name: yup.string().typeError("field is required").required('required')
+  name: yup.string().typeError('field is required').required('required')
 })
 
 const defaultValues = {
   name: ''
 }
 
-const IdNameForm = ({
-  toggle,
-  fetchApi,
-  api = 'expense',
-  _id,
-  stateSelector,
-  removeSelection
-}) => {
+const IdNameForm = ({ toggle, fetchApi, api = 'expense', _id, stateSelector, removeSelection }) => {
   const dispatch = useDispatch()
   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
 

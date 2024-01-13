@@ -112,7 +112,15 @@ const EcommerceProfit = () => {
           Last Month
         </Typography>
         <ReactApexcharts type='line' height={93} series={series} options={options} />
-        <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            gap: 2,
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
           <Typography variant='h4'>684k</Typography>
           <Typography variant='body2' sx={{ color: 'success.main' }}>
             +8.35%

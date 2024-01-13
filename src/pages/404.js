@@ -36,7 +36,15 @@ const Img = styled('img')(({ theme }) => ({
 const Error404 = () => {
   return (
     <Box className='content-center'>
-      <Box sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+      <Box
+        sx={{
+          p: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center'
+        }}
+      >
         <BoxWrapper>
           <Typography variant='h2' sx={{ mb: 1.5 }}>
             Page Not Found :(

@@ -14,6 +14,7 @@ export const createApi = async ({
 }) => {
   try {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/create`, data)
+
     // console.log(response.data.data)
     if (removeSelection) {
       removeSelection()

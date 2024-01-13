@@ -7,6 +7,7 @@ import { Button, Grid } from '@mui/material'
 import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
 import FormDrawer from '../drawer/FormDrawer'
 import TableHeader from './tableHeader/TableHeader'
+
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
 
@@ -134,12 +135,14 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api 
   }
 
   const tablePropsData = tableProps(theme)
+
   // table start
   const table = useMaterialReactTable({
     columns,
     data: data,
     ...tablePropsData,
     enableExpanding: hasSubRows(data),
+
     // enableExpanding: true,
     renderTopToolbarCustomActions: renderCustomActions,
     getRowId: row => row._id, // Adjust based on your data's unique identifier

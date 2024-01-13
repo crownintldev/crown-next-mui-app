@@ -1,4 +1,11 @@
-import { accountArrays, automationArray, databaseArray, homeArray, settingsArray, ticketingArrays } from './menu'
+import {
+  accountArrays,
+  automationArray,
+  databaseArray,
+  homeArray,
+  settingsArray,
+  ticketingArrays
+} from './menu'
 
 const navigation = () => {
   return [

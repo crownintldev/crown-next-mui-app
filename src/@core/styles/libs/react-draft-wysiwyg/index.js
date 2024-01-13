@@ -15,11 +15,12 @@ export const EditorWrapper = styled('div')(({ theme }) => ({
       '& .rdw-link-modal': {
         height: 'auto'
       },
-      '& .rdw-colorpicker-modal, & .rdw-link-modal, & .rdw-embedded-modal, & .rdw-emoji-modal, & .rdw-image-modal': {
-        boxShadow: theme.shadows[8],
-        borderColor: theme.palette.divider,
-        backgroundColor: theme.palette.background.paper
-      },
+      '& .rdw-colorpicker-modal, & .rdw-link-modal, & .rdw-embedded-modal, & .rdw-emoji-modal, & .rdw-image-modal':
+        {
+          boxShadow: theme.shadows[8],
+          borderColor: theme.palette.divider,
+          backgroundColor: theme.palette.background.paper
+        },
       '& .rdw-dropdown-optionwrapper': {
         boxShadow: theme.shadows[8],
         borderColor: theme.palette.divider,

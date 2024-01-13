@@ -70,7 +70,11 @@ const HorizontalNavLink = props => {
 
   return (
     <CanViewNavLink navLink={item}>
-      <Wrapper {...(!hasParent ? { component: 'div', sx: { py: settings.skin === 'bordered' ? 2.625 : 2.75 } } : {})}>
+      <Wrapper
+        {...(!hasParent
+          ? { component: 'div', sx: { py: settings.skin === 'bordered' ? 2.625 : 2.75 } }
+          : {})}
+      >
         <ListItem
           component={Link}
           disabled={item.disabled}
@@ -89,7 +93,8 @@ const HorizontalNavLink = props => {
             ...(!hasParent
               ? {
                   '&.active, &.active:hover': {
-                    boxShadow: theme => `0px 2px 6px ${hexToRGBA(theme.palette.primary.main, 0.48)}`,
+                    boxShadow: theme =>
+                      `0px 2px 6px ${hexToRGBA(theme.palette.primary.main, 0.48)}`,
                     background: theme =>
                       `linear-gradient(72.47deg, ${theme.palette.primary.main} 22.16%, ${hexToRGBA(
                         theme.palette.primary.main,
@@ -97,10 +102,9 @@ const HorizontalNavLink = props => {
                       )} 76.47%)`,
                     '&:focus-visible': {
                       background: theme =>
-                        `linear-gradient(72.47deg, ${theme.palette.primary.dark} 22.16%, ${hexToRGBA(
-                          theme.palette.primary.dark,
-                          0.7
-                        )} 76.47%)`
+                        `linear-gradient(72.47deg, ${
+                          theme.palette.primary.dark
+                        } 22.16%, ${hexToRGBA(theme.palette.primary.dark, 0.7)} 76.47%)`
                     },
                     '& .MuiTypography-root, & .MuiListItemIcon-root': {
                       color: 'common.white'
@@ -118,7 +122,15 @@ const HorizontalNavLink = props => {
                 })
           }}
         >
-          <Box sx={{ gap: 2, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              gap: 2,
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -127,9 +139,15 @@ const HorizontalNavLink = props => {
               }}
             >
               <ListItemIcon sx={{ mr: 2, color: 'text.secondary' }}>
-                <UserIcon icon={icon} fontSize={icon === navSubItemIcon ? '0.625rem' : '1.375rem'} />
+                <UserIcon
+                  icon={icon}
+                  fontSize={icon === navSubItemIcon ? '0.625rem' : '1.375rem'}
+                />
               </ListItemIcon>
-              <Typography {...(menuTextTruncate && { noWrap: true })} sx={{ color: 'text.secondary' }}>
+              <Typography
+                {...(menuTextTruncate && { noWrap: true })}
+                sx={{ color: 'text.secondary' }}
+              >
                 <Translations text={item.title} />
               </Typography>
             </Box>
@@ -138,7 +156,11 @@ const HorizontalNavLink = props => {
                 size='small'
                 label={item.badgeContent}
                 color={item.badgeColor || 'primary'}
-                sx={{ height: 22, minWidth: 22, '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' } }}
+                sx={{
+                  height: 22,
+                  minWidth: 22,
+                  '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' }
+                }}
               />
             ) : null}
           </Box>

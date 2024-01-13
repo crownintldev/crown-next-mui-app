@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+
 // ** Third Party Imports
 import * as yup from 'yup'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 
@@ -8,8 +10,10 @@ import Box from '@mui/material/Box'
 
 // yup
 import { yupResolver } from '@hookform/resolvers/yup'
+
 // hookform
 import { useForm } from 'react-hook-form'
+
 //redux
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -27,19 +31,26 @@ import { createApi, updateApi } from 'src/action/function'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 import SelectHookField from 'src/common/dataEntry/SelectHookField'
+
 //form
 import IdNameForm from '../idnameForm/IdNameForm'
 import SelectField from 'src/common/dataEntry/SelectField'
 import SupplierForm from 'src/common/forms/supplier/SupplierForm'
 import { getValue } from '@mui/system'
 
-const requiredError=["category","destination","duration","type","supplier"]
+const requiredError = ['category', 'destination', 'duration', 'type', 'supplier']
+
 const yupField = requiredError.reduce((acc, item) => {
-  acc[item] = yup.string().typeError("Field Should not be empty").required("Field Should not be empty");
-  return acc;
-}, {});
+  acc[item] = yup
+    .string()
+    .typeError('Field Should not be empty')
+    .required('Field Should not be empty')
+
+  return acc
+}, {})
 
 const schema = yup.object().shape(yupField)
+
 // const schema = yup.object().shape({
 //   category: yup.string().typeError("Field Should not be empty").required("Field Should not be empty"),
 //   destination: yup.string().typeError('Field Should not be empty').required('Field Should not be empty'),
@@ -55,11 +66,11 @@ const defaultValues = {
   type: '',
   supplier: '',
   confirmed: {
-    totalFee:""
+    totalFee: ''
   },
-  processing:{
-    visaFee:"",
-    processingFee:"",
+  processing: {
+    visaFee: '',
+    processingFee: ''
   }
 }
 
@@ -80,6 +91,7 @@ const SupplierVisaForm = ({
   const destination = useSelector(state => state?.visaDestination?.data)
   const type = useSelector(state => state?.visaType?.data)
   const duration = useSelector(state => state?.visaDuration?.data)
+
   const supplier = useSelector(state =>
     state?.supplier?.data?.map(item => ({ name: `${item.name} ${item.phone}`, _id: item._id }))
   )
@@ -91,6 +103,7 @@ const SupplierVisaForm = ({
     dispatch(fetchVisaDuration({}))
     dispatch(fetchSupplier({}))
   }, [])
+
   const {
     reset,
     control,
@@ -111,19 +124,21 @@ const SupplierVisaForm = ({
       Object.keys(editId).forEach(key => {
         setValue(key, editId[key])
       })
-      setValue("category",editId?.category?._id)
-      setValue("type",editId?.type?._id)
-      setValue("duration",editId?.duration?._id)
-      setValue("destination",editId?.destination?._id)
-      setValue("supplier",editId?.supplier?._id)
+      setValue('category', editId?.category?._id)
+      setValue('type', editId?.type?._id)
+      setValue('duration', editId?.duration?._id)
+      setValue('destination', editId?.destination?._id)
+      setValue('supplier', editId?.supplier?._id)
     } else {
       reset()
     }
   }, [setValue, editId])
+
   const handleClose = () => {
     toggle()
     reset()
   }
+
   const onSubmit = async data => {
     if (editId) {
       updateApi({
@@ -157,8 +172,8 @@ const SupplierVisaForm = ({
             type: 'number',
             placeholder: 'Enter Total Fee',
             label: 'Total Fee',
-            value:watch("confirmed.totalFee"),
-            myvalue:true
+            value: watch('confirmed.totalFee'),
+            myvalue: true
           }
         ]
       : [
@@ -167,16 +182,16 @@ const SupplierVisaForm = ({
             type: 'number',
             placeholder: 'Enter Processing Fee',
             label: 'Processing Fee',
-            value:watch("processing.processingFee"),
-            myvalue:true
+            value: watch('processing.processingFee'),
+            myvalue: true
           },
           {
             name: 'processing.visaFee',
             placeholder: 'Enter Visa Fee',
             type: 'number',
             label: 'Visa Fee',
-            value:watch("processing.visaFee"),
-            myvalue:true
+            value: watch('processing.visaFee'),
+            myvalue: true
           }
         ]
 
@@ -283,7 +298,12 @@ const SupplierVisaForm = ({
           disableClearable={true}
         />
 
-        <CustomHookTextField chooseFields={choosePaymentMethod} control={control} errors={errors} required={true} />
+        <CustomHookTextField
+          chooseFields={choosePaymentMethod}
+          control={control}
+          errors={errors}
+          required={true}
+        />
         {/* <CustomHookTextField chooseFields={chooseFields} control={control} errors={errors} /> */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>

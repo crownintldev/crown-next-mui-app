@@ -2,20 +2,24 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import DataTable from 'src/common/table/DataTable'
 import { columnData } from 'src/common/table/columnDataFunction'
+
 //Forms
 import EditAccountForm from 'src/common/forms/account/EditAccountForm'
+
 // redux
 import { fetchData } from 'src/store/apps/account'
 import { useDispatch, useSelector } from 'react-redux'
+
 // ** Store Imports
 import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet'
 
 const index = ({ apiData }) => {
   const dispatch = useDispatch()
-    const store = ReduxFetchAndGet(fetchData, state => state.passport)
-  
-  const state = useSelector(state=>state.account)
+  const store = ReduxFetchAndGet(fetchData, state => state.passport)
+
+  const state = useSelector(state => state.account)
   console.log(state)
+
   // useEffect(()=>{dispatch(fetchData)},[])
 
   // table column data
@@ -46,6 +50,7 @@ const index = ({ apiData }) => {
       headerName: 'Given Name',
       href: ''
     }),
+
     // Visa Booking
     columnData({
       field: 'visaBooking.RefName',
@@ -78,16 +83,21 @@ const index = ({ apiData }) => {
     <div>
       <DataTable
         apiData={apiData}
+
         // tavle columns
         columns={columns}
+
         // show data in table getting by redux
         fetchTableData={state.data}
+
         // drawer form titles
         formTitle={'Add Visa Service'}
         editFormTitle={'Edit Visa Booking'}
+
         //header buttons drawer
         // buttonTitle={'Add New Visa Service'}
         editButtonTitle={'Edit Visa Booking'}
+
         // forms
         // CreateForm={VisaServiceForm}
         EditForm={EditAccountForm}

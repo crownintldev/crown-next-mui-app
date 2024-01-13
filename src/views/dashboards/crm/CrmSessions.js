@@ -130,7 +130,15 @@ const CrmSessions = () => {
           This Month
         </Typography>
         <ReactApexcharts type='bar' height={96} series={series} options={options} />
-        <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            gap: 2,
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
           <Typography variant='h4'>45.1k</Typography>
           <Typography variant='body2' sx={{ color: 'success.main' }}>
             +9.41%

@@ -80,7 +80,12 @@ const CrmLastTransaction = () => {
         <Table>
           <TableHead>
             <TableRow
-              sx={{ '& .MuiTableCell-root': { py: 2, borderTop: theme => `1px solid ${theme.palette.divider}` } }}
+              sx={{
+                '& .MuiTableCell-root': {
+                  py: 2,
+                  borderTop: theme => `1px solid ${theme.palette.divider}`
+                }
+              }}
             >
               <TableCell>Card</TableCell>
               <TableCell>Date</TableCell>
@@ -94,15 +99,24 @@ const CrmLastTransaction = () => {
                 <TableRow
                   key={row.cardNumber}
                   sx={{
-                    '&:last-child .MuiTableCell-root': { pb: theme => `${theme.spacing(6)} !important` },
-                    '& .MuiTableCell-root': { border: 0, py: theme => `${theme.spacing(2.25)} !important` },
-                    '&:first-of-type .MuiTableCell-root': { pt: theme => `${theme.spacing(4.5)} !important` }
+                    '&:last-child .MuiTableCell-root': {
+                      pb: theme => `${theme.spacing(6)} !important`
+                    },
+                    '& .MuiTableCell-root': {
+                      border: 0,
+                      py: theme => `${theme.spacing(2.25)} !important`
+                    },
+                    '&:first-of-type .MuiTableCell-root': {
+                      pt: theme => `${theme.spacing(4.5)} !important`
+                    }
                   }}
                 >
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center', '& img': { mr: 4 } }}>
                       <img width={50} alt={row.imgName} src={`/images/cards/${row.imgName}.png`} />
-                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <Box
+                        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                      >
                         <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary' }}>
                           {row.cardNumber}
                         </Typography>
@@ -113,7 +127,9 @@ const CrmLastTransaction = () => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <Box
+                      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                    >
                       <Typography noWrap sx={{ fontWeight: 500, color: 'text.secondary' }}>
                         Sent
                       </Typography>

@@ -2,14 +2,17 @@ export const homeArray = () => [
   {
     title: 'Home',
     icon: 'tabler:smart-home'
+
     // badgeContent: 'new',
     // badgeColor: 'error',
   }
 ]
+
 export const accountArrays = () => [
   {
     title: 'Dashboards',
     icon: 'tabler:smart-home',
+
     // badgeContent: 'new',
     badgeColor: 'error',
     children: [
@@ -17,6 +20,7 @@ export const accountArrays = () => [
         title: 'Analytics',
         path: '/dashboards/analytics'
       }
+
       // {
       //   title: 'CRM',
       //   path: '/dashboards/crm'
@@ -27,6 +31,7 @@ export const accountArrays = () => [
       // }
     ]
   },
+
   // ==========================
   {
     title: 'Members',
@@ -60,6 +65,7 @@ export const accountArrays = () => [
       }
     ]
   },
+
   // ==========================
   {
     title: 'Services',
@@ -254,6 +260,7 @@ export const accountArrays = () => [
       }
     ]
   }
+
   // {
   //   title: 'Pages',
   //   icon: 'tabler:file',
@@ -788,6 +795,7 @@ export const ticketingArrays = () => [
     path: '/apps/email'
   }
 ]
+
 export const automationArray = () => [
   {
     sectionTitle: 'Modules'
@@ -888,6 +896,7 @@ export const databaseArray = () => [
     ]
   }
 ]
+
 export const settingsArray = () => [
   {
     sectionTitle: 'Setting & Config'

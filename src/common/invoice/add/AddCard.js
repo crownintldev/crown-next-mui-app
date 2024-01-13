@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 // ** React Imports
 import { useState, useEffect } from 'react'
+
 // ** MUI Imports
 import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
@@ -23,6 +24,7 @@ import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
 
 import { useSelector } from 'react-redux'
+
 const AddCard = props => {
   // ** Props
   const { clients, invoiceNumber, selectedClient, setSelectedClient, toggleAddCustomerDrawer } =
@@ -33,6 +35,7 @@ const AddCard = props => {
   const [userCategory, setUserCategory] = useState(null)
   const [selectUser, setSelectUser] = useState(null)
   const [invoiceData, setInvoiceData] = useState([])
+
   //**end AddCardInvoiceTo states
 
   // ** Hook
@@ -63,6 +66,7 @@ const AddCard = props => {
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
         {!invoiceDataArray || invoiceDataArray.length === 0 ? (
+
           // Error message
           <Box sx={{ textAlign: 'center', p: theme.spacing(4) }}>
             <Typography variant='h2' sx={{ mb: 1.5 }}>
@@ -73,6 +77,7 @@ const AddCard = props => {
             </Button>
           </Box>
         ) : (
+
           // Normal rendering
           invoiceDataArray.map(item => {
             const { by: clientData, amount, visaBookingIds } = item

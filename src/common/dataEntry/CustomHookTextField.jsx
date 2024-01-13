@@ -7,8 +7,10 @@ const CustomHookTextField = ({ chooseFields, control, errors, required, item }) 
   // function textfield
   const textField = item => {
     const { name, label, placeholder, type, value: myValue, myvalue } = item
+
     return (
       <Controller
+
         // key={name}
         name={name}
         control={control}
@@ -38,6 +40,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, required, item }) 
       />
     )
   }
+
   return (
     <>
       {chooseFields

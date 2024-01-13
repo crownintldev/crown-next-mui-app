@@ -1,5 +1,6 @@
 // ** Redux Imports
 import { Dispatch } from 'redux'
+
 // import { API } from '../../../../config'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -11,6 +12,7 @@ const toQueryString = params => {
   const query = Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&')
+
   return query
 }
 
@@ -18,6 +20,7 @@ const toQueryString = params => {
 export const fetchData = createAsyncThunk('appAccounts/fetchData', async params => {
   const queryString = toQueryString(params)
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/accounts?${queryString}`)
+
   // console.log(response)
   return response.data
 })

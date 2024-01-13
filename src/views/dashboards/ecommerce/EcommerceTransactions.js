@@ -117,7 +117,10 @@ const EcommerceTransactions = () => {
                   </Typography>
                 </Box>
                 <Typography
-                  sx={{ fontWeight: 500, color: item.amountDiff === 'negative' ? 'error.main' : 'success.main' }}
+                  sx={{
+                    fontWeight: 500,
+                    color: item.amountDiff === 'negative' ? 'error.main' : 'success.main'
+                  }}
                 >
                   {`${item.amountDiff === 'negative' ? '-' : '+'}$${item.amount}`}
                 </Typography>

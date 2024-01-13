@@ -7,9 +7,11 @@ import Icon from 'src/@core/components/icon'
 const ExportButton = ({ tableData, table }) => {
   const [exportToggle, setExportToggle] = useState(null)
   const toggleExport = Boolean(exportToggle)
+
   const handleExport = event => {
     setExportToggle(event.currentTarget)
   }
+
   const handleClose = () => {
     setExportToggle(null)
   }
@@ -19,7 +21,7 @@ const ExportButton = ({ tableData, table }) => {
       <IconButton onClick={handleExport}>
         <Icon fontSize='1.5rem' icon='ph:export-bold' color='#2b60fe' />
       </IconButton>
-      <Menu anchorEl={exportToggle} open={toggleExport} onClose={handleClose} >
+      <Menu anchorEl={exportToggle} open={toggleExport} onClose={handleClose}>
         <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
           <Box
             onClick={() => handleExportData(tableData)}
@@ -31,15 +33,15 @@ const ExportButton = ({ tableData, table }) => {
               color: '#2b60fe'
             }}
           >
-            <FileDownloadIcon sx={{ fontSize: '1.2em',}}/>
+            <FileDownloadIcon sx={{ fontSize: '1.2em' }} />
             Export All
           </Box>
         </MenuItem>
         <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
-        {/* disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()} */}
-         
+          {/* disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()} */}
+
           <Box
-           onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
+            onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
             sx={{
               fontSize: '0.8em',
               display: 'flex',
@@ -48,9 +50,9 @@ const ExportButton = ({ tableData, table }) => {
               color: '#2b60fe'
             }}
           >
-          <FileDownloadIcon sx={{ fontSize: '1.2em',}}/>
+            <FileDownloadIcon sx={{ fontSize: '1.2em' }} />
             Export Selected
-            </Box>
+          </Box>
         </MenuItem>
       </Menu>
     </div>

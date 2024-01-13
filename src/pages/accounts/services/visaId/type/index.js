@@ -2,13 +2,16 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
 import useNameIdTableColumns from 'src/common/materialTable/tableColumns/nameId'
+
 //Forms
 import VisaServiceIdForm from 'src/common/forms/visaServiceIdForm/visaServiceIdForm'
+
 // redux
 import { fetchVisaType } from 'src/store'
 
 const index = ({ apiData }) => {
   const columns = useNameIdTableColumns('Type')
+
   return (
     <div>
       <MaterialTable
@@ -20,6 +23,7 @@ const index = ({ apiData }) => {
         drawerProps={{
           formTitle: 'Add Visa Type',
           editFormTitle: 'Edit Visa Type',
+
           //header buttons drawer
           buttonTitle: 'Add Visa Type',
           editButtonTitle: 'Edit Visa Type',

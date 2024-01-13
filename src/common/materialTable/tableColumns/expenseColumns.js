@@ -7,9 +7,10 @@ const useExpenseColumns = () =>
   useMemo(
     () => [
       { accessorKey: 'title', header: 'Title', Cell: defaultCellRenderer },
+
       // { accessorKey: 'type', header: 'Type', Cell: defaultCellRenderer },
       // { accessorKey: 'category', header: 'Category', Cell: defaultCellRenderer },
-     
+
       { accessorKey: 'price', header: 'Price', Cell: defaultCellRenderer },
       { accessorKey: 'description', header: 'Description', Cell: defaultCellRenderer },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
@@ -17,4 +18,5 @@ const useExpenseColumns = () =>
     ],
     []
   )
+
 export default useExpenseColumns

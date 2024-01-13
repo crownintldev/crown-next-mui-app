@@ -26,10 +26,11 @@ const Table = () => {
           '& .MuiTableCell-body': {
             letterSpacing: '0.25px',
             color: theme.palette.text.secondary,
-            '&:not(.MuiTableCell-sizeSmall):not(.MuiTableCell-paddingCheckbox):not(.MuiTableCell-paddingNone)': {
-              paddingTop: theme.spacing(3.5),
-              paddingBottom: theme.spacing(3.5)
-            }
+            '&:not(.MuiTableCell-sizeSmall):not(.MuiTableCell-paddingCheckbox):not(.MuiTableCell-paddingNone)':
+              {
+                paddingTop: theme.spacing(3.5),
+                paddingBottom: theme.spacing(3.5)
+              }
           }
         })
       }

@@ -1,5 +1,6 @@
 // Next import
 import Link from 'next/link'
+
 // React import
 import React, { useRef } from 'react'
 
@@ -39,6 +40,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
     // Restore the original display style
     printContent.style.display = originalDisplay
   }
+
   // PDF generator handler
   const handlePDF = () => {
     console.log('PDF button clicked')
@@ -90,6 +92,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
         {data ? (
           multiRender
         ) : (
+
           // Error message
           <Box sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
             <Typography variant='h2' sx={{ mb: 1.5 }}>

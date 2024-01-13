@@ -3,18 +3,22 @@ import axios from 'axios'
 import DataTable from 'src/common/table/DataTable'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
 import { columnData } from 'src/common/table/columnDataFunction'
+
 //Forms
 import PassportForm from 'src/common/forms/booking/passport/PassportForm'
 import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'
+
 //
 import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
 import { MenuItem, Menu } from '@mui/material'
+
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
 // redux
 import { fetchData } from 'src/store/apps/booking/passport'
+
 // ** Store Imports
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -148,16 +152,21 @@ const index = ({ apiData }) => {
     <div>
       <DataTable
         apiData={apiData}
+
         // tavle columns
         columns={columns}
+
         // show data in table getting by redux
         fetchTableData={store.data}
+
         // drawer form titles
         formTitle={'Add Passport'}
         editFormTitle={'Edit Passport'}
+
         //header buttons drawer
         buttonTitle={'Add New Passport'}
         editButtonTitle={'Edit Passport'}
+
         // forms
         CreateForm={PassportForm}
         EditForm={EditPassportForm}

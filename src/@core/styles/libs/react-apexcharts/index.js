@@ -30,9 +30,13 @@ const ApexChartWrapper = styled('div')(({ theme }) => ({
     },
     '& .apexcharts-xaxistooltip': {
       borderColor: theme.palette.divider,
-      background: theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.customColors.bodyBg,
+      background:
+        theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.customColors.bodyBg,
       '&:after': {
-        borderBottomColor: theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.customColors.bodyBg
+        borderBottomColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[50]
+            : theme.palette.customColors.bodyBg
       },
       '&:before': {
         borderBottomColor: theme.palette.divider
@@ -40,9 +44,13 @@ const ApexChartWrapper = styled('div')(({ theme }) => ({
     },
     '& .apexcharts-yaxistooltip': {
       borderColor: theme.palette.divider,
-      background: theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.customColors.bodyBg,
+      background:
+        theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.customColors.bodyBg,
       '&:after': {
-        borderLeftColor: theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.customColors.bodyBg
+        borderLeftColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[50]
+            : theme.palette.customColors.bodyBg
       },
       '&:before': {
         borderLeftColor: theme.palette.divider

@@ -1,4 +1,5 @@
 import React from 'react'
+
 // ** Third Party Imports
 import * as yup from 'yup'
 
@@ -28,7 +29,6 @@ const AgentandClientForm = ({
   stateSelector,
   removeSelection
 }) => {
-
   const chooseFields = [
     {
       name: 'fullName',
@@ -71,7 +71,6 @@ const AgentandClientForm = ({
         defaultValues={defaultValues}
         chooseFields={chooseFields}
       />
-     
     </div>
   )
 }

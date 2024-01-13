@@ -80,8 +80,17 @@ const CrmRevenueGrowth = () => {
   return (
     <Card>
       <CardContent>
-        <Box sx={{ gap: 2, display: 'flex', alignItems: 'stretch', justifyContent: 'space-between' }}>
-          <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Box
+          sx={{ gap: 2, display: 'flex', alignItems: 'stretch', justifyContent: 'space-between' }}
+        >
+          <Box
+            sx={{
+              gap: 3,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}
+          >
             <div>
               <Typography variant='h5' sx={{ mb: 2 }}>
                 Revenue Growth

@@ -15,4 +15,5 @@ const useSupplierColumns = () =>
     ],
     []
   )
+
 export default useSupplierColumns

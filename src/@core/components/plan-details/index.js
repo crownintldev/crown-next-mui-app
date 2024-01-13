@@ -87,13 +87,26 @@ const PlanDetails = props => {
         <Typography sx={{ color: 'text.secondary' }}>{data?.subtitle}</Typography>
         <Box sx={{ my: 7, position: 'relative' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Typography sx={{ mt: 2.5, mr: 0.5, fontWeight: 500, color: 'primary.main', alignSelf: 'flex-start' }}>
+            <Typography
+              sx={{
+                mt: 2.5,
+                mr: 0.5,
+                fontWeight: 500,
+                color: 'primary.main',
+                alignSelf: 'flex-start'
+              }}
+            >
               $
             </Typography>
-            <Typography variant='h1' sx={{ color: 'primary.main', fontSize: '3rem', lineHeight: 1.4168 }}>
+            <Typography
+              variant='h1'
+              sx={{ color: 'primary.main', fontSize: '3rem', lineHeight: 1.4168 }}
+            >
               {plan === 'monthly' ? data?.monthlyPrice : data?.yearlyPlan.perMonth}
             </Typography>
-            <Typography sx={{ mb: 1.5, alignSelf: 'flex-end', color: 'text.disabled' }}>/month</Typography>
+            <Typography sx={{ mb: 1.5, alignSelf: 'flex-end', color: 'text.disabled' }}>
+              /month
+            </Typography>
           </Box>
           {plan !== 'monthly' && data?.monthlyPrice !== 0 ? (
             <Typography

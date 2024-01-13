@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer'
 import { styled, useTheme } from '@mui/material/styles'
 import TableCell from '@mui/material/TableCell'
 import { useSelector } from 'react-redux'
+
 //
 const MUITableCell = styled(TableCell)(({ theme }) => ({
   borderBottom: 0,
@@ -18,6 +19,7 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
     paddingRight: `${theme.spacing(2)} !important`
   }
 }))
+
 const AddCardInvoiceTo = ({ clientData, amount }) => {
   const theme = useTheme()
   console.log('amount', amount)

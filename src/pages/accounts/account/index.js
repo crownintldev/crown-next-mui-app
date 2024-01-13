@@ -5,8 +5,10 @@ import {
   useTableColumns,
   useChildTableColumns
 } from 'src/common/materialTable/tableColumns/accountColumns'
+
 //Forms
 import EditAccountForm from 'src/common/forms/account/EditAccountForm'
+
 // redux
 import { fetchData } from 'src/store/apps/account'
 
@@ -18,6 +20,7 @@ const index = ({ apiData }) => {
     <div>
       <GroupTable
         api={'accounts'}
+
         //  apiData={apiData}
         columns={columns}
         childColumns={childColumns}
@@ -25,8 +28,10 @@ const index = ({ apiData }) => {
         stateSelector='account'
         drawerProps={{
           editFormTitle: 'Edit Account',
+
           //header buttons drawer
           editButtonTitle: 'Edit Account',
+
           // forms
           EditForm: EditAccountForm,
           multiSelected: true

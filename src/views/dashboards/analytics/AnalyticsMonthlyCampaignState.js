@@ -104,8 +104,12 @@ const AnalyticsMonthlyCampaignState = () => {
               >
                 <Typography variant='h6'>{item.title}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography sx={{ mr: 4, fontWeight: 500, color: 'text.secondary' }}>{item.amount}</Typography>
-                  <Typography sx={{ color: `${item.trend === 'negative' ? 'error' : 'success'}.main` }}>
+                  <Typography sx={{ mr: 4, fontWeight: 500, color: 'text.secondary' }}>
+                    {item.amount}
+                  </Typography>
+                  <Typography
+                    sx={{ color: `${item.trend === 'negative' ? 'error' : 'success'}.main` }}
+                  >
                     {item.trendNumber}
                   </Typography>
                 </Box>

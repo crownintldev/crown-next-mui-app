@@ -36,15 +36,26 @@ const Img = styled('img')(({ theme }) => ({
 const Error401 = () => {
   return (
     <Box className='content-center'>
-      <Box sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+      <Box
+        sx={{
+          p: 5,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center'
+        }}
+      >
         <BoxWrapper>
           <Typography variant='h2' sx={{ mb: 1.5 }}>
             You are not authorized!
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            You do not have permission to view this page using the credentials that you have provided while login.
+            You do not have permission to view this page using the credentials that you have
+            provided while login.
           </Typography>
-          <Typography sx={{ mb: 6, color: 'text.secondary' }}>Please contact your site administrator.</Typography>
+          <Typography sx={{ mb: 6, color: 'text.secondary' }}>
+            Please contact your site administrator.
+          </Typography>
           <Button href='/' component={Link} variant='contained'>
             Back to Home
           </Button>

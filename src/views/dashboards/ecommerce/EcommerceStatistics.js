@@ -68,7 +68,10 @@ const EcommerceStatistics = () => {
         }
       />
       <CardContent
-        sx={{ pt: theme => `${theme.spacing(7)} !important`, pb: theme => `${theme.spacing(7.5)} !important` }}
+        sx={{
+          pt: theme => `${theme.spacing(7)} !important`,
+          pb: theme => `${theme.spacing(7.5)} !important`
+        }}
       >
         <Grid container spacing={6}>
           {renderStats()}

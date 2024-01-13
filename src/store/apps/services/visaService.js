@@ -9,6 +9,7 @@ const toQueryString = params => {
   const query = Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&')
+
   return query
 }
 
@@ -16,6 +17,7 @@ const toQueryString = params => {
 export const fetchData = createAsyncThunk('appVisaService/fetchData', async params => {
   const queryString = toQueryString(params)
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/visas?${queryString}`)
+
   // console.log(response)
   return response.data
 })

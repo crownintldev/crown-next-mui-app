@@ -118,7 +118,7 @@ const App = props => {
                     <Guard authGuard={authGuard} guestGuard={guestGuard}>
                       <AclGuard
                         aclAbilities={aclAbilities}
-                        guestGuard={guestGuard}
+                        guestGuard={guestGuard} 
                         authGuard={authGuard}
                       >
                         {getLayout(<Component {...pageProps} />)}

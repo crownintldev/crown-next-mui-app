@@ -2,6 +2,7 @@
 import Link from 'next/link'
 // React import
 import React, { useRef } from 'react'
+import QRCode from 'qrcode.react' // Import the QR code library
 
 // Material Imports
 import Modal from '@mui/material/Modal'
@@ -12,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
 
-// Normal Imports
+// html2canvas// Normal Imports
 import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
 import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
@@ -23,28 +24,21 @@ const ActionsHandlers = ({ open, onClose, data }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
   const printRef = useRef()
 
-  console.log('action data', data)
-
-  // print handler
+  // Print handler
   const handlePrint = () => {
-    const printContent = document.getElementById('print-content') // Create an element to hold the content to be printed
-    const originalDisplay = printContent.style.display // Store the original display style
-
-    // Set display to 'block' to make the content visible for printing
+    const printContent = document.getElementById('print-content')
+    const originalDisplay = printContent.style.display
     printContent.style.display = 'block'
-
-    // Trigger the print dialog
     window.print()
-
-    // Restore the original display style
     printContent.style.display = originalDisplay
   }
+
   // PDF generator handler
   const handlePDF = () => {
     console.log('PDF button clicked')
   }
 
-  // taking screenshot handler
+  // Taking screenshot handler
   const handleScreenshot = () => {
     console.log('Screenshot button clicked')
   }
@@ -55,7 +49,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
       <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
       <AddCardItemWithTotal data={itemTotalData} />
-      {index < data.length - 1 && <hr />} Add a horizontal line separator
+      {index < data.length - 1 && <hr />} {/* Add a horizontal line separator */}
     </React.Fragment>
   ))
 
@@ -71,13 +65,16 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       }}
     >
       <Box
+        id='modal-content' // Add this id to capture the entire content, including the scrolled portion
         sx={{
           position: 'absolute',
           backgroundColor: 'white',
           borderRadius: '8px',
           boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
           p: 20,
-          overflow: 'auto',
+          overflowY: 'auto', // Enable vertical scrolling
+          maxHeight: '80vh', // Set a maximum height
+          width: '80vw', // Set a maximum width
           color: 'black'
         }}
       >
@@ -87,6 +84,16 @@ const ActionsHandlers = ({ open, onClose, data }) => {
         >
           <CloseIcon />
         </IconButton>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <QRCode
+            value='https://crown-travokey.com/generate-pdf?params=your-parameters'
+            size={128}
+            bgColor='#ffffff'
+            fgColor='#000000'
+            level='L'
+          />
+        </div>
+
         {data ? (
           multiRender
         ) : (
@@ -101,7 +108,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
           </Box>
         )}
         <Box
-          id='print-content' // This element will be shown and hidden for printing
+          id='print-content'
           sx={{
             textAlign: 'center',
             mt: '10'

@@ -184,7 +184,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       setValue('confirmed', undefined)
     }
     removeUndefined(data)
-    console.log(data)
+    // console.log(data)
 
     try {
       const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/visa-booking/update`, data)

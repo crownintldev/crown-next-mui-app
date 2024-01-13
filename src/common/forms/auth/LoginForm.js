@@ -90,7 +90,7 @@ const LoginForm = () => {
                 value={value}
                 onBlur={onBlur}
                 onChange={onChange}
-                placeholder='admin@vuexy.com'
+                placeholder='admin@crown.com'
                 error={Boolean(errors.email)}
                 {...(errors.email && { helperText: errors.email.message })}
               />

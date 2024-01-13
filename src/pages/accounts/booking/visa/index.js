@@ -15,11 +15,31 @@ import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm
 // redux
 import { fetchVisaBooking } from 'src/store'
 import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet'
-import { Box, Typography } from '@mui/material'
+import { Box, Icon, MenuItem, Typography } from '@mui/material'
 
 const index = ({ apiData }) => {
   const columns = useTableColumns()
 
+ const headerMenu = ({selectedIds,removeSelection}) => {
+    return (
+      <>
+        <MenuItem sx={{ py: 1, m: 0 }}>
+          <Box
+            sx={{
+              fontSize: '0.8em',
+              display: 'flex',
+              alignItems: 'center',
+              columnGap: '4px',
+              color: '#2b60fe'
+            }}
+          >
+            <Icon fontSize='0.8rem' icon='tabler:plus' />
+            Edit Passport Booking
+          </Box>
+        </MenuItem>
+      </>
+    )
+  }
   return (
     <div>
       <MaterialTable
@@ -28,6 +48,7 @@ const index = ({ apiData }) => {
         fetchData={fetchVisaBooking}
         stateSelector='visaBooking'
         columns={columns}
+        headerMenu={headerMenu}
         drawerProps={{
           formTitle: 'Add Passport',
           buttonTitle: 'Add Passport',

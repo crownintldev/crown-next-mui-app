@@ -20,7 +20,7 @@ const TableHeader = props => {
   const dispatch = useDispatch()
 
   // ** Props
-  const { toggle, buttonTitle, deleteIds, fetchData, api, table, tableData, removeSelection } =
+  const { toggle, buttonTitle, selectedIds, fetchData, api, table, tableData, removeSelection,headerMenu } =
     props
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -40,7 +40,7 @@ const TableHeader = props => {
     }
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/remove`, {
-        ids: deleteIds
+        ids: selectedIds
       })
       if (response.data) {
         dispatch(
@@ -58,6 +58,7 @@ const TableHeader = props => {
     }
   }
 
+ 
   return (
     <Box>
       <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -88,7 +89,7 @@ const TableHeader = props => {
               </Box>
             </MenuItem>
           )}
-          {api && deleteIds && deleteIds.length > 0 && (
+          {api && selectedIds && selectedIds.length > 0 && (
             <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
               <Box
                 onClick={handleRemove}
@@ -106,6 +107,7 @@ const TableHeader = props => {
               </Box>
             </MenuItem>
           )}
+          {headerMenu({selectedIds,removeSelection})}
         </Menu>
 
         {/* ----------Export data--------- */}

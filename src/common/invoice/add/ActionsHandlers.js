@@ -1,5 +1,6 @@
 // Next import
 import Link from 'next/link'
+
 // React import
 import React, { useRef } from 'react'
 import QRCode from 'qrcode.react' // Import the QR code library
@@ -13,7 +14,10 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
 
-// html2canvas// Normal Imports
+// html2canvas
+import html2canvas from 'html2canvas'
+
+// Normal Imports
 import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
 import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
@@ -40,7 +44,21 @@ const ActionsHandlers = ({ open, onClose, data }) => {
 
   // Taking screenshot handler
   const handleScreenshot = () => {
-    console.log('Screenshot button clicked')
+    // Capture the content of the entire modal, including QRCode and other content
+    const modalContent = document.getElementById('modal-content')
+
+    html2canvas(modalContent).then(canvas => {
+      // Convert the canvas to a data URL
+      const screenshotUrl = canvas.toDataURL('image/png')
+
+      // Create a temporary link element to trigger the download
+      const link = document.createElement('a')
+      link.href = screenshotUrl
+      link.download = 'screenshot.png'
+
+      // Trigger a click event on the link to initiate the download
+      link.click()
+    })
   }
 
   const multiRender = data.map((invoiceData, index) => (

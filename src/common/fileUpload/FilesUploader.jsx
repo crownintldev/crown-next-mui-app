@@ -62,13 +62,12 @@ const FilesUploader = ({ files, setFiles, onChange }) => {
     </ListItem>
   ))
 
-  const handleRemoveAllFiles = () => {
-    setFiles([])
-  }
-
   return (
     <Fragment>
-      <div {...getRootProps({ className: 'dropzone' })} style={{padding:"10px",paddingBottom:"20px" }}>
+      <div
+        {...getRootProps({ className: 'dropzone' })}
+        style={{ padding: '10px', paddingBottom: '20px' }}
+      >
         {/* <input
           {...getInputProps()}
           type='file'

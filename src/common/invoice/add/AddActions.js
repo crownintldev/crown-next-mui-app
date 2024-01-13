@@ -1,8 +1,6 @@
 // *** React Import
 import React, { useState } from 'react'
-
-// ** Next Import
-import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -16,6 +14,7 @@ import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import TextField from '@mui/material/TextField' // Replace with CustomTextField if needed
 // ... other necessary imports
+import ActionsHandlers from './ActionsHandlers'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -31,9 +30,20 @@ const OptionsWrapper = styled(Box)(() => ({
 
 const AddActions = () => {
   const [paymentMethod, setPaymentMethod] = useState('Bank Transfer')
+  const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
+  const invoiceDataArray = useSelector(state => state.myInvoice.data)
 
   const handlePaymentMethodChange = event => {
     setPaymentMethod(event.target.value)
+  }
+  const handleActionMethodChange = () => {
+    // Set the state to open the modal
+    setPreviewModalOpen(true)
+  }
+
+  const handleClosePreviewModal = () => {
+    // Set the state to close the modal
+    setPreviewModalOpen(false)
   }
 
   return (
@@ -47,17 +57,21 @@ const AddActions = () => {
             </Button>
             <Button
               fullWidth
-              sx={{ mb: 2 }}
-              variant='tonal'
-              component={Link}
-              color='secondary'
-              href='/apps/invoice/preview/4987'
+              variant='contained'
+              sx={{ mb: 2, '& svg': { mr: 2 } }}
+              onClick={handleActionMethodChange}
             >
-              Preview
+              <Icon fontSize='1.125rem' icon='tabler:submit' />
+              Action
             </Button>
-            <Button fullWidth variant='tonal' color='secondary'>
-              Save
-            </Button>
+
+            {/* Render the preview modal */}
+            <ActionsHandlers
+              open={isPreviewModalOpen}
+              onClose={handleClosePreviewModal}
+              data={invoiceDataArray}
+            />
+
           </CardContent>
         </Card>
       </Grid>
@@ -65,7 +79,7 @@ const AddActions = () => {
         <CustomTextField
           select
           fullWidth
-          label='Accept payments via'
+          label='Payment method via'
           value={paymentMethod}
           onChange={handlePaymentMethodChange}
           sx={{

@@ -1,27 +1,19 @@
+//  ** React Imports
 import React, { useEffect, useState } from 'react'
-import { useTheme } from '@mui/material/styles'
 
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
-import toast from 'react-hot-toast'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 import Box, { BoxProps } from '@mui/material/Box'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
 
-// import DatePickerComponent from 'src/common/dataEntry/DatePickerComponent'
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAgent, fetchCompany, fetchClient } from 'src/store'
-
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/booking/passport'
 
 // components
 import PassportSubmitButton from './SubmitButton'
@@ -36,25 +28,33 @@ import FilesUploader from 'src/common/fileUpload/FilesUploader'
 
 //
 import { Grid } from '@mui/material'
-import { capitalizeCamelSpace } from 'src/utils/helperfunction'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
-import SelectField from 'src/common/dataEntry/SelectField'
-import SelectHookField from 'src/common/dataEntry/SelectHookField'
 
-const requiredError = ["cnic", "city", "country", "dob", "doi", "doe", "pob", "gender", "givenName", "fatherName", "nationality", "passportNumber", "religion", "remarks", "surname", "onModel", "by"]
-
-const yupField = requiredError.reduce((acc, item) => {
-  acc[item] = yup
-    .string()
-    .typeError('Field Should not be empty')
-    .required('Field Should not be empty')
-
-  return acc
-}, {})
-
-const schema = yup.object().shape(yupField)
+const schema = yup.object().shape({
+  bookletNumber: yup.string().required('Booklet Number is required'),
+  cnic: yup.string().required('Cnic Number is required'),
+  city: yup.string().required('City is required.'),
+  country: yup.string().required('Country is required'),
+  dob: yup.date().required('Date of Birth is required'),
+  doi: yup.string().required('Digital Object Identifier'),
+  doe: yup.date().required('Date of Expiry is required'),
+  pob: yup.string().required('Place of Birth is required'),
+  gender: yup.string().required('Gender is required'),
+  givenName: yup.string().required('Given Name is required'),
+  fatherName: yup.string().required('Father name is required'),
+  issuingAuthority: yup.string().required('Issuing Authority is required'),
+  nationality: yup.string().required('Nationality is required'),
+  passportNumber: yup.string().required('Passport Number is required'),
+  religion: yup.string().required('Religion is required'),
+  remarks: yup.string().required('Remarks is required'),
+  surname: yup.string().required('Surname is required'),
+  trackingNumber: yup.string().required('Tracking Number is required'),
+  onModel: yup.string().required('Refer Category is required'),
+  by: yup.string().required('Refer is required'),
+  files: yup.array().required('Files Are Missing')
+})
 
 const defaultValues = {
   bookletNumber: '',
@@ -74,7 +74,6 @@ const defaultValues = {
   surname: '',
   trackingNumber: '',
   onModel: 'Agent',
-  recievedPassport: '',
   files: [],
   by: ''
 }
@@ -86,6 +85,39 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const [files, setFiles] = useState([])
   const [date, setDate] = useState(new Date())
 
+  const schema = yup.object().shape({
+    bookletNumber: yup.string().required('Booklet Number is required'),
+    city: yup.string().required('City is required.'),
+    cnic: yup
+      .string()
+      .required('CNIC Number is required')
+      .matches(/^[0-9]{13}$|^[0-9]{5}-[0-9]{7}-[0-9]$/, 'Invalid CNIC format')
+      .test('is-numeric', 'Invalid CNIC format, only numbers are allowed', value => {
+        if (!value) return true // Skip validation if value is empty
+        return /^\d+$/.test(value.replace(/-/g, ''))
+      })
+      .max(15, 'CNIC must be 15 numbers or less')
+      .typeError('Invalid CNIC format, only numbers are allowed'),
+    country: yup.string().required('Country is required'),
+    dob: yup.date().required('Date of Birth is required'),
+    doi: yup.string().required('Digital Object Identifier'),
+    doe: yup.date().required('Date of Expiry is required'),
+    pob: yup.string().required('Place of Birth is required'),
+    gender: yup.string().required('Gender is required'),
+    givenName: yup.string().required('Given Name is required'),
+    fatherName: yup.string().required('Father name is required'),
+    issuingAuthority: yup.string().required('Issuing Authority is required'),
+    nationality: yup.string().required('Nationality is required'),
+    passportNumber: yup.string().required('Passport Number is required'),
+    religion: yup.string().required('Religion is required'),
+    remarks: yup.string().required('Remarks is required'),
+    surname: yup.string().required('Surname is required'),
+    trackingNumber: yup.string().required('Tracking Number is required'),
+    onModel: yup.string().required('Refer Category is required'),
+    by: yup.string().required('Refer is required'),
+    files: yup.array().required('Files Are Missing')
+  })
+
   useEffect(() => {
     setFormSize(1200)
   }, [])
@@ -94,6 +126,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const clients = useSelector(state => state.client?.data)
   const company = useSelector(state => state.company?.data)
   const agents = useSelector(state => state.agent?.data)
+
+  console.log('passport form data', clients, company, agents)
   useEffect(() => {
     dispatch(fetchAgent({}))
     dispatch(fetchClient({}))
@@ -124,46 +158,28 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
 
   const passportField1 = [
     {
-      name: 'givenName',
-      required: true
-    },
-    {
-      name: 'surname',
-      required: true
-    },
-    {
       name: 'passportNumber',
       required: true
     },
     {
-      name: "recievedPassport",
-      type: 'number',
+      name: 'bookletNumber'
+    },
+    {
+      name: 'cnic',
+      type: 'text',
+      required: true
     }
-
   ]
 
   const passportField2 = [
-    {
-      name: 'cnic',
-      type: 'number',
-      required: true
-    },
-    {
-      name: 'city',
-      required: true
-    },
-    {
-      name: 'country',
-      required: true
-    },
     {
       name: 'doi',
       required: true
     },
     {
-      name: 'gender'
+      name: 'givenName',
+      required: true
     },
-
     {
       name: 'fatherName',
       required: true
@@ -172,31 +188,25 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
       name: 'issuingAuthority'
     },
     {
-      name: 'nationality',
-      required: true
-    },
-    {
       name: 'pob',
       placeholder: 'Place of Birth',
       required: true
     },
     {
-      name: 'religion',
+      name: 'surname',
       required: true
-    },
-
-    {
-      name: 'bookletNumber'
     },
     {
       name: 'trackingNumber',
-      type: 'number'
+      required: true
     },
     {
       name: 'remarks',
       required: true
     }
   ]
+
+  console.log('files output', files)
 
   return (
     <div>
@@ -207,6 +217,36 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
               <CustomHookTextField item={item} control={control} errors={errors} required={true} />
             </Grid>
           ))}
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'country'}
+              options={['Pakistan', 'Iran', 'Afghanistan', 'Saudi Arbia', 'Turki']}
+              label={'Country'}
+              placeholder='Search Countries'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'city'}
+              options={['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Peshawar']}
+              label={'City'}
+              placeholder='Search Cities'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
           <Grid item md={6} lg={4} sx={{ mb: 4 }}>
             <DatePickerHookField
               name='dob'
@@ -219,10 +259,55 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
           <Grid item md={6} lg={4} sx={{ mb: 4 }}>
             <DatePickerHookField
               name='doe'
-              placeholder='Date of Expiry'
+              placeholder='Date of Expire'
               required={true}
               control={control}
               errors={errors}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'gender'}
+              options={['Male', 'Female', 'Other']}
+              label={'Gender'}
+              placeholder='Search Gender'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'nationality'}
+              options={['Pakistani', 'Indian', 'Afghani']}
+              label={'Nationality'}
+              placeholder='Search Nationality'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'religion'}
+              options={['Islam', 'Christan', 'Hindu', 'Sikh']}
+              label={'Religion'}
+              placeholder='Search Religion'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
             />
           </Grid>
           {passportField2.map(item => (
@@ -238,9 +323,13 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
               options={['Client', 'Company', 'Agent']}
               label={'Refer'}
               placeholder='Select Refer'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
             />
           </Grid>
-
 
           <Grid item md={6} lg={4}>
             <Controller

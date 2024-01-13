@@ -41,7 +41,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, required, item }) 
   return (
     <>
       {chooseFields
-        ? chooseFields.map((item) => {
+        ? chooseFields.map(item => {
             return textField(item)
           })
         : textField(item)}

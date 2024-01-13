@@ -9,11 +9,14 @@ export const handleURLQueries = (router, path) => {
   if (Object.keys(router.query).length && path) {
     const arr = Object.keys(router.query)
 
-    return router.asPath.includes(path) && router.asPath.includes(router.query[arr[0]]) && path !== '/'
+    return (
+      router.asPath.includes(path) && router.asPath.includes(router.query[arr[0]]) && path !== '/'
+    )
   }
 
   return false
 }
+
 export const extractSegment = (router, sliceIndex) => {
   const pathSegments = router.pathname.split('/')
 
@@ -22,6 +25,7 @@ export const extractSegment = (router, sliceIndex) => {
 
   return segment
 }
+
 /**
  * Check if the given item has the given url
  * in one of its children

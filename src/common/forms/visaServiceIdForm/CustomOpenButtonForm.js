@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { Button } from '@mui/material'
 import FormDrawer from 'src/common/drawer/FormDrawer'
 
-const CustomOpenButtonForm = ({ ButtonTitle, drawerTitle, Form, fetchApi,formName,api }) => {
+const CustomOpenButtonForm = ({ ButtonTitle, drawerTitle, Form, fetchApi, formName, api }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
+
   return (
     <div>
       <Button onClick={() => setDrawerOpen(true)}>{ButtonTitle}</Button>

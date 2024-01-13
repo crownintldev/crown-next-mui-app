@@ -26,6 +26,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
   // ** Hooks
   const { settings, saveSettings } = useSettings()
   const router = useRouter()
+
   // ** Vars for server side navigation
   // const { menuItems: verticalMenuItems } = ServerSideVerticalNavItems()
   // const { menuItems: horizontalMenuItems } = ServerSideHorizontalNavItems()
@@ -41,6 +42,7 @@ const UserLayout = ({ children, contentHeightFixed }) => {
   if (hidden && settings.layout === 'horizontal') {
     settings.layout = 'vertical'
   }
+
   const DummyArray = [
     {
       title: 'Dashboards',
@@ -64,19 +66,23 @@ const UserLayout = ({ children, contentHeightFixed }) => {
     }
   ]
   const [navItems, setNavItems] = useState([])
+
   const renderArray = activeAppRoute => {
     const arr = VerticalNavItems()
     if (activeAppRoute && arr.length > 0) {
       const navAppChildMenu = arr.find(el => el.path === activeAppRoute)
       setNavItems(navAppChildMenu && navAppChildMenu.children)
+
       return
     }
+
     return DummyArray
   }
   useEffect(() => {
     const activeAppRoute = extractSegment(router)
     renderArray(activeAppRoute)
   }, [router.asPath, router.query])
+
   return (
     <Layout
       hidden={hidden}
@@ -111,7 +117,9 @@ const UserLayout = ({ children, contentHeightFixed }) => {
             // navItems: horizontalMenuItems
           },
           appBar: {
-            content: () => <HorizontalAppBarContent settings={settings} saveSettings={saveSettings} />
+            content: () => (
+              <HorizontalAppBarContent settings={settings} saveSettings={saveSettings} />
+            )
           }
         }
       })}

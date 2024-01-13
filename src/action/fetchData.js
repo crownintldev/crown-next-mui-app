@@ -14,7 +14,7 @@ export const fetchActionData = async (apiFunc, setState, toastify) => {
     if (toastify) {
       toast.error(axiosErrorMessage(err))
     }
+
     // setState([]); // Reset state in case of error
   }
 }
-

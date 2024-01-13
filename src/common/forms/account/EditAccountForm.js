@@ -11,11 +11,13 @@ import Box from '@mui/material/Box'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 import { useDispatch, useSelector } from 'react-redux'
+
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/account'
 
 //helper function
 import { axiosErrorMessage, isAllSameinArray } from 'src/utils/helperfunction'
+
 //get by data
 import axios from 'axios'
 
@@ -39,6 +41,7 @@ const showErrors = (field, valueLen, min) => {
 //custom vuexy select style
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -50,6 +53,7 @@ const MenuProps = {
 
 const schema = yup.object().shape({
   accountIds: yup.array().of(yup.string()).required('Passports are required.')
+
   // visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
   // visaId: yup.string().required('Visa ID is required.'),
   // status: yup.string().required('Status is required.')
@@ -65,8 +69,10 @@ const defaultValues = {
 // ------------------visaBooking Form-----------------------
 const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   const theme = useTheme()
+
   // ** State
   const dispatch = useDispatch()
+
   const accountItems = useSelector(state =>
     ids
       .map(id => state.account.data.length > 0 && state.account.data.find(item => item._id === id))
@@ -84,6 +90,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
       })
   )
   const testValidityRefer = isAllSameinArray(accountItems, 'ReferName')
+
   // console.log('account item', accountItems)
 
   const {
@@ -119,11 +126,13 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   useEffect(() => {
     if (ids.length > 0) {
       setValue('accountIds', ids)
+
       const data = accountItems.reduce(
         (acc, item) => {
           acc.totalAmount += item.amount.total
           acc.paidAmount += item.amount.paid
           acc.discount += item.amount.discount
+
           return acc
         },
         { totalAmount: 0, paidAmount: 0, remainingAmount: 0, discount: 0 }
@@ -135,6 +144,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
       setValue('discount', data.discount)
     }
   }, [ids, setValue])
+
   const handleClose = () => {
     toggle()
     reset()
@@ -167,11 +177,13 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
     return selectedIds
       .map(id => {
         const item = accountItems.find(item => item._id === id)
+
         return item ? item.visaBookingDetails.map((item, index) => `${item.passportNumber} `) : ''
       })
       .filter(Boolean) // Removes any undefined or empty values
       .join(', ')
   }
+
   return (
     <div>
       {!testValidityRefer ? (

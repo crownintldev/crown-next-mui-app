@@ -82,7 +82,9 @@ const Register = () => {
 
   // ** Vars
   const { skin } = settings
-  const imageSource = skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
+
+  const imageSource =
+    skin === 'bordered' ? 'auth-v2-register-illustration-bordered' : 'auth-v2-register-illustration'
 
   return (
     <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
@@ -149,11 +151,24 @@ const Register = () => {
               <Typography variant='h3' sx={{ mb: 1.5 }}>
                 Adventure starts here 🚀
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>Make your app management easy and fun!</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>
+                Make your app management easy and fun!
+              </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-              <CustomTextField autoFocus fullWidth sx={{ mb: 4 }} label='Username' placeholder='johndoe' />
-              <CustomTextField fullWidth label='Email' sx={{ mb: 4 }} placeholder='user@email.com' />
+              <CustomTextField
+                autoFocus
+                fullWidth
+                sx={{ mb: 4 }}
+                label='Username'
+                placeholder='johndoe'
+              />
+              <CustomTextField
+                fullWidth
+                label='Email'
+                sx={{ mb: 4 }}
+                placeholder='user@email.com'
+              />
               <CustomTextField
                 fullWidth
                 label='Password'
@@ -167,7 +182,10 @@ const Register = () => {
                         onMouseDown={e => e.preventDefault()}
                         onClick={() => setShowPassword(!showPassword)}
                       >
-                        <Icon fontSize='1.25rem' icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
+                        <Icon
+                          fontSize='1.25rem'
+                          icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
+                        />
                       </IconButton>
                     </InputAdornment>
                   )
@@ -175,11 +193,27 @@ const Register = () => {
               />
               <FormControlLabel
                 control={<Checkbox />}
-                sx={{ mb: 4, mt: 1.5, '& .MuiFormControlLabel-label': { fontSize: theme.typography.body2.fontSize } }}
+                sx={{
+                  mb: 4,
+                  mt: 1.5,
+                  '& .MuiFormControlLabel-label': { fontSize: theme.typography.body2.fontSize }
+                }}
                 label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      justifyContent: 'center'
+                    }}
+                  >
                     <Typography sx={{ color: 'text.secondary' }}>I agree to</Typography>
-                    <Typography component={LinkStyled} href='/' onClick={e => e.preventDefault()} sx={{ ml: 1 }}>
+                    <Typography
+                      component={LinkStyled}
+                      href='/'
+                      onClick={e => e.preventDefault()}
+                      sx={{ ml: 1 }}
+                    >
                       privacy policy & terms
                     </Typography>
                   </Box>
@@ -188,8 +222,17 @@ const Register = () => {
               <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
                 Sign up
               </Button>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Typography sx={{ color: 'text.secondary', mr: 2 }}>Already have an account?</Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center'
+                }}
+              >
+                <Typography sx={{ color: 'text.secondary', mr: 2 }}>
+                  Already have an account?
+                </Typography>
                 <Typography component={LinkStyled} href='/login'>
                   Sign in instead
                 </Typography>
@@ -205,10 +248,20 @@ const Register = () => {
                 or
               </Divider>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <IconButton href='/' component={Link} sx={{ color: '#497ce2' }} onClick={e => e.preventDefault()}>
+                <IconButton
+                  href='/'
+                  component={Link}
+                  sx={{ color: '#497ce2' }}
+                  onClick={e => e.preventDefault()}
+                >
                   <Icon icon='mdi:facebook' />
                 </IconButton>
-                <IconButton href='/' component={Link} sx={{ color: '#1da1f2' }} onClick={e => e.preventDefault()}>
+                <IconButton
+                  href='/'
+                  component={Link}
+                  sx={{ color: '#1da1f2' }}
+                  onClick={e => e.preventDefault()}
+                >
                   <Icon icon='mdi:twitter' />
                 </IconButton>
                 <IconButton
@@ -219,7 +272,12 @@ const Register = () => {
                 >
                   <Icon icon='mdi:github' />
                 </IconButton>
-                <IconButton href='/' component={Link} sx={{ color: '#db4437' }} onClick={e => e.preventDefault()}>
+                <IconButton
+                  href='/'
+                  component={Link}
+                  sx={{ color: '#db4437' }}
+                  onClick={e => e.preventDefault()}
+                >
                   <Icon icon='mdi:google' />
                 </IconButton>
               </Box>

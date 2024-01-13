@@ -57,7 +57,11 @@ const columns = [
             <Typography noWrap sx={{ color: 'text.secondary', fontWeight: 500 }}>
               {name}
             </Typography>
-            <Typography noWrap variant='body2' sx={{ color: 'text.disabled', textTransform: 'capitalize' }}>
+            <Typography
+              noWrap
+              variant='body2'
+              sx={{ color: 'text.disabled', textTransform: 'capitalize' }}
+            >
               {date}
             </Typography>
           </Box>
@@ -124,7 +128,10 @@ const columns = [
         options={[
           'Details',
           'Archive',
-          { divider: true, dividerProps: { sx: { my: theme => `${theme.spacing(2)} !important` } } },
+          {
+            divider: true,
+            dividerProps: { sx: { my: theme => `${theme.spacing(2)} !important` } }
+          },
           {
             text: 'Delete',
             menuItemProps: {
@@ -163,7 +170,13 @@ const AnalyticsProject = () => {
       <CardHeader
         title='Projects'
         titleTypographyProps={{ sx: { mb: [2, 0] } }}
-        action={<CustomTextField value={value} placeholder='Search' onChange={e => handleFilter(e.target.value)} />}
+        action={
+          <CustomTextField
+            value={value}
+            placeholder='Search'
+            onChange={e => handleFilter(e.target.value)}
+          />
+        }
         sx={{
           py: 4,
           flexDirection: ['column', 'row'],

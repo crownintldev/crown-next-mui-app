@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import Link from 'next/link'
+
 // ** Custom Components Imports
 import CustomChip from 'src/@core/components/mui/chip'
 
@@ -48,6 +49,7 @@ export const columnData = ({
       } else {
         value = params.row[field]
       }
+
       // if (Array.isArray(value)) {
       //   value = value.join(', ');  // Format array as string
       // } else if (value && typeof value === 'object') {

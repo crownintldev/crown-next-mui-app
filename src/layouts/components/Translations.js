@@ -1,10 +1,4 @@
-
-
-
 const Translations = ({ text }) => {
-  
-  
-
   return <>{text}</>
 }
 

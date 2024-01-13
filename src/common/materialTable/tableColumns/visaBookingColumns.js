@@ -45,23 +45,24 @@ const useTableColumns = () =>
         header: 'Tracking Number',
         Cell: defaultCellRenderer
       },
+
       // passport end
       { accessorKey: 'onModel', header: 'Refer', Cell: defaultCellRenderer },
       { accessorKey: 'RefName', header: 'Refer Name', Cell: defaultCellRenderer },
       { accessorKey: 'phone', header: 'Phone', Cell: defaultCellRenderer },
 
       {
-        accessorKey: 'visaId.processing.processingFee',
+        accessorKey: 'processing.processingFee',
         header: 'Processing Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'visaId.processing.visaFee',
+        accessorKey: 'processing.visaFee',
         header: 'Processing - Visa Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'visaId.confirmed.totalFee',
+        accessorKey: 'confirmed.totalFee',
         header: 'Confirmed - Total Fee',
         Cell: defaultCellRenderer
       },
@@ -74,4 +75,5 @@ const useTableColumns = () =>
     ],
     []
   )
+
 export default useTableColumns

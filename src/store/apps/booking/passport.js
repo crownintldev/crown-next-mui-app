@@ -10,6 +10,7 @@ const toQueryString = params => {
   const query = Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&')
+
   return query
 }
 
@@ -18,6 +19,7 @@ export const fetchData = createAsyncThunk('appPassports/fetchData', async params
   const queryString = toQueryString(params)
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/passports?${queryString}`)
   console.log(response)
+
   return response.data
 })
 

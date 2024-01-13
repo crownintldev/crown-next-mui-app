@@ -5,12 +5,14 @@ const toQueryString = params => {
   const query = Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&')
+
   return query
 }
 
 // ** Fetch Users
 export const fetchData = createAsyncThunk('appVisaCategory/fetchData', async (params, thunkAPI) => {
   const currentState = thunkAPI.getState()
+
   // update and merge with new create data
   if (params.newData && params.newData.length !== 0) {
     return {
@@ -18,7 +20,8 @@ export const fetchData = createAsyncThunk('appVisaCategory/fetchData', async (pa
       total: currentState.visaCategory.total + params.newData.length
     }
   }
-   // update and merge updating data
+
+  // update and merge updating data
   if (params.updateData) {
     const updatedData = currentState.visaCategory.data.map(item => {
       const updateItem = params.updateData.find(updateItem => updateItem._id === item._id)
@@ -26,12 +29,14 @@ export const fetchData = createAsyncThunk('appVisaCategory/fetchData', async (pa
       // If updateItem exists, merge it with the existing item
       return updateItem ? { ...item, ...updateItem } : item
     })
+
     return { data: updatedData }
   }
 
   const queryString = toQueryString(params)
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/visa-category?${queryString}`)
   console.log('visaCategory', response)
+
   return response.data
 })
 

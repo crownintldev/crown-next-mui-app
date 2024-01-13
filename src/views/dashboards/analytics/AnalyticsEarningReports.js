@@ -132,9 +132,23 @@ const AnalyticsEarningReports = () => {
             item
             sm={5}
             xs={12}
-            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-end'
+            }}
           >
-            <Box sx={{ mb: 3, rowGap: 1, columnGap: 2.5, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+            <Box
+              sx={{
+                mb: 3,
+                rowGap: 1,
+                columnGap: 2.5,
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center'
+              }}
+            >
               <Typography variant='h1'>$468</Typography>
               <CustomChip rounded size='small' skin='light' color='success' label='+4.2%' />
             </Box>
@@ -144,7 +158,14 @@ const AnalyticsEarningReports = () => {
             <ReactApexcharts type='bar' height={163} series={series} options={options} />
           </StyledGrid>
         </Grid>
-        <Box sx={{ mt: 6, borderRadius: 1, p: theme.spacing(4, 5), border: `1px solid ${theme.palette.divider}` }}>
+        <Box
+          sx={{
+            mt: 6,
+            borderRadius: 1,
+            p: theme.spacing(4, 5),
+            border: `1px solid ${theme.palette.divider}`
+          }}
+        >
           <Grid container spacing={6}>
             {data.map((item, index) => (
               <Grid item xs={12} sm={4} key={index}>

@@ -6,10 +6,12 @@ import { useMemo } from 'react'
 import { columnData } from 'src/common/table/columnDataFunction'
 import CustomChip from 'src/@core/components/mui/chip'
 import useTableColumns from 'src/common/materialTable/tableColumns/visaBookingColumns'
+
 //Forms
 import EditVisaBookingForm from 'src/common/forms/booking/visaBooking/EditVisaBookingForm'
 import PassportForm from 'src/common/forms/booking/passport/PassportForm'
 import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'
+
 // redux
 import { fetchVisaBooking } from 'src/store'
 import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet'
@@ -21,6 +23,7 @@ const index = ({ apiData }) => {
   return (
     <div>
       <MaterialTable
+        api={'visa-booking'}
         apiData={apiData}
         fetchData={fetchVisaBooking}
         stateSelector='visaBooking'

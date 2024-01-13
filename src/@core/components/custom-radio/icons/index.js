@@ -9,7 +9,16 @@ import Icon from 'src/@core/components/icon'
 
 const CustomRadioIcons = props => {
   // ** Props
-  const { data, icon, name, selected, gridProps, iconProps, handleChange, color = 'primary' } = props
+  const {
+    data,
+    icon,
+    name,
+    selected,
+    gridProps,
+    iconProps,
+    handleChange,
+    color = 'primary'
+  } = props
   const { title, value, content } = data
 
   const renderComponent = () => {
@@ -32,7 +41,11 @@ const CustomRadioIcons = props => {
                   borderColor: `${color}.main`,
                   '& svg': { color: theme => `${theme.palette.primary.main} !important` }
                 }
-              : { '&:hover': { borderColor: theme => `rgba(${theme.palette.customColors.main}, 0.25)` } })
+              : {
+                  '&:hover': {
+                    borderColor: theme => `rgba(${theme.palette.customColors.main}, 0.25)`
+                  }
+                })
           }}
         >
           {icon ? <Icon icon={icon} {...iconProps} /> : null}

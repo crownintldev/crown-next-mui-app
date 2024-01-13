@@ -25,10 +25,12 @@ const Drawer = props => {
   const {
     hidden,
     children,
+
     // navHover,
     navWidth,
     settings,
     navVisible,
+
     // setNavHover,
     navMenuProps,
     setNavVisible,
@@ -89,6 +91,7 @@ const Drawer = props => {
         sx: {
           backgroundColor: 'background.paper',
           ...(!hidden && skin !== 'bordered' && { boxShadow: 2 }),
+
           // width: navCollapsed && !navHover ? collapsedNavWidth : navWidth,
           width: collapsedNavWidth,
           borderRight: theme =>

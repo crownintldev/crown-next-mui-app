@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import DataTable from 'src/common/table/DataTable'
 import { columnData } from 'src/common/table/columnDataFunction'
+
 //Forms
 import VisaServiceForm from 'src/common/forms/services/visaService/VisaServiceForm'
 
@@ -43,16 +44,21 @@ const index = ({ apiData }) => {
     <div>
       <DataTable
         apiData={apiData}
+
         // tavle columns
         columns={columns}
+
         // show data in table getting by redux
         fetchTableData={store && store.data.length > 0 && store.data}
+
         // drawer form titles
         formTitle={'Add Visa Service'}
         editFormTitle={'Edit Visa Service'}
+
         //header buttons drawer
         buttonTitle={'Add New Visa Service'}
         editButtonTitle={'Edit Visa Service'}
+
         // forms
         CreateForm={VisaServiceForm}
         EditForm={''}

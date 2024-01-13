@@ -28,7 +28,9 @@ const DropzoneWrapper = styled(Box)(({ theme }) => ({
         justifyContent: 'space-between',
         borderRadius: theme.shape.borderRadius,
         padding: theme.spacing(2.5, 2.4, 2.5, 6),
-        border: `1px solid ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.14)' : 'rgba(247, 244, 254, 0.14)'}`,
+        border: `1px solid ${
+          theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.14)' : 'rgba(247, 244, 254, 0.14)'
+        }`,
         '& .file-details': {
           display: 'flex',
           alignItems: 'center'
@@ -45,7 +47,9 @@ const DropzoneWrapper = styled(Box)(({ theme }) => ({
           height: 38,
           padding: theme.spacing(0.75),
           borderRadius: theme.shape.borderRadius,
-          border: `1px solid ${theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.14)' : 'rgba(247, 244, 254, 0.14)'}`
+          border: `1px solid ${
+            theme.palette.mode === 'light' ? 'rgba(93, 89, 98, 0.14)' : 'rgba(247, 244, 254, 0.14)'
+          }`
         },
         '& .file-name': {
           fontWeight: 600

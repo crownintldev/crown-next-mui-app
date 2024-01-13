@@ -56,7 +56,11 @@ const ScrollWrapper = ({ children, hidden }) => {
   if (hidden) {
     return <Box sx={{ maxHeight: '30rem', overflowY: 'auto', overflowX: 'hidden' }}>{children}</Box>
   } else {
-    return <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>{children}</PerfectScrollbar>
+    return (
+      <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>
+        {children}
+      </PerfectScrollbar>
+    )
   }
 }
 
@@ -83,7 +87,12 @@ const ShortcutsDropdown = props => {
 
   return (
     <Fragment>
-      <IconButton color='inherit' aria-haspopup='true' onClick={handleDropdownOpen} aria-controls='customized-menu'>
+      <IconButton
+        color='inherit'
+        aria-haspopup='true'
+        onClick={handleDropdownOpen}
+        aria-controls='customized-menu'
+      >
         <Icon fontSize='1.625rem' icon='tabler:layout-grid-add' />
       </IconButton>
       <Menu
@@ -157,7 +166,9 @@ const ShortcutsDropdown = props => {
                   <Avatar sx={{ mb: 2, width: 48, height: 48 }}>
                     <Icon fontSize='1.5rem' icon={shortcut.icon} />
                   </Avatar>
-                  <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>{shortcut.title}</Typography>
+                  <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                    {shortcut.title}
+                  </Typography>
                   <Typography variant='body2' sx={{ color: 'text.disabled' }}>
                     {shortcut.subtitle}
                   </Typography>

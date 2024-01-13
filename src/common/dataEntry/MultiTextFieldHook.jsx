@@ -14,15 +14,17 @@ const MultiTextFieldHook = ({ getValues, setValue, control }) => {
     const updatedServices = currentServices.filter((_, i) => i !== index)
     setValue('services', updatedServices)
   }
+
   // console.log(getValues('services'))
   const handleChange = (event, index) => {
     const { value } = event.target
     const updatedServices = getValues('services')
     updatedServices[index] = value
     console.log(index)
-    setValue('services', updatedServices);
+    setValue('services', updatedServices)
   }
   console.log(getValues('services'))
+
   return (
     <div>
       Services
@@ -38,7 +40,7 @@ const MultiTextFieldHook = ({ getValues, setValue, control }) => {
                 <CustomTextField
                   {...field}
                   value={field.value ? field.value : service}
-                  onChange={(event) =>handleChange(event,index)}
+                  onChange={event => handleChange(event, index)}
                   placeholder={`Service ${index + 1}`}
                   InputLabelProps={{ shrink: true }}
                   required={true}

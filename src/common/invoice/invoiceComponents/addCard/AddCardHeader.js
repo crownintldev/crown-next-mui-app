@@ -3,6 +3,7 @@ import { useState, forwardRef } from 'react'
 
 // ** NEXT js imports
 import Image from 'next/image'
+
 // ** MUI Imports
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'

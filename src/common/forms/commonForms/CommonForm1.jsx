@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
+
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -78,6 +79,7 @@ const CommonForm1 = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         {chooseFields.map((item, index) => {
           const { name, label, placeholder, type } = item
+
           return (
             <>
               <Controller
@@ -89,7 +91,7 @@ const CommonForm1 = ({
                   <CustomTextField
                     fullWidth
                     type={type ? type : 'text'}
-                    value={value ? capitalizeValue(value): ""}
+                    value={value ? capitalizeValue(value) : ''}
                     sx={{ mb: 4 }}
                     label={label ? label : capitalizeCamelSpace(name)}
                     onChange={onChange}

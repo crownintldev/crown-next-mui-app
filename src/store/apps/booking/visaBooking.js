@@ -13,6 +13,7 @@ const toQueryString = params => {
 export const fetchData = createAsyncThunk('appVisaBooking/fetchData', async params => {
   const queryString = toQueryString(params)
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/visa-booking?${queryString}`)
+
   // console.log(response)
   return response.data
 })

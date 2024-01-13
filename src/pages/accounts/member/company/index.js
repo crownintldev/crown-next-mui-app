@@ -2,13 +2,16 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
 import useCompanyColumns from 'src/common/materialTable/tableColumns/companyColumns'
+
 //Forms
 import CompanyForm from 'src/common/forms/member/CompanyForm'
+
 // redux
 import { fetchCompany } from 'src/store'
 
 const index = ({ apiData }) => {
   const columns = useCompanyColumns()
+
   return (
     <div>
       <MaterialTable
@@ -20,6 +23,7 @@ const index = ({ apiData }) => {
         drawerProps={{
           formTitle: 'Add Company',
           editFormTitle: 'Edit Company',
+
           //header buttons drawer
           buttonTitle: 'Add Company',
           editButtonTitle: 'Edit Company',

@@ -1,13 +1,24 @@
 import React from 'react'
 import { useMemo } from 'react'
 
-import { defaultCellRenderer,defaultCellUpperCase } from 'src/common/materialTable/tableColumnFunction'
+import {
+  defaultCellRenderer,
+  defaultCellUpperCase
+} from 'src/common/materialTable/tableColumnFunction'
 
 const useTableColumns = () =>
   useMemo(
     () => [
-      { accessorKey: 'supplierVisaService.supplier.name', header: 'Supplier Name', Cell: defaultCellRenderer },
-      { accessorKey: 'supplierVisaService.supplier.phone', header: 'Supplier Phone', Cell: defaultCellRenderer },
+      {
+        accessorKey: 'supplierVisaService.supplier.name',
+        header: 'Supplier Name',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'supplierVisaService.supplier.phone',
+        header: 'Supplier Phone',
+        Cell: defaultCellRenderer
+      },
       { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
       { accessorKey: 'destination.name', header: 'Destination', Cell: defaultCellUpperCase },
       { accessorKey: 'type.name', header: 'Type', Cell: defaultCellUpperCase },
@@ -30,4 +41,5 @@ const useTableColumns = () =>
     ],
     []
   )
+
 export default useTableColumns

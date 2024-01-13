@@ -13,6 +13,7 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAgent, fetchCompany, fetchClient } from 'src/store'
+
 // ** Actions Imports
 
 // components
@@ -34,8 +35,18 @@ import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 
 const schema = yup.object().shape({
   bookletNumber: yup.string().required('Booklet Number is required'),
-  cnic: yup.string().required('Cnic Number is required'),
   city: yup.string().required('City is required.'),
+  cnic: yup
+    .string()
+    .required('CNIC Number is required')
+    .matches(/^[0-9]{13}$|^[0-9]{5}-[0-9]{7}-[0-9]$/, 'Invalid CNIC format')
+    .test('is-numeric', 'Invalid CNIC format, only numbers are allowed', value => {
+      if (!value) return true // Skip validation if value is empty
+
+      return /^\d+$/.test(value.replace(/-/g, ''))
+    })
+    .max(15, 'CNIC must be 15 numbers or less')
+    .typeError('Invalid CNIC format, only numbers are allowed'),
   country: yup.string().required('Country is required'),
   dob: yup.date().required('Date of Birth is required'),
   doi: yup.string().required('Digital Object Identifier'),
@@ -85,39 +96,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const [files, setFiles] = useState([])
   const [date, setDate] = useState(new Date())
 
-  const schema = yup.object().shape({
-    bookletNumber: yup.string().required('Booklet Number is required'),
-    city: yup.string().required('City is required.'),
-    cnic: yup
-      .string()
-      .required('CNIC Number is required')
-      .matches(/^[0-9]{13}$|^[0-9]{5}-[0-9]{7}-[0-9]$/, 'Invalid CNIC format')
-      .test('is-numeric', 'Invalid CNIC format, only numbers are allowed', value => {
-        if (!value) return true // Skip validation if value is empty
-        return /^\d+$/.test(value.replace(/-/g, ''))
-      })
-      .max(15, 'CNIC must be 15 numbers or less')
-      .typeError('Invalid CNIC format, only numbers are allowed'),
-    country: yup.string().required('Country is required'),
-    dob: yup.date().required('Date of Birth is required'),
-    doi: yup.string().required('Digital Object Identifier'),
-    doe: yup.date().required('Date of Expiry is required'),
-    pob: yup.string().required('Place of Birth is required'),
-    gender: yup.string().required('Gender is required'),
-    givenName: yup.string().required('Given Name is required'),
-    fatherName: yup.string().required('Father name is required'),
-    issuingAuthority: yup.string().required('Issuing Authority is required'),
-    nationality: yup.string().required('Nationality is required'),
-    passportNumber: yup.string().required('Passport Number is required'),
-    religion: yup.string().required('Religion is required'),
-    remarks: yup.string().required('Remarks is required'),
-    surname: yup.string().required('Surname is required'),
-    trackingNumber: yup.string().required('Tracking Number is required'),
-    onModel: yup.string().required('Refer Category is required'),
-    by: yup.string().required('Refer is required'),
-    files: yup.array().required('Files Are Missing')
-  })
-
   useEffect(() => {
     setFormSize(1200)
   }, [])
@@ -127,7 +105,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const company = useSelector(state => state.company?.data)
   const agents = useSelector(state => state.agent?.data)
 
-  console.log('passport form data', clients, company, agents)
   useEffect(() => {
     dispatch(fetchAgent({}))
     dispatch(fetchClient({}))
@@ -206,7 +183,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     }
   ]
 
-  console.log('files output', files)
+  // console.log('files output', files)
 
   return (
     <div>

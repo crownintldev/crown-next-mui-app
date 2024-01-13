@@ -59,6 +59,7 @@ const DataTable = ({
 
   const handlePagination = value => {
     console.log(value)
+
     // dispatch(fetchData({ limit: value.pageSize, page: value.page }))
     setPaginationModel(value)
   }
@@ -118,6 +119,7 @@ const DataTable = ({
             pageSizeOptions={[10, 25, 50]}
             paginationModel={paginationModel}
             onPaginationModelChange={handlePagination}
+
             // pagination
             // paginationMode='server'
             // page={paginationModel.page}

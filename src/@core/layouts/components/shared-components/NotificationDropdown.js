@@ -90,7 +90,11 @@ const ScrollWrapper = ({ children, hidden }) => {
   if (hidden) {
     return <Box sx={{ maxHeight: 349, overflowY: 'auto', overflowX: 'hidden' }}>{children}</Box>
   } else {
-    return <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>{children}</PerfectScrollbar>
+    return (
+      <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>
+        {children}
+      </PerfectScrollbar>
+    )
   }
 }
 
@@ -136,13 +140,22 @@ const NotificationDropdown = props => {
 
   return (
     <Fragment>
-      <IconButton color='inherit' aria-haspopup='true' onClick={handleDropdownOpen} aria-controls='customized-menu'>
+      <IconButton
+        color='inherit'
+        aria-haspopup='true'
+        onClick={handleDropdownOpen}
+        aria-controls='customized-menu'
+      >
         <Badge
           color='error'
           variant='dot'
           invisible={!notifications.length}
           sx={{
-            '& .MuiBadge-badge': { top: 4, right: 4, boxShadow: theme => `0 0 0 2px ${theme.palette.background.paper}` }
+            '& .MuiBadge-badge': {
+              top: 4,
+              right: 4,
+              boxShadow: theme => `0 0 0 2px ${theme.palette.background.paper}`
+            }
           }}
         >
           <Icon fontSize='1.625rem' icon='tabler:bell' />
@@ -160,11 +173,23 @@ const NotificationDropdown = props => {
           disableTouchRipple
           sx={{ cursor: 'default', userSelect: 'auto', backgroundColor: 'transparent !important' }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%'
+            }}
+          >
             <Typography variant='h5' sx={{ cursor: 'text' }}>
               Notifications
             </Typography>
-            <CustomChip skin='light' size='small' color='primary' label={`${notifications.length} New`} />
+            <CustomChip
+              skin='light'
+              size='small'
+              color='primary'
+              label={`${notifications.length} New`}
+            />
           </Box>
         </MenuItem>
         <ScrollWrapper hidden={hidden}>
@@ -172,7 +197,16 @@ const NotificationDropdown = props => {
             <MenuItem key={index} disableRipple disableTouchRipple onClick={handleDropdownClose}>
               <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                 <RenderAvatar notification={notification} />
-                <Box sx={{ mr: 4, ml: 2.5, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
+                <Box
+                  sx={{
+                    mr: 4,
+                    ml: 2.5,
+                    flex: '1 1',
+                    display: 'flex',
+                    overflow: 'hidden',
+                    flexDirection: 'column'
+                  }}
+                >
                   <MenuItemTitle>{notification.title}</MenuItemTitle>
                   <MenuItemSubtitle variant='body2'>{notification.subtitle}</MenuItemSubtitle>
                 </Box>

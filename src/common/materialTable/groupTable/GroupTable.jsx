@@ -41,6 +41,7 @@ const Example = ({
   const [sorting, setSorting] = useState([])
   const [rowSelection, setRowSelection] = useState({})
   const [selectionRow, setSelectionRow] = useState([])
+
   // childRow
   const [childRowSelection, setChildRowSelection] = useState([])
   const [childSelectionRow, setChildSelectionRow] = useState([])
@@ -50,6 +51,7 @@ const Example = ({
     pageIndex: 0,
     pageSize: 10
   })
+
   //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
@@ -107,6 +109,7 @@ const Example = ({
   useEffect(() => {
     setChildSelectionRow(Object.keys(childRowSelection).filter(key => childRowSelection[key]))
   }, [childRowSelection])
+
   const handleChildRowSelectionChange = (selection, parentRowId) => {
     setChildRowSelection(selection)
     setParentId(parentRowId)
@@ -160,6 +163,7 @@ const Example = ({
       </Grid>
     )
   }
+
   const table = useMaterialReactTable({
     columns,
     data,
@@ -206,6 +210,7 @@ const Example = ({
         visaBookingIds={accountItems[0]?.visaBookingIds}
       />
     ),
+
     //  ({ row }) => {
     //   const parentRowId = row.original._id
     //   const handleChildRowSelectionChangeParentId = selection => {

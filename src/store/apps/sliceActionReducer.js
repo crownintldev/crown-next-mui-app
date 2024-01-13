@@ -17,26 +17,26 @@
 // export default invoiceSlice.reducer
 
 // reusable
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
-export const generateReducer = (name) => {
+export const generateReducer = name => {
   const slice = createSlice({
     name,
     initialState: { data: [] },
     reducers: {
       setData: (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload
       }
     }
-  });
+  })
 
   // Return both the reducer and the actions
-  return { reducer: slice.reducer, actions: slice.actions };
-};
+  return { reducer: slice.reducer, actions: slice.actions }
+}
 
+export const getReducer = name => {
+  const myInvoiceSlice = generateReducer(name)
+  const { setData } = myInvoiceSlice.actions
 
-export const getReducer=(name)=>{
-  const myInvoiceSlice = generateReducer(name);
-  const { setData } = myInvoiceSlice.actions;
-  return setData;
-  }
+  return setData
+}

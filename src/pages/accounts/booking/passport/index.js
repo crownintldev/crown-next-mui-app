@@ -3,6 +3,7 @@ import axios from 'axios'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
 
 import useTableColumns from 'src/common/materialTable/tableColumns/passportColumns'
+
 //Forms
 import PassportForm from 'src/common/forms/booking/passport/PassportForm'
 import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'

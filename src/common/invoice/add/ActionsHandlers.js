@@ -24,13 +24,15 @@ import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTo
 import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
 import { Divider } from '@mui/material'
 
+// new
+
 const ActionsHandlers = ({ open, onClose, data }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
-  const printRef = useRef()
+  const modalRef = useRef(null)
 
   // Print handler
   const handlePrint = () => {
-    const printContent = document.getElementById('print-content')
+    const printContent = modalRef.current
     const originalDisplay = printContent.style.display
     printContent.style.display = 'block'
     window.print()
@@ -44,20 +46,22 @@ const ActionsHandlers = ({ open, onClose, data }) => {
 
   // Taking screenshot handler
   const handleScreenshot = () => {
-    // Capture the content of the entire modal, including QRCode and other content
-    const modalContent = document.getElementById('modal-content')
+    const printContent = modalRef.current
 
-    html2canvas(modalContent).then(canvas => {
-      // Convert the canvas to a data URL
-      const screenshotUrl = canvas.toDataURL('image/png')
+    // Capture the screenshot of the modal using html2canvas
+    import('html2canvas').then(html2canvas => {
+      html2canvas.default(printContent).then(canvas => {
+        // Convert the canvas to a data URL
+        const screenshotUrl = canvas.toDataURL('image/png')
 
-      // Create a temporary link element to trigger the download
-      const link = document.createElement('a')
-      link.href = screenshotUrl
-      link.download = 'screenshot.png'
+        // Create a temporary link element to trigger the download
+        const link = document.createElement('a')
+        link.href = screenshotUrl
+        link.download = 'screenshot.png'
 
-      // Trigger a click event on the link to initiate the download
-      link.click()
+        // Trigger a click event on the link to initiate the download
+        link.click()
+      })
     })
   }
 
@@ -67,7 +71,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
       <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
       <AddCardItemWithTotal data={itemTotalData} />
-      {index < data.length - 1 && <hr />} {/* Add a horizontal line separator */}
+      {index < data.length - 1 && <hr />}
     </React.Fragment>
   ))
 
@@ -78,21 +82,22 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent:  'center',
         backgroundColor: 'rgba(255, 255, 255, 1)'
       }}
     >
       <Box
-        id='modal-content' // Add this id to capture the entire content, including the scrolled portion
+        id='modal-content'
+        ref={modalRef}
         sx={{
           position: 'absolute',
           backgroundColor: 'white',
           borderRadius: '8px',
           boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
           p: 20,
-          overflowY: 'auto', // Enable vertical scrolling
-          maxHeight: '80vh', // Set a maximum height
-          width: '80vw', // Set a maximum width
+          overflowY: 'auto',
+          maxHeight: '80vh',
+          width: '80vw',
           color: 'black'
         }}
       >
@@ -111,12 +116,9 @@ const ActionsHandlers = ({ open, onClose, data }) => {
             level='L'
           />
         </div>
-
-        {data ? (
+        {data && data.length > 0 ? (
           multiRender
         ) : (
-
-          // Error message
           <Box sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
             <Typography variant='h2' sx={{ mb: 1.5 }}>
               No Invoices Created, Invoices create first...
@@ -127,7 +129,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
           </Box>
         )}
         <Box
-          id='print-content'
           sx={{
             textAlign: 'center',
             mt: '10'

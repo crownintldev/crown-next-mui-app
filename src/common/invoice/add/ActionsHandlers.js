@@ -51,11 +51,11 @@ const ActionsHandlers = ({ open, onClose, data }) => {
 
   const multiRender = data.map((invoiceData, index) => (
     <React.Fragment key={index}>
-      {/* {index === 0 && <AddCardHeader />} */}
+      {index === 0 && <AddCardHeader />}
       <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
       <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
       <AddCardItemWithTotal data={itemTotalData} />
-      {index < data.length - 1 && <hr />} {/* Add a horizontal line separator */}
+      {index < data.length - 1 && <hr />} Add a horizontal line separator
     </React.Fragment>
   ))
 

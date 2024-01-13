@@ -44,7 +44,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   password: 'admin',
-  email: 'admin@vuexy.com'
+  email: 'admin@crown.com'
 }
 
 const LoginForm = () => {

@@ -61,8 +61,8 @@ body {
 }
 
 code {
-  font-family: 'Public Sans', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+  font-family: 'Public Sans', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
   padding: 0.1rem 0.4rem;
   font-size: 90%;
   color: #d400ff;
@@ -110,7 +110,12 @@ code[class*='language-'] {
 .css-34b9xr {
   z-index: 110 !important;
 }
-.custom-scrollbar .MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-186vso5-MuiPaper-root {
+.custom-scrollbar
+  .MuiPaper-root
+  MuiPaper-elevation
+  MuiPaper-rounded
+  MuiPaper-elevation2
+  css-186vso5-MuiPaper-root {
   z-index: 120 !important;
 }
 /* .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2 {

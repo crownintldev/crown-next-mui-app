@@ -151,7 +151,6 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         setValue('visaId', '')
       }
       if (visa._id) {
-
       }
     }
   }, [ids, setValue])
@@ -176,13 +175,13 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     }
     setValue('visaId', visa._id)
     const paymentType = watch('paymentType')
-    if (paymentType === "confirmed") {
+    if (paymentType === 'confirmed') {
       setValue(paymentType, visa.confirmed)
-      setValue("processing", undefined)
+      setValue('processing', undefined)
     }
-    if (paymentType === "processing") {
+    if (paymentType === 'processing') {
       setValue(paymentType, visa.processing)
-      setValue("confirmed", undefined)
+      setValue('confirmed', undefined)
     }
     removeUndefined(data)
     console.log(data)

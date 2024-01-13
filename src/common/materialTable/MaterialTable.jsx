@@ -80,10 +80,9 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api 
     }
   }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
 
- 
   const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
   console.log(selectedRowIds)
-  useEffect(() => { 
+  useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])
 
@@ -118,7 +117,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api 
   //apidata
   const cards = () => {
     return (
-      <Grid xs={12} className='mb-6' sx={{ zIndex: 10 }}>
+      <Grid xs={12} className='mb-6' sx={{ zIndex: 10, mb: 5 }}>
         {apiData && apiData.data && apiData.data.length > 0 && (
           <Grid container spacing={6}>
             {apiData.data.map((item, index) => {
@@ -178,7 +177,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api 
   return (
     <>
       {cards()}
-      <div className='custom-scrollbar'>
+      <div style={{ backgroundColor: '#FFF' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (
           <LinearProgress

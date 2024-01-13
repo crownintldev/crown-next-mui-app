@@ -1,5 +1,7 @@
+// Next import
+import Link from 'next/link'
 // React import
-import React from 'react'
+import React, { useRef } from 'react'
 
 // Material Imports
 import Modal from '@mui/material/Modal'
@@ -8,6 +10,7 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { useSelector } from 'react-redux'
+import Typography from '@mui/material/Typography'
 
 // Normal Imports
 import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
@@ -17,39 +20,44 @@ import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
 import { Divider } from '@mui/material'
 
 const ActionsHandlers = ({ open, onClose, data }) => {
-  let total = 0,
-    paid = 0,
-    remaining = 0,
-    discount = 0
-
-  data.map(feeItem => {
-    total += feeItem.amount.total
-    paid += feeItem.amount.paid
-    remaining += feeItem.amount.remaining
-    discount += feeItem.amount.discount
-    console.log('require output', total, paid, remaining, discount)
-  })
-
   const itemTotalData = useSelector(state => state.invoice.data)
+  const printRef = useRef()
 
   console.log('action data', data)
-  // Function to handle the print button click
-  const handlePrint = () => {
-    // Implement your print logic here
-    console.log('Print button clicked')
-  }
 
-  // Function to handle the PDF button click
+  // print handler
+  const handlePrint = () => {
+    const printContent = document.getElementById('print-content') // Create an element to hold the content to be printed
+    const originalDisplay = printContent.style.display // Store the original display style
+
+    // Set display to 'block' to make the content visible for printing
+    printContent.style.display = 'block'
+
+    // Trigger the print dialog
+    window.print()
+
+    // Restore the original display style
+    printContent.style.display = originalDisplay
+  }
+  // PDF generator handler
   const handlePDF = () => {
-    // Implement your PDF generation logic here
     console.log('PDF button clicked')
   }
 
-  // Function to handle the screenshot button click
+  // taking screenshot handler
   const handleScreenshot = () => {
-    // Implement your screenshot logic here
     console.log('Screenshot button clicked')
   }
+
+  const multiRender = data.map((invoiceData, index) => (
+    <React.Fragment key={index}>
+      {/* {index === 0 && <AddCardHeader />} */}
+      <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
+      <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
+      <AddCardItemWithTotal data={itemTotalData} />
+      {index < data.length - 1 && <hr />} {/* Add a horizontal line separator */}
+    </React.Fragment>
+  ))
 
   return (
     <Modal
@@ -65,8 +73,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       <Box
         sx={{
           position: 'absolute',
-          width: '60%',
-          height: '70%',
           backgroundColor: 'white',
           borderRadius: '8px',
           boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
@@ -81,24 +87,33 @@ const ActionsHandlers = ({ open, onClose, data }) => {
         >
           <CloseIcon />
         </IconButton>
-        <AddCardHeader />
-        <Divider />
-        {data.map((invoiceData, index) => (
-          <React.Fragment key={index}>
-            <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
-            <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
-            <AddCardItemWithTotal data={itemTotalData} />
-            <Divider />
-          </React.Fragment>
-        ))}
-        <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-          <Button variant='outlined' onClick={handlePrint} sx={{ marginRight: 2 }}>
+        {data ? (
+          multiRender
+        ) : (
+          // Error message
+          <Box sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
+            <Typography variant='h2' sx={{ mb: 1.5 }}>
+              No Invoices Created, Invoices create first...
+            </Typography>
+            <Button href='/accounts/account' component={Link} variant='outlined'>
+              Create Invoice First...
+            </Button>
+          </Box>
+        )}
+        <Box
+          id='print-content' // This element will be shown and hidden for printing
+          sx={{
+            textAlign: 'center',
+            mt: '10'
+          }}
+        >
+          <Button variant='contained' onClick={handlePrint} sx={{ marginRight: 2 }}>
             Print
           </Button>
-          <Button variant='outlined' onClick={handlePDF} sx={{ marginRight: 2 }}>
+          <Button variant='contained' onClick={handlePDF} sx={{ marginRight: 2 }}>
             PDF
           </Button>
-          <Button variant='outlined' onClick={handleScreenshot}>
+          <Button variant='contained' onClick={handleScreenshot} sx={{ marginRight: 2 }}>
             Screenshot
           </Button>
         </Box>

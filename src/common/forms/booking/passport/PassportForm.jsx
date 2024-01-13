@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 import Box, { BoxProps } from '@mui/material/Box'
 
@@ -125,6 +126,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
   const clients = useSelector(state => state.client?.data)
   const company = useSelector(state => state.company?.data)
   const agents = useSelector(state => state.agent?.data)
+
+  console.log('passport form data', clients, company, agents)
   useEffect(() => {
     dispatch(fetchAgent({}))
     dispatch(fetchClient({}))
@@ -162,16 +165,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
       name: 'bookletNumber'
     },
     {
-      name: 'city',
-      required: true
-    },
-    {
       name: 'cnic',
       type: 'text',
-      required: true
-    },
-    {
-      name: 'country',
       required: true
     }
   ]
@@ -180,9 +175,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     {
       name: 'doi',
       required: true
-    },
-    {
-      name: 'gender'
     },
     {
       name: 'givenName',
@@ -196,19 +188,10 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
       name: 'issuingAuthority'
     },
     {
-      name: 'nationality',
-      required: true
-    },
-    {
       name: 'pob',
       placeholder: 'Place of Birth',
       required: true
     },
-    {
-      name: 'religion',
-      required: true
-    },
-
     {
       name: 'surname',
       required: true
@@ -234,6 +217,36 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
               <CustomHookTextField item={item} control={control} errors={errors} required={true} />
             </Grid>
           ))}
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'country'}
+              options={['Pakistan', 'Iran', 'Afghanistan', 'Saudi Arbia', 'Turki']}
+              label={'Country'}
+              placeholder='Search Countries'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'city'}
+              options={['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Peshawar']}
+              label={'City'}
+              placeholder='Search Cities'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
           <Grid item md={6} lg={4} sx={{ mb: 4 }}>
             <DatePickerHookField
               name='dob'
@@ -246,10 +259,55 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
           <Grid item md={6} lg={4} sx={{ mb: 4 }}>
             <DatePickerHookField
               name='doe'
-              placeholder='Date of Expirt'
+              placeholder='Date of Expire'
               required={true}
               control={control}
               errors={errors}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'gender'}
+              options={['Male', 'Female', 'Other']}
+              label={'Gender'}
+              placeholder='Search Gender'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'nationality'}
+              options={['Pakistani', 'Indian', 'Afghani']}
+              label={'Nationality'}
+              placeholder='Search Nationality'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} lg={4}>
+            <SimpleSelectHookField
+              control={control}
+              errors={errors}
+              name={'religion'}
+              options={['Islam', 'Christan', 'Hindu', 'Sikh']}
+              label={'Religion'}
+              placeholder='Search Religion'
+              select={true}
+              MenuProps={{
+                disablePortal: true,
+                disableCloseOnSelect: true
+              }}
             />
           </Grid>
           {passportField2.map(item => (

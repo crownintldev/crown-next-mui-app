@@ -31,12 +31,18 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
 
         {clientData && (
           <Box>
-            <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
-              Name: {clientData.fullName}
-            </Typography>
-            <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
-              Passport Number: {clientData.passportNumber}
-            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
+                  Name: {clientData.fullName}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
+                  Passport Number: {clientData.passportNumber}
+                </Typography>
+              </Grid>
+            </Grid>
             <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
               Contact: {clientData.phone}
             </Typography>
@@ -49,59 +55,73 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
         xs={12}
         sm={12}
         md={6}
-        sx={{ display: 'flex', justifyContent: ['flex-start', 'flex-end'] }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between', // Use 'space-between' to align content on both sides
+          flexDirection: 'column', // Change flexDirection to 'column' for proper alignment
+          textAlign: ['left', 'right'], // Align text on both sides
+          mb: { xs: 4 }
+        }}
       >
         <div>
-          <Typography variant='h6' sx={{ mb: 6 }}>
+          <Typography variant='h6' sx={{ mb: 2, textAlign: 'left' }}>
             Billing Detail:
           </Typography>
           <TableContainer>
             <Table>
               <TableBody
-                sx={{ '& .MuiTableCell-root': { py: `${theme.spacing(0.75)} !important` } }}
+                sx={{
+                  '& .MuiTableCell-root': { py: `${theme.spacing(0.75)} !important` },
+                  display: 'flex',
+                  gap: '2rem'
+                }}
               >
                 {amount && (
                   <>
-                    <TableRow>
-                      <MUITableCell>
-                        <Typography sx={{ color: 'text.secondary' }}>Total Due:</Typography>
-                      </MUITableCell>
-                      <MUITableCell>
-                        <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {amount.total}
-                        </Typography>
-                      </MUITableCell>
-                    </TableRow>
-                    <TableRow>
-                      <MUITableCell>
-                        <Typography sx={{ color: 'text.secondary' }}>Paid:</Typography>
-                      </MUITableCell>
-                      <MUITableCell>
-                        <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {amount.paid}
-                        </Typography>
-                      </MUITableCell>
-                    </TableRow>
-                    <TableRow>
-                      <MUITableCell>
-                        <Typography sx={{ color: 'text.secondary' }}>Remaining:</Typography>
-                      </MUITableCell>
-                      <MUITableCell>
-                        <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {amount.remaining}
-                        </Typography>
-                      </MUITableCell>
-                    </TableRow>
-                    <TableRow>
-                      <MUITableCell>
-                        <Typography sx={{ color: 'text.secondary' }}>Discount:</Typography>
-                      </MUITableCell>
-                      <MUITableCell>
-                        <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                          Rs: {amount.discount}
-                        </Typography>
-                      </MUITableCell>
-                    </TableRow>
+                    <div>
+                      <TableRow>
+                        <MUITableCell>
+                          <Typography sx={{ color: 'text.secondary' }}>Total Due:</Typography>
+                        </MUITableCell>
+                        <MUITableCell>
+                          <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                            Rs: {amount.total}
+                          </Typography>
+                        </MUITableCell>
+                      </TableRow>
+                      <TableRow>
+                        <MUITableCell>
+                          <Typography sx={{ color: 'text.secondary' }}>Paid:</Typography>
+                        </MUITableCell>
+                        <MUITableCell>
+                          <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                            Rs: {amount.paid}
+                          </Typography>
+                        </MUITableCell>
+                      </TableRow>
+                    </div>
+                    <div>
+                      <TableRow>
+                        <MUITableCell>
+                          <Typography sx={{ color: 'text.secondary' }}>Remaining:</Typography>
+                        </MUITableCell>
+                        <MUITableCell>
+                          <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                            Rs: {amount.remaining}
+                          </Typography>
+                        </MUITableCell>
+                      </TableRow>
+                      <TableRow>
+                        <MUITableCell>
+                          <Typography sx={{ color: 'text.secondary' }}>Discount:</Typography>
+                        </MUITableCell>
+                        <MUITableCell>
+                          <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                            Rs: {amount.discount}
+                          </Typography>
+                        </MUITableCell>
+                      </TableRow>
+                    </div>
                   </>
                 )}
               </TableBody>

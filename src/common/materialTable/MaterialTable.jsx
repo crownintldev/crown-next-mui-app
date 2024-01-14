@@ -82,7 +82,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
 
   const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
-  console.log(selectedRowIds)
+  // console.log(selectedRowIds)
   useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])

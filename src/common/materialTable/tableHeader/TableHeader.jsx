@@ -20,8 +20,17 @@ const TableHeader = props => {
   const dispatch = useDispatch()
 
   // ** Props
-  const { toggle, buttonTitle, selectedIds, fetchData, api, table, tableData, removeSelection,headerMenu } =
-    props
+  const {
+    toggle,
+    buttonTitle,
+    selectedIds,
+    fetchData,
+    api,
+    table,
+    tableData,
+    removeSelection,
+    headerMenu,
+  } = props
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -58,7 +67,6 @@ const TableHeader = props => {
     }
   }
 
- 
   return (
     <Box>
       <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -107,7 +115,7 @@ const TableHeader = props => {
               </Box>
             </MenuItem>
           )}
-          {headerMenu({selectedIds,removeSelection})}
+          {headerMenu && headerMenu({ selectedIds, handleClose,toggle, removeSelection })}
         </Menu>
 
         {/* ----------Export data--------- */}

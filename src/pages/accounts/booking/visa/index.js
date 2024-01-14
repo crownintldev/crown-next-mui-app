@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import axios from 'axios'
 import DataTable from 'src/common/table/DataTable'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
@@ -15,28 +15,35 @@ import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm
 // redux
 import { fetchVisaBooking } from 'src/store'
 import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet'
-import { Box, Icon, MenuItem, Typography } from '@mui/material'
+//headerMenu
+import { MenuItem } from '@mui/material'
+import { Box } from '@mui/system'
+import Icon from 'src/@core/components/icon'
 
 const index = ({ apiData }) => {
   const columns = useTableColumns()
-
- const headerMenu = ({selectedIds,removeSelection}) => {
+  const headerMenu = ({ selectedIds,handleClose,removeSelection}) => {
+    const handleEditPassport=()=>{
+      handleClose()
+    }
     return (
       <>
-        <MenuItem sx={{ py: 1, m: 0 }}>
-          <Box
-            sx={{
-              fontSize: '0.8em',
-              display: 'flex',
-              alignItems: 'center',
-              columnGap: '4px',
-              color: '#2b60fe'
-            }}
-          >
-            <Icon fontSize='0.8rem' icon='tabler:plus' />
-            Edit Passport Booking
-          </Box>
-        </MenuItem>
+        {selectedIds && selectedIds.length > 0 && (
+          <MenuItem onClick={handleEditPassport} sx={{ py: 1, m: 0 }}>
+            <Box
+              sx={{
+                fontSize: '0.8em',
+                display: 'flex',
+                alignItems: 'center',
+                columnGap: '4px',
+                color: '#2b60fe'
+              }}
+            >
+              <Icon fontSize='0.8rem' icon='tabler:plus' />
+              Edit Passport Booking
+            </Box>
+          </MenuItem>
+        )}
       </>
     )
   }

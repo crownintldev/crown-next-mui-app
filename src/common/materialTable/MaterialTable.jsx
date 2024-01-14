@@ -11,7 +11,7 @@ import TableHeader from './tableHeader/TableHeader'
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
 
-const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api }) => {
+const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api, headerMenu }) => {
   const {
     formTitle,
     editFormTitle,
@@ -82,7 +82,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api 
   }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
 
   const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
-  console.log(selectedRowIds)
+  // console.log(selectedRowIds)
   useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])
@@ -105,12 +105,13 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api 
             ? buttonTitle
             : ''
         }
-        deleteIds={selectionRow}
+        selectedIds={selectionRow}
         fetchData={fetchData}
         api={api}
         table={table}
         tableData={data}
         removeSelection={handleRemoveSelection}
+        headerMenu={headerMenu}
       />
     )
   }

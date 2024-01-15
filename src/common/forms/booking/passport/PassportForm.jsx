@@ -208,7 +208,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
   ]
 
   // console.log('files output', files)
-
+// 
   return (
     <div>
     {/* <MuiTextAreaHookField/> */}

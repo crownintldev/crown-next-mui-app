@@ -39,16 +39,6 @@ import { Grid } from '@mui/material'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import FilesUploader from 'src/common/fileUpload/FilesUploader'
 
-const showErrors = (field, valueLen, min) => {
-  if (valueLen === 0) {
-    return `${field} field is required`
-  } else if (valueLen > 0 && valueLen < min) {
-    return `${field} must be at least ${min} characters`
-  } else {
-    return ''
-  }
-}
-
 const schema = yup.object().shape({
   bookletNumber: yup.number().required('Booklet Number is required'),
   cnic: yup.number().required('Cnic Number is required'),

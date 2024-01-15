@@ -36,7 +36,6 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
     paid += feeItem.amount.paid
     remaining += feeItem.amount.remaining
     discount += feeItem.amount.discount
-    console.log('require output', total, paid, remaining, discount)
   })
 
   return (

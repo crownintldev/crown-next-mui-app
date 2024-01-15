@@ -3,6 +3,8 @@ import { Controller } from 'react-hook-form'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
+// ... (other imports)
+
 const SelectHookField = ({
   errors,
   control,
@@ -28,7 +30,11 @@ const SelectHookField = ({
           options={options && options.length > 0 ? options : []}
           id='autocomplete-size-medium'
           disableClearable={disableClearable}
-          getOptionLabel={option => option[showValue] || ''}
+          getOptionLabel={option =>
+            option[showValue]
+              ? option[showValue].charAt(0).toUpperCase() + option[showValue].slice(1)
+              : ''
+          }
           isOptionEqualToValue={(option, value) => option._id === value?._id}
           renderInput={params => (
             <CustomTextField

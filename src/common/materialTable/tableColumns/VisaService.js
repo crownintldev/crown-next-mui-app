@@ -14,15 +14,15 @@ const useTableColumns = () =>
         header: 'Supplier Name',
         Cell: defaultCellRenderer
       },
+      { accessorKey: 'destination.name', header: 'Destination', Cell: defaultCellUpperCase },
+      { accessorKey: 'type.name', header: 'Type', Cell: defaultCellUpperCase },
+      { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
+      { accessorKey: 'duration.name', header: 'Duration', Cell: defaultCellRenderer },
       {
         accessorKey: 'supplierVisaService.supplier.phone',
         header: 'Supplier Phone',
         Cell: defaultCellRenderer
       },
-      { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
-      { accessorKey: 'destination.name', header: 'Destination', Cell: defaultCellUpperCase },
-      { accessorKey: 'type.name', header: 'Type', Cell: defaultCellUpperCase },
-      { accessorKey: 'duration.name', header: 'Duration', Cell: defaultCellRenderer },
       {
         accessorKey: 'processing.processingFee',
         header: 'Processing Fee',

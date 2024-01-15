@@ -49,6 +49,12 @@ body {
   }
 }
 
+/* Invoice styling start */
+#modal-content {
+  position: relative;
+  height: 100%;
+}
+/* Invoice styling end */
 .loaderimg {
   display: block;
   width: 100%;
@@ -152,7 +158,7 @@ code[class*='language-'] {
   padding: 1px 4px; /* Reduced cell padding */
 }
 
-.custom-child-table .MuiDataGrid-columnHeader {
+.custom-child-table .MuiDataGrid-cfmodalolumnHeader {
   padding: 2px 3px; /* Reduced column header padding */
 }
 /* MenuItem form scroll */

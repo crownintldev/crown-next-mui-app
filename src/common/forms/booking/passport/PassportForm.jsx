@@ -34,6 +34,7 @@ import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
 import dayjs from 'dayjs'
+import { MuiTextAreaHookField } from 'src/common/dataEntry/MuiTextAreaHookField'
 // import MuiTextAreaHookField from 'src/common/dataEntry/MuiTextAreaHookField'
 
 const schema = yup.object().shape({
@@ -202,8 +203,10 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
       required: true
     },
     {
+      textarea:true,
       name: 'remarks',
-      required: true
+      required: true,
+      placeholder:"Enter Remarks"
     }
   ]
 
@@ -219,6 +222,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
               <CustomHookTextField item={item} control={control} errors={errors} required={true} />
             </Grid>
           ))}
+        
           <Grid item md={6} lg={4}>
             <SimpleSelectHookField
               control={control}

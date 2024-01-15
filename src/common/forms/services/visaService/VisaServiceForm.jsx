@@ -117,13 +117,19 @@ const VisaServiceForm = ({
   const selectCategory = watch('category')
   const selectDuration = watch('duration')
   const selectType = watch('type')
-
+  // console.log(getValues('destination'))
   // console.log(selectDestination, selectCategory, selectDuration, selectType)
 
   useEffect(() => {
     if (selectDestination && selectCategory && selectDuration && selectType) {
       fetchActionData(
-        () => findSupplierVisa({ destination, category, type, duration }),
+        () =>
+          findSupplierVisa({
+            destination: selectDestination,
+            category: selectCategory,
+            type: selectType,
+            duration: selectDuration
+          }),
         setSupplierVisa
       )
     }
@@ -185,24 +191,24 @@ const VisaServiceForm = ({
     }
   }
 
-  const choosePaymentMethod =
-    payMethod === 'confirmed'
-      ? [
+  const choosePaymentMethod =[
+    // payMethod === 'confirmed'
+    //   ? [
           {
             name: 'confirmed.totalFee',
             type: 'number',
             placeholder: 'Enter Total Fee',
-            label: 'Total Fee',
+            label: 'Confirmed - Total Fee',
             value: watch('confirmed.totalFee'),
             myvalue: true
-          }
-        ]
-      : [
+          },
+      //   ]
+      // : [
           {
             name: 'processing.processingFee',
             type: 'number',
             placeholder: 'Enter Processing Fee',
-            label: 'Processing Fee',
+            label: 'Processing - Processing Fee',
             value: watch('processing.processingFee'),
             myvalue: true
           },
@@ -210,11 +216,12 @@ const VisaServiceForm = ({
             name: 'processing.visaFee',
             placeholder: 'Enter Visa Fee',
             type: 'number',
-            label: 'Visa Fee',
+            label: 'Processing - Visa Fee',
             value: watch('processing.visaFee'),
             myvalue: true
           }
         ]
+        // ]
 
   return (
     <div>

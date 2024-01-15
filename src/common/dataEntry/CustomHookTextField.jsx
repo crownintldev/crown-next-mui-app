@@ -2,6 +2,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import { capitalizeCamelSpace, capitalizeValue } from 'src/utils/helperfunction'
+import { TextareaAutosize } from '@mui/material'
 
 const CustomHookTextField = ({ chooseFields, control, errors, required, item }) => {
   // function textfield

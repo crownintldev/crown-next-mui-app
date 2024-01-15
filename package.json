@@ -10,8 +10,8 @@
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
-    "gitpush": "git add . && git commit -m 'home-hamail' && git push origin home-hamail",
-    "gitmerge": "git checkout main && git pull origin main && git merge home-hamail && git push origin main && git checkout home-hamail" ,
+    "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
+    "gitmerge": "git checkout main && git pull origin main && git merge hamail && git push origin main && git checkout hamail",
     "gitpushmain": "git checkout main && git add . && git commit -m 'main' && git push origin main"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "@fullcalendar/timegrid": "6.1.6",
     "@hookform/resolvers": "3.1.0",
     "@iconify/react": "4.1.0",
+    "@mui/base": "^5.0.0-beta.31",
     "@mui/icons-material": "^5.15.3",
     "@mui/lab": "5.0.0-alpha.128",
     "@mui/material": "5.12.2",

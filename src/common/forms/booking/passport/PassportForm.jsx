@@ -32,6 +32,8 @@ import { Grid } from '@mui/material'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
+import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
+import dayjs from 'dayjs'
 
 const schema = yup.object().shape({
   bookletNumber: yup.string().required('Booklet Number is required'),
@@ -86,14 +88,20 @@ const defaultValues = {
   trackingNumber: '',
   onModel: 'Agent',
   files: [],
+  deletedFiles: [],
   by: ''
 }
 
 // ------------------Passport Form-----------------------
-const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
+const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
   const dispatch = useDispatch()
-
+  let editId = useSelector(
+    state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
+  )
+  // console.log(editId?.passportNumber)
   const [files, setFiles] = useState([])
+  const [previousFiles, setPreviousFiles] = useState([])
+  const [removeFiles, setRemoveFiles] = useState([])
   const [date, setDate] = useState(new Date())
 
   useEffect(() => {
@@ -117,6 +125,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     setError,
     handleSubmit,
     getValues,
+    setValue,
     watch,
     formState: { errors }
   } = useForm({
@@ -124,6 +133,23 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
+
+  useEffect(() => {
+    setValue('deletedFiles', [removeFiles])
+  }, [previousFiles, removeFiles])
+  useEffect(() => {
+    if (editId?.passportNumber) {
+      Object.keys(editId).forEach(key => {
+        setValue(key, editId[key])
+      })
+      setPreviousFiles(editId.files)
+      setValue('by', editId.by?._id)
+      setValue('dob', dayjs(editId.dob))
+      setValue('doe', dayjs(editId.doe))
+    } else {
+      reset()
+    }
+  }, [setValue, editId])
 
   const watchedOnModel = watch('onModel')
 
@@ -360,24 +386,52 @@ const PassportForm = ({ toggle, removeSelection, setFormSize }) => {
               )}
             />
           </Grid>
-          <Grid item md={6}>
-            <Box sx={{ width: '200px' }}>
-              <Controller
-                name='files'
-                control={control}
-                defaultValue={[]}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <>
-                    <label htmlFor='files'>Upload Files</label>
-                    <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
-                  </>
-                )}
-              />
-            </Box>
-          </Grid>
+          {!editId ? (
+            <Grid item md={6}>
+              <Box sx={{ width: '200px' }}>
+                <Controller
+                  name='files'
+                  control={control}
+                  defaultValue={[]}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <>
+                      <label htmlFor='files'>Upload Files</label>
+                      <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
+                    </>
+                  )}
+                />
+              </Box>
+            </Grid>
+          ) : (
+            <Grid item md={6}>
+              <Box sx={{ width: '200px' }}>
+                <Controller
+                  name='files'
+                  control={control}
+                  defaultValue={[]}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <>
+                      <label htmlFor='files'>Upload Files</label>
+                      <EditFilesUploader
+                        setFiles={setFiles}
+                        previousFiles={previousFiles}
+                        setPreviousFiles={setPreviousFiles}
+                        removeFiles={removeFiles}
+                        setRemoveFiles={setRemoveFiles}
+                        files={files}
+                        prevFiles={editId?.files}
+                        onChange={onChange}
+                      />
+                    </>
+                  )}
+                />
+              </Box>
+            </Grid>
+          )}
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PassportSubmitButton
+            editId={editId?.passportId || ""}
             dispatch={dispatch}
             watch={watch}
             toggle={toggle}

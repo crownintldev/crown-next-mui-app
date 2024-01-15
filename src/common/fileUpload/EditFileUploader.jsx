@@ -60,8 +60,8 @@ const EditFilesUploader = ({
     setPreviousFiles(removeFile)
     setRemoveFiles([...removeFiles, file.public_id])
   }
-  console.log('previousFiles', previousFiles)
-  console.log('removeFiles', removeFiles)
+  // console.log('previousFiles', previousFiles)
+  // console.log('removeFiles', removeFiles)
 
   const fileList = files.map(file => (
     <ListItem key={file.name}>
@@ -102,19 +102,24 @@ const EditFilesUploader = ({
 
   return (
     <Fragment>
-      <div {...getRootProps({ className: 'dropzone' })} style={{ marginBottom: '10px' }}>
+      <div
+        {...getRootProps({ className: 'dropzone' })}
+        style={{ padding: '10px', paddingBottom: '20px' }}
+      >
         {/* <input
           {...getInputProps()}
           type='file'
           id={'files'}
         /> */}
         <Box
-          sx={{
+         sx={{
+            cursor: 'pointer',
             padding: 2,
-            width: '50%',
             margin: 'auto',
             display: 'flex',
             border: 1,
+            borderRadius: 2,
+            boxShadow: '3px 3px rgba(255, 255, 255, 0.4)',
             borderColor: '',
             textAlign: 'center',
             alignItems: 'center',
@@ -125,7 +130,6 @@ const EditFilesUploader = ({
             sx={{
               mb: 8.75,
               display: 'flex',
-
               borderRadius: 1,
               alignItems: 'center',
               justifyContent: 'center',
@@ -135,7 +139,7 @@ const EditFilesUploader = ({
           >
             <Icon icon='tabler:upload' fontSize='1.2rem' />
           </Box>
-          <Typography>Drop files here or click to upload.</Typography>
+          <Typography>Drop Files / Browse.</Typography>
         </Box>
       </div>
       {previousFiles.length > 0 && <List>{prevFileList}</List>}

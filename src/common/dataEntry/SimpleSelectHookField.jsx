@@ -22,12 +22,13 @@ const SimpleSelectHookField = ({
           sx={{ mb: 4 }}
           options={options ? options : ['confirmed', 'processing']}
           id='autocomplete-size-medium'
-          value={value}
-          getOptionLabel={option => option || ''}
+          value={value || null} 
+          getOptionLabel={(option) => option || ''}
+          isOptionEqualToValue={(option, value) => option === value}
           onChange={(event, newValue) => {
             onChange(newValue)
           }}
-          disableClearable={disableClearable ? disableClearable : ''}
+          disableClearable={disableClearable || false}
           renderInput={params => (
             <CustomTextField
               {...params}

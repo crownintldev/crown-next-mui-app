@@ -6,11 +6,12 @@ export const capitalizeCamelSpace = name => {
   return capitalized.replace(/([A-Z])/g, ' $1').trim()
 }
 
-export const axiosErrorMessage = err =>
-  err.response && err.response.data && err.response.data.message
+export const axiosErrorMessage = err => {
+  console.log(err)
+ return err.response && err.response.data && err.response.data.message
     ? err.response.data.message
     : 'An unexpected error occurred'
-
+}
 export const axiosSuccessToast = data => {
   if (data && data.message) {
     toast.success(data.message, { duration: 2000 })

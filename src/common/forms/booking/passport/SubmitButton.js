@@ -7,7 +7,15 @@ import { fetchVisaBooking } from 'src/store'
 import axios from 'axios'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
 
-const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, removeSelection }) => {
+const PassportSubmitButton = ({
+  dispatch,
+  watch,
+  toggle,
+  setFiles,
+  reset,
+  removeSelection,
+  editId
+}) => {
   const [response, setResponse] = useState(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
@@ -15,7 +23,7 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
 
   const onSubmit = async () => {
     try {
-      console.log('============', data)
+      console.log('============', editId)
       let formData = new FormData()
       Object.keys(data).forEach(key => {
         if (key !== 'files') {
@@ -28,19 +36,29 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
 
       //   const responseAction = await dispatch(addPassport(formData))
       //   console.log(responseAction)
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API}/passport/create`, formData)
-      console.log('backend', res)
+      let res
+      if (!editId) {
+        res = await axios.post(`${process.env.NEXT_PUBLIC_API}/passport/create`, formData)
+        dispatch(
+          fetchVisaBooking({
+            newData: res.data.data
+          })
+        )
+      } else {
+        res = await axios.put(`${process.env.NEXT_PUBLIC_API}/passport/update/${editId}`, formData)
+        dispatch(
+          fetchVisaBooking({
+            updateData: res.data.data
+          })
+        )
+      }
+      // console.log('backend', res)
       setResponse(res.data.data)
 
       toggle()
       setFiles([])
-      dispatch(
-        fetchVisaBooking({
-          newData: res.data.data
-        })
-      )
 
-      //   reset()
+      reset()
       if (removeSelection) {
         removeSelection()
       }
@@ -61,7 +79,6 @@ const PassportSubmitButton = ({ dispatch, watch, toggle, setFiles, reset, remove
         toggle={toggleDrawer}
         drawerTitle={'Add Visa'}
         Form={EditVisaBookingForm}
-
         // fetchApi={fetchApi}
         formName={'Add Visa'}
         _id={response ? [response[0]._id] : undefined}

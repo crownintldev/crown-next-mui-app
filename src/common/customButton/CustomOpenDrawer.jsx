@@ -1,26 +1,42 @@
-import React, { useState } from 'react'
-import { Button } from '@mui/material'
-import FormDrawer from 'src/common/drawer/FormDrawer'
+import React, { useState } from 'react';
+import { Button, Box, MenuItem, Icon } from '@mui/material';
+import FormDrawer from 'src/common/drawer/FormDrawer';
 
-const CustomOpenDrawer = ({ ButtonTitle, drawerTitle, Form, fetchApi, formName, api, anchor }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
+const CustomOpenDrawer = ({
+  ButtonTitle,
+  drawerTitle,
+  Form,
+  fetchApi,
+  api,
+  _id,
+  removeSelection,
+  anchor,
+  component,
+}) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
   return (
     <div>
-      <Button onClick={() => setDrawerOpen(true)}>{ButtonTitle}</Button>
+      {component ? (
+        <Box onClick={toggleDrawer}>{component}</Box>
+      ) : (
+        <Button onClick={toggleDrawer}>{ButtonTitle}</Button>
+      )}
+
       <FormDrawer
         open={drawerOpen}
         toggle={toggleDrawer}
         drawerTitle={drawerTitle}
         Form={Form}
-        anchor={anchor ? anchor : 'left'}
+        anchor={anchor || 'left'}
         fetchApi={fetchApi}
-        formName={formName}
         api={api}
+        _id={_id || ''}
+        removeSelection={removeSelection || ''}
       />
     </div>
-  )
-}
+  );
+};
 
-export default CustomOpenDrawer
+export default CustomOpenDrawer;

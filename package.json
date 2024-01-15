@@ -10,8 +10,8 @@
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
-    "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
-    "gitmerge": "git checkout main && git pull origin main && git checkout hamail && git merge main",
+    "gitpush": "git add . && git commit -m 'home-hamail' && git push origin home-hamail",
+    "gitmerge": "git checkout main && git pull origin main && git merge home-hamail && git push origin main && git checkout home-hamail" ,
     "gitpushmain": "git checkout main && git add . && git commit -m 'main' && git push origin main"
   },
   "dependencies": {

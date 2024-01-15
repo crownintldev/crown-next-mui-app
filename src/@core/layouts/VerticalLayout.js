@@ -83,7 +83,6 @@ const VerticalLayout = props => {
               toggleNavVisibility={toggleNavVisibility}
               navigationBorderWidth={navigationBorderWidth}
               verticalNavItems={verticalLayoutProps.navApps}
-
               // ========
               // navMenuContent={verticalLayoutProps.navMenu.content}
               // navMenuBranding={verticalLayoutProps.navMenu.branding}
@@ -115,7 +114,7 @@ const VerticalLayout = props => {
         )}
         <MainContentWrapper
           className='layout-content-wrapper'
-          sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }), background: '#8080801c' }}
+          sx={{ ...(contentHeightFixed && { maxHeight: '100vh' }), background: '#0064ff38' }}
         >
           {/* AppBar Component */}
           <AppBar

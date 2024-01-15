@@ -2,7 +2,7 @@
 import Link from 'next/link'
 
 // React import
-import React, { useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import QRCode from 'qrcode.react' // Import the QR code library
 import { useReactToPrint } from 'react-to-print'
 
@@ -25,26 +25,16 @@ import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTo
 import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
 import { Divider } from '@mui/material'
 
-// new
-
 const ActionsHandlers = ({ open, onClose, data }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
-  const componentPDF = useRef()
+  const [hasRenderedTotal, setHasRenderedTotal] = useState(false)
 
-  // Print handler
-  // const pdfGenerator = () => {
-  //   const printContent = modalRef.current
-  //   const originalDisplay = printContent.style.display
-  //   printContent.style.display = 'block'
-  //   window.print()
-  //   printContent.style.display = originalDisplay
-  // }
+  const componentPDF = useRef()
 
   // PDF generator handler
   const pdfGenerator = useReactToPrint({
     content: () => componentPDF.current,
-    documentTitle: 'Invoice Data',
-    onAfterPrint: () => alert('Data saved in pdf.')
+    documentTitle: 'Invoice Data'
   })
 
   // Taking screenshot handler
@@ -71,84 +61,94 @@ const ActionsHandlers = ({ open, onClose, data }) => {
   const multiRender = data.map((invoiceData, index) => (
     <React.Fragment key={index}>
       {index === 0 && <AddCardHeader />}
+      {console.log('render index', index + 1, data.length)}
       <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
       <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
-      <AddCardItemWithTotal data={itemTotalData} />
       {index < data.length - 1 && <hr />}
+      {index + 1 === data.length && !hasRenderedTotal && (
+        <>
+          <AddCardItemWithTotal data={itemTotalData} />
+          {setHasRenderedTotal(true)}{' '}
+        </>
+      )}
     </React.Fragment>
   ))
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 1)'
-      }}
-    >
-      <Box
-        id='modal-content'
-        ref={componentPDF}
+    <div style={{ position: 'relative !important', height: '100% !important' }}>
+      <Modal
+        open={open}
+        onClose={onClose}
         sx={{
-          position: 'absolute',
-          backgroundColor: 'white',
-          borderRadius: '8px',
-          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-          p: 20,
-          overflowY: 'auto',
-          maxHeight: '80vh',
-          width: '80vw',
-          color: 'black'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(255, 255, 255, 1)'
         }}
       >
-        <IconButton
-          onClick={onClose}
-          sx={{ position: 'absolute', top: 0, right: 0, color: 'black' }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <QRCode
-            value='https://crown-travokey.com/generate-pdf?params=your-parameters'
-            size={128}
-            bgColor='#ffffff'
-            fgColor='#000000'
-            level='L'
-          />
-        </div>
-        {data && data.length > 0 ? (
-          multiRender
-        ) : (
-          <Box sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
-            <Typography variant='h2' sx={{ mb: 1.5 }}>
-              No Invoices Created, Invoices create first...
-            </Typography>
-            <Button href='/accounts/account' component={Link} variant='outlined'>
-              Create Invoice First...
-            </Button>
-          </Box>
-        )}
         <Box
+          id='modal-content'
+          ref={componentPDF}
           sx={{
-            textAlign: 'center',
-            mt: '10'
+            position: 'absolute',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+            p: 20,
+            overflowY: 'auto',
+            width: '80vw',
+            color: 'black'
           }}
         >
-          <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
-            Print
-          </Button>
-          <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
-            PDF
-          </Button>
-          <Button variant='contained' onClick={handleScreenshot} sx={{ marginRight: 2 }}>
-            Screenshot
-          </Button>
+          <IconButton
+            onClick={onClose}
+            sx={{ position: 'absolute', top: 0, right: 0, color: 'black' }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <QRCode
+              value='https://crown-travokey.com/generate-pdf?params=your-parameters'
+              size={128}
+              bgColor='#ffffff'
+              fgColor='#000000'
+              level='L'
+            />
+          </div>
+          {data && data.length > 0 ? (
+            <>
+              {multiRender}
+              <AddCardItemWithTotal data={itemTotalData} />
+            </>
+          ) : (
+            <Box sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
+              <Typography variant='h2' sx={{ mb: 1.5 }}>
+                No Invoices Created, Invoices create first...
+              </Typography>
+              <Button href='/accounts/account' component={Link} variant='outlined'>
+                Create Invoice First...
+              </Button>
+            </Box>
+          )}
+          <Box
+            sx={{
+              textAlign: 'center',
+              mt: '10'
+            }}
+          >
+            <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
+              Print
+            </Button>
+            <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
+              PDF
+            </Button>
+            <Button variant='contained' onClick={handleScreenshot} sx={{ marginRight: 2 }}>
+              Screenshot
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Modal>
+      </Modal>
+    </div>
   )
 }
 

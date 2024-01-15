@@ -261,7 +261,7 @@ const VisaServiceForm = ({
         />
         {/* choose Payment Field */}
         <SelectField
-          options={['confirmed', 'processing']}
+          options={['Confirmed', 'Processing']}
           label='Select Payment Method'
           placeholder={'Select Payment Method'}
           value={payMethod}

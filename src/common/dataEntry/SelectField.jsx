@@ -6,7 +6,7 @@ const SelectField = ({ options, label, placeholder, value, setPayMethod, disable
   return (
     <CustomAutocomplete
       sx={{ mb: 4 }}
-      options={options ? options : ['confirmed', 'processing']}
+      options={options ? options : ['xyz', 'xyz']}
       id='autocomplete-size-medium'
       value={value}
       getOptionLabel={option => option || ''}

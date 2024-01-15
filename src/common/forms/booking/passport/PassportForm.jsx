@@ -34,6 +34,7 @@ import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
 import dayjs from 'dayjs'
+import MuiTextAreaHookField from 'src/common/dataEntry/TextAreaField'
 
 const schema = yup.object().shape({
   bookletNumber: yup.string().required('Booklet Number is required'),
@@ -104,16 +105,13 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
   const [removeFiles, setRemoveFiles] = useState([])
   const [date, setDate] = useState(new Date())
 
-  useEffect(() => {
-    setFormSize(1200)
-  }, [])
-
   // onModel
   const clients = useSelector(state => state.client?.data)
   const company = useSelector(state => state.company?.data)
   const agents = useSelector(state => state.agent?.data)
 
   useEffect(() => {
+    setFormSize(1200)
     dispatch(fetchAgent({}))
     dispatch(fetchClient({}))
     dispatch(fetchCompany({}))
@@ -234,6 +232,9 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
                 disableCloseOnSelect: true
               }}
             />
+          </Grid>
+          <Grid item md={6} lg={4}>
+          <MuiTextAreaHookField/>
           </Grid>
           <Grid item md={6} lg={4}>
             <SimpleSelectHookField

@@ -61,7 +61,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
   const multiRender = data.map((invoiceData, index) => (
     <React.Fragment key={index}>
       {index === 0 && <AddCardHeader />}
-      {console.log('render index', index + 1, data.length)}
       <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
       <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
       {index < data.length - 1 && <hr />}
@@ -96,8 +95,9 @@ const ActionsHandlers = ({ open, onClose, data }) => {
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
             p: 20,
             overflowY: 'auto',
-            width: '80vw',
             color: 'black'
+            // height: '60vh',
+            // width: '60vw'
           }}
         >
           <IconButton

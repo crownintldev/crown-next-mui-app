@@ -32,6 +32,7 @@ const Example = ({
   const dispatch = useDispatch()
   const accountItems = useSelector(state => state.account.data)
   const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
+  // console.log(data)
   const [isRefetching, setIsRefetching] = useState(false)
 
   // Table state

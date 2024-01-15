@@ -164,24 +164,24 @@ const SupplierVisaForm = ({
     }
   }
 
-  const choosePaymentMethod =
-    payMethod === 'confirmed'
-      ? [
+  const choosePaymentMethod =[
+    // payMethod === 'confirmed'
+    //   ? [
           {
             name: 'confirmed.totalFee',
             type: 'number',
             placeholder: 'Enter Total Fee',
-            label: 'Total Fee',
+            label: 'Confirmed - Total Fee',
             value: watch('confirmed.totalFee'),
             myvalue: true
-          }
-        ]
-      : [
+          },
+      //   ]
+      // : [
           {
             name: 'processing.processingFee',
             type: 'number',
             placeholder: 'Enter Processing Fee',
-            label: 'Processing Fee',
+            label: 'Processing - Processing Fee',
             value: watch('processing.processingFee'),
             myvalue: true
           },
@@ -189,11 +189,12 @@ const SupplierVisaForm = ({
             name: 'processing.visaFee',
             placeholder: 'Enter Visa Fee',
             type: 'number',
-            label: 'Visa Fee',
+            label: 'Processing - Visa Fee',
             value: watch('processing.visaFee'),
             myvalue: true
           }
         ]
+        // ]
 
   return (
     <div>
@@ -289,14 +290,14 @@ const SupplierVisaForm = ({
           placeholder='Choose Supplier'
         />
         {/* choose Payment Field */}
-        <SelectField
+        {/* <SelectField
           options={['confirmed', 'processing']}
           label='Select Payment Method'
           placeholder={'Select Payment Method'}
           value={payMethod}
           setPayMethod={setPayMethod}
           disableClearable={true}
-        />
+        /> */}
 
         <CustomHookTextField
           chooseFields={choosePaymentMethod}

@@ -11,16 +11,15 @@ import EditAccountForm from 'src/common/forms/account/EditAccountForm'
 
 // redux
 import { fetchData } from 'src/store/apps/account'
-
+//
 const index = ({ apiData }) => {
   const columns = useTableColumns()
   const childColumns = useChildTableColumns()
-// 
+  //
   return (
     <div>
       <GroupTable
         api={'accounts'}
-
         //  apiData={apiData}
         columns={columns}
         childColumns={childColumns}

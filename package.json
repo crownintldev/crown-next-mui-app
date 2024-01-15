@@ -86,6 +86,7 @@
     "react-popper": "2.3.0",
     "react-redux": "8.0.5",
     "react-to-pdf": "^1.0.1",
+    "react-to-print": "^2.14.15",
     "recharts": "2.5.0",
     "stylis": "4.1.4",
     "stylis-plugin-rtl": "2.1.1",

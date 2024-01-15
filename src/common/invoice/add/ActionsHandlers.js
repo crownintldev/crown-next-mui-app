@@ -4,6 +4,7 @@ import Link from 'next/link'
 // React import
 import React, { useRef } from 'react'
 import QRCode from 'qrcode.react' // Import the QR code library
+import { useReactToPrint } from 'react-to-print'
 
 // Material Imports
 import Modal from '@mui/material/Modal'
@@ -28,21 +29,23 @@ import { Divider } from '@mui/material'
 
 const ActionsHandlers = ({ open, onClose, data }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
-  const modalRef = useRef(null)
+  const componentPDF = useRef()
 
   // Print handler
-  const handlePrint = () => {
-    const printContent = modalRef.current
-    const originalDisplay = printContent.style.display
-    printContent.style.display = 'block'
-    window.print()
-    printContent.style.display = originalDisplay
-  }
+  // const pdfGenerator = () => {
+  //   const printContent = modalRef.current
+  //   const originalDisplay = printContent.style.display
+  //   printContent.style.display = 'block'
+  //   window.print()
+  //   printContent.style.display = originalDisplay
+  // }
 
   // PDF generator handler
-  const handlePDF = () => {
-    console.log('PDF button clicked')
-  }
+  const pdfGenerator = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: 'Invoice Data',
+    onAfterPrint: () => alert('Data saved in pdf.')
+  })
 
   // Taking screenshot handler
   const handleScreenshot = () => {
@@ -82,13 +85,13 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent:  'center',
+        justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 1)'
       }}
     >
       <Box
         id='modal-content'
-        ref={modalRef}
+        ref={componentPDF}
         sx={{
           position: 'absolute',
           backgroundColor: 'white',
@@ -134,10 +137,10 @@ const ActionsHandlers = ({ open, onClose, data }) => {
             mt: '10'
           }}
         >
-          <Button variant='contained' onClick={handlePrint} sx={{ marginRight: 2 }}>
+          <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
             Print
           </Button>
-          <Button variant='contained' onClick={handlePDF} sx={{ marginRight: 2 }}>
+          <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
             PDF
           </Button>
           <Button variant='contained' onClick={handleScreenshot} sx={{ marginRight: 2 }}>

@@ -34,7 +34,7 @@ import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
 import dayjs from 'dayjs'
-import MuiTextAreaHookField from 'src/common/dataEntry/TextAreaField'
+// import MuiTextAreaHookField from 'src/common/dataEntry/MuiTextAreaHookField'
 
 const schema = yup.object().shape({
   bookletNumber: yup.string().required('Booklet Number is required'),
@@ -211,6 +211,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
 
   return (
     <div>
+    {/* <MuiTextAreaHookField/> */}
       <form>
         <Grid container spacing={6}>
           {passportField1.map(item => (
@@ -232,9 +233,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
                 disableCloseOnSelect: true
               }}
             />
-          </Grid>
-          <Grid item md={6} lg={4}>
-          <MuiTextAreaHookField/>
           </Grid>
           <Grid item md={6} lg={4}>
             <SimpleSelectHookField

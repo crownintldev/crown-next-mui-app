@@ -13,6 +13,8 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAgent, fetchCompany, fetchClient } from 'src/store'
+import { getDataAction } from 'src/action/axiosApiFunc'
+import { fetchActionData } from 'src/action/fetchData'
 
 // ** Actions Imports
 
@@ -95,11 +97,16 @@ const defaultValues = {
 }
 
 // ------------------Passport Form-----------------------
-const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
+const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const dispatch = useDispatch()
-  let editId = useSelector(
+  const [editId, setEditId] = useState('')
+  const passportIdFromState = useSelector(
     state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
   )
+
+  // let editId = useSelector(
+  //   state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
+  // )
   // console.log(editId?.passportNumber)
   const [files, setFiles] = useState([])
   const [previousFiles, setPreviousFiles] = useState([])
@@ -132,10 +139,23 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
+  const passportNumber = getValues('passportNumber')
 
+  useEffect(() => {
+    if (passportNumber.length === 9 && !_id) {
+      let params = { passportNumber }
+      fetchActionData(()=>getDataAction('passport/read', params), setEditId)
+    } else {
+      // Use passportId from state if _id is present
+      setEditId(passportIdFromState)
+    }
+  }, [passportNumber, _id, passportIdFromState])
+
+  // console.log(editId)
   useEffect(() => {
     setValue('deletedFiles', [removeFiles])
   }, [previousFiles, removeFiles])
+
   useEffect(() => {
     if (editId?.passportNumber) {
       Object.keys(editId).forEach(key => {
@@ -203,18 +223,18 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
       required: true
     },
     {
-      textarea:true,
+      textarea: true,
       name: 'remarks',
       required: true,
-      placeholder:"Enter Remarks"
+      placeholder: 'Enter Remarks'
     }
   ]
 
   // console.log('files output', files)
-// 
+  //
   return (
     <div>
-    {/* <MuiTextAreaHookField/> */}
+      {/* <MuiTextAreaHookField/> */}
       <form>
         <Grid container spacing={6}>
           {passportField1.map(item => (
@@ -222,7 +242,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
               <CustomHookTextField item={item} control={control} errors={errors} required={true} />
             </Grid>
           ))}
-        
+
           <Grid item md={6} lg={4}>
             <SimpleSelectHookField
               control={control}
@@ -434,7 +454,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PassportSubmitButton
-            editId={editId?.passportId || ""}
+            editId={editId?.passportId || editId?._id || ''}
             dispatch={dispatch}
             watch={watch}
             toggle={toggle}

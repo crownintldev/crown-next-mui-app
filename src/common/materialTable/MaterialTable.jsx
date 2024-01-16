@@ -206,7 +206,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
         drawerTitle={selectionRow.length > 0 ? editFormTitle : formTitle}
         Form={selectionRow.length > 0 ? EditForm : CreateForm}
         removeSelection={handleRemoveSelection}
-        _id={multiSelected ? selectionRow : selectionRow.length === 1 ? selectionRow[0] : ''}
+        _id={multiSelected && selectionRow.length>0 ? selectionRow : selectionRow.length === 1 ? selectionRow[0] : ''}
         api={api}
         fetchApi={fetchData}
         stateSelector={stateSelector}

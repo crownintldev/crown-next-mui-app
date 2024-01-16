@@ -61,11 +61,7 @@ const ScrollWrapper = ({ children, hidden }) => {
   if (hidden) {
     return <Box sx={{ height: '100%', overflowY: 'auto', overflowX: 'hidden' }}>{children}</Box>
   } else {
-    return (
-      <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>
-        {children}
-      </PerfectScrollbar>
-    )
+    return <PerfectScrollbar options={{ wheelPropagation: false, suppressScrollX: true }}>{children}</PerfectScrollbar>
   }
 }
 
@@ -305,14 +301,7 @@ const MailLog = props => {
   }
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        overflow: 'hidden',
-        position: 'relative',
-        '& .ps__rail-y': { zIndex: 5 }
-      }}
-    >
+    <Box sx={{ width: '100%', overflow: 'hidden', position: 'relative', '& .ps__rail-y': { zIndex: 5 } }}>
       <Box sx={{ height: '100%', backgroundColor: 'background.paper' }}>
         <Box sx={{ px: 5, py: 3.75 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -341,10 +330,7 @@ const MailLog = props => {
               {store && store.mails && store.selectedMails ? (
                 <Checkbox
                   onChange={e => dispatch(handleSelectAllMail(e.target.checked))}
-                  checked={
-                    (store.mails.length && store.mails.length === store.selectedMails.length) ||
-                    false
-                  }
+                  checked={(store.mails.length && store.mails.length === store.selectedMails.length) || false}
                   indeterminate={
                     !!(
                       store.mails.length &&
@@ -365,16 +351,8 @@ const MailLog = props => {
                   <IconButton onClick={() => handleReadMail(store.selectedMails, false)}>
                     <Icon icon='tabler:mail-opened' />
                   </IconButton>
-                  <OptionsMenu
-                    leftAlignMenu
-                    options={handleFoldersMenu()}
-                    icon={<Icon icon='tabler:folder' />}
-                  />
-                  <OptionsMenu
-                    leftAlignMenu
-                    options={handleLabelsMenu()}
-                    icon={<Icon icon='tabler:tag' />}
-                  />
+                  <OptionsMenu leftAlignMenu options={handleFoldersMenu()} icon={<Icon icon='tabler:folder' />} />
+                  <OptionsMenu leftAlignMenu options={handleLabelsMenu()} icon={<Icon icon='tabler:tag' />} />
                 </Fragment>
               ) : null}
             </Box>
@@ -389,9 +367,7 @@ const MailLog = props => {
           </Box>
         </Box>
         <Divider sx={{ m: '0 !important' }} />
-        <Box
-          sx={{ p: 0, position: 'relative', overflowX: 'hidden', height: 'calc(100% - 7.5625rem)' }}
-        >
+        <Box sx={{ p: 0, position: 'relative', overflowX: 'hidden', height: 'calc(100% - 7.5625rem)' }}>
           <ScrollWrapper hidden={hidden}>
             {store && store.mails && store.mails.length ? (
               <List sx={{ p: 0 }}>
@@ -405,17 +381,13 @@ const MailLog = props => {
                       onClick={() => {
                         setMailDetailsOpen(true)
                         dispatch(getCurrentMail(mail.id))
-                        dispatch(
-                          updateMail({ emailIds: [mail.id], dataToUpdate: { isRead: true } })
-                        )
+                        dispatch(updateMail({ emailIds: [mail.id], dataToUpdate: { isRead: true } }))
                         setTimeout(() => {
                           dispatch(handleSelectAllMail(false))
                         }, 600)
                       }}
                     >
-                      <Box
-                        sx={{ mr: 4, display: 'flex', overflow: 'hidden', alignItems: 'center' }}
-                      >
+                      <Box sx={{ mr: 4, display: 'flex', overflow: 'hidden', alignItems: 'center' }}>
                         <Checkbox
                           onClick={e => e.stopPropagation()}
                           onChange={() => dispatch(handleSelectMail(mail.id))}
@@ -474,12 +446,7 @@ const MailLog = props => {
                             <IconButton
                               onClick={e => {
                                 e.stopPropagation()
-                                dispatch(
-                                  updateMail({
-                                    emailIds: [mail.id],
-                                    dataToUpdate: { folder: 'trash' }
-                                  })
-                                )
+                                dispatch(updateMail({ emailIds: [mail.id], dataToUpdate: { folder: 'trash' } }))
                               }}
                             >
                               <Icon icon='tabler:trash' />
@@ -512,17 +479,10 @@ const MailLog = props => {
                         className='mail-info-right'
                         sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
                       >
-                        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                          {renderMailLabels(mail.labels)}
-                        </Box>
+                        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>{renderMailLabels(mail.labels)}</Box>
                         <Typography
                           variant='body2'
-                          sx={{
-                            minWidth: '50px',
-                            textAlign: 'right',
-                            whiteSpace: 'nowrap',
-                            color: 'text.disabled'
-                          }}
+                          sx={{ minWidth: '50px', textAlign: 'right', whiteSpace: 'nowrap', color: 'text.disabled' }}
                         >
                           {new Date(mail.time).toLocaleTimeString('en-US', {
                             hour: '2-digit',
@@ -536,15 +496,7 @@ const MailLog = props => {
                 })}
               </List>
             ) : (
-              <Box
-                sx={{
-                  mt: 6,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  '& svg': { mr: 2 }
-                }}
-              >
+              <Box sx={{ mt: 6, display: 'flex', justifyContent: 'center', alignItems: 'center', '& svg': { mr: 2 } }}>
                 <Icon icon='tabler:alert-octagon' />
                 <Typography>No Mails Found</Typography>
               </Box>

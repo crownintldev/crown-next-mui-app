@@ -70,13 +70,7 @@ const UserProfileRight = props => {
             >
               <Icon icon='tabler:x' />
             </IconButton>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                p: theme => theme.spacing(11.25, 6, 4.5)
-              }}
-            >
+            <Box sx={{ display: 'flex', flexDirection: 'column', p: theme => theme.spacing(11.25, 6, 4.5) }}>
               <Box sx={{ mb: 3.5, display: 'flex', justifyContent: 'center' }}>
                 <Badge
                   overlap='circular'
@@ -130,29 +124,17 @@ const UserProfileRight = props => {
                 <FormGroup sx={{ mb: 6.5 }}>
                   <Typography
                     variant='body2'
-                    sx={{
-                      mb: 3.5,
-                      color: 'text.disabled',
-                      textTransform: 'uppercase',
-                      lineHeight: 'normal'
-                    }}
+                    sx={{ mb: 3.5, color: 'text.disabled', textTransform: 'uppercase', lineHeight: 'normal' }}
                   >
                     About
                   </Typography>
-                  <Typography sx={{ color: 'text.secondary' }}>
-                    {store.selectedChat.contact.about}
-                  </Typography>
+                  <Typography sx={{ color: 'text.secondary' }}>{store.selectedChat.contact.about}</Typography>
                 </FormGroup>
 
                 <Box sx={{ mb: 6 }}>
                   <Typography
                     variant='body2'
-                    sx={{
-                      mb: 3.5,
-                      color: 'text.disabled',
-                      textTransform: 'uppercase',
-                      lineHeight: 'normal'
-                    }}
+                    sx={{ mb: 3.5, color: 'text.disabled', textTransform: 'uppercase', lineHeight: 'normal' }}
                   >
                     Personal Information
                   </Typography>
@@ -164,29 +146,20 @@ const UserProfileRight = props => {
                       <ListItemText
                         sx={{ textTransform: 'lowercase' }}
                         primaryTypographyProps={{ variant: 'body1' }}
-                        primary={`${store.selectedChat.contact.fullName.replace(
-                          /\s/g,
-                          '_'
-                        )}@email.com`}
+                        primary={`${store.selectedChat.contact.fullName.replace(/\s/g, '_')}@email.com`}
                       />
                     </ListItem>
                     <ListItem sx={{ px: 2 }}>
                       <ListItemIcon sx={{ mr: 2 }}>
                         <Icon icon='tabler:phone-call' fontSize='1.5rem' />
                       </ListItemIcon>
-                      <ListItemText
-                        primaryTypographyProps={{ variant: 'body1' }}
-                        primary='+1(123) 456 - 7890'
-                      />
+                      <ListItemText primaryTypographyProps={{ variant: 'body1' }} primary='+1(123) 456 - 7890' />
                     </ListItem>
                     <ListItem sx={{ px: 2 }}>
                       <ListItemIcon sx={{ mr: 2 }}>
                         <Icon icon='tabler:clock' fontSize='1.5rem' />
                       </ListItemIcon>
-                      <ListItemText
-                        primaryTypographyProps={{ variant: 'body1' }}
-                        primary='Mon - Fri 10AM - 8PM'
-                      />
+                      <ListItemText primaryTypographyProps={{ variant: 'body1' }} primary='Mon - Fri 10AM - 8PM' />
                     </ListItem>
                   </List>
                 </Box>
@@ -194,12 +167,7 @@ const UserProfileRight = props => {
                 <div>
                   <Typography
                     variant='body2'
-                    sx={{
-                      mb: 3.5,
-                      color: 'text.disabled',
-                      textTransform: 'uppercase',
-                      lineHeight: 'normal'
-                    }}
+                    sx={{ mb: 3.5, color: 'text.disabled', textTransform: 'uppercase', lineHeight: 'normal' }}
                   >
                     Options
                   </Typography>
@@ -220,10 +188,7 @@ const UserProfileRight = props => {
                         <ListItemIcon sx={{ mr: 2 }}>
                           <Icon icon='tabler:badge' fontSize='1.5rem' />
                         </ListItemIcon>
-                        <ListItemText
-                          primary='Add Tag'
-                          primaryTypographyProps={{ variant: 'body1' }}
-                        />
+                        <ListItemText primary='Add Tag' primaryTypographyProps={{ variant: 'body1' }} />
                       </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -231,10 +196,7 @@ const UserProfileRight = props => {
                         <ListItemIcon sx={{ mr: 2 }}>
                           <Icon icon='tabler:star' fontSize='1.5rem' />
                         </ListItemIcon>
-                        <ListItemText
-                          primary='Important Contact'
-                          primaryTypographyProps={{ variant: 'body1' }}
-                        />
+                        <ListItemText primary='Important Contact' primaryTypographyProps={{ variant: 'body1' }} />
                       </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -242,10 +204,7 @@ const UserProfileRight = props => {
                         <ListItemIcon sx={{ mr: 2 }}>
                           <Icon icon='tabler:photo' fontSize='1.5rem' />
                         </ListItemIcon>
-                        <ListItemText
-                          primary='Shared Media'
-                          primaryTypographyProps={{ variant: 'body1' }}
-                        />
+                        <ListItemText primary='Shared Media' primaryTypographyProps={{ variant: 'body1' }} />
                       </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -253,10 +212,7 @@ const UserProfileRight = props => {
                         <ListItemIcon sx={{ mr: 2 }}>
                           <Icon icon='tabler:trash' fontSize='1.5rem' />
                         </ListItemIcon>
-                        <ListItemText
-                          primary='Delete Contact'
-                          primaryTypographyProps={{ variant: 'body1' }}
-                        />
+                        <ListItemText primary='Delete Contact' primaryTypographyProps={{ variant: 'body1' }} />
                       </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -264,10 +220,7 @@ const UserProfileRight = props => {
                         <ListItemIcon sx={{ mr: 2 }}>
                           <Icon icon='tabler:ban' fontSize='1.5rem' />
                         </ListItemIcon>
-                        <ListItemText
-                          primary='Block Contact'
-                          primaryTypographyProps={{ variant: 'body1' }}
-                        />
+                        <ListItemText primary='Block Contact' primaryTypographyProps={{ variant: 'body1' }} />
                       </ListItemButton>
                     </ListItem>
                   </List>

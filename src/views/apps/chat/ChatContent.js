@@ -156,11 +156,7 @@ const ChatContent = props => {
                       <CustomAvatar
                         skin='light'
                         color={selectedChat.contact.avatarColor}
-                        sx={{
-                          width: 38,
-                          height: 38,
-                          fontSize: theme => theme.typography.body1.fontSize
-                        }}
+                        sx={{ width: 38, height: 38, fontSize: theme => theme.typography.body1.fontSize }}
                       >
                         {getInitials(selectedChat.contact.fullName)}
                       </CustomAvatar>
@@ -168,15 +164,13 @@ const ChatContent = props => {
                   </Badge>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='h6'>{selectedChat.contact.fullName}</Typography>
-                    <Typography sx={{ color: 'text.disabled' }}>
-                      {selectedChat.contact.role}
-                    </Typography>
+                    <Typography sx={{ color: 'text.disabled' }}>{selectedChat.contact.role}</Typography>
                   </Box>
                 </Box>
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                {/* {mdAbove ? (
+                {mdAbove ? (
                   <Fragment>
                     <IconButton size='small' sx={{ color: 'text.secondary' }}>
                       <Icon icon='tabler:phone-call' />
@@ -188,19 +182,13 @@ const ChatContent = props => {
                       <Icon icon='tabler:search' />
                     </IconButton>
                   </Fragment>
-                ) : null} */}
+                ) : null}
 
                 <OptionsMenu
                   menuProps={{ sx: { mt: 2 } }}
                   icon={<Icon icon='tabler:dots-vertical' />}
                   iconButtonProps={{ size: 'small', sx: { color: 'text.secondary' } }}
-                  options={[
-                    'View Contact',
-                    'Mute Notifications',
-                    'Block Contact',
-                    'Clear Chat',
-                    'Report'
-                  ]}
+                  options={['View Contact', 'Mute Notifications', 'Block Contact', 'Clear Chat', 'Report']}
                 />
               </Box>
             </Box>

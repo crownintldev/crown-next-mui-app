@@ -164,9 +164,7 @@ const SidebarLeft = props => {
                           backgroundColor: `${statusObj[chat.status]}.main`,
                           boxShadow: theme =>
                             `0 0 0 2px ${
-                              !activeCondition
-                                ? theme.palette.background.paper
-                                : theme.palette.common.white
+                              !activeCondition ? theme.palette.background.paper : theme.palette.common.white
                             }`
                         }}
                       />
@@ -179,10 +177,7 @@ const SidebarLeft = props => {
                         sx={{
                           width: 38,
                           height: 38,
-                          outline: theme =>
-                            `2px solid ${
-                              activeCondition ? theme.palette.common.white : 'transparent'
-                            }`
+                          outline: theme => `2px solid ${activeCondition ? theme.palette.common.white : 'transparent'}`
                         }}
                       />
                     ) : (
@@ -193,10 +188,7 @@ const SidebarLeft = props => {
                           width: 38,
                           height: 38,
                           fontSize: theme => theme.typography.body1.fontSize,
-                          outline: theme =>
-                            `2px solid ${
-                              activeCondition ? theme.palette.common.white : 'transparent'
-                            }`
+                          outline: theme => `2px solid ${activeCondition ? theme.palette.common.white : 'transparent'}`
                         }}
                       >
                         {getInitials(chat.fullName)}
@@ -217,10 +209,7 @@ const SidebarLeft = props => {
                     </Typography>
                   }
                   secondary={
-                    <Typography
-                      noWrap
-                      sx={{ ...(!activeCondition && { color: 'text.secondary' }) }}
-                    >
+                    <Typography noWrap sx={{ ...(!activeCondition && { color: 'text.secondary' }) }}>
                       {lastMessage ? lastMessage.message : null}
                     </Typography>
                   }
@@ -235,10 +224,7 @@ const SidebarLeft = props => {
                 >
                   <Typography
                     variant='body2'
-                    sx={{
-                      whiteSpace: 'nowrap',
-                      color: activeCondition ? 'common.white' : 'text.disabled'
-                    }}
+                    sx={{ whiteSpace: 'nowrap', color: activeCondition ? 'common.white' : 'text.disabled' }}
                   >
                     <>{lastMessage ? formatDateToMonthShort(lastMessage.time, true) : new Date()}</>
                   </Typography>
@@ -278,18 +264,13 @@ const SidebarLeft = props => {
         return arrToMap !== null
           ? arrToMap.map((contact, index) => {
               const activeCondition =
-                active !== null &&
-                active.id === contact.id &&
-                active.type === 'contact' &&
-                !hasActiveId(contact.id)
+                active !== null && active.id === contact.id && active.type === 'contact' && !hasActiveId(contact.id)
 
               return (
                 <ListItem key={index} disablePadding sx={{ '&:not(:last-child)': { mb: 1 } }}>
                   <ListItemButton
                     disableRipple
-                    onClick={() =>
-                      handleChatClick(hasActiveId(contact.id) ? 'chat' : 'contact', contact.id)
-                    }
+                    onClick={() => handleChatClick(hasActiveId(contact.id) ? 'chat' : 'contact', contact.id)}
                     sx={{
                       py: 2,
                       px: 3,
@@ -298,9 +279,7 @@ const SidebarLeft = props => {
                       '&.MuiListItemButton-root:hover': { backgroundColor: 'action.hover' },
                       ...(activeCondition && {
                         background: theme =>
-                          `linear-gradient(72.47deg, ${
-                            theme.palette.primary.main
-                          } 22.16%, ${hexToRGBA(
+                          `linear-gradient(72.47deg, ${theme.palette.primary.main} 22.16%, ${hexToRGBA(
                             theme.palette.primary.main,
                             0.7
                           )} 76.47%) !important`
@@ -316,9 +295,7 @@ const SidebarLeft = props => {
                             width: 38,
                             height: 38,
                             outline: theme =>
-                              `2px solid ${
-                                activeCondition ? theme.palette.common.white : 'transparent'
-                              }`
+                              `2px solid ${activeCondition ? theme.palette.common.white : 'transparent'}`
                           }}
                         />
                       ) : (
@@ -330,9 +307,7 @@ const SidebarLeft = props => {
                             height: 38,
                             fontSize: theme => theme.typography.body1.fontSize,
                             outline: theme =>
-                              `2px solid ${
-                                activeCondition ? theme.palette.common.white : 'transparent'
-                              }`
+                              `2px solid ${activeCondition ? theme.palette.common.white : 'transparent'}`
                           }}
                         >
                           {getInitials(contact.fullName)}
@@ -343,16 +318,11 @@ const SidebarLeft = props => {
                       sx={{
                         my: 0,
                         ml: 3,
-                        ...(activeCondition && {
-                          '& .MuiTypography-root': { color: 'common.white' }
-                        })
+                        ...(activeCondition && { '& .MuiTypography-root': { color: 'common.white' } })
                       }}
                       primary={<Typography variant='h6'>{contact.fullName}</Typography>}
                       secondary={
-                        <Typography
-                          noWrap
-                          sx={{ ...(!activeCondition && { color: 'text.secondary' }) }}
-                        >
+                        <Typography noWrap sx={{ ...(!activeCondition && { color: 'text.secondary' }) }}>
                           {contact.about}
                         </Typography>
                       }
@@ -369,8 +339,7 @@ const SidebarLeft = props => {
   const handleFilter = e => {
     setQuery(e.target.value)
     if (store.chats !== null && store.contacts !== null) {
-      const searchFilterFunction = contact =>
-        contact.fullName.toLowerCase().includes(e.target.value.toLowerCase())
+      const searchFilterFunction = contact => contact.fullName.toLowerCase().includes(e.target.value.toLowerCase())
       const filteredChatsArr = store.chats.filter(searchFilterFunction)
       const filteredContactsArr = store.contacts.filter(searchFilterFunction)
       setFilteredChat(filteredChatsArr)

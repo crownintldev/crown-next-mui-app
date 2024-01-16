@@ -80,13 +80,7 @@ const UserProfileLeft = props => {
             <Icon icon='tabler:x' />
           </IconButton>
 
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              p: theme => theme.spacing(11.25, 6, 4.5)
-            }}
-          >
+          <Box sx={{ display: 'flex', flexDirection: 'column', p: theme => theme.spacing(11.25, 6, 4.5) }}>
             <Box sx={{ mb: 3.5, display: 'flex', justifyContent: 'center' }}>
               <Badge
                 overlap='circular'
@@ -118,9 +112,7 @@ const UserProfileLeft = props => {
             <Typography variant='h5' sx={{ textAlign: 'center' }}>
               {store.userProfile.fullName}
             </Typography>
-            <Typography
-              sx={{ textAlign: 'center', color: 'text.secondary', textTransform: 'capitalize' }}
-            >
+            <Typography sx={{ textAlign: 'center', color: 'text.secondary', textTransform: 'capitalize' }}>
               {store.userProfile.role}
             </Typography>
           </Box>
@@ -130,12 +122,7 @@ const UserProfileLeft = props => {
               <Box sx={{ p: 6 }}>
                 <Typography
                   variant='body2'
-                  sx={{
-                    mb: 3.5,
-                    color: 'text.disabled',
-                    textTransform: 'uppercase',
-                    lineHeight: 'normal'
-                  }}
+                  sx={{ mb: 3.5, color: 'text.disabled', textTransform: 'uppercase', lineHeight: 'normal' }}
                 >
                   About
                 </Typography>
@@ -148,12 +135,7 @@ const UserProfileLeft = props => {
                 />
                 <Typography
                   variant='body2'
-                  sx={{
-                    mb: 3.5,
-                    color: 'text.disabled',
-                    textTransform: 'uppercase',
-                    lineHeight: 'normal'
-                  }}
+                  sx={{ mb: 3.5, color: 'text.disabled', textTransform: 'uppercase', lineHeight: 'normal' }}
                 >
                   Status
                 </Typography>
@@ -166,11 +148,7 @@ const UserProfileLeft = props => {
                     />
                   </div>
                   <div>
-                    <FormControlLabel
-                      value='away'
-                      label='Away'
-                      control={<Radio color='warning' sx={{ p: 1.5 }} />}
-                    />
+                    <FormControlLabel value='away' label='Away' control={<Radio color='warning' sx={{ p: 1.5 }} />} />
                   </div>
                   <div>
                     <FormControlLabel
@@ -189,12 +167,7 @@ const UserProfileLeft = props => {
                 </RadioGroup>
                 <Typography
                   variant='body2'
-                  sx={{
-                    mb: 3.5,
-                    color: 'text.disabled',
-                    textTransform: 'uppercase',
-                    lineHeight: 'normal'
-                  }}
+                  sx={{ mb: 3.5, color: 'text.disabled', textTransform: 'uppercase', lineHeight: 'normal' }}
                 >
                   Settings
                 </Typography>
@@ -216,10 +189,7 @@ const UserProfileLeft = props => {
                       <ListItemIcon sx={{ mr: 2, color: 'text.primary' }}>
                         <Icon icon='tabler:message-dots' />
                       </ListItemIcon>
-                      <ListItemText
-                        primary='Two-step Verification'
-                        primaryTypographyProps={{ variant: 'body1' }}
-                      />
+                      <ListItemText primary='Two-step Verification' primaryTypographyProps={{ variant: 'body1' }} />
                     </ListItemButton>
                   </ListItem>
                   <ListItem disablePadding secondaryAction={<Switch defaultChecked />}>
@@ -227,10 +197,7 @@ const UserProfileLeft = props => {
                       <ListItemIcon sx={{ mr: 2, color: 'text.primary' }}>
                         <Icon icon='tabler:bell' />
                       </ListItemIcon>
-                      <ListItemText
-                        primary='Notification'
-                        primaryTypographyProps={{ variant: 'body1' }}
-                      />
+                      <ListItemText primary='Notification' primaryTypographyProps={{ variant: 'body1' }} />
                     </ListItemButton>
                   </ListItem>
                   <ListItem disablePadding>
@@ -238,10 +205,7 @@ const UserProfileLeft = props => {
                       <ListItemIcon sx={{ mr: 2, color: 'text.primary' }}>
                         <Icon icon='tabler:user-plus' />
                       </ListItemIcon>
-                      <ListItemText
-                        primary='Invite Friends'
-                        primaryTypographyProps={{ variant: 'body1' }}
-                      />
+                      <ListItemText primary='Invite Friends' primaryTypographyProps={{ variant: 'body1' }} />
                     </ListItemButton>
                   </ListItem>
                   <ListItem disablePadding>
@@ -249,10 +213,7 @@ const UserProfileLeft = props => {
                       <ListItemIcon sx={{ mr: 2, color: 'text.primary' }}>
                         <Icon icon='tabler:trash' />
                       </ListItemIcon>
-                      <ListItemText
-                        primary='Delete Account'
-                        primaryTypographyProps={{ variant: 'body1' }}
-                      />
+                      <ListItemText primary='Delete Account' primaryTypographyProps={{ variant: 'body1' }} />
                     </ListItemButton>
                   </ListItem>
                 </List>

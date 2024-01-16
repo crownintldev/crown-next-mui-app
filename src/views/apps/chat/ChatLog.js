@@ -86,10 +86,7 @@ const ChatLog = props => {
     if (isSender) {
       if (feedback.isSent && !feedback.isDelivered) {
         return (
-          <Box
-            component='span'
-            sx={{ display: 'flex', '& svg': { mr: 1.5, color: 'text.secondary' } }}
-          >
+          <Box component='span' sx={{ display: 'flex', '& svg': { mr: 1.5, color: 'text.secondary' } }}>
             <Icon icon='tabler:check' fontSize='1.125rem' />
           </Box>
         )
@@ -196,11 +193,7 @@ const ChatLog = props => {
                       {renderMsgFeedback(isSender, chat.feedback)}
                       <Typography variant='body2' sx={{ color: 'text.disabled' }}>
                         {time
-                          ? new Date(time).toLocaleString('en-US', {
-                              hour: 'numeric',
-                              minute: 'numeric',
-                              hour12: true
-                            })
+                          ? new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
                           : null}
                       </Typography>
                     </Box>

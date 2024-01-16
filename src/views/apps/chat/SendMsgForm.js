@@ -62,16 +62,11 @@ const SendMsgForm = props => {
           />
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {/* <IconButton size='small' sx={{ color: 'text.primary' }}>
+          <IconButton size='small' sx={{ color: 'text.primary' }}>
             <Icon icon='tabler:microphone' />
-          </IconButton> */}
-          <IconButton
-            size='small'
-            component='label'
-            htmlFor='upload-img'
-            sx={{ mr: 3, color: 'text.primary' }}
-          >
-            <Icon icon='tabler:upload' />
+          </IconButton>
+          <IconButton size='small' component='label' htmlFor='upload-img' sx={{ mr: 3, color: 'text.primary' }}>
+            <Icon icon='tabler:photo' />
             <input hidden type='file' id='upload-img' />
           </IconButton>
           <Button type='submit' variant='contained'>

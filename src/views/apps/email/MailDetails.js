@@ -197,13 +197,7 @@ const MailDetails = props => {
               borderBottom: theme => `1px solid ${theme.palette.divider}`
             }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: ['flex-start', 'center'],
-                justifyContent: 'space-between'
-              }}
-            >
+            <Box sx={{ display: 'flex', alignItems: ['flex-start', 'center'], justifyContent: 'space-between' }}>
               <Box
                 sx={{
                   display: 'flex',
@@ -246,10 +240,7 @@ const MailDetails = props => {
                               skin='light'
                               label={label}
                               color={labelColors[label]}
-                              sx={{
-                                textTransform: 'capitalize',
-                                '&:not(:last-of-type)': { mr: 2 }
-                              }}
+                              sx={{ textTransform: 'capitalize', '&:not(:last-of-type)': { mr: 2 } }}
                             />
                           )
                         })
@@ -318,15 +309,8 @@ const MailDetails = props => {
                   <Icon icon={mail.isStarred ? 'tabler:star-filled' : 'tabler:star'} />
                 </IconButton>
                 {mail.replies.length ? (
-                  <IconButton
-                    size='small'
-                    onClick={() => (showReplies ? setShowReplies(false) : setShowReplies(true))}
-                  >
-                    {showReplies ? (
-                      <Icon icon='tabler:fold' />
-                    ) : (
-                      <Icon icon='tabler:arrows-vertical' />
-                    )}
+                  <IconButton size='small' onClick={() => (showReplies ? setShowReplies(false) : setShowReplies(true))}>
+                    {showReplies ? <Icon icon='tabler:fold' /> : <Icon icon='tabler:arrows-vertical' />}
                   </IconButton>
                 ) : null}
                 <IconButton size='small'>
@@ -426,35 +410,23 @@ const MailDetails = props => {
                           </Box>
                           <Divider sx={{ m: '0 !important' }} />
                           <Box sx={{ px: 6 }}>
-                            <Box
-                              sx={{ color: 'text.secondary' }}
-                              dangerouslySetInnerHTML={{ __html: reply.message }}
-                            />
+                            <Box sx={{ color: 'text.secondary' }} dangerouslySetInnerHTML={{ __html: reply.message }} />
                           </Box>
                           {reply.attachments.length ? (
                             <>
                               <Divider sx={{ mx: 5, my: '0 !important' }} />
                               <Box sx={{ px: 6, pt: 3 }}>
                                 <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>
-                                  {`${reply.attachments.length} Attachment${
-                                    reply.attachments.length > 1 ? 's' : ''
-                                  }`}
+                                  {`${reply.attachments.length} Attachment${reply.attachments.length > 1 ? 's' : ''}`}
                                 </Typography>
                                 <List>
                                   {reply.attachments.map(item => {
                                     return (
                                       <ListItem disableGutters key={item.fileName}>
                                         <ListItemIcon sx={{ mr: 2 }}>
-                                          <img
-                                            src={item.thumbnail}
-                                            alt={item.fileName}
-                                            width='24'
-                                            height='24'
-                                          />
+                                          <img src={item.thumbnail} alt={item.fileName} width='24' height='24' />
                                         </ListItemIcon>
-                                        <Typography sx={{ color: 'text.secondary' }}>
-                                          {item.fileName}
-                                        </Typography>
+                                        <Typography sx={{ color: 'text.secondary' }}>{item.fileName}</Typography>
                                       </ListItem>
                                     )
                                   })}
@@ -469,14 +441,8 @@ const MailDetails = props => {
 
                 {mail.replies.length && !showReplies ? (
                   <Fragment>
-                    <HiddenReplyBack
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => setShowReplies(true)}
-                    />
-                    <HiddenReplyFront
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => setShowReplies(true)}
-                    />
+                    <HiddenReplyBack sx={{ cursor: 'pointer' }} onClick={() => setShowReplies(true)} />
+                    <HiddenReplyFront sx={{ cursor: 'pointer' }} onClick={() => setShowReplies(true)} />
                   </Fragment>
                 ) : null}
 
@@ -494,19 +460,10 @@ const MailDetails = props => {
                 >
                   <Box sx={{ py: 3, px: 6 }}>
                     <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        flexWrap: 'wrap'
-                      }}
+                      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar
-                          alt={mail.from.name}
-                          src={mail.from.avatar}
-                          sx={{ width: 32, height: 32, mr: 3 }}
-                        />
+                        <Avatar alt={mail.from.name} src={mail.from.avatar} sx={{ width: 32, height: 32, mr: 3 }} />
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                           <Typography variant='h6'>{mail.from.name}</Typography>
                           <Typography variant='body2' sx={{ color: 'text.disabled' }}>
@@ -549,35 +506,23 @@ const MailDetails = props => {
                   </Box>
                   <Divider sx={{ m: '0 !important' }} />
                   <Box sx={{ px: 6 }}>
-                    <Box
-                      sx={{ color: 'text.secondary' }}
-                      dangerouslySetInnerHTML={{ __html: mail.message }}
-                    />
+                    <Box sx={{ color: 'text.secondary' }} dangerouslySetInnerHTML={{ __html: mail.message }} />
                   </Box>
                   {mail.attachments.length ? (
                     <>
                       <Divider sx={{ mx: 5, my: '0 !important' }} />
                       <Box sx={{ px: 6, pt: 3 }}>
                         <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>
-                          {`${mail.attachments.length} Attachment${
-                            mail.attachments.length > 1 ? 's' : ''
-                          }`}
+                          {`${mail.attachments.length} Attachment${mail.attachments.length > 1 ? 's' : ''}`}
                         </Typography>
                         <List>
                           {mail.attachments.map(item => {
                             return (
                               <ListItem disableGutters key={item.fileName}>
                                 <ListItemIcon sx={{ mr: 2 }}>
-                                  <img
-                                    src={item.thumbnail}
-                                    alt={item.fileName}
-                                    width='24'
-                                    height='24'
-                                  />
+                                  <img src={item.thumbnail} alt={item.fileName} width='24' height='24' />
                                 </ListItemIcon>
-                                <Typography sx={{ color: 'text.secondary' }}>
-                                  {item.fileName}
-                                </Typography>
+                                <Typography sx={{ color: 'text.secondary' }}>{item.fileName}</Typography>
                               </ListItem>
                             )
                           })}

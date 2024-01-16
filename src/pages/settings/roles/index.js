@@ -20,8 +20,8 @@ const RolesComponent = () => {
         }
         subtitle={
           <Typography sx={{ color: 'text.secondary' }}>
-            A role provided access to predefined menus and features so that depending on <br /> assigned role an
-            administrator can have access to what he need
+            A role provided access to predefined menus and features so that depending on <br />{' '}
+            assigned role an administrator can have access to what he need
           </Typography>
         }
       />

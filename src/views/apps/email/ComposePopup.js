@@ -134,31 +134,16 @@ const ComposePopup = props => {
 
   const renderListItem = (props, option, array, setState) => {
     return (
-      <ListItem
-        {...props}
-        key={option.value}
-        sx={{ cursor: 'pointer' }}
-        onClick={() => setState([...array, option])}
-      >
+      <ListItem {...props} key={option.value} sx={{ cursor: 'pointer' }} onClick={() => setState([...array, option])}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {option.src.length ? (
-            <CustomAvatar
-              src={option.src}
-              alt={option.name}
-              sx={{ mr: 3, width: 22, height: 22 }}
-            />
+            <CustomAvatar src={option.src} alt={option.name} sx={{ mr: 3, width: 22, height: 22 }} />
           ) : (
-            <CustomAvatar
-              skin='light'
-              color='primary'
-              sx={{ mr: 3, width: 22, height: 22, fontSize: '.75rem' }}
-            >
+            <CustomAvatar skin='light' color='primary' sx={{ mr: 3, width: 22, height: 22, fontSize: '.75rem' }}>
               {getInitials(option.name)}
             </CustomAvatar>
           )}
-          <Typography sx={{ fontSize: theme => theme.typography.body2.fontSize }}>
-            {option.name}
-          </Typography>
+          <Typography sx={{ fontSize: theme => theme.typography.body2.fontSize }}>{option.name}</Typography>
         </Box>
       </ListItem>
     )
@@ -255,9 +240,7 @@ const ComposePopup = props => {
             filterOptions={addNewOption}
             getOptionLabel={option => option.name}
             renderOption={(props, option) => renderListItem(props, option, emailTo, setEmailTo)}
-            renderTags={(array, getTagProps) =>
-              renderCustomChips(array, getTagProps, emailTo, setEmailTo)
-            }
+            renderTags={(array, getTagProps) => renderCustomChips(array, getTagProps, emailTo, setEmailTo)}
             sx={{
               width: '100%',
               '& .MuiOutlinedInput-root': { p: 2 },
@@ -268,10 +251,7 @@ const ComposePopup = props => {
                 {...params}
                 autoComplete='new-password'
                 sx={{
-                  '& .MuiFilledInput-root.MuiInputBase-sizeSmall': {
-                    border: '0 !important',
-                    p: '0 !important'
-                  },
+                  '& .MuiFilledInput-root.MuiInputBase-sizeSmall': { border: '0 !important', p: '0 !important' },
                   '& .MuiFilledInput-input.MuiInputBase-inputSizeSmall': {
                     px: theme => `${theme.spacing(1.5)} !important`,
                     py: theme => `${theme.spacing(2.125)} !important`
@@ -303,20 +283,14 @@ const ComposePopup = props => {
           }}
         >
           <div>
-            <InputLabel
-              sx={{ mr: 3, fontSize: theme => theme.typography.body2.fontSize }}
-              htmlFor='email-cc-select'
-            >
+            <InputLabel sx={{ mr: 3, fontSize: theme => theme.typography.body2.fontSize }} htmlFor='email-cc-select'>
               Cc:
             </InputLabel>
           </div>
           <CustomTextField
             fullWidth
             sx={{
-              '& .MuiFilledInput-root.MuiInputBase-sizeSmall': {
-                border: '0 !important',
-                p: '0 !important'
-              }
+              '& .MuiFilledInput-root.MuiInputBase-sizeSmall': { border: '0 !important', p: '0 !important' }
             }}
           />
         </Box>
@@ -331,20 +305,14 @@ const ComposePopup = props => {
           }}
         >
           <div>
-            <InputLabel
-              sx={{ mr: 3, fontSize: theme => theme.typography.body2.fontSize }}
-              htmlFor='email-bcc-select'
-            >
+            <InputLabel sx={{ mr: 3, fontSize: theme => theme.typography.body2.fontSize }} htmlFor='email-bcc-select'>
               Bcc:
             </InputLabel>
           </div>
           <CustomTextField
             fullWidth
             sx={{
-              '& .MuiFilledInput-root.MuiInputBase-sizeSmall': {
-                border: '0 !important',
-                p: '0 !important'
-              }
+              '& .MuiFilledInput-root.MuiInputBase-sizeSmall': { border: '0 !important', p: '0 !important' }
             }}
           />
         </Box>

@@ -14,7 +14,7 @@ const navigation = () => {
       key: 'home',
       icon: 'iconoir:home',
       path: '/home',
-      activeChildPath: '/',
+      activeChildPath: '/dashboards/analytics',
       children: homeArray()
     },
     {

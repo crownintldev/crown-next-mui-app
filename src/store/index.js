@@ -8,7 +8,7 @@ import user from 'src/store/apps/user'
 import email from 'src/store/apps/email'
 import invoice from 'src/store/apps/invoice'
 import calendar from 'src/store/apps/calendar'
-import permissions from 'src/store/apps/role&permissions'
+import permissions from 'src/store/apps/permissions'
 import passport from './apps/booking/passport'
 
 // import visaBooking from './apps/booking/visaBooking'

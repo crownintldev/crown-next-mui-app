@@ -12,10 +12,10 @@ const navigation = () => {
           path: '/dashboards/analytics'
         },
 
-        // {
-        //   title: 'CRM',
-        //   path: '/dashboards/crm'
-        // },
+        {
+          title: 'CRM',
+          path: '/dashboards/crm'
+        },
         {
           title: 'eCommerce',
           path: '/dashboards/ecommerce'

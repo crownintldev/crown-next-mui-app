@@ -88,8 +88,7 @@ const data = {
     {
       id: 'money-back-guarantee',
       question: 'Do you have a money-back guarantee?',
-      answer:
-        'Yes. You may request a refund within 30 days of your purchase without any additional explanations.'
+      answer: 'Yes. You may request a refund within 30 days of your purchase without any additional explanations.'
     },
     {
       id: 'more-questions',

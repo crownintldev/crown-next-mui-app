@@ -861,8 +861,7 @@ mock.onGet('/apps/invoice/invoices').reply(config => {
             String(invoice.total).toLowerCase().includes(queryLowered) ||
             String(invoice.balance).toLowerCase().includes(queryLowered) ||
             invoice.dueDate.toLowerCase().includes(queryLowered)) &&
-          invoice.invoiceStatus.toLowerCase() ===
-            (status.toLowerCase() || invoice.invoiceStatus.toLowerCase())
+          invoice.invoiceStatus.toLowerCase() === (status.toLowerCase() || invoice.invoiceStatus.toLowerCase())
         )
       }
     } else {
@@ -873,8 +872,7 @@ mock.onGet('/apps/invoice/invoices').reply(config => {
           String(invoice.total).toLowerCase().includes(queryLowered) ||
           String(invoice.balance).toLowerCase().includes(queryLowered) ||
           invoice.dueDate.toLowerCase().includes(queryLowered)) &&
-        invoice.invoiceStatus.toLowerCase() ===
-          (status.toLowerCase() || invoice.invoiceStatus.toLowerCase())
+        invoice.invoiceStatus.toLowerCase() === (status.toLowerCase() || invoice.invoiceStatus.toLowerCase())
       )
     }
   })

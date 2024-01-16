@@ -25,18 +25,8 @@ const data = {
       { property: 'Email', value: 'john.doe@example.com', icon: 'tabler:mail' }
     ],
     teams: [
-      {
-        property: 'Backend Developer',
-        value: '(126 Members)',
-        icon: 'tabler:brand-github',
-        color: 'primary'
-      },
-      {
-        property: 'React Developer',
-        value: '(98 Members)',
-        icon: 'tabler:brand-react',
-        color: 'info'
-      }
+      { property: 'Backend Developer', value: '(126 Members)', icon: 'tabler:brand-github', color: 'primary' },
+      { property: 'React Developer', value: '(98 Members)', icon: 'tabler:brand-react', color: 'info' }
     ],
     overview: [
       { property: 'Task Compiled', value: '13.5k', icon: 'tabler:check' },
@@ -336,8 +326,7 @@ const data = {
         { avatar: '/images/avatars/5.png', name: 'John Doe' },
         { avatar: '/images/avatars/6.png', name: 'Alan Walker' }
       ],
-      description:
-        "Time is our most valuable asset, that's why we want to help you save it by creating…"
+      description: "Time is our most valuable asset, that's why we want to help you save it by creating…"
     },
     {
       members: 23,
@@ -401,8 +390,7 @@ const data = {
       client: 'Jerry Greene',
       title: 'Figma Dashboard',
       avatar: '/images/icons/project-icons/figma-label.png',
-      description:
-        'Use this template to organize your design project. Some of the key features are…',
+      description: 'Use this template to organize your design project. Some of the key features are…',
       avatarGroup: [
         { avatar: '/images/avatars/12.png', name: 'Kim Merchent' },
         { avatar: '/images/avatars/6.png', name: "Sam D'souza" },
@@ -425,8 +413,7 @@ const data = {
       title: 'Logo Design',
       client: 'Olive Strickland',
       avatar: '/images/icons/project-icons/xd-label.png',
-      description:
-        'Premium logo designs created by top logo designers. Create the branding of business.',
+      description: 'Premium logo designs created by top logo designers. Create the branding of business.',
       avatarGroup: [
         { avatar: '/images/avatars/8.png', name: 'Kim Karlos' },
         { avatar: '/images/avatars/11.png', name: 'Katy Turner' },
@@ -568,12 +555,7 @@ const projectTable = [
     name: 'Website SEO',
     date: '10 may 2021',
     avatarColor: 'success',
-    avatarGroup: [
-      '/images/avatars/1.png',
-      '/images/avatars/4.png',
-      '/images/avatars/3.png',
-      '/images/avatars/2.png'
-    ]
+    avatarGroup: ['/images/avatars/1.png', '/images/avatars/4.png', '/images/avatars/3.png', '/images/avatars/2.png']
   },
   {
     id: 2,
@@ -591,12 +573,7 @@ const projectTable = [
     date: '12 Aug 2021',
     name: 'Logo Designs',
     avatar: '/images/icons/project-icons/sketch-label.png',
-    avatarGroup: [
-      '/images/avatars/2.png',
-      '/images/avatars/1.png',
-      '/images/avatars/7.png',
-      '/images/avatars/8.png'
-    ]
+    avatarGroup: ['/images/avatars/2.png', '/images/avatars/1.png', '/images/avatars/7.png', '/images/avatars/8.png']
   },
   {
     id: 4,
@@ -605,12 +582,7 @@ const projectTable = [
     date: '19 Apr 2021',
     name: 'IOS App Design',
     avatar: '/images/icons/project-icons/sketch-label.png',
-    avatarGroup: [
-      '/images/avatars/5.png',
-      '/images/avatars/3.png',
-      '/images/avatars/6.png',
-      '/images/avatars/7.png'
-    ]
+    avatarGroup: ['/images/avatars/5.png', '/images/avatars/3.png', '/images/avatars/6.png', '/images/avatars/7.png']
   },
   {
     id: 5,
@@ -664,12 +636,7 @@ const projectTable = [
     date: '06 Oct 2021',
     name: 'Admin Template',
     avatar: '/images/icons/project-icons/vue-label.png',
-    avatarGroup: [
-      '/images/avatars/2.png',
-      '/images/avatars/3.png',
-      '/images/avatars/4.png',
-      '/images/avatars/5.png'
-    ]
+    avatarGroup: ['/images/avatars/2.png', '/images/avatars/3.png', '/images/avatars/4.png', '/images/avatars/5.png']
   }
 ]
 mock.onGet('/pages/profile').reply(config => {

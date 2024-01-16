@@ -10,8 +10,7 @@ const data = {
       slug: 'getting-started',
       title: 'Getting Started',
       img: '/images/pages/rocket.png',
-      subtitle:
-        "Whether you're new or you're a power user, this article will help you get started with the App."
+      subtitle: "Whether you're new or you're a power user, this article will help you get started with the App."
     },
     {
       slug: 'first-steps',
@@ -602,19 +601,12 @@ const data = {
 mock.onGet('/pages/help-center/landing').reply(() => {
   const allArticles = []
   data.categories.map(category =>
-    category.subCategories.map(subCategory =>
-      subCategory.articles.map(article => allArticles.push(article))
-    )
+    category.subCategories.map(subCategory => subCategory.articles.map(article => allArticles.push(article)))
   )
 
   return [
     200,
-    {
-      allArticles,
-      categories: data.categories,
-      popularArticles: data.popularArticles,
-      keepLearning: data.keepLearning
-    }
+    { allArticles, categories: data.categories, popularArticles: data.popularArticles, keepLearning: data.keepLearning }
   ]
 })
 mock.onGet('/pages/help-center/subcategory').reply(config => {
@@ -635,17 +627,8 @@ mock.onGet('/pages/help-center/article').reply(config => {
   const activeCategory = data.categories.filter(item => item.slug === category)[0]
 
   const activeSubcategory =
-    activeCategory.subCategories.filter(item => item.slug === subcategory)[0] ||
-    activeCategory.subCategories[0]
+    activeCategory.subCategories.filter(item => item.slug === subcategory)[0] || activeCategory.subCategories[0]
   const activeArticle = activeSubcategory.articles.filter(item => item.slug === article)[0]
 
-  return [
-    200,
-    {
-      activeArticle,
-      activeSubcategory,
-      categories: data.categories,
-      articles: activeSubcategory.articles
-    }
-  ]
+  return [200, { activeArticle, activeSubcategory, categories: data.categories, articles: activeSubcategory.articles }]
 })

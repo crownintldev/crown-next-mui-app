@@ -30,8 +30,7 @@ const data = {
         },
         {
           id: 'users-license',
-          question:
-            'Which license do I need for an end product that is only accessible to paying users?',
+          question: 'Which license do I need for an end product that is only accessible to paying users?',
           answer:
             'If you have paying users or you are developing any SaaS products then you need an Extended License. For each products, you need a license. You can get free lifetime updates as well.'
         },
@@ -115,8 +114,7 @@ const data = {
         {
           id: 'promo-code',
           question: 'My Promotion Code is not working, what can I do?',
-          answer:
-            'If you are having issues with a promotion code, please contact us at 1 000 000 000 for assistance.'
+          answer: 'If you are having issues with a promotion code, please contact us at 1 000 000 000 for assistance.'
         },
         {
           id: 'track-orders',

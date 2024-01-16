@@ -1120,9 +1120,7 @@ mock.onGet('/apps/email/get-email').reply(config => {
   if (mail) {
     const mailIndex = paramsFilteredMails.findIndex(i => i.id === mail.id)
     mailIndex > 0 ? (mail.hasPreviousMail = true) : (mail.hasPreviousMail = false)
-    mailIndex < paramsFilteredMails.length - 1
-      ? (mail.hasNextMail = true)
-      : (mail.hasNextMail = false)
+    mailIndex < paramsFilteredMails.length - 1 ? (mail.hasNextMail = true) : (mail.hasNextMail = false)
   }
 
   return mail ? [200, mail] : [404]
@@ -1154,9 +1152,7 @@ mock.onGet('/apps/email/paginate-email').reply(config => {
   if (newEmail) {
     const mailIndex = paramsFilteredMails.findIndex(i => i.id === newEmail.id)
     mailIndex > 0 ? (newEmail.hasPreviousMail = true) : (newEmail.hasPreviousMail = false)
-    mailIndex < paramsFilteredMails.length - 1
-      ? (newEmail.hasNextMail = true)
-      : (newEmail.hasNextMail = false)
+    mailIndex < paramsFilteredMails.length - 1 ? (newEmail.hasNextMail = true) : (newEmail.hasNextMail = false)
   }
 
   return newEmail ? [200, newEmail] : [404]

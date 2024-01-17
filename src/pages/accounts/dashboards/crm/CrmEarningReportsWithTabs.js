@@ -30,7 +30,7 @@ const tabData = [
     series: [{ data: [28, 10, 45, 38, 15, 30, 35, 28, 8] }]
   },
   {
-    type: 'Visa',
+    type: 'Booked Visa',
     avatarIcon: 'tabler:chart-bar',
     series: [{ data: [35, 25, 15, 40, 42, 25, 48, 8, 30] }]
   },
@@ -40,7 +40,17 @@ const tabData = [
     series: [{ data: [10, 22, 27, 33, 42, 32, 27, 22, 8] }]
   },
   {
-    type: 'Visa Income',
+    type: 'Delivered Visa',
+    avatarIcon: 'tabler:chart-pie-2',
+    series: [{ data: [5, 9, 12, 18, 20, 25, 30, 36, 48] }]
+  },
+  {
+    type: 'Expense Details',
+    avatarIcon: 'tabler:chart-pie-2',
+    series: [{ data: [5, 9, 12, 18, 20, 25, 30, 36, 48] }]
+  },
+  {
+    type: 'Account Details',
     avatarIcon: 'tabler:chart-pie-2',
     series: [{ data: [5, 9, 12, 18, 20, 25, 30, 36, 48] }]
   }

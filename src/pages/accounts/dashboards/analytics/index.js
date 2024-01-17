@@ -22,6 +22,7 @@ import * as source from 'src/views/components/swiper/SwiperSourceCode'
 
 // ** Hook Import
 import { useSettings } from 'src/@core/hooks/useSettings'
+import { InputLabel, Select, MenuItem } from '@mui/material'
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
@@ -37,28 +38,28 @@ const Swiper = () => {
   return (
     <KeenSliderWrapper>
       <Grid container spacing={6} className='match-height'>
-        <PageHeader
-          subtitle={
-            <Typography sx={{ color: 'text.secondary' }}>
-              Check the account main section for notifications, and much more
-            </Typography>
-          }
-          title={
-            <Typography variant='h4'>
-              <LinkStyled href='https://github.com/rcbyr/keen-slider' target='_blank'>
-                Latest Notifications
-              </LinkStyled>
-            </Typography>
-          }
-        />
         <Grid item xs={12}>
           <CardSnippet
-            title='Swape the cursor right to left'
+            title='Latest Offers and Deals '
             code={{
               tsx: null,
               jsx: source.SwiperDefaultJSXCode
             }}
           >
+            <Grid>
+              <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                // value={age}
+                label='Age'
+                // onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Grid>
             <SwiperDefault direction={direction} />
           </CardSnippet>
         </Grid>

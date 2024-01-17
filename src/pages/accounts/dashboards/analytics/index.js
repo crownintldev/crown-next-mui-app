@@ -1,68 +1,73 @@
-// ** MUI Import
+// ** Next Import
+import Link from 'next/link'
+
+// ** MUI Imports
 import Grid from '@mui/material/Grid'
+import { styled } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
-// ** Demo Component Imports
-import AnalyticsProject from 'src/views/dashboards/analytics/AnalyticsProject'
-import AnalyticsOrderVisits from 'src/views/dashboards/analytics/AnalyticsOrderVisits'
-import AnalyticsTotalEarning from 'src/views/dashboards/analytics/AnalyticsTotalEarning'
-import AnalyticsSourceVisits from 'src/views/dashboards/analytics/AnalyticsSourceVisits'
-import AnalyticsEarningReports from 'src/views/dashboards/analytics/AnalyticsEarningReports'
-import AnalyticsSupportTracker from 'src/views/dashboards/analytics/AnalyticsSupportTracker'
-import AnalyticsSalesByCountries from 'src/views/dashboards/analytics/AnalyticsSalesByCountries'
-import AnalyticsMonthlyCampaignState from 'src/views/dashboards/analytics/AnalyticsMonthlyCampaignState'
-import AnalyticsWebsiteAnalyticsSlider from 'src/views/dashboards/analytics/AnalyticsWebsiteAnalyticsSlider'
+// ** Custom Components Imports
+import PageHeader from 'src/@core/components/page-header'
+import CardSnippet from 'src/@core/components/card-snippet'
 
-// ** Custom Component Import
+// ** Demo Components Imports
+import SwiperDefault from 'src/views/components/swiper/SwiperDefault'
+import CrmEarningReportsWithTabs from '../crm/CrmEarningReportsWithTabs'
+
+// ** Styled Component Import
 import KeenSliderWrapper from 'src/@core/styles/libs/keen-slider'
-import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
-import CardStatsWithAreaChart from 'src/@core/components/card-statistics/card-stats-with-area-chart'
 
-const AnalyticsDashboard = () => {
+// ** Source code imports
+import * as source from 'src/views/components/swiper/SwiperSourceCode'
+
+// ** Hook Import
+import { useSettings } from 'src/@core/hooks/useSettings'
+
+const LinkStyled = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.primary.main
+}))
+
+const Swiper = () => {
+  // ** Hook
+  const {
+    settings: { direction }
+  } = useSettings()
+
   return (
-    <ApexChartWrapper>
-      <KeenSliderWrapper>
-        <Grid container spacing={6}>
-          <Grid item xs={12} lg={6}>
-            <AnalyticsWebsiteAnalyticsSlider />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <AnalyticsOrderVisits />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <CardStatsWithAreaChart
-              stats='97.5k'
-              chartColor='success'
-              avatarColor='success'
-              title='Revenue Generated'
-              avatarIcon='tabler:credit-card'
-              chartSeries={[{ data: [6, 35, 25, 61, 32, 84, 70] }]}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <AnalyticsEarningReports />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <AnalyticsSupportTracker />
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsSalesByCountries />
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsTotalEarning />
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsMonthlyCampaignState />
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <AnalyticsSourceVisits />
-          </Grid>
-          <Grid item xs={12} lg={8}>
-            <AnalyticsProject />
-          </Grid>
+    <KeenSliderWrapper>
+      <Grid container spacing={6} className='match-height'>
+        <PageHeader
+          subtitle={
+            <Typography sx={{ color: 'text.secondary' }}>
+              Check the account main section for notifications, and much more
+            </Typography>
+          }
+          title={
+            <Typography variant='h4'>
+              <LinkStyled href='https://github.com/rcbyr/keen-slider' target='_blank'>
+                Latest Notifications
+              </LinkStyled>
+            </Typography>
+          }
+        />
+        <Grid item xs={12}>
+          <CardSnippet
+            title='Swape the cursor right to left'
+            code={{
+              tsx: null,
+              jsx: source.SwiperDefaultJSXCode
+            }}
+          >
+            <SwiperDefault direction={direction} />
+          </CardSnippet>
         </Grid>
-      </KeenSliderWrapper>
-    </ApexChartWrapper>
+      </Grid>
+      <Grid item xs={12} lg={8}>
+        <CrmEarningReportsWithTabs />
+      </Grid>
+    </KeenSliderWrapper>
   )
 }
 
-export default AnalyticsDashboard
+export default Swiper

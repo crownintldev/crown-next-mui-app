@@ -63,7 +63,7 @@ const AddActions = () => {
               onClick={handleActionMethodChange}
             >
               <Icon fontSize='1.125rem' icon='tabler:submit' />
-              Action
+              Preview
             </Button>
 
             {/* Render the preview modal */}

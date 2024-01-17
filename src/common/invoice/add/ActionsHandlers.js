@@ -15,8 +15,9 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
 
-// html2canvas
+// html2canvas, jspdf
 import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 // Normal Imports
 import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
@@ -31,13 +32,33 @@ const ActionsHandlers = ({ open, onClose, data }) => {
 
   const componentPDF = useRef()
 
-  // PDF generator handler
-  const pdfGenerator = useReactToPrint({
+  // Print generator handler
+  const printGenerator = useReactToPrint({
     content: () => componentPDF.current,
     documentTitle: 'Invoice Data'
   })
 
-  // Taking screenshot handler
+  // PDF downloader
+  const pdfDownloader = () => {
+    const modalContent = componentPDF.current
+
+    // Capture the modal content
+    html2canvas(modalContent).then(canvas => {
+      // Create a new jsPDF instance
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height]
+      })
+
+      // Add the canvas as an image to the PDF
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, canvas.width, canvas.height)
+
+      // Save the PDF
+      pdf.save('modal-content.pdf')
+    })
+  }
+
   // Taking screenshot handler
   const screenShotHandler = () => {
     const modalContent = componentPDF.current
@@ -66,14 +87,10 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       const link = document.createElement('a')
       link.href = screenshotUrl
       link.download = 'screenshot.png'
-
-      // Trigger a click event on the link to initiate the download
       link.click()
 
-      // Remove the temporary container from the body
       document.body.removeChild(tempContainer)
 
-      // Show the buttons after capturing the screenshot
       if (actionButtons) {
         actionButtons.style.display = 'block'
       }
@@ -166,11 +183,11 @@ const ActionsHandlers = ({ open, onClose, data }) => {
               mt: '10'
             }}
           >
-            <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
+            <Button variant='contained' onClick={printGenerator} sx={{ marginRight: 2 }}>
               Print
             </Button>
-            <Button variant='contained' onClick={pdfGenerator} sx={{ marginRight: 2 }}>
-              PDF
+            <Button variant='contained' onClick={pdfDownloader} sx={{ marginRight: 2 }}>
+              Download PDF
             </Button>
             <Button variant='contained' onClick={screenShotHandler} sx={{ marginRight: 2 }}>
               Screenshot

@@ -72,63 +72,8 @@ const CardSnippet = props => {
       sx={{ '& .MuiCardHeader-action': { lineHeight: 0.8 }, ...sx }}
       id={id || `card-snippet--${title.toLowerCase().replace(/ /g, '-')}`}
     >
-      <CardHeader
-        title={title}
-        {...(hidden
-          ? {}
-          : {
-              action: (
-                <IconButton onClick={() => setShowCode(!showCode)}>
-                  <Icon icon='tabler:code' fontSize={20} />
-                </IconButton>
-              )
-            })}
-      />
+      <CardHeader title={title} {...(hidden ? {} : {})} />
       <CardContent>{children}</CardContent>
-      {hidden ? null : (
-        <Collapse in={showCode}>
-          <Divider sx={{ my: '0 !important' }} />
-
-          <CardContent
-            sx={{ position: 'relative', '& pre': { m: '0 !important', maxHeight: 500 } }}
-          >
-            <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-              <ToggleButtonGroup
-                exclusive
-                size='small'
-                color='primary'
-                value={tabValue}
-                onChange={(e, newValue) => (newValue !== null ? setTabValue(newValue) : null)}
-              >
-                {code.tsx !== null ? (
-                  <ToggleButton value='tsx'>
-                    <Icon icon='tabler:brand-typescript' fontSize={20} />
-                  </ToggleButton>
-                ) : null}
-                {code.jsx !== null ? (
-                  <ToggleButton value='jsx'>
-                    <Icon icon='tabler:brand-javascript' fontSize={20} />
-                  </ToggleButton>
-                ) : null}
-              </ToggleButtonGroup>
-            </Box>
-            <Tooltip title='Copy the source' placement='top'>
-              <IconButton
-                onClick={handleClick}
-                sx={{
-                  top: '5rem',
-                  color: 'grey.100',
-                  right: '2.5625rem',
-                  position: 'absolute'
-                }}
-              >
-                <Icon icon='tabler:copy' fontSize={20} />
-              </IconButton>
-            </Tooltip>
-            <div>{renderCode()}</div>
-          </CardContent>
-        </Collapse>
-      )}
     </Card>
   )
 }

@@ -348,7 +348,7 @@ const navigation = [
     icon: 'tabler:brand-tabler'
   },
   {
-    
+
     title: 'Cards',
     icon: 'tabler:id',
     children: [

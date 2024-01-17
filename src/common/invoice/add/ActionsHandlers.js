@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React, { useState, useRef } from 'react'
 import QRCode from 'qrcode.react' // Import the QR code library
 import { useReactToPrint } from 'react-to-print'
+import 'jspdf-autotable'
 
 // Material Imports
 import Modal from '@mui/material/Modal'
@@ -38,24 +39,15 @@ const ActionsHandlers = ({ open, onClose, data }) => {
     documentTitle: 'Invoice Data'
   })
 
-  // PDF downloader
   const pdfDownloader = () => {
-    const modalContent = componentPDF.current
-
-    // Capture the modal content
-    html2canvas(modalContent).then(canvas => {
-      // Create a new jsPDF instance
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
-      })
-
-      // Add the canvas as an image to the PDF
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, canvas.width, canvas.height)
-
-      // Save the PDF
-      pdf.save('modal-content.pdf')
+    const input = document.getElementById('modal-content')
+    html2canvas(input, { logging: true, letterRendering: 1, useCORS: true }).then(canvas => {
+      const imgWidth = 208
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      const imgData = canvas.toDataURL('img/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
+      pdf.save('invoice data.pdf')
     })
   }
 

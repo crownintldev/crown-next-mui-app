@@ -3645,6 +3645,11 @@ jsonwebtoken@8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
+jspdf-autotable@^3.8.1:
+  version "3.8.1"
+  resolved "https://registry.npmjs.org/jspdf-autotable/-/jspdf-autotable-3.8.1.tgz"
+  integrity sha512-UjJqo80Z3/WUzDi4JipTGp0pAvNvR3Gsm38inJ5ZnwsJH0Lw4pEbssRSH6zMWAhR1ZkTrsDpQo5p6rZk987/AQ==
+
 jspdf@^2.5.1:
   version "2.5.1"
   resolved "https://registry.npmjs.org/jspdf/-/jspdf-2.5.1.tgz"

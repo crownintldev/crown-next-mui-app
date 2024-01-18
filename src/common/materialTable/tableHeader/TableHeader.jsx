@@ -29,7 +29,7 @@ const TableHeader = props => {
     table,
     tableData,
     removeSelection,
-    headerMenu
+    headerMenu,
   } = props
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -115,7 +115,7 @@ const TableHeader = props => {
               </Box>
             </MenuItem>
           )}
-          {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
+          {headerMenu && headerMenu({ selectedIds, handleClose,toggle, removeSelection })}
         </Menu>
 
         {/* ----------Export data--------- */}

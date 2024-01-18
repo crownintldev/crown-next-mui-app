@@ -1,12 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { ThemeProvider, LinearProgress } from '@mui/material'
-import { useTheme } from '@mui/material'
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Grid } from '@mui/material'
 import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
 import FormDrawer from '../drawer/FormDrawer'
 import TableHeader from './tableHeader/TableHeader'
+
+// MUI Imports
+import { LinearProgress, Tab, Tabs } from '@mui/material'
+import { useTheme } from '@mui/material'
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
+import { Grid } from '@mui/material'
 
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
@@ -24,7 +26,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   const theme = useTheme()
   const dispatch = useDispatch()
   const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
-  const [isRefetching, setIsRefetching] = useState(false)
+  const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
   // Table state
 
@@ -33,11 +35,11 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   const [sorting, setSorting] = useState([])
   const [rowSelection, setRowSelection] = useState({})
   const [selectionRow, setSelectionRow] = useState([])
-
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 20
   })
+  const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows
 
   //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -82,10 +84,24 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
 
   const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
-  // console.log(selectedRowIds)
   useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])
+
+  // Function to handle tab changes
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue)
+  }
+
+  // Conditionally render the table component based on the active tab
+  const renderTableComponent = () => {
+    if (activeTab === 'default') {
+      return <MaterialReactTable table={table} className='custom-table-styles' />
+    } else if (activeTab === 'trash') {
+      // Pass the trashed rows to the table in the "Trash" tab
+      return <MaterialReactTable table={table} data={trashedRows} className='custom-table-styles' />
+    }
+  }
 
   const handleRemoveSelection = () => {
     setRowSelection({})
@@ -181,6 +197,27 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   return (
     <>
       {cards()}
+      <Tabs
+        value={activeTab}
+        onChange={handleTabChange}
+        indicatorColor='primary'
+        textColor='primary'
+        variant='fullWidth'
+        aria-label='table sections tabs'
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+          marginBottom: '3px',
+          borderRadius: '7px'
+        }}
+      >
+        <Tab label='Default' value='default' />
+        <Tab label='Trash' value='trash' />
+      </Tabs>
+      <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
+        {/* Conditionally render the table component */}
+        {renderTableComponent()}
+      </div>
+
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (
@@ -190,7 +227,8 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
             }}
           />
         )}
-        <MaterialReactTable table={table} className='custom-table-styles' />
+
+        {/* <MaterialReactTable table={table} className='custom-table-styles' /> */}
         {isLoading && (
           <LinearProgress
             sx={{

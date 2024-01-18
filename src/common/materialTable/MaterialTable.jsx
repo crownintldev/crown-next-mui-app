@@ -181,7 +181,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   return (
     <>
       {cards()}
-      <div style={{ backgroundColor: '#FFF' }} className='custom-scrollbar'>
+      <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (
           <LinearProgress
@@ -190,7 +190,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
             }}
           />
         )}
-        <MaterialReactTable table={table} />
+        <MaterialReactTable table={table} className='custom-table-styles' />
         {isLoading && (
           <LinearProgress
             sx={{

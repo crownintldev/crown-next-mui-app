@@ -13,6 +13,15 @@ import CardContent from '@mui/material/CardContent'
 import ToggleButton from '@mui/material/ToggleButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import {
+  Grid,
+  Typography,
+  InputLabel,
+  Select,
+  MenuItem,
+  Autocomplete,
+  TextField
+} from '@mui/material'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -73,6 +82,35 @@ const CardSnippet = props => {
       id={id || `card-snippet--${title.toLowerCase().replace(/ /g, '-')}`}
     >
       <CardHeader title={title} {...(hidden ? {} : {})} />
+      <Grid
+        container
+        justifyContent='space-between'
+        paddingLeft={5}
+        paddingRight={5}
+        alignItems={'center'}
+      >
+        <Grid item>
+          <Typography variant='h4'>Latest Offers and Deals</Typography>
+        </Grid>
+        <Grid item>
+          {/* <InputLabel id='demo-simple-select-label'>Select from lists</InputLabel> */}
+          <Autocomplete
+            id='demo-simple-select'
+            options={[
+              { value: 10, label: 'Ten' },
+              { value: 20, label: 'Twenty' },
+              { value: 30, label: 'Thirty' },
+              { value: 40, label: 'Forty' },
+              { value: 50, label: 'Fifty' },
+              { value: 60, label: 'Sixty' },
+              { value: 70, label: 'Seventy' }
+            ]}
+            getOptionLabel={option => option.label}
+            renderInput={params => <TextField {...params} label='Select from lists' />}
+            sx={{ width: '15em' }}
+          />
+        </Grid>
+      </Grid>
       <CardContent>{children}</CardContent>
     </Card>
   )

@@ -9,6 +9,7 @@ import {
 const useTableColumns = () =>
   useMemo(
     () => [
+      { accessorKey: '_id', header: 'ID', size: 100 },
       {
         accessorKey: 'supplierVisaService.supplier.name',
         header: 'Supplier Name',

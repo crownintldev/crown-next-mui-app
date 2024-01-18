@@ -6,6 +6,7 @@ import { dateFormat, ArrayCellRenderer } from 'src/common/materialTable/tableCol
 const useSupplierColumns = () =>
   useMemo(
     () => [
+      { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'name', header: 'Name', Cell: defaultCellRenderer },
       { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
       { accessorKey: 'phone', header: 'Phone', Cell: defaultCellRenderer },

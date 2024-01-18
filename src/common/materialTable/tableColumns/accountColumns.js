@@ -10,12 +10,9 @@ import {
 export const useTableColumns = () =>
   useMemo(
     () => [
+      { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'onModel', header: 'Refer', size: 100, Cell: defaultCellRenderer },
-      {
-        accessorKey: 'by',
-        header: 'Refer Name',
-        Cell: conditionValue
-      },
+      { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Refer Phone #' },
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
       { accessorKey: 'amount.paid', header: 'Paid Amount', size: 100 },
@@ -50,13 +47,11 @@ export const useChildTableColumns = () =>
       header: 'Confirmed - Total Fee',
       Cell: defaultCellRenderer
     },
-  // minWidth converted to size
+    // minWidth converted to size
     { accessorKey: 'visaId.destination', header: 'Destination', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.category', header: 'Category', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.type', header: 'Type', Cell: defaultCellRenderer },
-    { accessorKey: 'visaId.duration', header: 'Duration', Cell: defaultCellRenderer },
-   
-   
+    { accessorKey: 'visaId.duration', header: 'Duration', Cell: defaultCellRenderer }
   ])
 
 // export default useTableColumns

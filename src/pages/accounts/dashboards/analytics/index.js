@@ -11,7 +11,7 @@ import CardSnippet from 'src/@core/components/card-snippet'
 
 // ** Demo Components Imports
 import SwiperDefault from 'src/views/components/swiper/SwiperDefault'
-import CrmEarningReportsWithTabs from '../crm/CrmEarningReportsWithTabs'
+import CrmEarningReportsWithTabs from 'src/pages/components/earning-reports/CrmEarningReportsWithTabs'
 
 // ** Styled Component Import
 import KeenSliderWrapper from 'src/@core/styles/libs/keen-slider'
@@ -21,12 +21,6 @@ import * as source from 'src/views/components/swiper/SwiperSourceCode'
 
 // ** Hook Import
 import { useSettings } from 'src/@core/hooks/useSettings'
-
-const LinkStyled = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  color: theme.palette.primary.main
-}))
-
 const Swiper = () => {
   // ** Hook
   const {
@@ -38,7 +32,6 @@ const Swiper = () => {
       <Grid item xs={12} lg={8}>
         <Grid container spacing={6} className='match-height'>
           <Grid item xs={12}>
-
             <CardSnippet
               title=''
               code={{

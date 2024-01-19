@@ -133,7 +133,7 @@ const LoginPage = () => {
                 Please sign-in to your account and start the adventure
               </Typography> */}
             </Box>
-            <Alert
+            {/* <Alert
               icon={false}
               sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}
             >
@@ -149,7 +149,7 @@ const LoginPage = () => {
               <Typography variant='body2' sx={{ color: 'primary.main' }}>
                 Client: <strong>client@crown.com</strong> / Pass: <strong>client</strong>
               </Typography>
-            </Alert>
+            </Alert> */}
             <LoginForm />
           </Box>
         </Box>

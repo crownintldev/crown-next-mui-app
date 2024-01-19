@@ -28,6 +28,7 @@ body {
   min-height: 100%;
 }
 /* screen loader style */
+/* spinner loader style */
 .loader {
   display: inline-block;
   width: 220px; /* Adjust based on image size + padding */
@@ -38,6 +39,14 @@ body {
   border: 8px solid rgba(0, 0, 0, 0.1);
   border-top-color: #1852fe; /* Color of the loader */
   animation: spin 2s linear infinite;
+}
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 @keyframes spin {

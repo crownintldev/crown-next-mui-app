@@ -30,7 +30,7 @@ const navigation = () => {
       key: 'tickets',
       icon: 'mdi:airplane',
       path: '/tickets',
-      activeChildPath: '/coming-soon',
+      activeChildPath: '/welcome',
       children: ticketingArrays()
     },
     {

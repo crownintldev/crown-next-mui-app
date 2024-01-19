@@ -12,9 +12,17 @@ const users = [
     id: 1,
     role: 'admin',
     password: 'admin',
-    fullName: 'John Doe',
-    username: 'johndoe',
-    email: 'admin@vuexy.com'
+    fullName: 'Shafqat',
+    username: 'shafqat',
+    email: 'shafqat@crown.com'
+  },
+  {
+    id: 2,
+    role: 'admin',
+    password: 'admin',
+    fullName: 'admin',
+    username: 'admin',
+    email: 'admin@crown.com'
   },
   {
     id: 2,
@@ -22,7 +30,7 @@ const users = [
     password: 'client',
     fullName: 'Jane Doe',
     username: 'janedoe',
-    email: 'client@vuexy.com'
+    email: 'client@crown.com'
   }
 ]
 
@@ -40,7 +48,9 @@ mock.onPost('/jwt/login').reply(request => {
   }
   const user = users.find(u => u.email === email && u.password === password)
   if (user) {
-    const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, { expiresIn: jwtConfig.expirationTime })
+    const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
+      expiresIn: jwtConfig.expirationTime
+    })
 
     const response = {
       accessToken,

@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
+import PhoneIcon from '@mui/icons-material/Phone' // Import an appropriate icon from Material-UI
+import Person from '@mui/icons-material/Person' // Import an appropriate icon from Material-UI
 
 import Box, { BoxProps } from '@mui/material/Box'
 
@@ -190,33 +192,24 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       name: 'cnic',
       type: 'text',
       required: true
-    }
-  ]
-
-  const passportField2 = [
+    },
     {
-      name: 'doi',
+      name: 'surname',
       required: true
     },
     {
       name: 'givenName',
       required: true
-    },
+    }
+  ]
+
+  const passportField2 = [
     {
       name: 'fatherName',
       required: true
     },
     {
       name: 'issuingAuthority'
-    },
-    {
-      name: 'pob',
-      placeholder: 'Place of Birth',
-      required: true
-    },
-    {
-      name: 'surname',
-      required: true
     },
     {
       name: 'trackingNumber',
@@ -229,6 +222,17 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       placeholder: 'Enter Remarks'
     }
   ]
+
+  const fontStyles = {
+    fontsize: '12.2px'
+  }
+  const iconStyles = {
+    fontSize: '14px',
+    position: 'relative',
+    top: '2px',
+    left: '-3px'
+  }
+  const listStyles = { borderLeft: '2px solid #1852fe', height: '42px', marginBottom: '5px' }
 
   // console.log('files output', files)
   //
@@ -262,33 +266,15 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
             <SimpleSelectHookField
               control={control}
               errors={errors}
-              name={'city'}
-              options={['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Peshawar']}
-              label={'City'}
-              placeholder='Search Cities'
+              name={'nationality'}
+              options={['Pakistani', 'Indian', 'Afghani']}
+              label={'Nationality'}
+              placeholder='Search Nationality'
               select={true}
               MenuProps={{
                 disablePortal: true,
                 disableCloseOnSelect: true
               }}
-            />
-          </Grid>
-          <Grid item md={6} lg={4} sx={{ mb: 4 }}>
-            <DatePickerHookField
-              name='dob'
-              placeholder='Date of Birth'
-              required={true}
-              control={control}
-              errors={errors}
-            />
-          </Grid>
-          <Grid item md={6} lg={4} sx={{ mb: 4 }}>
-            <DatePickerHookField
-              name='doe'
-              placeholder='Date of Expire'
-              required={true}
-              control={control}
-              errors={errors}
             />
           </Grid>
           <Grid item md={6} lg={4}>
@@ -310,10 +296,10 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
             <SimpleSelectHookField
               control={control}
               errors={errors}
-              name={'nationality'}
-              options={['Pakistani', 'Indian', 'Afghani']}
-              label={'Nationality'}
-              placeholder='Search Nationality'
+              name={'pob'}
+              options={['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Peshawar']}
+              label={'Place of birth'}
+              placeholder='Search places'
               select={true}
               MenuProps={{
                 disablePortal: true,
@@ -321,6 +307,35 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               }}
             />
           </Grid>
+          <Grid item md={6} lg={4} sx={{ mb: 4 }}>
+            <DatePickerHookField
+              name='dob'
+              placeholder='Date of Birth'
+              required={true}
+              control={control}
+              errors={errors}
+            />
+          </Grid>
+          <Grid item md={4} lg={4} sx={{ mb: 4 }}>
+            <DatePickerHookField
+              name='doi'
+              placeholder='Date of Issue'
+              required={true}
+              control={control}
+              errors={errors}
+            />
+          </Grid>
+          <Grid item md={4} lg={4} sx={{ mb: 4 }}>
+            <DatePickerHookField
+              name='doe'
+              placeholder='Date of Expire'
+              required={true}
+              control={control}
+              errors={errors}
+              className='inputdate'
+            />
+          </Grid>
+
           <Grid item md={6} lg={4}>
             <SimpleSelectHookField
               control={control}
@@ -380,28 +395,52 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                   </MenuItem>
                   {watchedOnModel === 'Client' &&
                     clients?.map(item => (
-                      <MenuItem key={item} value={item._id}>
+                      <MenuItem key={item} value={item._id} style={listStyles}>
                         <div>
-                          <div>Phone: {item.phone && item.phone}</div>
-                          <div>Name: {item.fullName && item.fullName}</div>
+                          <div>
+                            <PhoneIcon style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
+                          </div>
+                          <div>
+                            <Person style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>
+                              {item.fullName && item.fullName}
+                            </span>
+                          </div>
                         </div>
                       </MenuItem>
                     ))}
                   {watchedOnModel === 'Agent' &&
                     agents?.map(item => (
-                      <MenuItem key={item} value={item._id}>
+                      <MenuItem key={item} value={item._id} style={listStyles}>
                         <div>
-                          <div>Phone: {item.phone && item.phone}</div>
-                          <div>Name: {item.fullName && item.fullName}</div>
+                          <div>
+                            <PhoneIcon style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
+                          </div>
+                          <div>
+                            <Person style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>
+                              {item.fullName && item.fullName}
+                            </span>
+                          </div>
                         </div>
                       </MenuItem>
                     ))}
                   {watchedOnModel === 'Company' &&
                     company?.map(item => (
-                      <MenuItem key={item} value={item._id}>
+                      <MenuItem key={item} value={item._id} style={listStyles}>
                         <div>
-                          <div>Phone: {item.phone && item.phone}</div>
-                          <div>Name: {item.companyName && item.companyName}</div>
+                          <div>
+                            <PhoneIcon style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
+                          </div>
+                          <div>
+                            <Person style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>
+                              {item.fullName && item.fullName}
+                            </span>
+                          </div>
                         </div>
                       </MenuItem>
                     ))}

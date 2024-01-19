@@ -25,6 +25,7 @@ const DatePickerHookField = ({ name, placeholder, required, control, errors }) =
                 helperText={errors.datePicker?.message}
               />
             )}
+            className='inputdate'
           />
         )}
       />

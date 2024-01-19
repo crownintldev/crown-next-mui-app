@@ -189,3 +189,12 @@ code[class*='language-'] {
 .css-185anww-MuiTypography-root {
   color: black !important;
 }
+
+/* dropdown stles */
+.css-kvmkal-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+  box-shadow: 0px 0px 3px -1px;
+}
+/* date input field styles */
+.inputdate .css-1lxcjy7-MuiInputBase-root-MuiOutlinedInput-root:not(.MuiInputBase-sizeSmall) {
+  height: 40px !important;
+}

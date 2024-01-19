@@ -177,6 +177,36 @@ code[class*='language-'] {
 
 /* ////////////// */
 /* sidepanel */
+.css-ldnpn0 {
+  position: relative;
+  left: -14px;
+  padding-top: 2px;
+  padding-left: 10px;
+  padding-bottom: 2px;
+}
 .css-185anww-MuiTypography-root {
   color: black !important;
+}
+.css-sk7p9v-MuiButtonBase-root-MuiMenuItem-root:not(.Mui-focusVisible) {
+  color: #1852fe;
+  height: 26px;
+  width: 126px;
+}
+.css-sk7p9v-MuiButtonBase-root-MuiMenuItem-root:not(.Mui-focusVisible):hover {
+  background-color: rgba(24, 82, 254, 0.08);
+}
+.css-185anww-MuiTypography-root:not(.Mui-focusVisible):hover {
+  color: #1852fe;
+  background-color: rgba(24, 82, 254, 0.08);
+  border-radius: 0px;
+  border-bottom: 1px solid #80808054;
+}
+
+/* dropdown stles */
+.css-kvmkal-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+  box-shadow: 0px 0px 3px -1px;
+}
+/* date input field styles */
+.inputdate .css-1lxcjy7-MuiInputBase-root-MuiOutlinedInput-root:not(.MuiInputBase-sizeSmall) {
+  height: 40px !important;
 }

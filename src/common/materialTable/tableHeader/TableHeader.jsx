@@ -29,7 +29,7 @@ const TableHeader = props => {
     table,
     tableData,
     removeSelection,
-    headerMenu,
+    headerMenu
   } = props
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -69,7 +69,14 @@ const TableHeader = props => {
 
   return (
     <Box>
-      <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Box
+        sx={{
+          rowGap: 2,
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center'
+        }}
+      >
         {/* {buttonTitle && (
           <Button onClick={toggle} variant='contained'  sx={{ '& svg': { mr: 2 } }}>
             <Icon fontSize='1.125rem' icon='tabler:plus' />
@@ -81,7 +88,10 @@ const TableHeader = props => {
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {buttonTitle && (
-            <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
+            <MenuItem
+              onClick={handleClose}
+              // sx={{ m: 0, borderBottom: '1px solid #80808054', borderRadius: '0px' }}
+            >
               <Box
                 onClick={toggle}
                 sx={{
@@ -89,11 +99,14 @@ const TableHeader = props => {
                   display: 'flex',
                   alignItems: 'center',
                   columnGap: '4px',
-                  color: '#2b60fe'
+                  color: '#2b60fe',
+                  // padding: '3px',
+                  height: '36px',
+                  border: 'solid 1px'
                 }}
               >
                 <Icon fontSize='0.8rem' icon='tabler:plus' />
-                {buttonTitle}
+                <div>{buttonTitle}</div>
               </Box>
             </MenuItem>
           )}
@@ -115,7 +128,7 @@ const TableHeader = props => {
               </Box>
             </MenuItem>
           )}
-          {headerMenu && headerMenu({ selectedIds, handleClose,toggle, removeSelection })}
+          {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
 
         {/* ----------Export data--------- */}

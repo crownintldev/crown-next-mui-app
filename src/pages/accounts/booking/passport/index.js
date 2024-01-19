@@ -6,14 +6,14 @@ import useTableColumns from 'src/common/materialTable/tableColumns/passportColum
 
 //Forms
 import PassportForm from 'src/common/forms/booking/passport/PassportForm'
-import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'
+// import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'
 
 // redux
 import { fetchData } from 'src/store/apps/booking/passport'
 
 const index = ({ apiData }) => {
   const columns = useTableColumns()
-  console.log(apiData)
+  // console.log(apiData)
 
   return (
     <div>
@@ -29,7 +29,7 @@ const index = ({ apiData }) => {
           buttonTitle: 'Add New Passport',
           editButtonTitle: 'Edit Passport',
           CreateForm: PassportForm,
-          EditForm: EditPassportForm
+          EditForm: PassportForm
         }}
       />
     </div>

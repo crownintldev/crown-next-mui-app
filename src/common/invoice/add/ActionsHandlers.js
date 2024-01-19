@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 // React import
 import React, { useState, useRef } from 'react'
-import QRCode from 'qrcode.react' // Import the QR code library
+import QRCode from 'qrcode.react'
 import { useReactToPrint } from 'react-to-print'
 import 'jspdf-autotable'
 
@@ -25,7 +25,6 @@ import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
 import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
 import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
-import { Divider } from '@mui/material'
 
 const ActionsHandlers = ({ open, onClose, data }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
@@ -97,13 +96,10 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       actionButtons.style.display = 'none'
     }
 
-    // Clone the modal content to create a temporary container
     const tempContainer = modalContent.cloneNode(true)
 
-    // Set the height to auto to capture the entire content
     tempContainer.style.height = 'auto'
 
-    // Append the temporary container to the body
     document.body.appendChild(tempContainer)
 
     // Capture the screenshot of the temporary container using html2canvas

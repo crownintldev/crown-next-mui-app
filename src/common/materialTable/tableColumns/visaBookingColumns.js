@@ -10,7 +10,6 @@ import {
 const useTableColumns = () =>
   useMemo(
     () => [
-      { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'passportId.givenName', header: 'Given Name', Cell: defaultCellRenderer },
       { accessorKey: 'passportId.city', header: 'City', Cell: defaultCellUpperCase },

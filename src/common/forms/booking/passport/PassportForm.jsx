@@ -210,7 +210,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id }) => {
     fontSize: '14px',
     position: 'relative',
     top: '2px',
-    left: '-px'
+    left: '-3px'
   }
   const listStyles = { borderLeft: '2px solid #1852fe', height: '42px', marginBottom: '5px' }
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
-import { Theme, useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import toast from 'react-hot-toast'
 import { IconButton, Menu, MenuItem } from '@mui/material'
 
@@ -16,7 +16,6 @@ import { axiosErrorMessage } from 'src/utils/helperfunction'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
 
 const TableHeader = props => {
-  const theme = useTheme()
   const dispatch = useDispatch()
 
   // ** Props
@@ -66,7 +65,15 @@ const TableHeader = props => {
       toast.error(axiosErrorMessage(error), { position: 'top-center' })
     }
   }
+  const [isHovered, setIsHovered] = useState(false)
 
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
   return (
     <Box>
       <Box
@@ -90,19 +97,23 @@ const TableHeader = props => {
           {buttonTitle && (
             <MenuItem
               onClick={handleClose}
-              // sx={{ m: 0, borderBottom: '1px solid #80808054', borderRadius: '0px' }}
+              sx={{
+                m: 0,
+                borderRadius: '0px',
+                cursor: 'pointer'
+              }}
             >
               <Box
                 onClick={toggle}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
                 sx={{
                   fontSize: '0.8em',
                   display: 'flex',
                   alignItems: 'center',
                   columnGap: '4px',
                   color: '#2b60fe',
-                  // padding: '3px',
-                  height: '36px',
-                  border: 'solid 1px'
+                  textDecoration: isHovered ? 'underline' : 'none'
                 }}
               >
                 <Icon fontSize='0.8rem' icon='tabler:plus' />

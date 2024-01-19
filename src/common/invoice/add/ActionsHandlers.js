@@ -40,14 +40,50 @@ const ActionsHandlers = ({ open, onClose, data }) => {
   })
 
   const pdfDownloader = () => {
-    const input = document.getElementById('modal-content')
-    html2canvas(input, { logging: true, letterRendering: 1, useCORS: true }).then(canvas => {
-      const imgWidth = 208
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-      const imgData = canvas.toDataURL('img/png')
+    const modalContent = componentPDF.current
+
+    // Hide the buttons during the screenshot capture
+    const actionButtons = modalContent.querySelector('#action-buttons')
+    if (actionButtons) {
+      actionButtons.style.display = 'none'
+    }
+
+    // Clone the modal content to create a temporary container
+    const tempContainer = modalContent.cloneNode(true)
+
+    // Set the height to auto to capture the entire content
+    tempContainer.style.height = 'auto'
+
+    // Append the temporary container to the body
+    document.body.appendChild(tempContainer)
+
+    // Capture the screenshot of the temporary container using html2canvas
+    html2canvas(tempContainer, { scale: 2, allowTaint: true }).then(canvas => {
+      // Convert the canvas to a data URL
+      const screenshotUrl = canvas.toDataURL('image/png')
+
+      // Create a new instance of jsPDF
       const pdf = new jsPDF('p', 'mm', 'a4')
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
-      pdf.save('invoice data.pdf')
+
+      // Add the captured image to the PDF
+      pdf.addImage(
+        screenshotUrl,
+        'PNG',
+        0,
+        0,
+        pdf.internal.pageSize.width,
+        pdf.internal.pageSize.height
+      )
+
+      // Save the PDF
+      pdf.save('invoice_screenshot.pdf')
+
+      document.body.removeChild(tempContainer)
+
+      // Show the buttons after capturing the PDF
+      if (actionButtons) {
+        actionButtons.style.display = 'block'
+      }
     })
   }
 
@@ -78,7 +114,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       // Create a temporary link element to trigger the download
       const link = document.createElement('a')
       link.href = screenshotUrl
-      link.download = 'screenshot.png'
+      link.download = 'invoice screenshot.png'
       link.click()
 
       document.body.removeChild(tempContainer)

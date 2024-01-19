@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { useState, useRef } from 'react'
 import QRCode from 'qrcode.react' // Import the QR code library
 import { useReactToPrint } from 'react-to-print'
-// import 'jspdf-autotable'
+import 'jspdf-autotable'
 
 // Material Imports
 import Modal from '@mui/material/Modal'
@@ -40,19 +40,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
   })
 
   const pdfDownloader = () => {
-    const input = document.getElementById('modal-content')
-    html2canvas(input, { logging: true, letterRendering: 1, useCORS: true }).then(canvas => {
-      const imgWidth = 208
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-      const imgData = canvas.toDataURL('img/png')
-      const pdf = new jsPDF('p', 'mm', 'a4')
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
-      pdf.save('invoice data.pdf')
-    })
-  }
-
-  // Taking screenshot handler
-  const screenShotHandler = () => {
     const modalContent = componentPDF.current
 
     // Hide the buttons during the screenshot capture
@@ -71,6 +58,52 @@ const ActionsHandlers = ({ open, onClose, data }) => {
     document.body.appendChild(tempContainer)
 
     // Capture the screenshot of the temporary container using html2canvas
+    html2canvas(tempContainer, { scale: 2, allowTaint: true }).then(canvas => {
+      // Convert the canvas to a data URL
+      const screenshotUrl = canvas.toDataURL('image/png')
+
+      // Create a new instance of jsPDF
+      const pdf = new jsPDF('p', 'mm', 'a4')
+
+      // Add the captured image to the PDF
+      pdf.addImage(
+        screenshotUrl,
+        'PNG',
+        0,
+        0,
+        pdf.internal.pageSize.width,
+        pdf.internal.pageSize.height
+      )
+
+      // Save the PDF
+      pdf.save('invoice_screenshot.pdf')
+
+      document.body.removeChild(tempContainer)
+
+      // Show the buttons after capturing the PDF
+      if (actionButtons) {
+        actionButtons.style.display = 'block'
+      }
+    })
+  }
+
+  // Taking screenshot handler
+  const screenShotHandler = () => {
+    const modalContent = componentPDF.current
+
+    // Hide the buttons during the screenshot capture
+    const actionButtons = modalContent.querySelector('#action-buttons')
+    if (actionButtons) {
+      actionButtons.style.display = 'none'
+    }
+
+    const tempContainer = modalContent.cloneNode(true)
+
+    tempContainer.style.height = 'auto'
+
+    document.body.appendChild(tempContainer)
+
+    // Capture the screenshot of the temporary container using html2canvas
     html2canvas(tempContainer).then(canvas => {
       // Convert the canvas to a data URL
       const screenshotUrl = canvas.toDataURL('image/png')
@@ -78,7 +111,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       // Create a temporary link element to trigger the download
       const link = document.createElement('a')
       link.href = screenshotUrl
-      link.download = 'screenshot.png'
+      link.download = 'invoice screenshot.png'
       link.click()
 
       document.body.removeChild(tempContainer)

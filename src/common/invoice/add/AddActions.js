@@ -12,8 +12,9 @@ import { styled } from '@mui/material/styles'
 import InputLabel from '@mui/material/InputLabel'
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
-import TextField from '@mui/material/TextField' // Replace with CustomTextField if needed
-// ... other necessary imports
+import TextField from '@mui/material/TextField'
+
+// Other Imports
 import ActionsHandlers from './ActionsHandlers'
 
 // ** Custom Component Import
@@ -29,7 +30,7 @@ const OptionsWrapper = styled(Box)(() => ({
 }))
 
 const AddActions = () => {
-  const [paymentMethod, setPaymentMethod] = useState('Bank Transfer')
+  const [paymentMethod, setPaymentMethod] = useState(null)
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
   const invoiceDataArray = useSelector(state => state.myInvoice.data)
 
@@ -63,7 +64,7 @@ const AddActions = () => {
               onClick={handleActionMethodChange}
             >
               <Icon fontSize='1.125rem' icon='tabler:submit' />
-              Action
+              Preview
             </Button>
 
             {/* Render the preview modal */}
@@ -96,7 +97,7 @@ const AddActions = () => {
           <MenuItem value='Cash'>Cash</MenuItem>
         </CustomTextField>
 
-        {paymentMethod !== 'Bank Transfer' && (
+        {paymentMethod !== null && (
           <Box>
             <TextField fullWidth label='Title' sx={{ mb: 2 }} />
             <TextField fullWidth label='Description' multiline rows={4} sx={{ mb: 2 }} />

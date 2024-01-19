@@ -17,10 +17,9 @@ export const accountArrays = () => [
     badgeColor: 'error',
     children: [
       {
-        title: 'Analytics',
+        title: 'Main',
         path: '/dashboards/analytics'
       }
-
       // {
       //   title: 'CRM',
       //   path: '/dashboards/crm'

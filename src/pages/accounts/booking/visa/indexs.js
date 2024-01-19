@@ -83,21 +83,16 @@ const index = ({ apiData }) => {
     <div>
       <DataTable
         apiData={apiData}
-
         // tavle columns
         columns={columns}
-
         // show data in table getting by redux
         fetchTableData={store.data}
-
         // drawer form titles
         formTitle={'Add Visa Service'}
         editFormTitle={'Edit Visa Booking'}
-
         //header buttons drawer
         // buttonTitle={'Add New Visa Service'}
         editButtonTitle={'Edit Visa Booking'}
-
         // forms
         // CreateForm={VisaServiceForm}
         EditForm={EditVisaBookingForm}

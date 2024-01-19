@@ -49,12 +49,13 @@ body {
   }
 }
 
-/* Invoice styling start */
+/* Account styling start */
 #modal-content {
   position: relative;
   height: 100%;
 }
-/* Invoice styling end */
+/* Account styling end */
+
 .loaderimg {
   display: block;
   width: 100%;
@@ -122,6 +123,10 @@ code[class*='language-'] {
   MuiPaper-rounded
   MuiPaper-elevation2
   css-186vso5-MuiPaper-root {
+  color: #28c76f !important;
+  background-color: rgba(40, 199, 111, 0.16) !important;
+  border-radius: 0 !important;
+  font-size: 0.9rem !important;
   z-index: 120 !important;
 }
 /* .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2 {

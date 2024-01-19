@@ -34,10 +34,10 @@ const FooterContent = () => {
         justifyContent: 'space-between'
       }}
     >
-      <Typography sx={{ mr: 2, display: 'flex', color: 'text.secondary' }}>
+      {/* <Typography sx={{ mr: 2, display: 'flex', color: 'text.secondary' }}>
         {`© Copyright ${new Date().getFullYear()},  All rights reserved.`}
-      </Typography>
-      {hidden ? null : (
+      </Typography> */}
+      {hidden || true ? null : (
         <Box
           sx={{
             display: 'flex',

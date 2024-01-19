@@ -11,7 +11,6 @@ import CrmLastTransaction from 'src/views/dashboards/crm/CrmLastTransaction'
 import CrmActivityTimeline from 'src/views/dashboards/crm/CrmActivityTimeline'
 import CrmSalesWithAreaChart from 'src/views/dashboards/crm/CrmSalesWithAreaChart'
 import CrmSalesWithRadarChart from 'src/views/dashboards/crm/CrmSalesWithRadarChart'
-import CrmEarningReportsWithTabs from 'src/views/dashboards/crm/CrmEarningReportsWithTabs'
 
 // ** Custom Component Imports
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'

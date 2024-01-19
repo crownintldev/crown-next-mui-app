@@ -1,63 +1,176 @@
-// ** MUI Imports
-import { useTheme } from '@mui/material/styles'
-import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
+// // ** MUI Imports
+// import { useTheme } from '@mui/material/styles'
+// import Box from '@mui/material/Box'
+// import CircularProgress from '@mui/material/CircularProgress'
 
-const FallbackSpinner = ({ sx }) => {
-  // ** Hook
-  const theme = useTheme()
+// const FallbackSpinner = ({ sx }) => {
+//   // ** Hook
+//   const theme = useTheme()
 
-  return (
-    <Box
-      sx={{
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        ...sx
-      }}
-    >
-      <div className='loader'>
-        <img src='/images/favicon.svg' alt='Logo' width='200' className='loaderimg' />
-      </div>
-      {/* <svg
-        width={82}
-        height={56.375}
-        viewBox='0 0 32 22'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <path
-          fillRule='evenodd'
-          clipRule='evenodd'
-          fill={theme.palette.primary.main}
-          d='M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z'
-        />
-        <path
-          fill='#161616'
-          opacity={0.06}
-          fillRule='evenodd'
-          clipRule='evenodd'
-          d='M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z'
-        />
-        <path
-          fill='#161616'
-          opacity={0.06}
-          fillRule='evenodd'
-          clipRule='evenodd'
-          d='M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z'
-        />
-        <path
-          fillRule='evenodd'
-          clipRule='evenodd'
-          fill={theme.palette.primary.main}
-          d='M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z'
-        />
-      </svg> */}
-      {/* <CircularProgress disableShrink sx={{ mt: 6 }} /> */}
-    </Box>
-  )
+//   return (
+//     <Box
+//       sx={{
+//         height: '100vh',
+//         display: 'flex',
+//         alignItems: 'center',
+//         flexDirection: 'column',
+//         justifyContent: 'center',
+//         ...sx
+//       }}
+//     >
+//       <div className='loader'>
+//         <img src='/images/favicon.svg' alt='Logo' width='200' className='loaderimg' />
+//       </div>
+//     </Box>
+//   )
+// }
+
+// export default FallbackSpinner
+
+import React from 'react'
+import { motion } from 'framer-motion'
+import bird from '../../../../public/images/animate-logo/bird.svg'
+import circle from '../../../../public/images/animate-logo/circle.svg'
+import travokey from '../../../../public/images/animate-logo/Travokey.svg'
+import bgbird from '../../../../public/images/animate-logo/bird-back.svg'
+import Image from 'next/image'
+
+const firstImageVariants = {
+  initial: { x: '-100vw', opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { opacity: 0 }
 }
+
+const secondImageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0, transition: { duration: 0.5 } }
+}
+
+const thirdImageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0, transition: { duration: 0.9 } }
+}
+
+const fourthImageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0, transition: { duration: 1.2 } }
+}
+
+const transition = {
+  duration: 1,
+  ease: 'easeInOut'
+}
+const fifthImageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0, transition: { duration: 1.1 } }
+}
+
+const FallbackSpinner = ({ sx }) => (
+  <div className='preloader' style={{ position: 'relative' }}>
+    <motion.div
+      variants={fifthImageVariants}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      transition={{ ...transition, delay: 0.3 }}
+      style={{
+        position: 'absolute',
+        zIndex: 1,
+        width: '270px',
+        height: '270px',
+        borderRadius: '50%',
+        backgroundColor: 'white'
+      }}
+    ></motion.div>
+    <motion.div
+      variants={firstImageVariants}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      transition={{ ...transition, delay: 0 }}
+      style={{ position: 'absolute', zIndex: 5 }}
+    >
+      <Image
+        src={bird}
+        alt='Bird Image'
+        width={200}
+        height={200}
+        style={{
+          width: '112px', // or you can use theme spacing like theme.spacing(28)
+          height: '112px', // or theme.spacing(28)
+          marginBottom: '80px',
+          marginRight: '16px'
+        }}
+        className='image w-28 h-28 mb-20 mr-4'
+      />
+    </motion.div>
+    <motion.div
+      variants={secondImageVariants}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      transition={{ duration: 1, delay: 0.6 }}
+      style={{ position: 'absolute', zIndex: 1 }}
+    >
+      <Image
+        src={circle}
+        alt='Circle Image'
+        width={300}
+        height={300}
+        style={{
+          height: 320,
+          width: 320
+        }}
+        className='image w-80 h-80'
+      />
+    </motion.div>
+    <motion.div
+      variants={thirdImageVariants}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      transition={{ ...transition, delay: 1 }}
+      style={{ position: 'absolute', zIndex: 2 }}
+    >
+      <Image
+        src={travokey}
+        alt='Third Image'
+        width={200}
+        height={200}
+        style={{
+          marginTop: '56px'
+        }}
+        className='image mt-14'
+      />
+    </motion.div>
+
+    <motion.div
+      variants={fourthImageVariants}
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      transition={{ ...transition, delay: 1.2 }}
+      style={{ position: 'absolute', zIndex: 3 }}
+    >
+      <Image
+        src={bgbird}
+        alt='Fourth Image'
+        width={200}
+        height={200}
+        style={{
+          width: '256px',
+          height: '256px',
+          marginBottom: '64px',
+          marginRight: '12px'
+        }}
+        className='image w-64 h-64 mb-16 mr-3'
+      />
+    </motion.div>
+  </div>
+)
 
 export default FallbackSpinner

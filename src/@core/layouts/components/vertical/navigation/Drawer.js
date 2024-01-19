@@ -82,6 +82,7 @@ const Drawer = props => {
 
   return (
     <SwipeableDrawer
+      style={{ zIndex: 500 }}
       className='layout-vertical-nav'
       variant={hidden ? 'temporary' : 'permanent'}
       {...(hidden ? { ...MobileDrawerProps } : { ...DesktopDrawerProps })}

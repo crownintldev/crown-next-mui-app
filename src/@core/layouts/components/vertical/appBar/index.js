@@ -41,7 +41,7 @@ const LayoutAppBar = props => {
     '&:after': {
       top: 0,
       left: 0,
-      zIndex: -1,
+      zIndex: -20,
       width: '100%',
       content: '""',
       position: 'absolute',

@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
     "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
-    "gitmerge": "git checkout main && git pull origin main && git merge hamail && git push origin main && git checkout hamail",
+    "gitmerge": "git checkout main && git pull origin main && git merge hamail ",
     "gitpushmain": "git checkout main && git add . && git commit -m 'main' && git push origin main"
   },
   "dependencies": {

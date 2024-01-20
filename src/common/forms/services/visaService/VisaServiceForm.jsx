@@ -267,14 +267,14 @@ const VisaServiceForm = ({
           placeholder='Choose Destination'
         />
         {/* choose Payment Field */}
-        <SelectField
+        {/* <SelectField
           options={['Confirmed', 'Processing']}
           label='Select Payment Method'
           placeholder={'Select Payment Method'}
           value={payMethod}
           setPayMethod={setPayMethod}
           disableClearable={true}
-        />
+        /> */}
 
         <CustomHookTextField
           chooseFields={choosePaymentMethod}

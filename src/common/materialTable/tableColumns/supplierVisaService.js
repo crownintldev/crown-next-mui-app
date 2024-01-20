@@ -6,6 +6,7 @@ import { dateFormat } from 'src/common/materialTable/tableColumnFunction'
 const useSupplierVisaService = () =>
   useMemo(
     () => [
+      { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'supplier.name', header: 'Supplier Name', Cell: defaultCellRenderer },
       { accessorKey: 'destination.name', header: 'Destination', Cell: defaultCellRenderer },
       { accessorKey: 'type.name', header: 'Type', Cell: defaultCellRenderer },

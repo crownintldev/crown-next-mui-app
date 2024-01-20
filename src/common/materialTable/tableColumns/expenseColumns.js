@@ -6,6 +6,7 @@ import { dateFormat } from 'src/common/materialTable/tableColumnFunction'
 const useExpenseColumns = () =>
   useMemo(
     () => [
+      { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'title', header: 'Title', Cell: defaultCellRenderer },
 
       // { accessorKey: 'type', header: 'Type', Cell: defaultCellRenderer },

@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
     "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
-    "gitmerge": "git checkout main && git pull origin main && git merge hamail && git push origin main && git checkout hamail",
+    "gitmerge": "git checkout main && git pull origin main && git merge hamail ",
     "gitpushmain": "git checkout main && git add . && git commit -m 'main' && git push origin main"
   },
   "dependencies": {
@@ -55,6 +55,7 @@
     "dayjs": "^1.11.10",
     "draft-js": "0.11.7",
     "export-to-csv": "^1.2.2",
+    "framer-motion": "^10.18.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.1",
     "i": "^0.3.7",

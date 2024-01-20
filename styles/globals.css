@@ -28,6 +28,7 @@ body {
   min-height: 100%;
 }
 /* screen loader style */
+/* spinner loader style */
 .loader {
   display: inline-block;
   width: 220px; /* Adjust based on image size + padding */
@@ -39,6 +40,14 @@ body {
   border-top-color: #1852fe; /* Color of the loader */
   animation: spin 2s linear infinite;
 }
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
 
 @keyframes spin {
   0% {
@@ -49,12 +58,13 @@ body {
   }
 }
 
-/* Invoice styling start */
+/* Account styling start */
 #modal-content {
   position: relative;
   height: 100%;
 }
-/* Invoice styling end */
+/* Account styling end */
+
 .loaderimg {
   display: block;
   width: 100%;
@@ -122,6 +132,10 @@ code[class*='language-'] {
   MuiPaper-rounded
   MuiPaper-elevation2
   css-186vso5-MuiPaper-root {
+  color: #28c76f !important;
+  background-color: rgba(40, 199, 111, 0.16) !important;
+  border-radius: 0 !important;
+  font-size: 0.9rem !important;
   z-index: 120 !important;
 }
 /* .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2 {
@@ -174,4 +188,13 @@ code[class*='language-'] {
 /* sidepanel */
 .css-185anww-MuiTypography-root {
   color: black !important;
+}
+
+/* dropdown stles */
+.css-kvmkal-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+  box-shadow: 0px 0px 3px -1px;
+}
+/* date input field styles */
+.inputdate .css-1lxcjy7-MuiInputBase-root-MuiOutlinedInput-root:not(.MuiInputBase-sizeSmall) {
+  height: 40px !important;
 }

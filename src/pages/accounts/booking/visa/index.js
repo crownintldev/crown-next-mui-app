@@ -26,8 +26,8 @@ const index = ({ apiData }) => {
   const columns = useTableColumns()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
-const [selectedIds,setSelectedIds] = useState("")
-const [removeSelection,setRemoveSelection] = useState(null)
+  const [selectedIds, setSelectedIds] = useState('')
+  const [removeSelection, setRemoveSelection] = useState(null)
 
   const formDrawer = () => (
     <FormDrawer
@@ -38,12 +38,12 @@ const [removeSelection,setRemoveSelection] = useState(null)
       anchor={'right'}
       fetchApi={fetchVisaBooking}
       api={'visa-booking'}
-      _id={selectedIds[0] || ""}
-      removeSelection={removeSelection || ""}
+      _id={selectedIds[0] || ''}
+      removeSelection={removeSelection || ''}
     />
   )
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
-    const handleDrawer=()=>{
+    const handleDrawer = () => {
       setSelectedIds(selectedIds)
       setRemoveSelection(removeSelection)
       toggleDrawer()
@@ -97,12 +97,21 @@ const [removeSelection,setRemoveSelection] = useState(null)
 }
 
 export const getStaticProps = async () => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/visa-bookings/card`)
-  const apiData = res.data
+  try {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/visa-bookings/card`)
+    const apiData = res.data
 
-  return {
-    props: {
-      apiData
+    return {
+      props: {
+        apiData
+      }
+    }
+  } catch (err) {
+    console.error(err.message)
+    return {
+      props: {
+        apiData: []
+      }
     }
   }
 }

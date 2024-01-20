@@ -5,7 +5,6 @@ import Link from 'next/link'
 import React, { useState, useRef } from 'react'
 import QRCode from 'qrcode.react'
 import { useReactToPrint } from 'react-to-print'
-import 'jspdf-autotable'
 
 // Material Imports
 import Modal from '@mui/material/Modal'

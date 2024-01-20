@@ -168,6 +168,7 @@ const CustomTextField = forwardRef((props, ref) => {
       {...rest}
       variant='filled'
       InputLabelProps={{ ...InputLabelProps, shrink: true }}
+      autoComplete="off" 
     />
   )
 })

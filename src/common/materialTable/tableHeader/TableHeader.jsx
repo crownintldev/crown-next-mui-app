@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
-import { Theme, useTheme } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import toast from 'react-hot-toast'
 import { IconButton, Menu, MenuItem } from '@mui/material'
 
@@ -16,7 +16,6 @@ import { axiosErrorMessage } from 'src/utils/helperfunction'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
 
 const TableHeader = props => {
-  const theme = useTheme()
   const dispatch = useDispatch()
 
   // ** Props
@@ -29,7 +28,7 @@ const TableHeader = props => {
     table,
     tableData,
     removeSelection,
-    headerMenu,
+    headerMenu
   } = props
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -66,10 +65,25 @@ const TableHeader = props => {
       toast.error(axiosErrorMessage(error), { position: 'top-center' })
     }
   }
+  const [isHovered, setIsHovered] = useState(false)
 
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
   return (
     <Box>
-      <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Box
+        sx={{
+          rowGap: 2,
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center'
+        }}
+      >
         {/* {buttonTitle && (
           <Button onClick={toggle} variant='contained'  sx={{ '& svg': { mr: 2 } }}>
             <Icon fontSize='1.125rem' icon='tabler:plus' />
@@ -81,19 +95,29 @@ const TableHeader = props => {
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {buttonTitle && (
-            <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
+            <MenuItem
+              onClick={handleClose}
+              sx={{
+                m: 0,
+                borderRadius: '0px',
+                cursor: 'pointer'
+              }}
+            >
               <Box
                 onClick={toggle}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
                 sx={{
                   fontSize: '0.8em',
                   display: 'flex',
                   alignItems: 'center',
                   columnGap: '4px',
-                  color: '#2b60fe'
+                  color: '#2b60fe',
+                  textDecoration: isHovered ? 'underline' : 'none'
                 }}
               >
                 <Icon fontSize='0.8rem' icon='tabler:plus' />
-                {buttonTitle}
+                <div>{buttonTitle}</div>
               </Box>
             </MenuItem>
           )}
@@ -115,7 +139,7 @@ const TableHeader = props => {
               </Box>
             </MenuItem>
           )}
-          {headerMenu && headerMenu({ selectedIds, handleClose,toggle, removeSelection })}
+          {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
 
         {/* ----------Export data--------- */}

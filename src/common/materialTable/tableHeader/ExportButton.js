@@ -24,39 +24,46 @@ const ExportButton = ({ tableData, table }) => {
             <Icon fontSize='1.5rem' icon='ph:export-bold' color='#2b60fe' />
           </IconButton>
           <Menu anchorEl={exportToggle} open={toggleExport} onClose={handleClose}>
-            <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
-              <Box
-                onClick={() => handleExportData(tableData)}
-                sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: '#2b60fe'
-                }}
-              >
-                <FileDownloadIcon sx={{ fontSize: '1.2em' }} />
-                Export All
-              </Box>
-            </MenuItem>
+            <div onClick={handleClose}>
+              <div onClick={() => handleExportData(tableData)}>
+                <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
+                  <Box
+                    // onClick={() => handleExportData(tableData)}
+                    sx={{
+                      fontSize: '0.8em',
+                      display: 'flex',
+                      alignItems: 'center',
+                      columnGap: '4px',
+                      color: '#2b60fe'
+                    }}
+                  >
+                    <FileDownloadIcon sx={{ fontSize: '1.2em' }} />
+                    Export All
+                  </Box>
+                </MenuItem>
+              </div>
+            </div>
             {tableData.length > 1 && (
-              <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
-                {/* disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()} */}
+              <div onClick={handleClose}>
+                <div onClick={() => handleExportRows(table.getSelectedRowModel().rows)}>
+                  <MenuItem sx={{ py: 1, m: 0 }}>
+                    {/* disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()} */}
 
-                <Box
-                  onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-                  sx={{
-                    fontSize: '0.8em',
-                    display: 'flex',
-                    alignItems: 'center',
-                    columnGap: '4px',
-                    color: '#2b60fe'
-                  }}
-                >
-                  <FileDownloadIcon sx={{ fontSize: '1.2em' }} />
-                  Export Selected
-                </Box>
-              </MenuItem>
+                    <Box
+                      sx={{
+                        fontSize: '0.8em',
+                        display: 'flex',
+                        alignItems: 'center',
+                        columnGap: '4px',
+                        color: '#2b60fe'
+                      }}
+                    >
+                      <FileDownloadIcon sx={{ fontSize: '1.2em' }} />
+                      Export Selected
+                    </Box>
+                  </MenuItem>
+                </div>
+              </div>
             )}
           </Menu>
         </>

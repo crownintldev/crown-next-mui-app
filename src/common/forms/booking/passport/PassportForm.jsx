@@ -146,7 +146,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   useEffect(() => {
     if (passportNumber.length === 9 && !_id) {
       let params = { passportNumber }
-      fetchActionData(()=>getDataAction('passport/read', params), setEditId)
+      fetchActionData(() => getDataAction('passport/read', params), setEditId)
     } else {
       // Use passportId from state if _id is present
       setEditId(passportIdFromState)

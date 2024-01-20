@@ -28,6 +28,7 @@ const index = ({ apiData }) => {
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   const [selectedIds, setSelectedIds] = useState('')
   const [removeSelection, setRemoveSelection] = useState(null)
+  const [showAddPassport, setShowAddPassport] = useState(true)
 
   const formDrawer = () => (
     <FormDrawer
@@ -48,25 +49,32 @@ const index = ({ apiData }) => {
       setRemoveSelection(removeSelection)
       toggleDrawer()
     }
+    const handleEditPassport = () => {
+      setShowAddPassport(false) // Hide the "Add Passport" menu item
+      handleDrawer()
+    }
     return (
       <>
-        {selectedIds && selectedIds.length == 1 && (
+        {selectedIds && selectedIds.length === 1 && (
           <>
-            <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
-              <Box
-                onClick={handleDrawer}
-                sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: '#2b60fe'
-                }}
-              >
-                <Icon fontSize='0.8rem' icon='tabler:plus' />
-                Edit Passport Booking
-              </Box>
-            </MenuItem>
+            <div onClick={handleClose}>
+              <div onClick={toggleDrawer}>
+                <MenuItem onClick={handleDrawer} sx={{ py: 1, m: 0 }}>
+                  <Box
+                    sx={{
+                      fontSize: '0.8em',
+                      display: 'flex',
+                      alignItems: 'center',
+                      columnGap: '4px',
+                      color: '#2b60fe'
+                    }}
+                  >
+                    <Icon fontSize='0.8rem' icon='tabler:plus' />
+                    Edit Passport Booking
+                  </Box>
+                </MenuItem>
+              </div>
+            </div>
           </>
         )}
       </>

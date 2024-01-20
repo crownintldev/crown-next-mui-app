@@ -104,11 +104,11 @@ const AddCard = props => {
                   onChange={handleOptionSelect}
                   renderInput={params => <TextField {...params} label='Select your creation' />}
                   renderOption={(props, option) => (
-                    <li {...props}>
-                      <Link href={option.link}>
+                    <Link href={option.link}>
+                      <li {...props}>
                         <span>{option.label}</span>
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                   )}
                 />
               </div>

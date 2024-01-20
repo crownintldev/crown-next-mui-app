@@ -190,11 +190,19 @@ code[class*='language-'] {
   color: black !important;
 }
 
-/* dropdown stles */
+/* dropdown styles */
 .css-kvmkal-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
   box-shadow: 0px 0px 3px -1px;
 }
 
+/* invoices styles */
+.MuiAutocomplete-hasPopupIcon.css-14xg4mo-MuiAutocomplete-root .MuiOutlinedInput-root,
+.MuiAutocomplete-hasClearIcon.css-14xg4mo-MuiAutocomplete-root .MuiOutlinedInput-root {
+  height: 36px;
+}
+.css-18fbx67-MuiFormLabel-root-MuiInputLabel-root {
+  top: -9px;
+}
 /* visa booking forms styles */
 .css-1oi89t9-MuiButtonBase-root-MuiMenuItem-root:not(.Mui-focusVisible):hover {
   color: #1852fe;

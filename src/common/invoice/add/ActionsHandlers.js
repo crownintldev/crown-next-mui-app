@@ -14,6 +14,9 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
+import Autocomplete from '@mui/material/Autocomplete'
+import Stack from '@mui/material/Stack'
+import { TextField } from '@mui/material'
 
 // html2canvas, jspdf
 import html2canvas from 'html2canvas'
@@ -24,12 +27,15 @@ import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
 import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
 import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
+import { useTheme } from '@emotion/react'
 
 const ActionsHandlers = ({ open, onClose, data }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
   const [hasRenderedTotal, setHasRenderedTotal] = useState(false)
+  const [selectedOption, setSelectedOption] = useState(null)
 
   const componentPDF = useRef()
+  const theme = useTheme()
 
   // Print generator handler
   const printGenerator = useReactToPrint({
@@ -39,17 +45,12 @@ const ActionsHandlers = ({ open, onClose, data }) => {
 
   const pdfDownloader = () => {
     const modalContent = componentPDF.current
-
-    // Hide the buttons during the screenshot capture
     const actionButtons = modalContent.querySelector('#action-buttons')
     if (actionButtons) {
       actionButtons.style.display = 'none'
     }
 
-    // Clone the modal content to create a temporary container
     const tempContainer = modalContent.cloneNode(true)
-
-    // Set the height to auto to capture the entire content
     tempContainer.style.height = 'auto'
 
     // Append the temporary container to the body
@@ -60,7 +61,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       // Convert the canvas to a data URL
       const screenshotUrl = canvas.toDataURL('image/png')
 
-      // Create a new instance of jsPDF
       const pdf = new jsPDF('p', 'mm', 'a4')
 
       // Add the captured image to the PDF
@@ -77,8 +77,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       pdf.save('invoice_screenshot.pdf')
 
       document.body.removeChild(tempContainer)
-
-      // Show the buttons after capturing the PDF
       if (actionButtons) {
         actionButtons.style.display = 'block'
       }
@@ -89,24 +87,19 @@ const ActionsHandlers = ({ open, onClose, data }) => {
   const screenShotHandler = () => {
     const modalContent = componentPDF.current
 
-    // Hide the buttons during the screenshot capture
     const actionButtons = modalContent.querySelector('#action-buttons')
     if (actionButtons) {
       actionButtons.style.display = 'none'
     }
 
     const tempContainer = modalContent.cloneNode(true)
-
     tempContainer.style.height = 'auto'
-
     document.body.appendChild(tempContainer)
 
     // Capture the screenshot of the temporary container using html2canvas
     html2canvas(tempContainer).then(canvas => {
       // Convert the canvas to a data URL
       const screenshotUrl = canvas.toDataURL('image/png')
-
-      // Create a temporary link element to trigger the download
       const link = document.createElement('a')
       link.href = screenshotUrl
       link.download = 'invoice screenshot.png'
@@ -134,6 +127,16 @@ const ActionsHandlers = ({ open, onClose, data }) => {
       )}
     </React.Fragment>
   ))
+
+  const options = [
+    { label: 'Account', link: '/accounts/account/' },
+    { label: 'Booking', link: '/accounts/account/' },
+    { label: 'Flight', link: '/accounts/account/' }
+  ]
+
+  const handleOptionSelect = (event, option) => {
+    setSelectedOption(option)
+  }
 
   return (
     <div style={{ position: 'relative !important', height: '100% !important' }}>
@@ -164,8 +167,6 @@ const ActionsHandlers = ({ open, onClose, data }) => {
                 display: 'none'
               }
             }
-            // height: '60vh',
-            // width: '60vw'
           }}
         >
           <IconButton
@@ -190,13 +191,38 @@ const ActionsHandlers = ({ open, onClose, data }) => {
               <AddCardItemWithTotal data={itemTotalData} />
             </>
           ) : (
-            <Box sx={{ textAlign: 'center', mt: 10, mb: 10 }}>
+            <Box
+              sx={{
+                textAlign: 'center',
+                p: theme.spacing(4),
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                marginBottom: 4
+              }}
+            >
               <Typography variant='h2' sx={{ mb: 1.5 }}>
                 No Invoices Created, Invoices create first...
               </Typography>
-              <Button href='/accounts/account' component={Link} variant='outlined'>
-                Create Invoice First...
-              </Button>
+              <Stack sx={{ width: 250 }}>
+                <div>
+                  <Autocomplete
+                    id='custom-autocomplete'
+                    options={options}
+                    getOptionLabel={option => option.label}
+                    onChange={handleOptionSelect}
+                    renderInput={params => <TextField {...params} label='Select your creation' />}
+                    renderOption={(props, option) => (
+                      <li {...props}>
+                        <Link href={option.link}>
+                          <span>{option.label}</span>
+                        </Link>
+                      </li>
+                    )}
+                  />
+                </div>
+              </Stack>
             </Box>
           )}
           <Box

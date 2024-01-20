@@ -13,6 +13,9 @@ import Divider from '@mui/material/Divider'
 import InputLabel from '@mui/material/InputLabel'
 import { useTheme } from '@mui/material/styles'
 import CardContent from '@mui/material/CardContent'
+import Autocomplete from '@mui/material/Autocomplete'
+import Stack from '@mui/material/Stack'
+import { TextField } from '@mui/material'
 
 // ** Custom Component Imports
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -35,6 +38,7 @@ const AddCard = props => {
   const [userCategory, setUserCategory] = useState(null)
   const [selectUser, setSelectUser] = useState(null)
   const [invoiceData, setInvoiceData] = useState([])
+  const [selectedOption, setSelectedOption] = useState(null)
 
   //**end AddCardInvoiceTo states
 
@@ -51,6 +55,16 @@ const AddCard = props => {
     console.log('Updated invoices', data)
   }, [data])
 
+  const options = [
+    { label: 'Account', link: '/accounts/account/' },
+    { label: 'Booking', link: '/accounts/account/' },
+    { label: 'Flight', link: '/accounts/account/' }
+  ]
+
+  const handleOptionSelect = (event, option) => {
+    setSelectedOption(option)
+  }
+
   return (
     <Card>
       {/* Header ---------------------------------------------------------------*/}
@@ -66,18 +80,41 @@ const AddCard = props => {
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
         {!invoiceDataArray || invoiceDataArray.length === 0 ? (
-
           // Error message
-          <Box sx={{ textAlign: 'center', p: theme.spacing(4) }}>
+          <Box
+            sx={{
+              textAlign: 'center',
+              p: theme.spacing(4),
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              marginBottom: 4
+            }}
+          >
             <Typography variant='h2' sx={{ mb: 1.5 }}>
               No Invoices Created, Invoices create first...
             </Typography>
-            <Button href='/accounts/account' component={Link} variant='contained'>
-              Create Invoice
-            </Button>
+            <Stack spacing={1} sx={{ width: 250 }}>
+              <div>
+                <Autocomplete
+                  id='custom-autocomplete'
+                  options={options}
+                  getOptionLabel={option => option.label}
+                  onChange={handleOptionSelect}
+                  renderInput={params => <TextField {...params} label='Select your creation' />}
+                  renderOption={(props, option) => (
+                    <li {...props}>
+                      <Link href={option.link}>
+                        <span>{option.label}</span>
+                      </Link>
+                    </li>
+                  )}
+                />
+              </div>
+            </Stack>
           </Box>
         ) : (
-
           // Normal rendering
           invoiceDataArray.map(item => {
             const { by: clientData, amount, visaBookingIds } = item

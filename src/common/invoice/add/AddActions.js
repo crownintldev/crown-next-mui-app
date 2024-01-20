@@ -13,12 +13,11 @@ import InputLabel from '@mui/material/InputLabel'
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'
 import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
+import Stack from '@mui/material/Stack'
 
 // Other Imports
 import ActionsHandlers from './ActionsHandlers'
-
-// ** Custom Component Import
-import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -34,8 +33,16 @@ const AddActions = () => {
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
   const invoiceDataArray = useSelector(state => state.myInvoice.data)
 
-  const handlePaymentMethodChange = event => {
-    setPaymentMethod(event.target.value)
+  const paymentMethods = [
+    { name: 'Bank Transfer' },
+    { name: 'Debit Card' },
+    { name: 'Credit Card' },
+    { name: 'Cash' }
+  ]
+
+  const defaultProps = {
+    options: paymentMethods,
+    getOptionLabel: option => option.name
   }
 
   const handleActionMethodChange = () => {
@@ -77,25 +84,16 @@ const AddActions = () => {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <CustomTextField
-          select
-          fullWidth
-          label='Payment method via'
-          value={paymentMethod}
-          onChange={handlePaymentMethodChange}
-          sx={{
-            mb: 4,
-            '& .MuiInputLabel-root': {
-              fontSize: theme => theme.typography.body1.fontSize,
-              lineHeight: theme => theme.typography.body1.lineHeight
-            }
-          }}
-        >
-          <MenuItem value='Bank Transfer'>Bank Transfer</MenuItem>
-          <MenuItem value='Debit Card'>Debit Card</MenuItem>
-          <MenuItem value='Credit Card'>Credit Card</MenuItem>
-          <MenuItem value='Cash'>Cash</MenuItem>
-        </CustomTextField>
+        <Stack spacing={1} sx={{ width: 300, mb: 2 }}>
+          <Autocomplete
+            {...defaultProps}
+            id='payment-methods'
+            clearOnEscape
+            renderInput={params => (
+              <TextField {...params} label='Select your payment' variant='standard' />
+            )}
+          />
+        </Stack>
 
         {paymentMethod !== null && (
           <Box>

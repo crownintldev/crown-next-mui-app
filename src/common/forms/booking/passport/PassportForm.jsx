@@ -7,12 +7,11 @@ import MenuItem from '@mui/material/MenuItem'
 import TextareaAutosize from '@mui/material/TextareaAutosize'
 import PhoneIcon from '@mui/icons-material/Phone' // Import an appropriate icon from Material-UI
 import Person from '@mui/icons-material/Person' // Import an appropriate icon from Material-UI
-
+import { Grid, Input } from '@mui/material'
 import Box, { BoxProps } from '@mui/material/Box'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAgent, fetchCompany, fetchClient } from 'src/store'
 import { getDataAction } from 'src/action/axiosApiFunc'
@@ -32,7 +31,6 @@ import { useForm, Controller } from 'react-hook-form'
 import FilesUploader from 'src/common/fileUpload/FilesUploader'
 
 //
-import { Grid } from '@mui/material'
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
@@ -114,6 +112,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const [previousFiles, setPreviousFiles] = useState([])
   const [removeFiles, setRemoveFiles] = useState([])
   const [date, setDate] = useState(new Date())
+  const [filteredItems, setFilteredItems] = useState([])
+  const [searchFields, setSearchFields] = useState('')
 
   // onModel
   const clients = useSelector(state => state.client?.data)
@@ -143,15 +143,14 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   })
   const passportNumber = getValues('passportNumber')
 
-  useEffect(() => {
-    if (passportNumber.length === 9 && !_id) {
-      let params = { passportNumber }
-      fetchActionData(() => getDataAction('passport/read', params), setEditId)
-    } else {
-      // Use passportId from state if _id is present
-      setEditId(passportIdFromState)
-    }
-  }, [passportNumber, _id, passportIdFromState])
+  // useEffect(() => {
+  //   if (passportNumber.length === 9 && !_id) {
+  //     let params = { passportNumber }
+  //     fetchActionData(() => getDataAction('passport/read', params), setEditId)
+  //   } else {
+  //     setEditId(null)
+  //   }
+  // }, [passportNumber])
 
   // console.log(editId)
   useEffect(() => {
@@ -235,7 +234,42 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const listStyles = { borderLeft: '2px solid #1852fe', height: '42px', marginBottom: '5px' }
 
   // console.log('files output', files)
-  //
+
+  const scrollToTop = () => {
+    // Use JavaScript to scroll the dropdown menu to the top
+    const selectMenu = document.querySelector('#your-select-menu-id')
+    if (selectMenu) {
+      selectMenu.scrollTop = 0
+    }
+  }
+
+  // Function to filter items based on the search field
+  const filterItems = searchText => {
+    let items = []
+
+    if (watchedOnModel === 'Client') {
+      items = clients
+    } else if (watchedOnModel === 'Agent') {
+      items = agents
+    } else if (watchedOnModel === 'Company') {
+      items = company
+    }
+
+    const filtered = items.filter(item => {
+      const searchStr = searchText.toLowerCase()
+      const phoneStr = item.phone ? item.phone.toString() : '' // Convert phone to string
+      const nameStr = item.fullName ? item.fullName.toString() : '' // Convert phone to string
+      return nameStr.includes(searchStr) || phoneStr.includes(searchStr)
+    })
+
+    setFilteredItems(filtered)
+  }
+
+  // Update filtered items whenever searchFields or the model changes
+  useEffect(() => {
+    filterItems(searchFields)
+  }, [searchFields, watchedOnModel, clients, agents, company])
+
   return (
     <div>
       {/* <MuiTextAreaHookField/> */}
@@ -386,43 +420,51 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                   helperText={errors.by?.message}
                   SelectProps={{
                     value: value,
-                    onChange: e => onChange(e)
+                    onChange: e => onChange(e),
+                    onClick: () => scrollToTop()
                   }}
                   sx={{ mb: 4 }}
                 >
+                  {/* <div style={{ overflow: 'hidden' }}> */}
                   <MenuItem value='' disabled>
                     Select refer
                   </MenuItem>
-                  {watchedOnModel === 'Client' &&
-                    clients?.map(item => (
-                      <MenuItem key={item} value={item._id} style={listStyles}>
+                  <Input
+                    type='text'
+                    onChange={e => setSearchFields(e.target.value)}
+                    name='search'
+                    value={searchFields}
+                    placeholder='search by name'
+                  />
+                  {filteredItems.map(item => (
+                    <MenuItem key={item._id} value={item._id} style={listStyles}>
+                      <div>
                         <div>
-                          <div>
-                            <PhoneIcon style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                          </div>
-                          <div>
-                            <Person style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>
-                              {item.fullName && item.fullName}
-                            </span>
-                          </div>
+                          <Person style={iconStyles} />
+                          <span style={{ fontSize: '12.2px' }}>
+                            {item.fullName && item.fullName}
+                          </span>
                         </div>
-                      </MenuItem>
-                    ))}
-                  {watchedOnModel === 'Agent' &&
+                        <div>
+                          <PhoneIcon style={iconStyles} />
+                          <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
+                        </div>
+                      </div>
+                    </MenuItem>
+                  ))}
+                  {/* {watchedOnModel === 'Agent' &&
                     agents?.map(item => (
                       <MenuItem key={item} value={item._id} style={listStyles}>
                         <div>
                           <div>
-                            <PhoneIcon style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                          </div>
-                          <div>
                             <Person style={iconStyles} />
                             <span style={{ fontSize: '12.2px' }}>
                               {item.fullName && item.fullName}
                             </span>
+                          </div>
+                          <div>
+                            <PhoneIcon style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
                           </div>
                         </div>
                       </MenuItem>
@@ -432,22 +474,24 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                       <MenuItem key={item} value={item._id} style={listStyles}>
                         <div>
                           <div>
-                            <PhoneIcon style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                          </div>
-                          <div>
                             <Person style={iconStyles} />
                             <span style={{ fontSize: '12.2px' }}>
                               {item.fullName && item.fullName}
                             </span>
                           </div>
+                          <div>
+                            <PhoneIcon style={iconStyles} />
+                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
+                          </div>
                         </div>
                       </MenuItem>
-                    ))}
+                    ))} */}
+                  {/* </div> */}
                 </CustomTextField>
               )}
             />
           </Grid>
+
           {!editId ? (
             <Grid item md={6}>
               <Box sx={{ width: '200px' }}>

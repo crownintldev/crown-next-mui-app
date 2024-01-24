@@ -27,7 +27,7 @@ import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: `${theme.palette.primary.main} !important`
+  color: `${theme.palette.primary.main} !important`,
 }))
 
 const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
@@ -155,6 +155,20 @@ const LoginForm = () => {
         <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
           Login
         </Button>
+
+        {/* tracking button */}
+        <IconButton sx={{ color: 'white', display: 'flex', margin: 'auto' }}>
+          <Link href='/track-status' style={{ textDecoration: 'none', margin: 'auto' }}>
+            <Button
+              fullWidth
+              variant='contained'
+              sx={{ height: '33px', color: 'white', display: 'flex', gap: '4px' }}
+            >
+              Track your status
+              <Icon icon='mdi:search' />
+            </Button>
+          </Link>
+        </IconButton>
         <Box
           sx={{
             display: 'flex',

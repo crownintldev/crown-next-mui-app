@@ -23,7 +23,8 @@ const data = {
       id: 1,
       fullName: 'Felecia Rower',
       role: 'Frontend Developer',
-      about: 'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
+      about:
+        'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
       avatar: '/images/avatars/2.png',
       status: 'offline'
     },
@@ -59,7 +60,8 @@ const data = {
       fullName: 'Margot Henschke',
       role: 'Dietitian',
       avatarColor: 'success',
-      about: 'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
+      about:
+        'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
       status: 'busy'
     },
     {
@@ -103,7 +105,8 @@ const data = {
       avatarColor: 'error',
       fullName: 'Zenia Jacobs',
       role: 'Building surveyor',
-      about: 'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
+      about:
+        'Cake pie jelly jelly beans. Marzipan lemon drops halvah cake. Pudding cookie lemon drops icing',
       status: 'away'
     }
   ],
@@ -124,7 +127,8 @@ const data = {
           }
         },
         {
-          message: 'Hey John, I am looking for the best admin template. Could you please help me to find it out?',
+          message:
+            'Hey John, I am looking for the best admin template. Could you please help me to find it out?',
           time: 'Mon Dec 10 2018 07:45:23 GMT+0000 (GMT)',
           senderId: 1,
           feedback: {
@@ -300,7 +304,11 @@ mock.onGet('/apps/chat/chats-and-contacts').reply(() => {
     const contact = data.contacts.find(c => c.id === chat.userId)
 
     // @ts-ignore
-    contact.chat = { id: chat.id, unseenMsgs: chat.unseenMsgs, lastMessage: chat.chat[chat.chat.length - 1] }
+    contact.chat = {
+      id: chat.id,
+      unseenMsgs: chat.unseenMsgs,
+      lastMessage: chat.chat[chat.chat.length - 1]
+    }
 
     return contact
   })

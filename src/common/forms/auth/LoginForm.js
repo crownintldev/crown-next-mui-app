@@ -162,7 +162,7 @@ const LoginForm = () => {
             <Button
               fullWidth
               variant='contained'
-              sx={{ height: '33px', color: 'white', display: 'flex', gap: '4px' }}
+              sx={{ height: '33px', color: 'white', display: 'flex', gap: '4px', fontSize: "10" }}
             >
               Track your status
               <Icon icon='mdi:search' />

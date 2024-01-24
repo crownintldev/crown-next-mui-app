@@ -21,7 +21,7 @@ import Icon from 'src/@core/components/icon'
 
 const staticData = ['pakistan visa', 'Afghan visa', 'turki visa', 'canada visa', 'japan visa']
 const TrackStatus = () => {
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState()
   const [results, setResults] = useState([])
 
   const handleSearch = event => {
@@ -48,6 +48,7 @@ const TrackStatus = () => {
         flexDirection: 'column'
       }}
     >
+      <h2>Status Tracking</h2>
       <Paper
         component='form'
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
@@ -66,20 +67,22 @@ const TrackStatus = () => {
           <SearchIcon />
         </IconButton>
       </Paper>
-      <Box sx={{ mt: 4, width: '100%' }}>
-        {results.length > 0
-          ? results.map((result, index) => (
-              <Typography key={index} variant='subtitle1' sx={{ textAlign: 'center' }}>
-                {result}
-              </Typography>
-            ))
-          : searchText && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <NoDataIcon sx={{ fontSize: 60 }} />
-                <Typography>No data found, use valid data</Typography>
-              </Box>
-            )}
-      </Box>
+      {searchText && (
+        <Box sx={{ mt: 4, width: '100%' }}>
+          {results.length > 0
+            ? results.map((result, index) => (
+                <Typography key={index} variant='subtitle1' sx={{ textAlign: 'center' }}>
+                  {result}
+                </Typography>
+              ))
+            : searchText && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <NoDataIcon sx={{ fontSize: 60 }} />
+                  <Typography>No data found, use valid data</Typography>
+                </Box>
+              )}
+        </Box>
+      )}
       <Typography
         sx={{
           display: 'flex',
@@ -88,7 +91,7 @@ const TrackStatus = () => {
           '& svg': { mr: 1 }
         }}
       >
-        <Link href='/login' sx={{ display: 'flex', margin: '10px' }}>
+        <Link href='/login' sx={{ display: 'flex', margin: '15px' }}>
           <Icon fontSize='1.25rem' icon='tabler:chevron-left' />
           <span>Back to login</span>
         </Link>

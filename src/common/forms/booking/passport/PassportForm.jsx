@@ -237,7 +237,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
 
   const scrollToTop = () => {
     // Use JavaScript to scroll the dropdown menu to the top
-    const selectMenu = document.querySelector('#your-select-menu-id')
+    const selectMenu = document.querySelector('#search-field')
     if (selectMenu) {
       selectMenu.scrollTop = 0
     }
@@ -405,7 +405,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               }}
             />
           </Grid>
-
           <Grid item md={6} lg={4}>
             <Controller
               name='by'
@@ -418,23 +417,37 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                   label='Select Refer To'
                   error={Boolean(errors.by)}
                   helperText={errors.by?.message}
+                  // id='search-field'
                   SelectProps={{
                     value: value,
                     onChange: e => onChange(e),
-                    onClick: () => scrollToTop()
+                    onClick: () => scrollToTop(),
+                    MenuProps: {
+                      anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                      },
+                      transformOrigin: {
+                        vertical: 'top',
+                        horizontal: 'left'
+                      },
+                      getContentAnchorEl: null
+                    }
                   }}
                   sx={{ mb: 4 }}
                 >
                   {/* <div style={{ overflow: 'hidden' }}> */}
-                  <MenuItem value='' disabled>
+                  {/* <MenuItem value='' disabled>
                     Select refer
-                  </MenuItem>
+                  </MenuItem> */}
                   <Input
                     type='text'
                     onChange={e => setSearchFields(e.target.value)}
                     name='search'
                     value={searchFields}
-                    placeholder='search by name'
+                    placeholder='search name, phone'
+                    fullWidth
+                    sx={{ mb: 2, pl: 2 }}
                   />
                   {filteredItems.map(item => (
                     <MenuItem key={item._id} value={item._id} style={listStyles}>
@@ -491,7 +504,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               )}
             />
           </Grid>
-
           {!editId ? (
             <Grid item md={6}>
               <Box sx={{ width: '200px' }}>

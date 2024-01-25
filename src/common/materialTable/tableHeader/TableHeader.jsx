@@ -95,50 +95,67 @@ const TableHeader = props => {
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {buttonTitle && (
-            <MenuItem
-              onClick={handleClose}
-              sx={{
-                m: 0,
-                borderRadius: '0px',
-                cursor: 'pointer'
-              }}
-            >
-              <Box
+            <div onClick={handleClose}>
+              <MenuItem
                 onClick={toggle}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                // onMouseEnter={handleMouseEnter}
+                // onMouseLeave={handleMouseLeave}
                 sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: '#2b60fe',
-                  textDecoration: isHovered ? 'underline' : 'none'
+                  py: 1,
+                  m: 0
+                  // borderBottom: isHovered ? '1px solid #8080806e' : 'none'
                 }}
               >
-                <Icon fontSize='0.8rem' icon='tabler:plus' />
-                <div>{buttonTitle}</div>
-              </Box>
-            </MenuItem>
+                <Box
+                  // onClick={toggle}
+                  sx={{
+                    fontSize: '0.8em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    columnGap: '4px',
+                    color: '#2b60fe'
+                  }}
+                >
+                  <Icon fontSize='0.8rem' icon='tabler:plus' />
+                  <div>{buttonTitle}</div>
+                </Box>
+              </MenuItem>
+            </div>
           )}
           {api && selectedIds && selectedIds.length > 0 && (
-            <MenuItem onClick={handleClose} sx={{ py: 1, m: 0 }}>
-              <Box
-                onClick={handleRemove}
-                sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: 'red'
-                }}
-              >
-                <Icon fontSize='0.8rem' icon='tabler:minus' />
-                {/* {api === 'visa' && 'Delete Visa Service'} */}
-                {`Delete ${capitalizeSplitDash(api)}`}
-              </Box>
-            </MenuItem>
+            <div onClick={handleClose}>
+              <div onClick={handleRemove}>
+                <MenuItem
+                  // onClick={toggle} // onMouseLeave={handleMouseLeave}
+                  sx={{
+                    py: 1,
+                    m: 0
+                    // borderBottom: isHovered ? '1px solid #8080806e' : 'none'
+                  }}
+                >
+                  <Box
+                    // onClick={handleRemove}
+                    sx={{
+                      fontSize: '0.8em',
+                      display: 'flex',
+                      alignItems: 'center',
+                      columnGap: '4px',
+                      color: 'red'
+                    }}
+                  >
+                    <Icon fontSize='0.8rem' icon='tabler:minus' />
+                    {/* {api === 'visa' && 'Delete Visa Service'} */}
+                    {`Delete ${capitalizeSplitDash(api)}`}
+                  </Box>
+                </MenuItem>
+              </div>
+            </div>
           )}
+          {/* <div onClick={removeSelection}>
+            <div onClick={toggle}>
+              {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
+            </div>
+          </div> */}
           {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
 

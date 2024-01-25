@@ -72,8 +72,8 @@ const navigation = () => {
       title: 'Automation Tools',
       key: 'automation',
       icon: 'nimbus:marketing',
-      path: '/automation',
-      activeChildPath: '/chatmodule/chat',
+      path: '/settings',
+      activeChildPath: '/chat',
       children: automationArray()
     },
     {

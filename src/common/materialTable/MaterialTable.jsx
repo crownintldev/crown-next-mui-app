@@ -9,6 +9,8 @@ import { LinearProgress, Tab, Tabs } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import { Grid } from '@mui/material'
+import InboxIcon from '@mui/icons-material/Inbox' // Import appropriate icons
+import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
@@ -210,8 +212,22 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
           borderRadius: '7px'
         }}
       >
-        <Tab label='Default' value='default' />
-        <Tab label='Trash' value='trash' />
+        <Tab
+          label={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <InboxIcon style={{ marginRight: '4px' }} /> Default
+            </div>
+          }
+          value='default'
+        />
+        <Tab
+          label={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <DeleteIcon style={{ marginRight: '4px' }} /> Trash
+            </div>
+          }
+          value='trash'
+        />
       </Tabs>
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* Conditionally render the table component */}
@@ -244,7 +260,13 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
         drawerTitle={selectionRow.length > 0 ? editFormTitle : formTitle}
         Form={selectionRow.length > 0 ? EditForm : CreateForm}
         removeSelection={handleRemoveSelection}
-        _id={multiSelected && selectionRow.length>0 ? selectionRow : selectionRow.length === 1 ? selectionRow[0] : ''}
+        _id={
+          multiSelected && selectionRow.length > 0
+            ? selectionRow
+            : selectionRow.length === 1
+            ? selectionRow[0]
+            : ''
+        }
         api={api}
         fetchApi={fetchData}
         stateSelector={stateSelector}

@@ -34,7 +34,7 @@ export const accountArrays = () => [
   // ==========================
   {
     title: 'Members',
-    icon: 'arcticons:booking',
+    icon: 'tabler:user',
     children: [
       {
         title: 'Agents',
@@ -52,7 +52,7 @@ export const accountArrays = () => [
   },
   {
     title: 'Booking',
-    icon: 'arcticons:booking',
+    icon: 'tabler:plane-departure',
     children: [
       // {
       //   title: 'Passport Booking',
@@ -68,7 +68,7 @@ export const accountArrays = () => [
   // ==========================
   {
     title: 'Services',
-    icon: 'arcticons:booking',
+    icon: 'tabler:packages',
     children: [
       {
         title: 'Visa Service',
@@ -101,11 +101,11 @@ export const accountArrays = () => [
   {
     title: 'Account',
     path: '/account',
-    icon: 'arcticons:booking'
+    icon: 'tabler:file-dollar'
   },
   {
     title: 'Supplier',
-    icon: 'arcticons:booking',
+    icon: 'tabler:truck',
     children: [
       {
         title: 'Supplier Category',
@@ -125,11 +125,11 @@ export const accountArrays = () => [
   {
     title: 'Expense',
     path: '/expense',
-    icon: 'arcticons:booking'
+    icon: 'tabler:receipt'
   },
   {
     title: 'Invoice',
-    icon: 'tabler:file-dollar',
+    icon: 'tabler:file-text',
     children: [
       {
         title: 'List',

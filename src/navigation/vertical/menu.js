@@ -105,7 +105,7 @@ export const accountArrays = () => [
   },
   {
     title: 'Supplier',
-    icon: 'tabler:truck',
+    icon: 'tabler:truck-delivery',
     children: [
       {
         title: 'Supplier Category',
@@ -125,7 +125,7 @@ export const accountArrays = () => [
   {
     title: 'Expense',
     path: '/expense',
-    icon: 'tabler:receipt'
+    icon: 'tabler:wallet'
   },
   {
     title: 'Invoice',

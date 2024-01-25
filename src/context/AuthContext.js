@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
           })
           .then(async response => {
             setLoading(false)
-            setUser({ ...response.data.userData })
+            setUser(response.data.data)
           })
           .catch(() => {
             localStorage.removeItem('userData')
@@ -69,14 +69,15 @@ const AuthProvider = ({ children }) => {
           ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
           : null
         const returnUrl = router.query.returnUrl
-        setUser({ ...response.data.userData })
+        setUser(response.data.data )
         params.rememberMe
-          ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData))
+          ? window.localStorage.setItem('userData', JSON.stringify(response.data.data))
           : null
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
         router.replace(redirectURL)
       })
       .catch(err => {
+        console.log(err)
         if (errorCallback) errorCallback(err)
       })
   }

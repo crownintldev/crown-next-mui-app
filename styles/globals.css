@@ -214,11 +214,10 @@ code[class*='language-'] {
   background-color: rgb(24 82 254 / 8%);
   border-radius: 0px;
   border-bottom: 1px solid rgb(24 82 254 / 19%);
-  border: 1px solid red;
 }
 .css-16pbco9-MuiListItemIcon-root svg {
   font-size: 10px;
-  color: '';
+  color: blue;
 }
 /* .css-16pbco9-MuiListItemIcon-root {
   font-size: 2px;

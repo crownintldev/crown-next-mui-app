@@ -148,11 +148,15 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   //     let params = { passportNumber }
   //     fetchActionData(() => getDataAction('passport/read', params), setEditId)
   //   } else {
+  //     // Use passportId from state if _id is present
+  //     // setEditId(passportIdFromState)
+
   //     setEditId(null)
   //   }
   // }, [passportNumber])
 
   // console.log(editId)
+
   useEffect(() => {
     setValue('deletedFiles', [removeFiles])
   }, [previousFiles, removeFiles])
@@ -222,9 +226,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     }
   ]
 
-  const fontStyles = {
-    fontsize: '12.2px'
-  }
   const iconStyles = {
     fontSize: '14px',
     position: 'relative',
@@ -232,16 +233,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     left: '-3px'
   }
   const listStyles = { borderLeft: '2px solid #1852fe', height: '42px', marginBottom: '5px' }
-
-  // console.log('files output', files)
-
-  const scrollToTop = () => {
-    // Use JavaScript to scroll the dropdown menu to the top
-    const selectMenu = document.querySelector('#search-field')
-    if (selectMenu) {
-      selectMenu.scrollTop = 0
-    }
-  }
 
   // Function to filter items based on the search field
   const filterItems = searchText => {
@@ -420,19 +411,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                   // id='search-field'
                   SelectProps={{
                     value: value,
-                    onChange: e => onChange(e),
-                    onClick: () => scrollToTop(),
-                    MenuProps: {
-                      anchorOrigin: {
-                        vertical: 'bottom',
-                        horizontal: 'left'
-                      },
-                      transformOrigin: {
-                        vertical: 'top',
-                        horizontal: 'left'
-                      },
-                      getContentAnchorEl: null
-                    }
+                    onChange: e => onChange(e)
                   }}
                   sx={{ mb: 4 }}
                 >
@@ -448,23 +427,26 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                     placeholder='search name, phone'
                     fullWidth
                     sx={{ mb: 2, pl: 2 }}
+                    onMouseDown={e => e.stopPropagation()}
                   />
-                  {filteredItems.map(item => (
-                    <MenuItem key={item._id} value={item._id} style={listStyles}>
-                      <div>
-                        <div>
-                          <Person style={iconStyles} />
-                          <span style={{ fontSize: '12.2px' }}>
-                            {item.fullName && item.fullName}
-                          </span>
-                        </div>
-                        <div>
-                          <PhoneIcon style={iconStyles} />
-                          <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                        </div>
-                      </div>
-                    </MenuItem>
-                  ))}
+                  {searchFields
+                    ? filteredItems.map(item => (
+                        <MenuItem key={item._id} value={item._id} style={listStyles}>
+                          <div>
+                            <div>
+                              <Person style={iconStyles} />
+                              <span style={{ fontSize: '12.2px' }}>
+                                {item.fullName && item.fullName}
+                              </span>
+                            </div>
+                            <div>
+                              <PhoneIcon style={iconStyles} />
+                              <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
+                            </div>
+                          </div>
+                        </MenuItem>
+                      ))
+                    : null}
                   {/* {watchedOnModel === 'Agent' &&
                     agents?.map(item => (
                       <MenuItem key={item} value={item._id} style={listStyles}>

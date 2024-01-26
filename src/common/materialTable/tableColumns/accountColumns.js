@@ -1,4 +1,8 @@
 import { useMemo } from 'react'
+
+// MUI Imports
+import PermMediaIcon from '@mui/icons-material/PermMedia'
+
 import {
   renderStatusCell,
   defaultCellRenderer,
@@ -10,6 +14,12 @@ import {
 export const useTableColumns = () =>
   useMemo(
     () => [
+      {
+        accessorKey: 'media',
+        header: 'Media',
+        size: 100,
+        Cell: () => <PermMediaIcon sx={{ color: '#1EB280' }} />
+      },
       { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'onModel', header: 'Refer', size: 100, Cell: defaultCellRenderer },
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },

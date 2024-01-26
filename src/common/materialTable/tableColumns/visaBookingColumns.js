@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMemo } from 'react'
 import {
   renderStatusCell,
@@ -6,10 +6,23 @@ import {
   dateFormat,
   defaultCellUpperCase
 } from 'src/common/materialTable/tableColumnFunction'
+import PermMediaIcon from '@mui/icons-material/PermMedia'
+import { IconButton } from '@mui/material'
+import FormDrawer from 'src/common/drawer/FormDrawer'
 
 const useTableColumns = () =>
   useMemo(
     () => [
+      {
+        accessorKey: 'media',
+        header: 'Media',
+        size: 100,
+        Cell: () => (
+          <IconButton onClick={formDrawer}>
+            <PermMediaIcon sx={{ color: '#1EB280' }} />
+          </IconButton>
+        )
+      },
       { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'passportId.givenName', header: 'Given Name', Cell: defaultCellRenderer },

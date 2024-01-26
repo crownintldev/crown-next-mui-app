@@ -7,10 +7,18 @@ import {
   conditionValue,
   dateFormat
 } from 'src/common/materialTable/tableColumnFunction'
+import PermMediaIcon from '@mui/icons-material/PermMedia'
 
 const useTableColumns = () =>
   useMemo(
     () => [
+      {
+        accessorKey: 'media',
+        header: 'Media',
+        size: 100,
+        Cell: () => <PermMediaIcon sx={{ color: '#1EB280' }} />
+      },
+
       { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'visabooking.status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'givenName', header: 'Given Name', Cell: defaultCellRenderer },

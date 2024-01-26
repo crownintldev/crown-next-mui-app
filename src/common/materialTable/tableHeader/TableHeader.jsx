@@ -98,8 +98,6 @@ const TableHeader = props => {
             <div onClick={handleClose}>
               <MenuItem
                 onClick={toggle}
-                // onMouseEnter={handleMouseEnter}
-                // onMouseLeave={handleMouseLeave}
                 sx={{
                   py: 1,
                   m: 0
@@ -107,7 +105,6 @@ const TableHeader = props => {
                 }}
               >
                 <Box
-                  // onClick={toggle}
                   sx={{
                     fontSize: '0.8em',
                     display: 'flex',
@@ -126,15 +123,12 @@ const TableHeader = props => {
             <div onClick={handleClose}>
               <div onClick={handleRemove}>
                 <MenuItem
-                  // onClick={toggle} // onMouseLeave={handleMouseLeave}
                   sx={{
                     py: 1,
                     m: 0
-                    // borderBottom: isHovered ? '1px solid #8080806e' : 'none'
                   }}
                 >
                   <Box
-                    // onClick={handleRemove}
                     sx={{
                       fontSize: '0.8em',
                       display: 'flex',

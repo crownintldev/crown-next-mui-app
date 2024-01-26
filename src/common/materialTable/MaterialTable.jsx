@@ -15,7 +15,16 @@ import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
 
-const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api, headerMenu }) => {
+const MaterialTable = ({
+  fetchData,
+  stateSelector,
+  columns,
+  apiData,
+  drawerProps,
+  api,
+  headerMenu
+}) => {
+  console.log('apiData', apiData)
   const {
     formTitle,
     editFormTitle,
@@ -275,4 +284,4 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   )
 }
 
-export default Example
+export default MaterialTable

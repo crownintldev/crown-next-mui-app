@@ -11,7 +11,8 @@ import CardSnippet from 'src/@core/components/card-snippet'
 
 // ** Demo Components Imports
 import SwiperDefault from 'src/views/components/swiper/SwiperDefault'
-import CrmEarningReportsWithTabs from 'src/pages/components/earning-reports/CrmEarningReportsWithTabs'
+import EarningReportsWithTabs from 'src/pages/components/earning-reports/charts/multiTabs-barchart/EarningReportsWithTabs'
+import ApexAreaChart from 'src/pages/components/earning-reports/charts/apex-charts'
 
 // ** Styled Component Import
 import KeenSliderWrapper from 'src/@core/styles/libs/keen-slider'
@@ -43,7 +44,8 @@ const Swiper = () => {
             </CardSnippet>
           </Grid>
         </Grid>
-        <CrmEarningReportsWithTabs />
+        <EarningReportsWithTabs />
+        <ApexAreaChart />
       </Grid>
     </KeenSliderWrapper>
   )

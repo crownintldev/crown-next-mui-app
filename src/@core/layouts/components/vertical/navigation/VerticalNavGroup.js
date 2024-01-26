@@ -267,6 +267,7 @@ const VerticalNavGroup = props => {
               ...menuGroupCollapsedStyles,
               transition: 'all 0.25s ease-in-out'
             }}
+            className='hello'
           >
             <VerticalNavItems
               {...props}

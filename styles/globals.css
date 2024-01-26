@@ -183,7 +183,36 @@ code[class*='language-'] {
 .css-1buxjf4-MuiSvgIcon-root {
   color: #1852fe;
 }
-
+.child-items > .nav-link {
+  /* border: '1px solid red';
+  background-color: red; */
+  height: 28px;
+}
+.child-items > .nav-link:hover {
+  border: 'solid';
+}
+.hello
+  > .css-smkl36-MuiCollapse-wrapper
+  > .css-9l5vo-MuiCollapse-wrapperInner
+  > .child-items
+  > .css-1esf9fq-MuiListItem-root
+  > .css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root
+  > .css-164kvcj
+  > .css-185anww-MuiTypography-root {
+  font-size: 13px;
+}
+.css-spdbyg>.css-185anww-MuiTypography-root{
+  font-size: 13px;
+}
+.css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root.active {
+  height: 28px;
+}
+.css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root.active {
+  height: 28px;
+}
+.child-items > .nav-link > p {
+  border: '1px solid oranges';
+}
 /* app bar styles start */
 .css-pr8bgq-MuiToolbar-root {
   box-shadow: none;
@@ -223,11 +252,6 @@ code[class*='language-'] {
   font-size: 10px;
   color: blue;
 }
-/* .css-16pbco9-MuiListItemIcon-root {
-  font-size: 2px;
-  color: #1852fee8;
-  font-size: 9px !important;
-} */
 /* date input field styles */
 .inputdate .css-1lxcjy7-MuiInputBase-root-MuiOutlinedInput-root:not(.MuiInputBase-sizeSmall) {
   height: 40px !important;

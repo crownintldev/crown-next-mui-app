@@ -183,6 +183,11 @@ code[class*='language-'] {
 .css-1buxjf4-MuiSvgIcon-root {
   color: #1852fe;
 }
+
+/* component bg */
+.css-1ewxx0h-MuiPaper-root-MuiAppBar-root {
+  /* background: #dbe5fb; */
+}
 .child-items > .nav-link {
   height: 28px;
 }

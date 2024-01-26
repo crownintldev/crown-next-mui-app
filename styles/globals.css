@@ -184,12 +184,16 @@ code[class*='language-'] {
   color: #1852fe;
 }
 
-/* Sub Menu styles start */
+/* app bar styles start */
+.css-pr8bgq-MuiToolbar-root {
+  box-shadow: none;
+}
+
+/* Sub Menu styles */
 .css-16pbco9-MuiListItemIcon-root {
   font-size: 9px;
   color: #1852fee8;
 }
-/* ////////////// */
 /* sidepanel */
 .css-185anww-MuiTypography-root {
   color: black !important;

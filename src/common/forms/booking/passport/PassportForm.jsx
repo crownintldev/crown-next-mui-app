@@ -41,7 +41,6 @@ import { MuiTextAreaHookField } from 'src/common/dataEntry/MuiTextAreaHookField'
 
 const schema = yup.object().shape({
   bookletNumber: yup.string().required('Booklet Number is required'),
-  city: yup.string().required('City is required.'),
   cnic: yup
     .string()
     .required('CNIC Number is required')
@@ -76,7 +75,6 @@ const schema = yup.object().shape({
 const defaultValues = {
   bookletNumber: '',
   cnic: '',
-  city: '',
   country: '',
   dob: '',
   doi: '',
@@ -256,7 +254,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     setFilteredItems(filtered)
   }
 
-  // Update filtered items whenever searchFields or the model changes
+  // Update filtered items whenever searchFields or the model   changes
   useEffect(() => {
     filterItems(searchFields)
   }, [searchFields, watchedOnModel, clients, agents, company])

@@ -23,7 +23,7 @@ const PassportSubmitButton = ({
 
   const onSubmit = async () => {
     try {
-      console.log('============', editId)
+      console.log('============', data)
       let formData = new FormData()
       Object.keys(data).forEach(key => {
         if (key !== 'files') {

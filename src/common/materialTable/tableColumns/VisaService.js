@@ -9,6 +9,12 @@ import {
 const useTableColumns = () =>
   useMemo(
     () => [
+      {
+        accessorKey: 'media',
+        header: 'Media',
+        size: 100,
+        Cell: () => <PermMediaIcon sx={{ color: '#1EB280' }} />
+      },
       { accessorKey: '_id', header: 'ID', size: 100 },
       {
         accessorKey: 'supplierVisaService.supplier.name',

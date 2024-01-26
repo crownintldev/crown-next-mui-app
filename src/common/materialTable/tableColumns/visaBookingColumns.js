@@ -7,6 +7,7 @@ import {
   defaultCellUpperCase
 } from 'src/common/materialTable/tableColumnFunction'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
+import PermMediaIcon from '@mui/icons-material/PermMedia'
 
 const useTableColumns = () =>
   useMemo(

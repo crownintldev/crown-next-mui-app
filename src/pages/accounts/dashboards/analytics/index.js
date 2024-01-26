@@ -4,7 +4,7 @@ import Link from 'next/link'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
+// import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports
 import CardSnippet from 'src/@core/components/card-snippet'

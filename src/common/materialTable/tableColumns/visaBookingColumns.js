@@ -8,7 +8,6 @@ import {
 } from 'src/common/materialTable/tableColumnFunction'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { IconButton } from '@mui/material'
-import FormDrawer from 'src/common/drawer/FormDrawer'
 
 const useTableColumns = () =>
   useMemo(
@@ -18,7 +17,7 @@ const useTableColumns = () =>
         header: 'Media',
         size: 100,
         Cell: () => (
-          <IconButton onClick={formDrawer}>
+          <IconButton>
             <PermMediaIcon sx={{ color: '#1EB280' }} />
           </IconButton>
         )

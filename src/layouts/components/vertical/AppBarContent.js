@@ -1,3 +1,5 @@
+// Next Imports
+import Link from 'next/link'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
@@ -135,9 +137,11 @@ const AppBarContent = props => {
         {auth.user && (
           <>
             {/* <Icon fontSize='1.5rem' icon='tabler:message' /> */}
-            <IconButton color="inherit">
-              <Icon fontSize='1.5rem' icon='tabler:message' />
-            </IconButton>
+            <Link href='/settings/chat'>
+              <IconButton sx={{ color: 'rgb(0 0 0 / 58%)' }}>
+                <Icon fontSize='1.5rem' icon='tabler:message' />
+              </IconButton>
+            </Link>
             <NotificationDropdown settings={settings} notifications={notifications} />
             <UserDropdown settings={settings} />
           </>

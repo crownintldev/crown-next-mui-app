@@ -202,10 +202,11 @@ code[class*='language-'] {
   > .css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root
   > .css-164kvcj
   > .css-185anww-MuiTypography-root {
-  font-size: 13px;
+  font-size: 13.5px;
 }
 .css-spdbyg > .css-185anww-MuiTypography-root {
-  font-size: 13px;
+  font-size: 13.5px;
+  border: '1px solid red';
 }
 .css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root.active {
   height: 28px;
@@ -222,9 +223,10 @@ code[class*='language-'] {
 }
 
 /* Sub Menu styles */
-.css-16pbco9-MuiListItemIcon-root {
-  font-size: 9px;
-  color: #1852fee8;
+
+.css-16pbco9-MuiListItemIcon-root svg {
+  font-size: 10px !important;
+  color: blue !important;
 }
 /* sidepanel */
 .css-185anww-MuiTypography-root {

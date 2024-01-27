@@ -2,18 +2,10 @@ import { useMemo } from 'react'
 
 import { defaultCellRenderer } from 'src/common/materialTable/tableColumnFunction'
 import { dateFormat } from 'src/common/materialTable/tableColumnFunction'
-import PermMediaIcon from '@mui/icons-material/PermMedia'
 
 const useCompanyColumns = () =>
   useMemo(
     () => [
-      {
-        accessorKey: 'media',
-        header: 'Media',
-        size: 100,
-        Cell: () => <PermMediaIcon sx={{ color: '#1EB280' }} />
-      },
-
       { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'companyName', header: 'Company Name', Cell: defaultCellRenderer },
       { accessorKey: 'licenseNo', header: 'License #', Cell: defaultCellRenderer },

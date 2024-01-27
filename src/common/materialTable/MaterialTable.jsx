@@ -51,6 +51,7 @@ const MaterialTable = ({
     pageSize: 20
   })
   const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -94,7 +95,10 @@ const MaterialTable = ({
     }
   }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
 
-  const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
+  const selectedRowIds = Object.keys(rowSelection).filter(key => {
+    console.log('tb key', key)
+    // rowSelection[key]
+  })
   useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])
@@ -242,7 +246,6 @@ const MaterialTable = ({
         {/* Conditionally render the table component */}
         {renderTableComponent()}
       </div>
-
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (

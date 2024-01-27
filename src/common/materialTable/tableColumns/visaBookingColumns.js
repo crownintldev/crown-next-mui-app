@@ -9,15 +9,15 @@ import {
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { IconButton } from '@mui/material'
 
-const useTableColumns = () =>
+const useTableColumns = openMediaDrawer =>
   useMemo(
     () => [
       {
         accessorKey: 'media',
         header: 'Media',
         size: 100,
-        Cell: () => (
-          <IconButton>
+        Cell: ({ row }) => (
+          <IconButton onClick={() => openMediaDrawer(row)}>
             <PermMediaIcon sx={{ color: '#1EB280' }} />
           </IconButton>
         )

@@ -8,8 +8,10 @@ export const capitalizeCamelSpace = name => {
 
 export const axiosErrorMessage = err => {
   console.log(err)
- return err.response && err.response.data && err.response.data.message
+  return err.response && err.response.data && err.response.data.message
     ? err.response.data.message
+    : err.message
+    ? err.message
     : 'An unexpected error occurred'
 }
 export const axiosSuccessToast = data => {

@@ -10,6 +10,9 @@ import axios from 'axios'
 // ** Config
 import authConfig from 'src/configs/auth'
 
+//actions
+import { signin,isAuth, authenticate,getCookie,removeAuthenticate,accessToken } from 'src/action/auth-action'
+
 // ** Defaults
 const defaultProvider = {
   user: null,
@@ -30,23 +33,25 @@ const AuthProvider = ({ children }) => {
   const router = useRouter()
   useEffect(() => {
     const initAuth = async () => {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-      if (storedToken) {
+      // const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      if (accessToken) {
         setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
             headers: {
-              Authorization: storedToken
+              Authorization: accessToken
             }
           })
           .then(async response => {
-            setLoading(false)
+            authenticate(response.data) 
             setUser(response.data.data)
+            setLoading(false)
           })
           .catch(() => {
-            localStorage.removeItem('userData')
+            removeAuthenticate("userData","accessToken")
             localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
+            // localStorage.removeItem('userData')
+            // localStorage.removeItem('accessToken')
             setUser(null)
             setLoading(false)
             if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
@@ -55,6 +60,7 @@ const AuthProvider = ({ children }) => {
           })
       } else {
         setLoading(false)
+        removeAuthenticate("userData","accessToken")
       }
     }
     initAuth()
@@ -62,30 +68,43 @@ const AuthProvider = ({ children }) => {
   }, [])
 
   const handleLogin = (params, errorCallback) => {
-    axios
-      .post(authConfig.loginEndpoint, params)
-      .then(async response => {
-        params.rememberMe
-          ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
-          : null
-        const returnUrl = router.query.returnUrl
-        setUser(response.data.data )
-        params.rememberMe
-          ? window.localStorage.setItem('userData', JSON.stringify(response.data.data))
-          : null
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-        router.replace(redirectURL)
-      })
-      .catch(err => {
-        console.log(err)
-        if (errorCallback) errorCallback(err)
-      })
+    signin(params).then(response => {
+      // params.rememberMe ? authenticate(response.data) : ''
+      authenticate(response.data) 
+      setUser(response.data.data)
+      const returnUrl = router.query.returnUrl
+      const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+      router.replace(redirectURL)
+    })
+    .catch(err => {
+      console.log("===auth context===",err)
+      if (errorCallback) errorCallback(err)
+    })
+    // axios
+    //   .post(authConfig.loginEndpoint, params)
+    //   .then(async response => {
+    //     params.rememberMe
+    //       ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
+    //       : null
+    //     const returnUrl = router.query.returnUrl
+    //     setUser(response.data.data)
+    //     params.rememberMe
+    //       ? window.localStorage.setItem('userData', JSON.stringify(response.data.data))
+    //       : null
+    //     const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+    //     router.replace(redirectURL)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     if (errorCallback) errorCallback(err)
+    //   })
   }
 
   const handleLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('userData')
-    window.localStorage.removeItem(authConfig.storageTokenKeyName)
+    removeAuthenticate("userData","accessToken")
+    // window.localStorage.removeItem('userData')
+    // window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')
   }
 

@@ -7,9 +7,17 @@ import PageHeader from 'src/@core/components/page-header'
 
 // ** Demo Components Imports
 import Table from 'src/views/apps/roles/Table'
+import { fetchUser } from 'src/store'
+import useUserColumns from 'src/common/materialTable/tableColumns/authColumns'
 import RoleCards from 'src/views/apps/roles/RoleCards'
+import MaterialTable from 'src/common/materialTable/MaterialTable'
+import AuthTable from 'src/common/tables/authTable/AuthTable'
+import DialogModal from 'src/views/apps/roles/Dialog'
+//form
+import UserForm from 'src/common/forms/user/UserForm'
 
 const RolesComponent = () => {
+  const columns = useUserColumns()
   return (
     <Grid container spacing={6}>
       <PageHeader
@@ -29,7 +37,22 @@ const RolesComponent = () => {
         <RoleCards />
       </Grid>
       <Grid item xs={12}>
-        <Table />
+        {/* <Table /> */}
+        <MaterialTable
+          api={'user'}
+          fetchData={fetchUser}
+          stateSelector='user'
+          columns={columns}
+          drawerProps={{
+            editFormTitle: 'Edit User',
+
+            //header buttons drawer
+            editButtonTitle: 'Edit User',
+            CreateForm: "",
+            EditForm: UserForm,
+            multiSelected:true
+          }}
+        />
       </Grid>
     </Grid>
   )

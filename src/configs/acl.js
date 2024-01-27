@@ -17,13 +17,19 @@ const defineRulesFor = (roles, subject) => {
   //   can(['read', 'create', 'update', 'delete'], subject)
   // }
 
-  roles.forEach(role => {
-    const [subject, action] = role.name.split('-');
-    console.log(subject, action)
-    if (subject && action) {
-      can(subject, action);
-    }
-  });
+  // roles.forEach(role => {
+  //   const [subject, action] = role.name.split('-');
+  //   // console.log(subject, action)
+  //   if (subject && action) {
+  //     can(subject, action);
+  //   }
+  // });
+  if(roles){
+    can('manage', 'all')
+  }
+  else{
+    can(['read', 'create', 'update', 'delete'], subject)
+  }
   return rules
 }
 

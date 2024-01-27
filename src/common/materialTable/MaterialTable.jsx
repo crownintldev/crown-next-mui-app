@@ -24,7 +24,7 @@ const MaterialTable = ({
   api,
   headerMenu
 }) => {
-  console.log('apiData', apiData)
+  // console.log('apiData', apiData)
   const {
     formTitle,
     editFormTitle,
@@ -95,10 +95,7 @@ const MaterialTable = ({
     }
   }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
 
-  const selectedRowIds = Object.keys(rowSelection).filter(key => {
-    console.log('tb key', key)
-    // rowSelection[key]
-  })
+  const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
   useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])
@@ -123,7 +120,7 @@ const MaterialTable = ({
   }
 
   const renderCustomActions = ({ table }) => {
-    // console.log(state)
+    console.log(selectionRow.length, 'length')
     return (
       <TableHeader
         toggle={toggleDrawer}

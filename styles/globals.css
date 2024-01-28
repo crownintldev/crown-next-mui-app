@@ -175,6 +175,16 @@ code[class*='language-'] {
 .custom-child-table .MuiDataGrid-cfmodalolumnHeader {
   padding: 2px 3px; /* Reduced column header padding */
 }
+
+/* track status styles */
+.track-status-styles {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 384px;
+  justify-content: space-between;
+  border: "solid red 1px"
+}
 /* MenuItem form scroll */
 .MuiButtonBase-root::-webkit-scrollbar {
   height: 4px;

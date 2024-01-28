@@ -48,7 +48,22 @@ const TrackStatus = () => {
         flexDirection: 'column'
       }}
     >
-      <h2>Status Tracking</h2>
+      <div className='track-status-styles'>
+        <h2>Status Tracking</h2>
+        <Typography
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '& svg': { mr: 1 }
+          }}
+        >
+          <Link href='/login' sx={{ display: 'flex' }}>
+            <Icon fontSize='1.25rem' icon='tabler:chevron-left' />
+            <span>Back to login</span>
+          </Link>
+        </Typography>
+      </div>
       <Paper
         component='form'
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
@@ -83,19 +98,6 @@ const TrackStatus = () => {
               )}
         </Box>
       )}
-      <Typography
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          '& svg': { mr: 1 }
-        }}
-      >
-        <Link href='/login' sx={{ display: 'flex', margin: '15px' }}>
-          <Icon fontSize='1.25rem' icon='tabler:chevron-left' />
-          <span>Back to login</span>
-        </Link>
-      </Typography>
     </Box>
   )
 }

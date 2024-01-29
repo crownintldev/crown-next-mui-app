@@ -21,7 +21,11 @@ const ExportButton = ({ tableData, table }) => {
       {tableData.length > 0 ? (
         <>
           <IconButton onClick={handleExport}>
-            <Icon fontSize='1.5rem' icon='ph:export-bold' color='#2b60fe' />
+            <Icon
+              fontSize='1.5rem'
+              icon='ph:export-bold'
+              // color='#2b60fe'
+            />
           </IconButton>
           <Menu anchorEl={exportToggle} open={toggleExport} onClose={handleClose}>
             <div onClick={handleClose}>

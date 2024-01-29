@@ -25,7 +25,6 @@ const useTableColumns = openMediaDrawer =>
       { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'passportId.givenName', header: 'Given Name', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.city', header: 'City', Cell: defaultCellUpperCase },
       { accessorKey: 'passportId.surname', header: 'Surname', Cell: defaultCellRenderer },
       { accessorKey: 'passportId.cnic', header: 'CNIC', Cell: defaultCellRenderer },
       { accessorKey: 'passportId.country', header: 'Country', Cell: defaultCellUpperCase },

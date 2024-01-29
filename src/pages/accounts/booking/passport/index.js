@@ -11,8 +11,16 @@ import PassportForm from 'src/common/forms/booking/passport/PassportForm'
 // redux
 import { fetchData } from 'src/store/apps/booking/passport'
 
+// Hooks imports
+import { useSettings } from 'src/@core/hooks/useSettings'
+
+// ** Icon Imports
+import Icon from 'src/@core/components/icon'
+
 const index = ({ apiData }) => {
   const columns = useTableColumns()
+  const { settings, saveSettings } = useSettings()
+
   // console.log(apiData)
 
   return (
@@ -23,6 +31,7 @@ const index = ({ apiData }) => {
         fetchData={fetchData}
         stateSelector='passport'
         columns={columns}
+        settings={settings}
         drawerProps={{
           formTitle: 'Add Passport',
           editFormTitle: 'Edit Passport',

@@ -18,7 +18,8 @@ export const accountArrays = () => [
     children: [
       {
         title: 'Main',
-        path: '/dashboards/analytics'
+        path: '/dashboards/analytics',
+        icon: 'tabler:circle-filled'
       }
       // {
       //   title: 'CRM',
@@ -38,15 +39,18 @@ export const accountArrays = () => [
     children: [
       {
         title: 'Agents',
-        path: '/member/agent'
+        path: '/member/agent',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Clients',
-        path: '/member/client'
+        path: '/member/client',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Company',
-        path: '/member/company'
+        path: '/member/company',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -60,7 +64,8 @@ export const accountArrays = () => [
       // },
       {
         title: 'Visa Booking',
-        path: '/booking/visa'
+        path: '/booking/visa',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -75,24 +80,29 @@ export const accountArrays = () => [
         children: [
           {
             title: 'Visa Destination',
-            path: '/services/visaId/destination'
+            path: '/services/visaId/destination',
+            icon: 'tabler:circle-filled'
           },
           {
             title: 'Visa Type',
-            path: '/services/visaId/type'
+            path: '/services/visaId/type',
+            icon: 'tabler:circle-filled'
           },
           {
             title: 'Visa Category',
-            path: '/services/visaId/category'
+            path: '/services/visaId/category',
+            icon: 'tabler:circle-filled'
           },
 
           {
             title: 'Visa Duration',
-            path: '/services/visaId/duration'
+            path: '/services/visaId/duration',
+            icon: 'tabler:circle-filled'
           },
           {
             title: 'Visa Rate Detail',
-            path: '/services/visa'
+            path: '/services/visa',
+            icon: 'tabler:circle-filled'
           }
         ]
       }
@@ -105,19 +115,22 @@ export const accountArrays = () => [
   },
   {
     title: 'Supplier',
-    icon: 'tabler:truck',
+    icon: 'tabler:truck-delivery',
     children: [
       {
         title: 'Supplier Category',
-        path: '/supplier/supplier-category'
+        path: '/supplier/supplier-category',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Visa Service',
-        path: '/supplier/supplier-visa-service'
+        path: '/supplier/supplier-visa-service',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Supplier List',
-        path: '/supplier/supplier-list'
+        path: '/supplier/supplier-list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -125,7 +138,7 @@ export const accountArrays = () => [
   {
     title: 'Expense',
     path: '/expense',
-    icon: 'tabler:receipt'
+    icon: 'tabler:wallet'
   },
   {
     title: 'Invoice',
@@ -133,19 +146,23 @@ export const accountArrays = () => [
     children: [
       {
         title: 'List',
-        path: '/invoice/list'
+        path: '/invoice/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Preview',
-        path: '/invoice/preview'
+        path: '/invoice/preview',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Edit',
-        path: '/invoice/edit'
+        path: '/invoice/edit',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Add',
-        path: '/invoice/add'
+        path: '/invoice/add',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -246,7 +263,7 @@ export const accountArrays = () => [
   //     }
   //   ]
   // },
- 
+
 
   // {
   //   title: 'Pages',
@@ -764,15 +781,18 @@ export const ticketingArrays = () => [
     children: [
       {
         title: 'Analytics',
-        path: '/dashboards/analytics'
+        path: '/dashboards/analytics',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'CRM',
-        path: '/dashboards/crm'
+        path: '/dashboards/crm',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'eCommerce',
-        path: '/dashboards/ecommerce'
+        path: '/dashboards/ecommerce',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -793,15 +813,18 @@ export const automationArray = () => [
     children: [
       {
         title: 'Start Chat',
-        path: '/chatmodule/chat'
+        path: '/chatmodule/chat',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Chat Automate',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Chat Manager',
-        path: '/chatmodule/chatmanager/list'
+        path: '/chatmodule/chatmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -812,15 +835,18 @@ export const automationArray = () => [
     children: [
       {
         title: 'Start Email',
-        path: '/emailmodule/email'
+        path: '/emailmodule/email',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Email Automate',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Email Manager',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -830,15 +856,18 @@ export const automationArray = () => [
     children: [
       {
         title: 'WhatsApp Web ',
-        path: '/emailmodule/email'
+        path: '/emailmodule/email',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'WhatsApp Automate',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'WhatsApp Manager',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -848,15 +877,18 @@ export const automationArray = () => [
     children: [
       {
         title: 'WhatsApp Web ',
-        path: '/emailmodule/email'
+        path: '/emailmodule/email',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'WhatsApp Automate',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'WhatsApp Manager',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   }
@@ -871,15 +903,18 @@ export const databaseArray = () => [
     children: [
       {
         title: 'Analytics',
-        path: '/dashboards/analytics'
+        path: '/dashboards/analytics',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'CRM',
-        path: '/dashboards/crm'
+        path: '/dashboards/crm',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'eCommerce',
-        path: '/dashboards/ecommerce'
+        path: '/dashboards/ecommerce',
+        icon: 'tabler:circle-filled'
       }
     ]
   }
@@ -895,11 +930,13 @@ export const settingsArray = () => [
     children: [
       {
         title: 'Roles',
-        path: '/roles'
+        path: '/roles',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Permissions',
-        path: '/permissions'
+        path: '/permissions',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -910,7 +947,8 @@ export const settingsArray = () => [
     children: [
       {
         title: 'Company Setting',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -920,19 +958,23 @@ export const settingsArray = () => [
     children: [
       {
         title: 'Currency',
-        path: '/chatmodule/chat'
+        path: '/chatmodule/chat',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Languages',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Zone & Area',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Theme',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -942,19 +984,23 @@ export const settingsArray = () => [
     children: [
       {
         title: 'Currency',
-        path: '/chatmodule/chat'
+        path: '/chatmodule/chat',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Languages',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Zone & Area',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Theme',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -964,19 +1010,23 @@ export const settingsArray = () => [
     children: [
       {
         title: 'Currency',
-        path: '/chatmodule/chat'
+        path: '/chatmodule/chat',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Languages',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Zone & Area',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       },
       {
         title: 'Theme',
-        path: '/emailmodule/emailmanager/list'
+        path: '/emailmodule/emailmanager/list',
+        icon: 'tabler:circle-filled'
       }
     ]
   },

@@ -14,8 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
+import Icon from 'src/@core/components/icon'
 
-const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api, headerMenu }) => {
+const MaterialTable = ({
+  fetchData,
+  stateSelector,
+  columns,
+  settings,
+  apiData,
+  drawerProps,
+  api,
+  headerMenu
+}) => {
+  // console.log('apiData', apiData)
   const {
     formTitle,
     editFormTitle,
@@ -42,6 +53,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
     pageSize: 20
   })
   const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -110,7 +122,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   }
 
   const renderCustomActions = ({ table }) => {
-    // console.log(state)
+    console.log(selectionRow.length, 'length')
     return (
       <TableHeader
         toggle={toggleDrawer}
@@ -215,6 +227,7 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
         <Tab
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
+       
               <InboxIcon style={{ marginRight: '4px' }} /> Default
             </div>
           }
@@ -233,7 +246,6 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
         {/* Conditionally render the table component */}
         {renderTableComponent()}
       </div>
-
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (
@@ -275,4 +287,4 @@ const Example = ({ fetchData, stateSelector, columns, apiData, drawerProps, api,
   )
 }
 
-export default Example
+export default MaterialTable

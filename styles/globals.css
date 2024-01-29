@@ -175,6 +175,15 @@ code[class*='language-'] {
 .custom-child-table .MuiDataGrid-cfmodalolumnHeader {
   padding: 2px 3px; /* Reduced column header padding */
 }
+
+/* track status styles */
+.track-status-styles {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 384px;
+  justify-content: space-between;
+}
 /* MenuItem form scroll */
 .MuiButtonBase-root::-webkit-scrollbar {
   height: 4px;
@@ -184,7 +193,50 @@ code[class*='language-'] {
   color: #1852fe;
 }
 
-/* ////////////// */
+/* component bg */
+.css-1ewxx0h-MuiPaper-root-MuiAppBar-root {
+  /* background: #dbe5fb; */
+}
+.child-items > .nav-link {
+  height: 28px;
+}
+.child-items > .nav-link:hover {
+  border: 'solid';
+}
+.hello
+  > .css-smkl36-MuiCollapse-wrapper
+  > .css-9l5vo-MuiCollapse-wrapperInner
+  > .child-items
+  > .css-1esf9fq-MuiListItem-root
+  > .css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root
+  > .css-164kvcj
+  > .css-185anww-MuiTypography-root {
+  font-size: 13.5px;
+}
+.css-spdbyg > .css-185anww-MuiTypography-root {
+  font-size: 13.5px;
+  border: '1px solid red';
+}
+.css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root.active {
+  height: 28px;
+}
+.css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root.active {
+  height: 28px;
+}
+.child-items > .nav-link > p {
+  border: '1px solid oranges';
+}
+/* app bar styles start */
+.css-pr8bgq-MuiToolbar-root {
+  box-shadow: none;
+}
+
+/* Sub Menu styles */
+
+.css-16pbco9-MuiListItemIcon-root svg {
+  font-size: 10px !important;
+  color: blue !important;
+}
 /* sidepanel */
 .css-185anww-MuiTypography-root {
   color: black !important;
@@ -210,7 +262,10 @@ code[class*='language-'] {
   border-radius: 0px;
   border-bottom: 1px solid rgb(24 82 254 / 19%);
 }
-
+.css-16pbco9-MuiListItemIcon-root svg {
+  font-size: 10px;
+  color: blue;
+}
 /* date input field styles */
 .inputdate .css-1lxcjy7-MuiInputBase-root-MuiOutlinedInput-root:not(.MuiInputBase-sizeSmall) {
   height: 40px !important;
@@ -232,3 +287,8 @@ code[class*='language-'] {
   padding: 40px;
 }
 /* track status styles end */
+
+/* app icons styles */
+.css-1buxjf4-MuiSvgIcon-root {
+  color: #afb3cf;
+}

@@ -76,12 +76,12 @@ const VerticalNavHeader = props => {
         userNavMenuBranding(props)
       ) : (
         <>
-          <div>
-            {/* Use the SVG component */}
-            {/* <MySvgIcon width={34} /> */}
-          </div>
+          {/* <div>
+            Use the SVG component
+            <MySvgIcon width={34} />
+          </div> */}
           <LinkStyled href='/'>
-            <img src='/images/favicon.svg' alt='Logo' width={40} />
+            <img src='/images/favicon.svg' alt='Logo' width={48} style={{marginLeft: '-6px'}}/>
             {/* <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path
               fillRule='evenodd'

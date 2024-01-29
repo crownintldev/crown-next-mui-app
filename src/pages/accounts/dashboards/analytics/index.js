@@ -4,14 +4,13 @@ import Link from 'next/link'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
+// import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports
 import CardSnippet from 'src/@core/components/card-snippet'
 
 // ** Demo Components Imports
 import SwiperDefault from 'src/views/components/swiper/SwiperDefault'
-import CrmEarningReportsWithTabs from 'src/pages/components/earning-reports/CrmEarningReportsWithTabs'
 
 // ** Styled Component Import
 import KeenSliderWrapper from 'src/@core/styles/libs/keen-slider'
@@ -21,6 +20,9 @@ import * as source from 'src/views/components/swiper/SwiperSourceCode'
 
 // ** Hook Import
 import { useSettings } from 'src/@core/hooks/useSettings'
+// import EarningReportsWithTabs from 'src/common/analytics/charts/multiTabs-barchart/EarningReportsWithTabs'
+import ApexAreaChart from 'src/common/analytics/charts/apex-charts'
+
 const Swiper = () => {
   // ** Hook
   const {
@@ -43,7 +45,8 @@ const Swiper = () => {
             </CardSnippet>
           </Grid>
         </Grid>
-        <CrmEarningReportsWithTabs />
+        {/* <EarningReportsWithTabs /> */}
+        <ApexAreaChart />
       </Grid>
     </KeenSliderWrapper>
   )

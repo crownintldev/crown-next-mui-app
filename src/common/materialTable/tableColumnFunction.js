@@ -54,7 +54,6 @@ export const defaultCellUpperCase = ({ row, column }) => {
 
 export const conditionValue = ({ cell }) => {
   const data = cell.getValue()
-
   return data?.fullName ? capitalize(data?.fullName) : capitalize(data?.companyName)
 }
 

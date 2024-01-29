@@ -130,7 +130,7 @@ const renderTabPanels = (value, theme, options, colors) => {
   })
 }
 
-const CrmEarningReportsWithTabs = () => {
+const EarningReportsWithTabs = () => {
   // ** State
   const [value, setValue] = useState('orders')
 
@@ -266,4 +266,4 @@ const CrmEarningReportsWithTabs = () => {
   )
 }
 
-export default CrmEarningReportsWithTabs
+export default EarningReportsWithTabs

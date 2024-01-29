@@ -101,7 +101,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const passportIdFromState = useSelector(
     state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
   )
-
   // let editId = useSelector(
   //   state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
   // )
@@ -141,24 +140,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   })
   const passportNumber = getValues('passportNumber')
 
-  // useEffect(() => {
-  //   if (passportNumber.length === 9 && !_id) {
-  //     let params = { passportNumber }
-  //     fetchActionData(() => getDataAction('passport/read', params), setEditId)
-  //   } else {
-  //     // Use passportId from state if _id is present
-  //     // setEditId(passportIdFromState)
-
-  //     setEditId(null)
-  //   }
-  // }, [passportNumber])
-
-  // console.log(editId)
-
-  useEffect(() => {
-    setValue('deletedFiles', [removeFiles])
-  }, [previousFiles, removeFiles])
-
   useEffect(() => {
     if (editId?.passportNumber) {
       Object.keys(editId).forEach(key => {
@@ -168,10 +149,41 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       setValue('by', editId.by?._id)
       setValue('dob', dayjs(editId.dob))
       setValue('doe', dayjs(editId.doe))
+      setValue('doi', dayjs(editId.doi))
     } else {
       reset()
     }
   }, [setValue, editId])
+  // const handleEditPassport = () => {
+  //   if (editId?.passportNumber) {
+  //     Object.keys(editId).forEach(key => {
+  //       setValue(key, editId[key])
+  //     })
+  //     setPreviousFiles(editId.files)
+  //     setValue('by', editId.by?._id)
+  //     setValue('dob', dayjs(editId.dob))
+  //     setValue('doe', dayjs(editId.doe))
+  //     setValue('doi', dayjs(editId.doi))
+  //   } else {
+  //     reset()
+  //   }
+  // }
+  // console.log(editId)
+  useEffect(() => {
+    setFormSize(1200)
+    if (passportNumber.length === 9 && !_id) {
+      let params = { passportNumber }
+      fetchActionData(() => getDataAction('passport/read', params), setEditId)
+    } else if (_id) {
+      setEditId(passportIdFromState)
+    }
+  }, [passportNumber,_id])
+
+  // console.log(editId)
+
+  useEffect(() => {
+    setValue('deletedFiles', [removeFiles])
+  }, [previousFiles, removeFiles])
 
   const watchedOnModel = watch('onModel')
 

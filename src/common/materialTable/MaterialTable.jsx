@@ -122,7 +122,6 @@ const MaterialTable = ({
   }
 
   const renderCustomActions = ({ table }) => {
-    console.log(selectionRow.length, 'length')
     return (
       <TableHeader
         toggle={toggleDrawer}

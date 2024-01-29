@@ -6,6 +6,9 @@ const path = require('path')
 // Remove this if you're not using Fullcalendar features
 
 module.exports = {
+  images: {
+    domains: ['drive.google.com',"drive.usercontent.google.com"],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

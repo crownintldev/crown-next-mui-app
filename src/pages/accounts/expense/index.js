@@ -8,6 +8,7 @@ import ExpenseForm from 'src/common/forms/expense/ExpenseForm'
 
 // redux
 import { fetchExpense } from 'src/store'
+import Image from 'next/image'
 
 const index = ({ apiData }) => {
   const columns = useExpenseColumns()

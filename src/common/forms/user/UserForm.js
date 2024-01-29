@@ -24,7 +24,7 @@ import { createApi, updateManyApi } from 'src/action/function'
 //form
 import IdNameForm from '../idnameForm/IdNameForm'
 
-import {AuthApi} from 'config'
+import { AuthApi } from 'config'
 
 //dataEntry
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
@@ -61,6 +61,7 @@ const schema = yup.object().shape(yupField)
 const defaultValues = {
   ids: [],
   roles: '',
+  appPermissions:["account"],
   password: ''
 }
 
@@ -122,7 +123,7 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
     if (editIds) {
       updateManyApi({
         completeApi: 'user/editUserbyAdministrator',
-        apidomain:AuthApi,
+        apidomain: AuthApi,
         data: getValues(),
         dispatch,
         fetchData: fetchApi,
@@ -195,6 +196,31 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
         placeholder='Choose Roles'
       />
       <CustomHookTextField chooseFields={chooseFields} control={control} errors={errors} />
+
+      <Controller
+        name='appPermissions'
+        control={control}
+        render={({ field }) => (
+          <CustomTextField
+            sx={{ mb: 6 }}
+            select
+            fullWidth
+            label='Apps Selected'
+            id='select-multiple-checkbox'
+            SelectProps={{
+              MenuProps,
+              displayEmpty: true,
+              multiple: true,
+              value: field.value,
+              onChange: field.onChange,
+            }}
+          >
+         <MenuItem value='account' disabled>
+             Account
+            </MenuItem>
+          </CustomTextField>
+        )}
+      />
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Button color='primary' variant='contained' sx={{ mr: 3 }} onClick={onSubmit}>
           Submit

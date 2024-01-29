@@ -40,11 +40,13 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 
 // yup schema
 const schema = yup.object().shape({
+  username:yup.string().required(),
   email: yup.string().email().required(),
   password: yup.string().min(3).required()
 })
 
 const defaultValues = {
+  username: '',
   password: '',
   email: ''
 }
@@ -67,8 +69,8 @@ const RegisterForm = () => {
   })
 
   const onSubmit = data => {
-    const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
+    const { username, email, password } = data
+    auth.register({ username,email, password, rememberMe }, () => {
       setError('email', {
         type: 'manual',
         message: 'Email or Password is invalid'
@@ -78,35 +80,82 @@ const RegisterForm = () => {
 
   return (
     <div>
-      <form noValidate autoComplete='off' onSubmit={e => e.preventDefault()}>
-        <CustomTextField
-          autoFocus
-          fullWidth
-          sx={{ mb: 4 }}
-          label='Username'
-          placeholder='jiay bhutto'
+      <form autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name='username'
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              autoFocus
+              label='Username'
+              value={value}
+              onBlur={onBlur}
+              onChange={onChange}
+              placeholder='jiay bhutto'
+              error={Boolean(errors.username)}
+              {...(errors.username && { helperText: errors.username.message })}
+            />
+          )}
         />
-        <CustomTextField fullWidth label='Email' sx={{ mb: 4 }} placeholder='user@email.com' />
-        <CustomTextField
-          fullWidth
-          label='Password'
-          id='auth-login-v2-password'
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <IconButton
-                  edge='end'
-                  onMouseDown={e => e.preventDefault()}
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  <Icon fontSize='1.25rem' icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'} />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
+        <Controller
+          name='email'
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              autoFocus
+              label='Email'
+              value={value}
+              onBlur={onBlur}
+              onChange={onChange}
+              placeholder='Enter Your Valid Email'
+              error={Boolean(errors.email)}
+              {...(errors.email && { helperText: errors.email.message })}
+            />
+          )}
         />
-        <FormControlLabel
+        <Controller
+          name='password'
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <CustomTextField
+              sx={{ mb: 4 }}
+              fullWidth
+              value={value}
+              onBlur={onBlur}
+              label='Password'
+              onChange={onChange}
+              placeholder='Enter Password'
+              id='auth-login-v2-password'
+              error={Boolean(errors.password)}
+              {...(errors.password && { helperText: errors.password.message })}
+              type={showPassword ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      edge='end'
+                      onMouseDown={e => e.preventDefault()}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      <Icon
+                        fontSize='1.25rem'
+                        icon={showPassword ? 'tabler:eye' : 'tabler:eye-off'}
+                      />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+          )}
+        />
+        {/* <FormControlLabel
           control={<Checkbox />}
           sx={{
             mb: 4,
@@ -133,7 +182,7 @@ const RegisterForm = () => {
               </Typography>
             </Box>
           }
-        />
+        /> */}
         <Button fullWidth type='submit' variant='contained' sx={{ mb: 4 }}>
           Sign up
         </Button>

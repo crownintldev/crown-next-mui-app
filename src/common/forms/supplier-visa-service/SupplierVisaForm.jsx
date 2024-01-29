@@ -77,7 +77,7 @@ const defaultValues = {
 const SupplierVisaForm = ({
   toggle,
   fetchApi,
-  api = 'expense',
+  api = 'supplier-visa-service',
   _id,
   stateSelector,
   removeSelection

@@ -7,7 +7,7 @@ const useUserColumns = () =>
   useMemo(
     () => [
       // { accessorKey: '_id', header: 'ID', size: 100 },
-      { accessorKey: 'userName', header: 'User Name', Cell: defaultCellRenderer },
+      { accessorKey: 'username', header: 'User Name', Cell: defaultCellRenderer },
 
       { accessorKey: 'email', header: 'Email', Cell: defaultCellRenderer },
       { accessorKey: 'roles.title', header: 'Roles', Cell: defaultCellRenderer },

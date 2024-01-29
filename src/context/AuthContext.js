@@ -11,7 +11,15 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 
 //actions
-import { signin,isAuth, authenticate,getCookie,removeAuthenticate,accessToken } from 'src/action/auth-action'
+import {
+  signin,
+  signup,
+  isAuth,
+  authenticate,
+  getCookie,
+  removeAuthenticate,
+  accessToken
+} from 'src/action/auth-action'
 
 // ** Defaults
 const defaultProvider = {
@@ -43,12 +51,12 @@ const AuthProvider = ({ children }) => {
             }
           })
           .then(async response => {
-            authenticate(response.data) 
+            authenticate(response.data)
             setUser(response.data.data)
             setLoading(false)
           })
           .catch(() => {
-            removeAuthenticate("userData","accessToken")
+            removeAuthenticate('userData', 'accessToken')
             localStorage.removeItem('refreshToken')
             // localStorage.removeItem('userData')
             // localStorage.removeItem('accessToken')
@@ -60,7 +68,7 @@ const AuthProvider = ({ children }) => {
           })
       } else {
         setLoading(false)
-        removeAuthenticate("userData","accessToken")
+        removeAuthenticate('userData', 'accessToken')
       }
     }
     initAuth()
@@ -68,41 +76,40 @@ const AuthProvider = ({ children }) => {
   }, [])
 
   const handleLogin = (params, errorCallback) => {
-    signin(params).then(response => {
-      // params.rememberMe ? authenticate(response.data) : ''
-      authenticate(response.data) 
-      setUser(response.data.data)
-      const returnUrl = router.query.returnUrl
-      const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-      router.replace(redirectURL)
-    })
-    .catch(err => {
-      console.log("===auth context===",err)
-      if (errorCallback) errorCallback(err)
-    })
-    // axios
-    //   .post(authConfig.loginEndpoint, params)
-    //   .then(async response => {
-    //     params.rememberMe
-    //       ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
-    //       : null
-    //     const returnUrl = router.query.returnUrl
-    //     setUser(response.data.data)
-    //     params.rememberMe
-    //       ? window.localStorage.setItem('userData', JSON.stringify(response.data.data))
-    //       : null
-    //     const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-    //     router.replace(redirectURL)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     if (errorCallback) errorCallback(err)
-    //   })
+    signin(params)
+      .then(response => {
+        // params.rememberMe ? authenticate(response.data) : ''
+        authenticate(response.data)
+        setUser(response.data.data)
+        const returnUrl = router.query.returnUrl
+        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        router.replace(redirectURL)
+      })
+      .catch(err => {
+        console.log('===auth context===', err)
+        if (errorCallback) errorCallback(err)
+      })
+  }
+
+  const handleRegister = (params, errorCallback) => {
+    signup(params)
+      .then(response => {
+        // params.rememberMe ? authenticate(response.data) : ''
+        authenticate(response.data)
+        setUser(response.data.data)
+        const returnUrl = router.query.returnUrl
+        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        router.replace(redirectURL)
+      })
+      .catch(err => {
+        console.log('===auth context===', err)
+        if (errorCallback) errorCallback(err)
+      })
   }
 
   const handleLogout = () => {
     setUser(null)
-    removeAuthenticate("userData","accessToken")
+    removeAuthenticate('userData', 'accessToken')
     // window.localStorage.removeItem('userData')
     // window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')
@@ -114,6 +121,7 @@ const AuthProvider = ({ children }) => {
     setUser,
     setLoading,
     login: handleLogin,
+    register: handleRegister,
     logout: handleLogout
   }
 

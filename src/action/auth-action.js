@@ -4,6 +4,9 @@ import Cookies from 'js-cookie'
 export const signin = user => {
   return axios.post(`${process.env.NEXT_PUBLIC_AUTH}/auth/signin`, user)
 }
+export const signup = user => {
+  return axios.post(`${process.env.NEXT_PUBLIC_AUTH}/auth/signup`, user)
+}
 
 //cookie
 export const setCookie = (key, value) => {

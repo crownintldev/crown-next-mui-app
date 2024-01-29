@@ -183,7 +183,6 @@ code[class*='language-'] {
   flex-wrap: wrap;
   width: 384px;
   justify-content: space-between;
-  border: "solid red 1px"
 }
 /* MenuItem form scroll */
 .MuiButtonBase-root::-webkit-scrollbar {
@@ -288,3 +287,8 @@ code[class*='language-'] {
   padding: 40px;
 }
 /* track status styles end */
+
+/* app icons styles */
+.css-1buxjf4-MuiSvgIcon-root {
+  color: #afb3cf;
+}

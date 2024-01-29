@@ -14,11 +14,13 @@ import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
+import Icon from 'src/@core/components/icon'
 
 const MaterialTable = ({
   fetchData,
   stateSelector,
   columns,
+  settings,
   apiData,
   drawerProps,
   api,
@@ -225,6 +227,7 @@ const MaterialTable = ({
         <Tab
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
+       
               <InboxIcon style={{ marginRight: '4px' }} /> Default
             </div>
           }

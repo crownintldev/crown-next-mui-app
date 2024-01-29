@@ -21,14 +21,23 @@ import { MenuItem } from '@mui/material'
 import { Box } from '@mui/system'
 import Icon from 'src/@core/components/icon'
 import FormDrawer from 'src/common/drawer/FormDrawer'
+import MediaDrawer from 'src/common/drawer/MediaDrawer'
 
 const index = ({ apiData }) => {
-  const columns = useTableColumns()
+  const openMediaDrawer = row => {
+    console.log('original dat', row.original)
+    setSelectedRowData(row.original)
+    setMediaDrawerOpen(true)
+  }
+
+  const columns = useTableColumns(openMediaDrawer)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   const [selectedIds, setSelectedIds] = useState('')
   const [removeSelection, setRemoveSelection] = useState(null)
   const [showAddPassport, setShowAddPassport] = useState(true)
+  const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false)
+  const [selectedRowData, setSelectedRowData] = useState(null)
 
   const formDrawer = () => (
     <FormDrawer
@@ -100,6 +109,13 @@ const index = ({ apiData }) => {
           multiSelected: true
         }}
       />
+      {mediaDrawerOpen && (
+        <MediaDrawer
+          open={mediaDrawerOpen}
+          onClose={() => setMediaDrawerOpen(false)}
+          data={selectedRowData}
+        />
+      )}
     </div>
   )
 }

@@ -14,17 +14,19 @@ import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 
 //functions
 import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
+import Icon from 'src/@core/components/icon'
 
 const MaterialTable = ({
   fetchData,
   stateSelector,
   columns,
+  settings,
   apiData,
   drawerProps,
   api,
   headerMenu
 }) => {
-  console.log('apiData', apiData)
+  // console.log('apiData', apiData)
   const {
     formTitle,
     editFormTitle,
@@ -51,6 +53,7 @@ const MaterialTable = ({
     pageSize: 20
   })
   const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -119,7 +122,7 @@ const MaterialTable = ({
   }
 
   const renderCustomActions = ({ table }) => {
-    // console.log(state)
+    console.log(selectionRow.length, 'length')
     return (
       <TableHeader
         toggle={toggleDrawer}
@@ -224,6 +227,7 @@ const MaterialTable = ({
         <Tab
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
+       
               <InboxIcon style={{ marginRight: '4px' }} /> Default
             </div>
           }
@@ -242,7 +246,6 @@ const MaterialTable = ({
         {/* Conditionally render the table component */}
         {renderTableComponent()}
       </div>
-
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (

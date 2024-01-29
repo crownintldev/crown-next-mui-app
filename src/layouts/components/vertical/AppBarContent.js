@@ -138,7 +138,7 @@ const AppBarContent = props => {
           <>
             {/* <Icon fontSize='1.5rem' icon='tabler:message' /> */}
             <Link href='/settings/chat'>
-              <IconButton sx={{ color: 'rgb(0 0 0 / 58%)' }}>
+              <IconButton settings={settings}>
                 <Icon fontSize='1.5rem' icon='tabler:message' />
               </IconButton>
             </Link>

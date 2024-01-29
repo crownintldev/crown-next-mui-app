@@ -91,7 +91,11 @@ const TableHeader = props => {
           </Button>
         )} */}
         <IconButton onClick={handleClick}>
-          <Icon fontSize='1.5rem' icon='mdi:call-to-action' color='#2b60fe' />
+          <Icon
+            fontSize='1.5rem'
+            icon='mdi:call-to-action'
+            // color='#2b60fe'
+          />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {buttonTitle && (

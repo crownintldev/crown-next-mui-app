@@ -292,3 +292,11 @@ code[class*='language-'] {
 .css-1buxjf4-MuiSvgIcon-root {
   color: #afb3cf;
 }
+
+/* .media-drawer styles */
+.media-drawer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 36px;
+}

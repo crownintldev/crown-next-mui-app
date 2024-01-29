@@ -113,11 +113,7 @@ const index = ({ apiData }) => {
         <MediaDrawer
           open={mediaDrawerOpen}
           onClose={() => setMediaDrawerOpen(false)}
-          data={
-            [
-              /* Pass your static data here */
-            ]
-          }
+          data={selectedRowData}
         />
       )}
     </div>

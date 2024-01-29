@@ -58,6 +58,10 @@ export const fetchExpense = createFetchDataThunk('expense', 'expense')
 
 export const fetchInvoice = createFetchDataThunk('invoice', 'invoice')
 
+//Auth App
+export const fetchUser= createFetchDataThunk('user', 'user',process.env.NEXT_PUBLIC_AUTH)
+export const fetchRole= createFetchDataThunk('role', 'role',process.env.NEXT_PUBLIC_AUTH)
+
 export const store = configureStore({
   reducer: {
     user,
@@ -86,7 +90,10 @@ export const store = configureStore({
     expenseType: generate('expenseType', fetchExpenseType),
 
     // invoice: generate('invoice', fetchInvoice),
-    myInvoice: generateReducer('myInvoice').reducer
+    myInvoice: generateReducer('myInvoice').reducer,
+    // auth 
+    user: generate('user', fetchUser),
+    role: generate('role', fetchRole),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

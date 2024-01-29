@@ -11,6 +11,7 @@ import {
 const useTableColumns = () =>
   useMemo(
     () => [
+
   { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'visabooking.status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'givenName', header: 'Given Name', Cell: defaultCellRenderer },

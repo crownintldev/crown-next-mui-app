@@ -9,15 +9,15 @@ import {
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { IconButton } from '@mui/material'
 
-const useTableColumns = () =>
+const useTableColumns = openMediaDrawer =>
   useMemo(
     () => [
       {
         accessorKey: 'media',
         header: 'Media',
         size: 100,
-        Cell: () => (
-          <IconButton>
+        Cell: ({ row }) => (
+          <IconButton onClick={() => openMediaDrawer(row)}>
             <PermMediaIcon sx={{ color: '#1EB280' }} />
           </IconButton>
         )
@@ -25,7 +25,6 @@ const useTableColumns = () =>
       { accessorKey: '_id', header: 'ID', size: 100 },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'passportId.givenName', header: 'Given Name', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.city', header: 'City', Cell: defaultCellUpperCase },
       { accessorKey: 'passportId.surname', header: 'Surname', Cell: defaultCellRenderer },
       { accessorKey: 'passportId.cnic', header: 'CNIC', Cell: defaultCellRenderer },
       { accessorKey: 'passportId.country', header: 'Country', Cell: defaultCellUpperCase },

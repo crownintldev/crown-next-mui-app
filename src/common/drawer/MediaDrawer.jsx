@@ -23,9 +23,9 @@ const MediaDrawer = ({ open, onClose, data }) => {
     <Drawer anchor='right' open={open} onClose={onClose}>
       <Box p={2} width={500} className='media-drawer'>
         <Typography variant='h5' gutterBottom>
-          Media Drawer Content
+          Booking Visa Assets
         </Typography>
-        <Typography variant='body1'>Here is some static data:</Typography>
+        <Typography variant='body1'>Dynamic visa asset lists</Typography>
         <TreeView
           defaultCollapseIcon={<span>-</span>}
           defaultExpandIcon={<span>+</span>}
@@ -52,7 +52,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
                       </div>
                     }
                   />
-                  <TreeItem
+                  {/* <TreeItem
                     key={`${index}+${item.fileName}`}
                     nodeId={`${index}+${item.fileName}`}
                     label={
@@ -67,7 +67,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
                         {item.fileName}
                       </div>
                     }
-                  />
+                  /> */}
                   {/* <TreeItem
                   key={`${index}+${item.fileType}`}
                   nodeId={`${index}+${item.fileType}`}

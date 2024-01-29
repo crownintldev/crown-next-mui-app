@@ -300,3 +300,8 @@ code[class*='language-'] {
   align-items: center;
   margin-top: 36px;
 }
+.media-img-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+}

@@ -1,10 +1,18 @@
+// React Imports
 import React, { useState } from 'react'
+
+// Next Imports
+import Image from 'next/image'
+
+// MUI Imports
 import Drawer from '@mui/material/Drawer'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
+
+// Normal Imports
 import Icon from 'src/@core/components/icon'
 
 const MediaDrawer = ({ open, onClose, data }) => {
@@ -40,16 +48,29 @@ const MediaDrawer = ({ open, onClose, data }) => {
                     key={`${index}+${item.fileName}`}
                     nodeId={`${index}+${item.fileName}`}
                     label={
-                      <div>
+                      <div className='media-img-container'>
                         {item.fileType === 'image/png' ? (
                           <Icon icon='tabler:file-type-png' width={24} height={24} />
-                        ) : item.fileType === 'image/jpeg' ? (
-                          <Icon icon='tabler:file-type-png' width={24} height={24} />
                         ) : (
-                          <span>{item.fileName}</span>
+                          item.fileType ===
+                          'image/jpg'(<Icon icon='tabler:file-type-jpg' width={24} height={24} />)
                         )}
-                        {item.fileName}
+                        {/* {item.fileName} */}
+                        <Image src={item.url} height={150} width={150} />
                       </div>
+                    }
+                  />
+                  <TreeItem
+                    key={`${index}+${item.url}`}
+                    nodeId={`${index}+${item.url}`}
+                    label={
+                      <div>
+                        <Icon icon='tabler:image' width={24} height={24} />
+                        {`filename: ${item.fileName}`}
+                      </div>
+                    }
+                    onClick={event =>
+                      handleTreeItemClick(event, `${index}+${item.fileUrl}`, item.fileUrl)
                     }
                   />
                   {/* <TreeItem
@@ -69,15 +90,15 @@ const MediaDrawer = ({ open, onClose, data }) => {
                     }
                   /> */}
                   {/* <TreeItem
-                  key={`${index}+${item.fileType}`}
-                  nodeId={`${index}+${item.fileType}`}
-                  label={
-                    <div>
-                      <Icon icon='tabler:file-type-jpg' width={24} height={24} />
-                      {`filename: ${item.fileName}`}
-                    </div>
-                  }
-                /> */}
+                    key={`${index}+${item.fileType}`}
+                    nodeId={`${index}+${item.fileType}`}
+                    label={
+                      <div>
+                        <Icon icon='tabler:file-type-jpg' width={24} height={24} />
+                        {`filename: ${item.fileName}`}
+                      </div>
+                    }
+                  /> */}
                   <TreeItem
                     key={`${index}+${item.fileUrl}`}
                     nodeId={`${index}+${item.fileUrl}`}

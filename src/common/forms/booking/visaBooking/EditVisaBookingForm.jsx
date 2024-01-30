@@ -22,6 +22,8 @@ import FormDrawer from 'src/common/drawer/FormDrawer'
 import VisaServiceForm from '../../services/visaService/VisaServiceForm'
 import { capitalizeValue } from 'src/utils/helperfunction'
 
+import { fetchVisaService } from 'src/store'
+
 //get by data
 import axios from 'axios'
 import { listVisaCategory } from 'src/action/visaIdSelector/visaCategory'
@@ -150,8 +152,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       if (visa && visa.length === 0) {
         setValue('visaId', '')
       }
-      if (visa._id) {
-      }
+      // if (visa._id) {
+      // }
     }
   }, [ids, setValue])
 
@@ -310,6 +312,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         drawerTitle={'Add Visa Service'}
         Form={VisaServiceForm}
         anchor='left'
+        fetchApi={fetchVisaService}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller

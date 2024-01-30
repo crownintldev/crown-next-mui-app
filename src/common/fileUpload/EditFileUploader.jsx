@@ -14,6 +14,7 @@ import Icon from 'src/@core/components/icon'
 
 // ** Third Party Imports
 import { useDropzone } from 'react-dropzone'
+import Image from 'next/image'
 
 const EditFilesUploader = ({
   files,
@@ -39,14 +40,14 @@ const EditFilesUploader = ({
 
   const renderFilePreview = file => {
     if (file.type.startsWith('image')) {
-      return <img width={38} height={38} alt={file.name} src={URL.createObjectURL(file)} />
+      return <Image width={38} height={38} alt={file.name} src={URL.createObjectURL(file)} />
     } else {
       return <Icon icon='tabler:file-description' />
     }
   }
 
   const renderPreviousFiles = file => {
-    return <img width={38} height={38} alt={file.name} src={file.url} />
+    return <Image width={38} height={38} alt={file.name ?? ""} src={file.url ?? ""} />
   }
 
   const handleRemoveFile = file => {
@@ -82,7 +83,7 @@ const EditFilesUploader = ({
     </ListItem>
   ))
 
-  const prevFileList = previousFiles.map(file => (
+  const prevFileList = previousFiles?.map(file => (
     <ListItem key={file.url}>
       <div className='file-details'>
         <div className='file-preview'>{renderPreviousFiles(file)}</div>

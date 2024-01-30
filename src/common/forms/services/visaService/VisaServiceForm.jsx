@@ -33,8 +33,8 @@ import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 import SelectHookField from 'src/common/dataEntry/SelectHookField'
 
 //form
-import SelectField from 'src/common/dataEntry/SelectField'
-import SupplierForm from 'src/common/forms/supplier/SupplierForm'
+import SupplierVisaForm from '../../supplier-visa-service/SupplierVisaForm'
+import { fetchSupplierVisaService } from 'src/store'
 import axios from 'axios'
 import { fetchActionData } from 'src/action/fetchData'
 
@@ -73,7 +73,7 @@ export const findSupplierVisa = data => {
 const VisaServiceForm = ({
   toggle,
   fetchApi,
-  api = 'expense',
+  api = 'visa-service',
   _id,
   stateSelector,
   removeSelection
@@ -191,37 +191,37 @@ const VisaServiceForm = ({
     }
   }
 
-  const choosePaymentMethod =[
+  const choosePaymentMethod = [
     // payMethod === 'confirmed'
     //   ? [
-          {
-            name: 'confirmed.totalFee',
-            type: 'number',
-            placeholder: 'Enter Total Fee',
-            label: 'Confirmed - Total Fee',
-            value: watch('confirmed.totalFee'),
-            myvalue: true
-          },
-      //   ]
-      // : [
-          {
-            name: 'processing.processingFee',
-            type: 'number',
-            placeholder: 'Enter Processing Fee',
-            label: 'Processing - Processing Fee',
-            value: watch('processing.processingFee'),
-            myvalue: true
-          },
-          {
-            name: 'processing.visaFee',
-            placeholder: 'Enter Visa Fee',
-            type: 'number',
-            label: 'Processing - Visa Fee',
-            value: watch('processing.visaFee'),
-            myvalue: true
-          }
-        ]
-        // ]
+    {
+      name: 'confirmed.totalFee',
+      type: 'number',
+      placeholder: 'Enter Total Fee',
+      label: 'Confirmed - Total Fee',
+      value: watch('confirmed.totalFee'),
+      myvalue: true
+    },
+    //   ]
+    // : [
+    {
+      name: 'processing.processingFee',
+      type: 'number',
+      placeholder: 'Enter Processing Fee',
+      label: 'Processing - Processing Fee',
+      value: watch('processing.processingFee'),
+      myvalue: true
+    },
+    {
+      name: 'processing.visaFee',
+      placeholder: 'Enter Visa Fee',
+      type: 'number',
+      label: 'Processing - Visa Fee',
+      value: watch('processing.visaFee'),
+      myvalue: true
+    }
+  ]
+  // ]
 
   return (
     <div>
@@ -282,7 +282,16 @@ const VisaServiceForm = ({
           errors={errors}
           required={true}
         />
-        {/* <CustomHookTextField chooseFields={chooseFields} control={control} errors={errors} /> */}
+        {!supplierVisa && (
+          <CustomOpenDrawer
+            ButtonTitle='Supplier Visa Service'
+            drawerTitle='Add Supplier Visa Service'
+            Form={SupplierVisaForm}
+            fetchApi={fetchSupplierVisaService}
+            api='supplier-visa-service'
+            anchor="right"
+          />
+        )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit

@@ -1,6 +1,7 @@
 // sliceGenerator.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { accessToken } from 'src/action/auth-action'
 
 const toQueryString = params => {
   const query = Object.entries(params)
@@ -11,7 +12,7 @@ const toQueryString = params => {
 }
 
 // ** Fetch Users
-export const createFetchDataThunk = (name, api) => {
+export const createFetchDataThunk = (name, api, apidomain) => {
   return createAsyncThunk(`${name}/fetchData`, async (params, thunkAPI) => {
     const currentState = thunkAPI.getState()
 
@@ -34,9 +35,15 @@ export const createFetchDataThunk = (name, api) => {
 
       return { data: updatedData }
     }
-
     const queryString = toQueryString(params)
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/${api}?${queryString}`)
+    const response = await axios.get(
+      `${apidomain ? apidomain : process.env.NEXT_PUBLIC_API }/${api}?${queryString}`,
+      {
+        headers: {
+          Authorization: accessToken
+        }
+      }
+    )
 
     // console.log(api, response);
     return response.data

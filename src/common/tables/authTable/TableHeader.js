@@ -90,17 +90,15 @@ const TableHeader = props => {
           </Button>
         )} */}
         <IconButton onClick={handleClick}>
-          <Icon
-            fontSize='1.5rem'
-            icon='mdi:call-to-action'
-            // color='#2b60fe'
-          />
+          <Icon fontSize='1.5rem' icon='mdi:call-to-action' color='#2b60fe' />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {buttonTitle && (
             <div onClick={handleClose}>
               <MenuItem
                 onClick={toggle}
+                // onMouseEnter={handleMouseEnter}
+                // onMouseLeave={handleMouseLeave}
                 sx={{
                   py: 1,
                   m: 0
@@ -108,6 +106,7 @@ const TableHeader = props => {
                 }}
               >
                 <Box
+                  // onClick={toggle}
                   sx={{
                     fontSize: '0.8em',
                     display: 'flex',
@@ -126,12 +125,15 @@ const TableHeader = props => {
             <div onClick={handleClose}>
               <div onClick={handleRemove}>
                 <MenuItem
+                  // onClick={toggle} // onMouseLeave={handleMouseLeave}
                   sx={{
                     py: 1,
                     m: 0
+                    // borderBottom: isHovered ? '1px solid #8080806e' : 'none'
                   }}
                 >
                   <Box
+                    // onClick={handleRemove}
                     sx={{
                       fontSize: '0.8em',
                       display: 'flex',

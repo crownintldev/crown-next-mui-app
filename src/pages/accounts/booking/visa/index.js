@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { columnData } from 'src/common/table/columnDataFunction'
 import CustomChip from 'src/@core/components/mui/chip'
 import useTableColumns from 'src/common/materialTable/tableColumns/visaBookingColumns'
+import Image from 'next/image'
 
 //Forms
 import EditVisaBookingForm from 'src/common/forms/booking/visaBooking/EditVisaBookingForm'
@@ -25,7 +26,6 @@ import MediaDrawer from 'src/common/drawer/MediaDrawer'
 
 const index = ({ apiData }) => {
   const openMediaDrawer = row => {
-    console.log('original dat', row.original)
     setSelectedRowData(row.original)
     setMediaDrawerOpen(true)
   }
@@ -46,8 +46,6 @@ const index = ({ apiData }) => {
       drawerTitle={'Edit Passport'}
       Form={PassportForm}
       anchor={'right'}
-      fetchApi={fetchVisaBooking}
-      api={'visa-booking'}
       _id={selectedIds[0] || ''}
       removeSelection={removeSelection || ''}
     />
@@ -91,6 +89,8 @@ const index = ({ apiData }) => {
   }
   return (
     <div>
+     
+
       {formDrawer()}
       <MaterialTable
         api={'visa-booking'}

@@ -2,7 +2,7 @@ import React from 'react'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
-const SelectField = ({ options, label, placeholder, value, setPayMethod, disableClearable }) => {
+const SelectField = ({ options, label, placeholder, value, setValue, disableClearable }) => {
   return (
     <CustomAutocomplete
       sx={{ mb: 4 }}
@@ -11,7 +11,7 @@ const SelectField = ({ options, label, placeholder, value, setPayMethod, disable
       value={value}
       getOptionLabel={option => option || ''}
       onChange={(event, newValue) => {
-        setPayMethod(newValue)
+        setValue(newValue)
       }}
       disableClearable={disableClearable}
       renderInput={params => (

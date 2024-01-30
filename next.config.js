@@ -7,10 +7,10 @@ const path = require('path')
 
 module.exports = {
   images: {
-    domains: ['drive.google.com',"drive.usercontent.google.com"],
+    domains: ['drive.google.com', 'drive.usercontent.google.com']
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true
   },
   trailingSlash: true,
   reactStrictMode: false,
@@ -23,4 +23,3 @@ module.exports = {
     return config
   }
 }
-

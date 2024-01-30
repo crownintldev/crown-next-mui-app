@@ -1,6 +1,5 @@
 // ** Redux Imports
-import { Dispatch } from 'redux'
-
+import { accessToken } from 'src/action/auth-action'
 // import { API } from '../../../../config'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -19,7 +18,11 @@ const toQueryString = params => {
 // ** Fetch Visa Booking
 export const fetchData = createAsyncThunk('appAccounts/fetchData', async params => {
   const queryString = toQueryString(params)
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/accounts?${queryString}`)
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/account?${queryString}`, {
+    headers: {
+      Authorization: accessToken
+    }
+  })
 
   // console.log(response)
   return response.data

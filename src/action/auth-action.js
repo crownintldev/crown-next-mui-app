@@ -13,7 +13,7 @@ export const setCookie = (key, value) => {
   if (typeof window !== 'undefined') {
     Cookies.set(key, value, {
       expires: 1
-    })
+  })
   }
 }
 
@@ -30,7 +30,7 @@ export const getCookie = key => {
     return Cookies.get(key)
   }
 }
-export const accessToken=getCookie('accessToken')
+export const accessToken = getCookie('accessToken')
 
 //localStorage
 export const setLocalStorage = (key, value) => {

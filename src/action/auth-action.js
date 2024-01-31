@@ -30,7 +30,7 @@ export const getCookie = key => {
     return Cookies.get(key)
   }
 }
-export const accessToken=getCookie('accessToken')
+export const accessToken = getCookie('jwt')
 
 //localStorage
 export const setLocalStorage = (key, value) => {
@@ -51,10 +51,10 @@ export const removeAuthenticate = (localStorageKey, token) => {
 }
 
 export const authenticate = (data, next) => {
-  setCookie('accessToken', data.accessToken)
+  setCookie('jwt', data.accessToken)
   // setLocalStorage('token', data.token)
   setLocalStorage('userData', data.data)
-  // next();
+  next()
 }
 
 export const isAuth = () => {

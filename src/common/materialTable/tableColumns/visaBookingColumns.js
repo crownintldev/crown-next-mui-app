@@ -25,7 +25,7 @@ const useTableColumns = openMediaDrawer =>
           </IconButton>
         )
       },
-      { accessorKey: 'id', header: 'ID', Cell: (CellRowId) },
+      { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'passport.givenName', header: 'Given Name', Cell: defaultCellRenderer },
       { accessorKey: 'passport.surname', header: 'Surname', Cell: defaultCellRenderer },

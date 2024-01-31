@@ -18,7 +18,8 @@ import {
   authenticate,
   getCookie,
   removeAuthenticate,
-  accessToken
+  accessToken,
+  setCookie
 } from 'src/action/auth-action'
 
 // ** Defaults
@@ -36,7 +37,7 @@ const AuthProvider = ({ children }) => {
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
   const [loading, setLoading] = useState(defaultProvider.loading)
-
+  
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
@@ -46,17 +47,19 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
+            withCredentials: true,
             headers: {
               Authorization: accessToken
             }
           })
           .then(async response => {
-            authenticate(response.data)
-            setUser(response.data.data)
-            setLoading(false)
+            authenticate(response.data, () => {
+              setUser(response.data.data)
+              setLoading(false)
+            })
           })
           .catch(() => {
-            removeAuthenticate('userData', 'accessToken')
+            removeAuthenticate('userData', 'jwt')
             localStorage.removeItem('refreshToken')
             // localStorage.removeItem('userData')
             // localStorage.removeItem('accessToken')
@@ -68,7 +71,7 @@ const AuthProvider = ({ children }) => {
           })
       } else {
         setLoading(false)
-        removeAuthenticate('userData', 'accessToken')
+        removeAuthenticate('userData', 'jwt')
       }
     }
     initAuth()
@@ -79,11 +82,12 @@ const AuthProvider = ({ children }) => {
     signin(params)
       .then(response => {
         // params.rememberMe ? authenticate(response.data) : ''
-        authenticate(response.data)
-        setUser(response.data.data)
-        const returnUrl = router.query.returnUrl
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-        router.replace(redirectURL)
+        authenticate(response.data, () => {
+          setUser(response.data.data)
+          const returnUrl = router.query.returnUrl
+          const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+          router.replace(redirectURL)
+        })
       })
       .catch(err => {
         console.log('===auth context===', err)
@@ -109,7 +113,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     setUser(null)
-    removeAuthenticate('userData', 'accessToken')
+    removeAuthenticate('userData', 'jwt')
     // window.localStorage.removeItem('userData')
     // window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')

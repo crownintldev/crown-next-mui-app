@@ -99,7 +99,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const dispatch = useDispatch()
   const [editId, setEditId] = useState('')
   const passportIdFromState = useSelector(
-    state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
+    state => state.visaBooking?.data?.find(item => item._id === _id)?.passport
   )
   // let editId = useSelector(
   //   state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId

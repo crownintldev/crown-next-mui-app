@@ -925,20 +925,10 @@ export const settingsArray = () => [
     sectionTitle: 'Setting & Config'
   },
   {
-    title: 'Roles & Permissions',
+    title: 'User Roles',
     icon: 'tabler:settings',
-    children: [
-      {
-        title: 'Roles',
-        path: '/roles',
-        icon: 'tabler:circle-filled'
-      },
-      {
-        title: 'Permissions',
-        path: '/permissions',
-        icon: 'tabler:circle-filled'
-      }
-    ]
+    path: '/roles',
+
   },
   
   {

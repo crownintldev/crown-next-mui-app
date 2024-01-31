@@ -87,9 +87,9 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         .map(id => state?.visaBooking?.data.find(item => item?._id === id))
         .map(item => {
           return {
-            passportNumber: item?.passportId?.passportNumber,
+            passportNumber: item?.passport?.passportNumber,
             status: item?.status,
-            givenName: item?.passportId?.givenName,
+            givenName: item?.passport?.givenName,
             _id: item?._id
           }
         })

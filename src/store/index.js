@@ -1,7 +1,7 @@
 // ** Toolkit imports
 import { configureStore } from '@reduxjs/toolkit'
 import { createFetchDataThunk } from './apps/sliceGenerator'
-
+import { accessToken } from 'src/action/auth-action'
 // ** Reducers
 import chat from 'src/store/apps/chat'
 import user from 'src/store/apps/user'
@@ -59,7 +59,7 @@ export const fetchExpense = createFetchDataThunk('expense', 'expense')
 export const fetchInvoice = createFetchDataThunk('invoice', 'invoice')
 
 //Auth App
-export const fetchUser= createFetchDataThunk('user', 'user',process.env.NEXT_PUBLIC_AUTH)
+export const fetchUser= createFetchDataThunk('user', 'user',process.env.NEXT_PUBLIC_AUTH,accessToken)
 export const fetchRole= createFetchDataThunk('role', 'role',process.env.NEXT_PUBLIC_AUTH)
 
 export const store = configureStore({

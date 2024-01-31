@@ -18,6 +18,7 @@ export const createApi = async ({
   const baseURL = apidomain || AccountApi
   try {
     const response = await axios.post(`${baseURL}/${api}/create`, data, {
+      withCredentials: true,
       headers: {
         Authorization: accessToken
       }
@@ -61,6 +62,7 @@ export const updateApi = async ({
 }) => {
   try {
     const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/${api}/update/${_id}`, data, {
+      withCredentials: true,
       headers: {
         Authorization: accessToken
       }
@@ -106,6 +108,7 @@ export const updateManyApi = async ({
   let myapi = completeApi ? completeApi : `${api}/data`
   try {
     const response = await axios.put(`${baseURL}/${myapi}`, data, {
+      withCredentials: true,
       headers: {
         Authorization: accessToken
       }

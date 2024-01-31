@@ -10,7 +10,7 @@ import axios from 'axios'
 //         data)
 // }
 export const listVisaCategory = async () => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-category`)
+  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-category`,{withCredentials: true,})
 }
 
 // export const countVisaCategory = async () => {

@@ -27,7 +27,7 @@ export const removeCookie = key => {
 
 export const getCookie = key => {
   if (typeof window !== 'undefined') {
-    return Cookies.get(key)
+    return Cookies.get("jwt")
   }
 }
 export const accessToken = getCookie('jwt')

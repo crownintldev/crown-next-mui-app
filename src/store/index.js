@@ -59,7 +59,7 @@ export const fetchExpense = createFetchDataThunk('expense', 'expense')
 export const fetchInvoice = createFetchDataThunk('invoice', 'invoice')
 
 //Auth App
-export const fetchUser= createFetchDataThunk('user', 'user',process.env.NEXT_PUBLIC_AUTH,accessToken)
+export const fetchUser= createFetchDataThunk('user', 'user',process.env.NEXT_PUBLIC_AUTH)
 export const fetchRole= createFetchDataThunk('role', 'role',process.env.NEXT_PUBLIC_AUTH)
 
 export const store = configureStore({

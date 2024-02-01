@@ -1,31 +1,31 @@
 import React from 'react'
-import axios from 'axios'
-import MaterialTable from 'src/common/materialTable/MaterialTable'
+// import axios from 'axios'
+// import MaterialTable from 'src/common/materialTable/MaterialTable'
 
-import useTableColumns from 'src/common/materialTable/tableColumns/passportColumns'
+// import useTableColumns from 'src/common/materialTable/tableColumns/passportColumns'
 
 //Forms
-import PassportForm from 'src/common/forms/booking/passport/PassportForm'
+// import PassportForm from 'src/common/forms/booking/passport/PassportForm'
 // import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'
 
 // redux
-import { fetchData } from 'src/store/apps/booking/passport'
+// import { fetchData } from 'src/store/apps/booking/passport'
 
 // Hooks imports
-import { useSettings } from 'src/@core/hooks/useSettings'
+// import { useSettings } from 'src/@core/hooks/useSettings'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+// import Icon from 'src/@core/components/icon'
 
-const index = ({ apiData }) => {
-  const columns = useTableColumns()
-  const { settings, saveSettings } = useSettings()
+const index = () => {
+  // const columns = useTableColumns()
+  // const { settings, saveSettings } = useSettings()
 
   // console.log(apiData)
 
   return (
     <div>
-      <MaterialTable
+      {/* <MaterialTable
         api={'passports'}
         apiData={apiData}
         fetchData={fetchData}
@@ -40,20 +40,9 @@ const index = ({ apiData }) => {
           CreateForm: PassportForm,
           EditForm: PassportForm
         }}
-      />
+      /> */}
     </div>
   )
-}
-
-export const getStaticProps = async () => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/passports/card`)
-  const apiData = res.data
-
-  return {
-    props: {
-      apiData
-    }
-  }
 }
 
 export default index

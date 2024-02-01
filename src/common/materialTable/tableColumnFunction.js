@@ -63,7 +63,7 @@ export const dateFormat = ({ cell }) => {
 
 export const ArrayCellRenderer = ({ cell }) => {
   const data = cell.getValue()
-
+// console.log(data)
   return (
     <div>
       {data.map(service => (
@@ -71,4 +71,7 @@ export const ArrayCellRenderer = ({ cell }) => {
       ))}
     </div>
   )
+}
+export const CellRowId=({row})=>{
+  return row.index+1;
 }

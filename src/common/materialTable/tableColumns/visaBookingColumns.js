@@ -4,10 +4,13 @@ import {
   renderStatusCell,
   defaultCellRenderer,
   dateFormat,
-  defaultCellUpperCase
+  defaultCellUpperCase,
+  CellRowId
 } from 'src/common/materialTable/tableColumnFunction'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { IconButton } from '@mui/material'
+
+
 
 const useTableColumns = openMediaDrawer =>
   useMemo(
@@ -22,38 +25,38 @@ const useTableColumns = openMediaDrawer =>
           </IconButton>
         )
       },
-      { accessorKey: '_id', header: 'ID', size: 100 },
+      { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
-      { accessorKey: 'passportId.givenName', header: 'Given Name', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.surname', header: 'Surname', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.cnic', header: 'CNIC', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.country', header: 'Country', Cell: defaultCellUpperCase },
-      { accessorKey: 'passportId.dob', header: 'Date of Birth', Cell: dateFormat },
-      { accessorKey: 'passportId.doe', header: 'Date of Expiry', Cell: dateFormat },
-      { accessorKey: 'passportId.doi', header: 'Doi', Cell: dateFormat },
-      { accessorKey: 'passportId.fatherName', header: 'Father Name', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.gender', header: 'Gender', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.givenName', header: 'Given Name', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.surname', header: 'Surname', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.cnic', header: 'CNIC', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.country', header: 'Country', Cell: defaultCellUpperCase },
+      { accessorKey: 'passport.dob', header: 'Date of Birth', Cell: dateFormat },
+      { accessorKey: 'passport.doe', header: 'Date of Expiry', Cell: dateFormat },
+      { accessorKey: 'passport.doi', header: 'Doi', Cell: dateFormat },
+      { accessorKey: 'passport.fatherName', header: 'Father Name', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.gender', header: 'Gender', Cell: defaultCellRenderer },
       {
-        accessorKey: 'passportId.issuingAuthority',
+        accessorKey: 'passport.issuingAuthority',
         header: 'Issuing Authority',
         Cell: defaultCellRenderer
       },
-      { accessorKey: 'passportId.nationality', header: 'Nationality', Cell: defaultCellUpperCase },
+      { accessorKey: 'passport.nationality', header: 'Nationality', Cell: defaultCellUpperCase },
       {
-        accessorKey: 'passportId.passportNumber',
+        accessorKey: 'passport.passportNumber',
         header: 'Passport Number',
         Cell: defaultCellRenderer
       },
-      { accessorKey: 'passportId.pob', header: 'Place of Birth', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.religion', header: 'Religion', Cell: defaultCellRenderer },
-      { accessorKey: 'passportId.remarks', header: 'Remarks', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.pob', header: 'Place of Birth', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.religion', header: 'Religion', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.remarks', header: 'Remarks', Cell: defaultCellRenderer },
       {
-        accessorKey: 'passportId.bookletNumber',
+        accessorKey: 'passport.bookletNumber',
         header: 'Booklet Number',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'passportId.trackingNumber',
+        accessorKey: 'passport.trackingNumber',
         header: 'Tracking Number',
         Cell: defaultCellRenderer
       },
@@ -78,10 +81,10 @@ const useTableColumns = openMediaDrawer =>
         header: 'Confirmed - Total Fee',
         Cell: defaultCellRenderer
       },
-      { accessorKey: 'visaId.category.name', header: 'Category', Cell: defaultCellRenderer },
-      { accessorKey: 'visaId.destination.name', header: 'Destination', Cell: defaultCellRenderer },
-      { accessorKey: 'visaId.type.name', header: 'Type', Cell: defaultCellRenderer },
-      { accessorKey: 'visaId.duration.name', header: 'Duration', Cell: defaultCellRenderer },
+      { accessorKey: 'visa.category.name', header: 'Category', Cell: defaultCellRenderer },
+      { accessorKey: 'visa.destination.name', header: 'Destination', Cell: defaultCellRenderer },
+      { accessorKey: 'visa.type.name', header: 'Type', Cell: defaultCellRenderer },
+      { accessorKey: 'visa.duration.name', header: 'Duration', Cell: defaultCellRenderer },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
       { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }
     ],

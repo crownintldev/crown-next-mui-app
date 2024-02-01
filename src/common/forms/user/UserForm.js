@@ -32,6 +32,7 @@ import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 import SelectHookField from 'src/common/dataEntry/SelectHookField'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import MenuItem from '@mui/material/MenuItem'
+import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 
 //custom vuexy select style
 const ITEM_HEIGHT = 48
@@ -61,7 +62,8 @@ const schema = yup.object().shape(yupField)
 const defaultValues = {
   ids: [],
   roles: '',
-  appPermissions:["account"],
+  appPermissions: ['account'],
+  status: '',
   password: ''
 }
 
@@ -79,10 +81,13 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
           return {
             email: item.email,
             roles: item?.roles?._id,
+            status:item?.status,
+            appPermissions:item?.appPermissions,
             _id: item?._id
           }
         })
   )
+  // console.log(editIds)
 
   useEffect(() => {
     dispatch(fetchRole({}))
@@ -106,6 +111,7 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
   useEffect(() => {
     if (ids.length === 1) {
       setValue('roles', editIds[0].roles)
+      setValue('status', editIds[0].status)
       setValue('ids', ids)
     } else if (ids.length > 1) {
       setValue('ids', ids)
@@ -195,6 +201,14 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
         label='Role'
         placeholder='Choose Roles'
       />
+      <SimpleSelectHookField
+        control={control}
+        errors={errors}
+        name='status'
+        options={['pending', 'active', 'block']}
+        label='Status'
+        placeholder='select Status'
+      />
       <CustomHookTextField chooseFields={chooseFields} control={control} errors={errors} />
 
       <Controller
@@ -212,11 +226,11 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
               displayEmpty: true,
               multiple: true,
               value: field.value,
-              onChange: field.onChange,
+              onChange: field.onChange
             }}
           >
-         <MenuItem value='account' disabled>
-             Account
+            <MenuItem value='account' disabled>
+              Account
             </MenuItem>
           </CustomTextField>
         )}

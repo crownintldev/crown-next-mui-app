@@ -40,3 +40,7 @@ export const getReducer = name => {
 
   return setData
 }
+//how to use
+// const setAccessToken = getReducer('sameuseSelectorValue')
+// reducer
+// accessToken:generateReducer('sameuseSelectorValue').reducer,

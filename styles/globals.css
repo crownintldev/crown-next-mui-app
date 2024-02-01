@@ -194,7 +194,15 @@ code[class*='language-'] {
 }
 
 /* component bg */
+<<<<<<< HEAD
 
+=======
+.css-1ewxx0h-MuiPaper-root-MuiAppBar-root {
+  /* background: #dbe5fb; */
+}
+
+/* vertical nav styles start */
+>>>>>>> salik
 .child-items > .nav-link {
   height: 28px;
 }
@@ -211,9 +219,65 @@ code[class*='language-'] {
   > .css-185anww-MuiTypography-root {
   font-size: 13.5px;
 }
-.css-spdbyg > .css-185anww-MuiTypography-root {
+
+.hello
+  > .css-smkl36-MuiCollapse-wrapper
+  > .css-9l5vo-MuiCollapse-wrapperInner
+  > .child-items
+  > .css-1p8mho2-MuiListItem-root
+  > .css-hm90hx-MuiButtonBase-root-MuiListItemButton-root
+  > .css-1w9dm8e-MuiListItemIcon-root
+  > svg {
+  font-size: 10.5px;
+}
+.hello
+  > .css-smkl36-MuiCollapse-wrapper
+  > .css-9l5vo-MuiCollapse-wrapperInner
+  > .child-items
+  > .css-1p8mho2-MuiListItem-root
+  > .css-hm90hx-MuiButtonBase-root-MuiListItemButton-root
+  > .css-164kvcj
+  > p {
   font-size: 13.5px;
-  border: '1px solid red';
+}
+.hello
+  > .css-smkl36-MuiCollapse-wrapper
+  > .css-9l5vo-MuiCollapse-wrapperInner
+  > .child-items
+  > .css-1esf9fq-MuiListItem-root
+  > .css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root
+  > .css-spdbyg
+  p {
+  font-size: 13.5px;
+}
+/* dark mode vertical nav styles start*/
+.css-1i0jf2v-MuiListItemIcon-root svg {
+  font-size: 10.5px;
+}
+.child-items
+  > .nav-links
+  > .css-1xlhu8s-MuiButtonBase-root-MuiListItemButton-root
+  > .css-1uzxa8w-MuiListItemIcon-root
+  svg
+  g {
+  /* border: 2px solid red; */
+}
+.css-1uzxa8w-MuiListItemIcon-root svg {
+  font-size: 10.5px !important;
+  color: #1852fe !important;
+}
+.child-items
+  > .nav-links
+  > .css-1xlhu8s-MuiButtonBase-root-MuiListItemButton-root
+  > .css-sx7ign-MuiTypography-root {
+  font-size: 13.5px;
+}
+.css-1xlhu8s-MuiButtonBase-root-MuiListItemButton-root.active {
+  height: 28px;
+}
+.css-spdbyg > .css-185anww-MuiTypography-root {
+  font-size: 10.5px;
+  /* border: '1px solid red'; */
 }
 .css-ehlsdq-MuiButtonBase-root-MuiListItemButton-root.active {
   height: 28px;

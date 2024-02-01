@@ -151,7 +151,6 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   }
 
   const onSubmit = async data => {
-    console.log(data)
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/account/update`, data)
       if (response) {

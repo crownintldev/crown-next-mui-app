@@ -19,7 +19,7 @@ const ReactHotToast = styled(Box)(({ theme }) => {
       top: layout === 'horizontal' && !navHidden ? '139px !important' : '75px !important',
       zIndex: useMediaQuery(theme.breakpoints.down('lg'))
         ? `${theme.zIndex.drawer - 1} !important`
-        : `${theme.zIndex.drawer + 1} !important`
+        : `${theme.zIndex.drawer + 2000} !important`
     },
     '& .react-hot-toast': {
       fontWeight: 400,

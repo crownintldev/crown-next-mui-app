@@ -39,12 +39,12 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 // yup schema
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().min(5).required()
+  password: yup.string().min(3).required()
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@crown.com'
+  password: '',
+  email: ''
 }
 
 const LoginForm = () => {
@@ -90,7 +90,7 @@ const LoginForm = () => {
                 value={value}
                 onBlur={onBlur}
                 onChange={onChange}
-                placeholder='admin@crown.com'
+                placeholder='Enter Your Valid Email'
                 error={Boolean(errors.email)}
                 {...(errors.email && { helperText: errors.email.message })}
               />
@@ -109,6 +109,7 @@ const LoginForm = () => {
                 onBlur={onBlur}
                 label='Password'
                 onChange={onChange}
+                placeholder='Enter Password'
                 id='auth-login-v2-password'
                 error={Boolean(errors.password)}
                 {...(errors.password && { helperText: errors.password.message })}

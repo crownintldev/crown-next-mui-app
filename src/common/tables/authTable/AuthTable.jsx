@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
-import FormDrawer from '../drawer/FormDrawer'
-import TableHeader from './tableHeader/TableHeader'
+import TableHeader from './TableHeader'
 
 // MUI Imports
 import { LinearProgress, Tab, Tabs } from '@mui/material'
@@ -13,29 +12,20 @@ import InboxIcon from '@mui/icons-material/Inbox' // Import appropriate icons
 import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 
 //functions
-import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
-import Icon from 'src/@core/components/icon'
+import { hasSubRows, muiLinearProgressProps, tableProps } from 'src/common/materialTable/functions'
 
-const MaterialTable = ({
+const AuthTable = ({
   fetchData,
   stateSelector,
   columns,
-  settings,
   apiData,
-  drawerProps,
+  buttonTitle,
+  editButtonTitle = 'Edit',
+  multiSelected = false,
   api,
-  headerMenu
+  headerMenu,
+  FormModal
 }) => {
-  // console.log('apiData', apiData)
-  const {
-    formTitle,
-    editFormTitle,
-    buttonTitle,
-    editButtonTitle,
-    EditForm,
-    CreateForm,
-    multiSelected = false
-  } = drawerProps
   const theme = useTheme()
   const dispatch = useDispatch()
   const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
@@ -53,7 +43,6 @@ const MaterialTable = ({
     pageSize: 20
   })
   const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -122,6 +111,7 @@ const MaterialTable = ({
   }
 
   const renderCustomActions = ({ table }) => {
+    // console.log(state)
     return (
       <TableHeader
         toggle={toggleDrawer}
@@ -226,7 +216,6 @@ const MaterialTable = ({
         <Tab
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
-       
               <InboxIcon style={{ marginRight: '4px' }} /> Default
             </div>
           }
@@ -245,6 +234,7 @@ const MaterialTable = ({
         {/* Conditionally render the table component */}
         {renderTableComponent()}
       </div>
+
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (
@@ -255,7 +245,6 @@ const MaterialTable = ({
           />
         )}
 
-        {/* <MaterialReactTable table={table} className='custom-table-styles' /> */}
         {isLoading && (
           <LinearProgress
             sx={{
@@ -263,27 +252,14 @@ const MaterialTable = ({
             }}
           />
         )}
-        {/* </TableProvider> */}
       </div>
-      <FormDrawer
-        open={drawerOpen}
-        toggle={toggleDrawer}
-        drawerTitle={selectionRow.length > 0 ? editFormTitle : formTitle}
-        Form={selectionRow.length > 0 ? EditForm : CreateForm}
-        removeSelection={handleRemoveSelection}
-        _id={
-          multiSelected && selectionRow.length > 0
-            ? selectionRow
-            : selectionRow.length === 1
-            ? selectionRow[0]
-            : ''
-        }
-        api={api}
-        fetchApi={fetchData}
-        stateSelector={stateSelector}
+      <FormModal 
+      open={drawerOpen} 
+      setOpen={setDrawerOpen}
+      
       />
     </>
   )
 }
 
-export default MaterialTable
+export default AuthTable

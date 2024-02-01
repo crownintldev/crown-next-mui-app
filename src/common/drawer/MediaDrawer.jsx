@@ -1,10 +1,10 @@
+
 // React Imports
 import React, { useState } from 'react'
 
 // Next Imports
 import Image from 'next/image'
 
-// MUI Imports
 import Drawer from '@mui/material/Drawer'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -12,7 +12,6 @@ import Button from '@mui/material/Button'
 import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
-// Normal Imports
 import Icon from 'src/@core/components/icon'
 
 const MediaDrawer = ({ open, onClose, data }) => {
@@ -34,6 +33,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
           Booking Visa Assets
         </Typography>
         <Typography variant='body1'>Dynamic visa asset lists</Typography>
+
         <TreeView
           defaultCollapseIcon={<span>-</span>}
           defaultExpandIcon={<span>+</span>}
@@ -41,6 +41,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
           onNodeToggle={handleTreeItemToggle}
         >
           <TreeItem nodeId='passportId' label='passportId'>
+
             {data.passportId.files ? (
               data.passportId.files.map((item, index) => (
                 <>
@@ -117,6 +118,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
             ) : (
               <h3>No Files Found...</h3>
             )}
+
           </TreeItem>
         </TreeView>
         <Button variant='contained' color='primary' onClick={onClose} sx={{ mt: 10 }}>

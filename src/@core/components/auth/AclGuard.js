@@ -30,17 +30,18 @@ const AclGuard = props => {
   const router = useRouter()
 
   // ** Vars
+  // console.log("=======aclguard=====",auth)
   let ability
   useEffect(() => {
-    if (auth.user && auth.user.role && !guestGuard && router.route === '/') {
-      const homeRoute = getHomeRoute(auth.user.role)
+    if (auth.user && auth.user.roles && !guestGuard && router.route === '/') {
+      const homeRoute = getHomeRoute(auth.user.roles)
       router.replace(homeRoute)
     }
   }, [auth.user, guestGuard, router])
 
-  // User is logged in, build ability for the user based on his role
-  if (auth.user && !ability) {
-    ability = buildAbilityFor(auth.user.role, aclAbilities.subject)
+  // User is logged in, build ability for the user based on his roles
+  if (auth.user && auth.user.roles && !ability) {
+    ability = buildAbilityFor(auth.user.roles, aclAbilities.subject)
     if (router.route === '/') {
       return <Spinner />
     }

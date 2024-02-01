@@ -12,6 +12,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrations from 'src/views/pages/misc/FooterIllustrations'
+import { useAuth } from 'src/hooks/useAuth'
 
 // ** Styled Components
 const BoxWrapper = styled(Box)(({ theme }) => ({
@@ -34,6 +35,7 @@ const Img = styled('img')(({ theme }) => ({
 }))
 
 const Error401 = () => {
+  const auth = useAuth()
   return (
     <Box className='content-center'>
       <Box
@@ -56,8 +58,8 @@ const Error401 = () => {
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
             Please contact your site administrator.
           </Typography>
-          <Button href='/' component={Link} variant='contained'>
-            Back to Home
+          <Button href='/' component={Link} variant='contained' onClick={()=>auth.logout()}>
+           Logout
           </Button>
         </BoxWrapper>
         <Img height='500' alt='error-illustration' src='/images/pages/401.png' />

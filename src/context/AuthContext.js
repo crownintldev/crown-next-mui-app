@@ -10,6 +10,17 @@ import axios from 'axios'
 // ** Config
 import authConfig from 'src/configs/auth'
 
+//actions
+import {
+  signin,
+  signup,
+  isAuth,
+  authenticate,
+  getCookie,
+  removeAuthenticate,
+  accessToken
+} from 'src/action/auth-action'
+
 // ** Defaults
 const defaultProvider = {
   user: null,
@@ -30,23 +41,25 @@ const AuthProvider = ({ children }) => {
   const router = useRouter()
   useEffect(() => {
     const initAuth = async () => {
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-      if (storedToken) {
+      // const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      if (accessToken) {
         setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
             headers: {
-              Authorization: storedToken
+              Authorization: accessToken
             }
           })
           .then(async response => {
+            authenticate(response.data)
+            setUser(response.data.data)
             setLoading(false)
-            setUser({ ...response.data.userData })
           })
           .catch(() => {
-            localStorage.removeItem('userData')
+            removeAuthenticate('userData', 'accessToken')
             localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
+            // localStorage.removeItem('userData')
+            // localStorage.removeItem('accessToken')
             setUser(null)
             setLoading(false)
             if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
@@ -55,6 +68,7 @@ const AuthProvider = ({ children }) => {
           })
       } else {
         setLoading(false)
+        removeAuthenticate('userData', 'accessToken')
       }
     }
     initAuth()
@@ -62,29 +76,42 @@ const AuthProvider = ({ children }) => {
   }, [])
 
   const handleLogin = (params, errorCallback) => {
-    axios
-      .post(authConfig.loginEndpoint, params)
-      .then(async response => {
-        params.rememberMe
-          ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
-          : null
+    signin(params)
+      .then(response => {
+        // params.rememberMe ? authenticate(response.data) : ''
+        authenticate(response.data)
+        setUser(response.data.data)
         const returnUrl = router.query.returnUrl
-        setUser({ ...response.data.userData })
-        params.rememberMe
-          ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData))
-          : null
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
         router.replace(redirectURL)
       })
       .catch(err => {
+        console.log('===auth context===', err)
+        if (errorCallback) errorCallback(err)
+      })
+  }
+
+  const handleRegister = (params, errorCallback) => {
+    signup(params)
+      .then(response => {
+        // params.rememberMe ? authenticate(response.data) : ''
+        authenticate(response.data)
+        setUser(response.data.data)
+        const returnUrl = router.query.returnUrl
+        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        router.replace(redirectURL)
+      })
+      .catch(err => {
+        console.log('===auth context===', err)
         if (errorCallback) errorCallback(err)
       })
   }
 
   const handleLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('userData')
-    window.localStorage.removeItem(authConfig.storageTokenKeyName)
+    removeAuthenticate('userData', 'accessToken')
+    // window.localStorage.removeItem('userData')
+    // window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')
   }
 
@@ -94,6 +121,7 @@ const AuthProvider = ({ children }) => {
     setUser,
     setLoading,
     login: handleLogin,
+    register: handleRegister,
     logout: handleLogout
   }
 

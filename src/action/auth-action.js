@@ -13,7 +13,7 @@ export const setCookie = (key, value) => {
   if (typeof window !== 'undefined') {
     Cookies.set(key, value, {
       expires: 1
-  })
+    })
   }
 }
 

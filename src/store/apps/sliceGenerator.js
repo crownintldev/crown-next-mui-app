@@ -13,9 +13,9 @@ const toQueryString = params => {
 
 // ** Fetch Users
 export const createFetchDataThunk = (name, api, apidomain) => {
-  const accessToken = getCookie('accessToken')
   return createAsyncThunk(`${name}/fetchData`, async (params, thunkAPI) => {
     const currentState = thunkAPI.getState()
+    // console.log(currentState.token.data)
     // update and merge with new create data
     if (params.newData && params.newData.length !== 0) {
       return {
@@ -35,16 +35,18 @@ export const createFetchDataThunk = (name, api, apidomain) => {
 
       return { data: updatedData }
     }
+   
     const queryString = toQueryString(params)
     const response = await axios.get(
       `${apidomain ? apidomain : process.env.NEXT_PUBLIC_API}/${api}?${queryString}`,
       {
         withCredentials: true,
         headers: {
-          Authorization: accessToken
+          Authorization: `Bearer ${currentState.token.data}`
         }
       }
     )
+   
 
     // console.log(api, response);
     return response.data

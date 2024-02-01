@@ -22,7 +22,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const generateReducer = name => {
   const slice = createSlice({
     name,
-    initialState: { data: [] },
+    initialState: { data: null },
     reducers: {
       setData: (state, action) => {
         state.data = action.payload

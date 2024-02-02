@@ -403,11 +403,11 @@ code[class*='language-'] {
   opacity: 1;
 }
 
-.css-9l5vo-MuiCollapse-wrapperInner {
+/* .css-9l5vo-MuiCollapse-wrapperInner {
   display: flex;
   margin-top: 12px;
   gap: 20px;
-}
+} */
 .css-r1nnr0-MuiTreeItem-content.Mui-selected {
   background-color: white !important;
 }

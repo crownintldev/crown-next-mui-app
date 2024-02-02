@@ -45,7 +45,6 @@ const EditFilesUploader = ({
       return <Icon icon='tabler:file-description' />
     }
   }
-
   const renderPreviousFiles = file => {
     
     return <Image width={38} height={38} alt={file.fileName ?? ""} src={file.url ?? ""} />

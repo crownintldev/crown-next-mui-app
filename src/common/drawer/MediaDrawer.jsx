@@ -40,11 +40,11 @@ const MediaDrawer = ({ open, onClose, data }) => {
           expanded={expanded}
           onNodeToggle={handleTreeItemToggle}
         >
-          <TreeItem nodeId='passport' label='passport'>
+          <TreeItem nodeId='passport' label='passport' className='node-images'>
             {data.passport && data.passport.files ? (
               data.passport.files.map((item, index) => (
                 <div key={index}>
-                  {item.fileType.startsWith('image/') ? ( // Check if it's an image
+                  {item.fileType.startsWith('image/') && ( // Check if it's an image
                     <TreeItem
                       key={`${index}+${item.url}`}
                       nodeId={`${index}+${item.url}`}
@@ -61,8 +61,8 @@ const MediaDrawer = ({ open, onClose, data }) => {
                         </div>
                       }
                     />
-                  ) : item.fileType === 'application/pdf' ||
-                    item.fileType === 'application/docx' ? ( // Check if it's a PDF or DOCX
+                  )}
+                  {item.fileType.startsWith('application/') && ( // Check if it's a PDF or DOCX
                     <TreeItem
                       key={`${index}+${item.url}`}
                       nodeId={`${index}+${item.url}`}
@@ -78,12 +78,6 @@ const MediaDrawer = ({ open, onClose, data }) => {
                         </div>
                       }
                     />
-                  ) : (
-                    // If it's neither an image nor a PDF/DOCX, display "File Not Supported"
-                    <div className='media-img-container'>
-                      <Icon icon='tabler:file-type-unknown' width={24} height={24} />
-                      <span className='tooltip'>File Not Supported</span>
-                    </div>
                   )}
                 </div>
               ))

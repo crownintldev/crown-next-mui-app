@@ -6,7 +6,7 @@ import axios from 'axios'
 // }
 
 export const listVisaDuration = async () => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-duration`)
+  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-duration`,{withCredentials: true,})
 }
 
 // export const countVisaDuration = async () => {

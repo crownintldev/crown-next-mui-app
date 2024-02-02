@@ -22,8 +22,6 @@ import { fetchRole } from 'src/store'
 import { createApi, updateManyApi } from 'src/action/function'
 
 //form
-import IdNameForm from '../idnameForm/IdNameForm'
-
 import { AuthApi } from 'config'
 
 //dataEntry

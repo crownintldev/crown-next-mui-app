@@ -354,8 +354,6 @@ code[class*='language-'] {
 /* track status styles end */
 
 /* app icons styles */
-
-/*  */
 .css-1buxjf4-MuiSvgIcon-root {
   color: #afb3cf;
 }
@@ -402,12 +400,29 @@ code[class*='language-'] {
   visibility: visible;
   opacity: 1;
 }
-
-/* .css-9l5vo-MuiCollapse-wrapperInner {
+.node-images {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.css-r1nnr0-MuiTreeItem-content .MuiTreeItem-label {
+  font-weight: 600;
+}
+.node-images .css-9l5vo-MuiCollapse-wrapperInner {
   display: flex;
   margin-top: 12px;
-  gap: 20px;
-} */
+  justify-content: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
 .css-r1nnr0-MuiTreeItem-content.Mui-selected {
   background-color: white !important;
+}
+.css-161j9ok-MuiTreeView-root {
+  display: block;
+}
+.media-doc-icon {
+  color: #625b5b;
+}
+.media-doc-icon:hover {
+  color: #1852fe;
 }

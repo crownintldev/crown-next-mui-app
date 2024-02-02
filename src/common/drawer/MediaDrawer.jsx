@@ -32,28 +32,46 @@ const MediaDrawer = ({ open, onClose, data }) => {
         <Typography variant='h5' gutterBottom>
           Booking Visa Assets
         </Typography>
-        <Typography variant='body1'>Dynamic visa asset lists</Typography>
+        <Typography variant='body1'>Dynamic visa image and document lists</Typography>
 
         <TreeView
-          defaultCollapseIcon={<span>-</span>}
-          defaultExpandIcon={<span>+</span>}
+          defaultCollapseIcon={
+            <span>
+              <Icon icon='tabler:minus' />
+            </span>
+          }
+          defaultExpandIcon={
+            <span>
+              <Icon icon='tabler:plus' />
+            </span>
+          }
           expanded={expanded}
           onNodeToggle={handleTreeItemToggle}
         >
-          <TreeItem nodeId='passport' label='passport'>
+          <TreeItem nodeId='Images' label='Images' className='node-images'>
             {data.passport && data.passport.files ? (
               data.passport.files.map((item, index) => (
                 <div key={index}>
-                  {item.fileType.startsWith('image/') ? ( // Check if it's an image
+                  {item.fileType.startsWith('image/') && ( // Check if it's an image
                     <TreeItem
                       key={`${index}+${item.url}`}
                       nodeId={`${index}+${item.url}`}
                       label={
                         <div className='media-img-container'>
                           {item.fileType === 'image/png' ? (
-                            <Icon icon='tabler:file-type-png' width={24} height={24} />
+                            <Icon
+                              icon='tabler:file-type-png'
+                              width={24}
+                              height={24}
+                              className='media-doc-icon'
+                            />
                           ) : (
-                            <Icon icon='tabler:file-type-jpg' width={24} height={24} />
+                            <Icon
+                              icon='tabler:file-type-jpg'
+                              width={24}
+                              height={24}
+                              className='media-doc-icon'
+                            />
                           )}
                           <Image src={item.url} height={80} width={80} className='media-image' />
                           <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
@@ -61,34 +79,77 @@ const MediaDrawer = ({ open, onClose, data }) => {
                         </div>
                       }
                     />
-                  ) : item.fileType === 'application/pdf' ||
-                    item.fileType === 'application/docx' ? ( // Check if it's a PDF or DOCX
+                  )}
+                </div>
+              ))
+            ) : (
+              <h3>No Image Found...</h3>
+            )}
+          </TreeItem>
+          <Divider />
+          <TreeItem nodeId='documents' label='Documents' className='node-images'>
+            {data.passport && data.passport.files ? (
+              data.passport.files.map((item, index) => (
+                <div key={index}>
+                  {item.fileType.startsWith('application/') && ( // Check if it's a PDF or DOCX
                     <TreeItem
                       key={`${index}+${item.url}`}
                       nodeId={`${index}+${item.url}`}
                       label={
                         <div className='media-img-container'>
                           {item.fileType === 'application/pdf' ? (
-                            <Icon icon='tabler:file-type-pdf' width={24} height={24} />
+                            <div>
+                              <Icon icon='tabler:file-type-pdf' width={75} height={75} />
+                              <span className='tooltip'>{item.fileName.substring(0, 10)}</span>
+                              <a href={item.fileUrl} target='_blank' rel='noopener noreferrer'>
+                                <Icon
+                                  icon='tabler:eye'
+                                  width={24}
+                                  height={24}
+                                  className='media-doc-icon'
+                                />
+                              </a>
+                              <a href={item.url} download>
+                                <Icon
+                                  icon='tabler:cloud-download'
+                                  width={24}
+                                  height={24}
+                                  className='media-doc-icon'
+                                />
+                              </a>
+                            </div>
                           ) : (
-                            <Icon icon='tabler:file-type-doc' width={24} height={24} />
+                            <div>
+                              <Icon icon='tabler:file-type-doc' width={75} height={75} />
+                              <span className='tooltip'>{item.fileName.substring(0, 10)}</span>
+                              <a href={item.fileUrl} target='_blank' rel='noopener noreferrer'>
+                                <Icon
+                                  icon='tabler:eye'
+                                  width={24}
+                                  height={24}
+                                  className='media-doc-icon'
+                                />
+                              </a>
+                              <a href={item.url} download>
+                                <Icon
+                                  icon='tabler:cloud-download'
+                                  width={24}
+                                  height={24}
+                                  className='media-doc-icon'
+                                />
+                              </a>
+                            </div>
                           )}
                           <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
                           {/* Truncate to 10 characters */}
                         </div>
                       }
                     />
-                  ) : (
-                    // If it's neither an image nor a PDF/DOCX, display "File Not Supported"
-                    <div className='media-img-container'>
-                      <Icon icon='tabler:file-type-unknown' width={24} height={24} />
-                      <span className='tooltip'>File Not Supported</span>
-                    </div>
                   )}
                 </div>
               ))
             ) : (
-              <h3>No Files Found...</h3>
+              <h3>Document Not Found...</h3>
             )}
           </TreeItem>
         </TreeView>

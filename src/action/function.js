@@ -19,12 +19,14 @@ export const createApi = async ({
   const baseURL = apidomain || AccountApi
  
   try {
-    const response = await axios.post(`${baseURL}/${api}/create`, data, {
+    const response = await axios.post(`${baseURL}/${api}/create`, data, 
+    {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
-    })
+    }
+    )
 
     // console.log(response.data.data)
     if (removeSelection) {

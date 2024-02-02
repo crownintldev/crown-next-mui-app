@@ -19,7 +19,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
 import ExportButton from '../tableHeader/ExportButton'
 import { getReducer } from 'src/store/apps/sliceActionReducer'
+import { getCookie } from 'src/action/auth-action'
 
+const accessToken = getCookie('jwt')
 const TableHeader = props => {
   const router = useRouter()
   const theme = useTheme()
@@ -68,7 +70,16 @@ const TableHeader = props => {
 
   const handleEject = async () => {
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/account/eject`, ejectValue)
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/account/eject`,
+        ejectValue,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
       if (response.data) {
         dispatch(
           fetchData({
@@ -90,9 +101,18 @@ const TableHeader = props => {
       return toast.error('api not found', { position: 'top-center' })
     }
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/remove`, {
-        ids: selectionRow
-      })
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/${api}/remove`,
+        {
+          ids: selectionRow
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
       if (response.data) {
         dispatch(
           fetchData({
@@ -154,14 +174,14 @@ const TableHeader = props => {
               </Button>
             </MenuItem>
           )}
-          {selectionRow?.length > 0 && (
+          {/* {selectionRow?.length > 0 && (
             <MenuItem onClick={handleRemove}>
               <Button color='error' size='small'>
                 <Icon fontSize='1.125rem' icon='tabler:plus' />
                 Delete Account
               </Button>
             </MenuItem>
-          )}
+          )} */}
         </Menu>
         {/* ----------Export data--------- */}
         <ExportButton table={table} tableData={tableData} />

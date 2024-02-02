@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { getCookie } from 'src/action/auth-action'
+const accessToken = getCookie('jwt')
 
 // export const addVisaCategory = (name) => {
 //     return axios.post(`${API}/visa-category/create`,
@@ -10,7 +12,12 @@ import axios from 'axios'
 //         data)
 // }
 export const listVisaCategory = async () => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-category`,{withCredentials: true,})
+  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-category`,{
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
 }
 
 // export const countVisaCategory = async () => {

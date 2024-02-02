@@ -80,9 +80,27 @@ const MediaDrawer = ({ open, onClose, data }) => {
                       label={
                         <div className='media-img-container'>
                           {item.fileType === 'application/pdf' ? (
-                            <Icon icon='tabler:file-type-pdf' width={75} height={75} />
+                            <div>
+                              <Icon icon='tabler:file-type-pdf' width={75} height={75} />
+                              <span className='tooltip'>{item.fileName.substring(0, 10)}</span>
+                              <a href={item.fileUrl} target='_blank' rel='noopener noreferrer'>
+                                <Icon icon='tabler:eye' width={24} height={24} />
+                              </a>
+                              <a href={item.url} download>
+                                <Icon icon='tabler:cloud-download' width={24} height={24} />
+                              </a>
+                            </div>
                           ) : (
-                            <Icon icon='tabler:file-type-doc' width={75} height={75} />
+                            <div>
+                              <Icon icon='tabler:file-type-doc' width={75} height={75} />
+                              <span className='tooltip'>{item.fileName.substring(0, 10)}</span>
+                              <a href={item.fileUrl} target='_blank' rel='noopener noreferrer'>
+                                <Icon icon='tabler:eye' width={24} height={24} />
+                              </a>
+                              <a href={item.url} download>
+                                <Icon icon='tabler:cloud-download' width={24} height={24} />
+                              </a>
+                            </div>
                           )}
                           <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
                           {/* Truncate to 10 characters */}

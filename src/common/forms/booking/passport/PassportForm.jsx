@@ -37,6 +37,7 @@ import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
 import dayjs from 'dayjs'
 import { MuiTextAreaHookField } from 'src/common/dataEntry/MuiTextAreaHookField'
+import SelectHookField from 'src/common/dataEntry/SelectHookField'
 // import MuiTextAreaHookField from 'src/common/dataEntry/MuiTextAreaHookField'
 
 const schema = yup.object().shape({
@@ -108,9 +109,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const [files, setFiles] = useState([])
   const [previousFiles, setPreviousFiles] = useState([])
   const [removeFiles, setRemoveFiles] = useState([])
-  const [date, setDate] = useState(new Date())
-  const [filteredItems, setFilteredItems] = useState([])
-  const [searchFields, setSearchFields] = useState('')
 
   // onModel
   const clients = useSelector(state => state.client?.data)
@@ -145,7 +143,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
         setValue(key, editId[key])
       })
       setPreviousFiles(editId.files)
-      setValue('by', editId.by?._id)
+      setValue('by', editId.by)
       setValue('dob', dayjs(editId.dob))
       setValue('doe', dayjs(editId.doe))
       setValue('doi', dayjs(editId.doi))
@@ -153,22 +151,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       reset()
     }
   }, [setValue, editId])
-  // const handleEditPassport = () => {
-  //   if (editId?.passportNumber) {
-  //     Object.keys(editId).forEach(key => {
-  //       setValue(key, editId[key])
-  //     })
-  //     setPreviousFiles(editId.files)
-  //     setValue('by', editId.by?._id)
-  //     setValue('dob', dayjs(editId.dob))
-  //     setValue('doe', dayjs(editId.doe))
-  //     setValue('doi', dayjs(editId.doi))
-  //   } else {
-  //     reset()
-  //   }
-  // }
-  // console.log(editId)
-  // console.log(editId)
   useEffect(() => {
     setFormSize(1200)
     if (passportNumber.length === 9 && !_id) {
@@ -244,32 +226,22 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   }
   const listStyles = { borderLeft: '2px solid #1852fe', height: '42px', marginBottom: '5px' }
 
-  // Function to filter items based on the search field
-  const filterItems = searchText => {
-    let items = []
-
-    if (watchedOnModel === 'Client') {
-      items = clients
-    } else if (watchedOnModel === 'Agent') {
-      items = agents
-    } else if (watchedOnModel === 'Company') {
-      items = company
-    }
-
-    const filtered = items.filter(item => {
-      const searchStr = searchText.toLowerCase()
-      const phoneStr = item.phone ? item.phone.toString() : '' // Convert phone to string
-      const nameStr = item.fullName ? item.fullName.toString() : '' // Convert phone to string
-      return nameStr.includes(searchStr) || phoneStr.includes(searchStr)
-    })
-
-    setFilteredItems(filtered)
+  const supplier = useSelector(state =>
+    state?.supplier?.data?.map(item => ({ name: `${item.name} ${item.phone}`, _id: item._id }))
+  )
+  let byItems = []
+  if (watchedOnModel === 'Client') {
+    byItems = clients
+  } else if (watchedOnModel === 'Agent') {
+    byItems = agents
+  } else if (watchedOnModel === 'Company') {
+    byItems = company
   }
 
-  // Update filtered items whenever searchFields or the model   changes
-  useEffect(() => {
-    filterItems(searchFields)
-  }, [searchFields, watchedOnModel, clients, agents, company])
+  const byItem = byItems.map(item => ({
+    name: `${item.fullName || item.companyName} ${item.phone}`,
+    _id: item._id
+  }))
 
   return (
     <div>
@@ -407,95 +379,17 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
             />
           </Grid>
           <Grid item md={6} lg={4}>
-            <Controller
-              name='by'
+            <SelectHookField
               control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  select
-                  fullWidth
-                  label='Select Refer To'
-                  error={Boolean(errors.by)}
-                  helperText={errors.by?.message}
-                  // id='search-field'
-                  SelectProps={{
-                    value: value,
-                    onChange: e => onChange(e)
-                  }}
-                  sx={{ mb: 4 }}
-                >
-                  {/* <div style={{ overflow: 'hidden' }}> */}
-                  <MenuItem value='' disabled>
-                    Select refer
-                  </MenuItem>
-                  <Input
-                    type='text'
-                    onChange={e => setSearchFields(e.target.value)}
-                    name='search'
-                    value={searchFields}
-                    placeholder='search name, phone'
-                    fullWidth
-                    sx={{ mb: 2, pl: 2 }}
-                    onMouseDown={e => e.stopPropagation()}
-                  />
-                  {searchFields
-                    ? filteredItems.map(item => (
-                        <MenuItem key={item._id} value={item._id} style={listStyles}>
-                          <div>
-                            <div>
-                              <Person style={iconStyles} />
-                              <span style={{ fontSize: '12.2px' }}>
-                                {item.fullName && item.fullName}
-                              </span>
-                            </div>
-                            <div>
-                              <PhoneIcon style={iconStyles} />
-                              <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                            </div>
-                          </div>
-                        </MenuItem>
-                      ))
-                    : null}
-                  {/* {watchedOnModel === 'Agent' &&
-                    agents?.map(item => (
-                      <MenuItem key={item} value={item._id} style={listStyles}>
-                        <div>
-                          <div>
-                            <Person style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>
-                              {item.fullName && item.fullName}
-                            </span>
-                          </div>
-                          <div>
-                            <PhoneIcon style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                          </div>
-                        </div>
-                      </MenuItem>
-                    ))}
-                  {watchedOnModel === 'Company' &&
-                    company?.map(item => (
-                      <MenuItem key={item} value={item._id} style={listStyles}>
-                        <div>
-                          <div>
-                            <Person style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>
-                              {item.fullName && item.fullName}
-                            </span>
-                          </div>
-                          <div>
-                            <PhoneIcon style={iconStyles} />
-                            <span style={{ fontSize: '12.2px' }}>{item.phone && item.phone}</span>
-                          </div>
-                        </div>
-                      </MenuItem>
-                    ))} */}
-                  {/* </div> */}
-                </CustomTextField>
-              )}
+              errors={errors}
+              name='by'
+              options={byItem ?? []}
+              showValue='name'
+              label='Refer'
+              placeholder='Choose Refer'
             />
           </Grid>
+        
           {!editId ? (
             <Grid item md={6}>
               <Box sx={{ width: '200px' }}>

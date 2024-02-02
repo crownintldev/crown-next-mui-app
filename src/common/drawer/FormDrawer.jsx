@@ -61,20 +61,22 @@ const FormDrawer = ({
           <Icon icon='tabler:x' fontSize='1.125rem' />
         </IconButton>
       </Header>
-      <Box sx={{ p: theme => theme.spacing(0, 6, 6) }}>
-        {Form && (
-          <Form
-            toggle={toggle}
-            _id={_id}
-            removeSelection={removeSelection}
-            fetchApi={fetchApi}
-            formName={formName}
-            api={api}
-            stateSelector={stateSelector}
-            setFormSize={setFormSize}
-          />
-        )}
-      </Box>
+      {open && (
+        <Box sx={{ p: theme => theme.spacing(0, 6, 6) }}>
+          {Form && (
+            <Form
+              toggle={toggle}
+              _id={_id}
+              removeSelection={removeSelection}
+              fetchApi={fetchApi}
+              formName={formName}
+              api={api}
+              stateSelector={stateSelector}
+              setFormSize={setFormSize}
+            />
+          )}
+        </Box>
+      )}
     </Drawer>
   )
 }

@@ -6,7 +6,7 @@ import axios from 'axios'
 // }
 
 export const listVisaType = async () => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-type`)
+  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-type`,{withCredentials: true,})
 }
 
 // export const listVisaType = async () => {

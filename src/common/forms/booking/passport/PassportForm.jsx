@@ -169,6 +169,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   //   }
   // }
   // console.log(editId)
+  console.log(editId)
   useEffect(() => {
     setFormSize(1200)
     if (passportNumber.length === 9 && !_id) {
@@ -270,6 +271,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   useEffect(() => {
     filterItems(searchFields)
   }, [searchFields, watchedOnModel, clients, agents, company])
+
+
 
   return (
     <div>
@@ -426,9 +429,9 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                   sx={{ mb: 4 }}
                 >
                   {/* <div style={{ overflow: 'hidden' }}> */}
-                  {/* <MenuItem value='' disabled>
+                  <MenuItem value='' disabled>
                     Select refer
-                  </MenuItem> */}
+                  </MenuItem>
                   <Input
                     type='text'
                     onChange={e => setSearchFields(e.target.value)}

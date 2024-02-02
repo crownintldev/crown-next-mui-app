@@ -3,7 +3,8 @@ import { createContext, useEffect, useState } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
-
+import { useDispatch } from 'react-redux'
+import { getReducer } from 'src/store/apps/sliceActionReducer'
 // ** Axios
 import axios from 'axios'
 
@@ -37,24 +38,28 @@ const AuthProvider = ({ children }) => {
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
   const [loading, setLoading] = useState(defaultProvider.loading)
-  
+  const dispatch = useDispatch()
+  const setToken = getReducer('token')
+
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
+    const accessToken = getCookie('jwt')
     const initAuth = async () => {
-      // const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       if (accessToken) {
         setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
             withCredentials: true,
             headers: {
-              Authorization: accessToken
+              Authorization: `Bearer ${accessToken}`
             }
           })
           .then(async response => {
             authenticate(response.data, () => {
               setUser(response.data.data)
+              setCookie('jwt', response.data.accessToken)
+              dispatch(setToken(response.data.accessToken))
               setLoading(false)
             })
           })
@@ -83,6 +88,7 @@ const AuthProvider = ({ children }) => {
       .then(response => {
         // params.rememberMe ? authenticate(response.data) : ''
         authenticate(response.data, () => {
+          dispatch(setToken(response.data.accessToken))
           setUser(response.data.data)
           const returnUrl = router.query.returnUrl
           const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'

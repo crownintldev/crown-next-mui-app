@@ -143,6 +143,7 @@ const MaterialTable = ({
         table={table}
         tableData={data}
         removeSelection={handleRemoveSelection}
+        showTrash={showTrash}
         headerMenu={headerMenu}
       />
     )

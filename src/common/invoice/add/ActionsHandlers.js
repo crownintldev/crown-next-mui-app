@@ -113,7 +113,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
     })
   }
 
-  const multiRender = data.map((invoiceData, index) => (
+  const multiRender = data && data.map((invoiceData, index) => (
     <React.Fragment key={index}>
       {index === 0 && <AddCardHeader />}
       <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />

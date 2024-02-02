@@ -165,8 +165,7 @@ export const accountArrays = () => [
         icon: 'tabler:circle-filled'
       }
     ]
-  },
-  
+  }
 
   // {
   //   sectionTitle: 'Apps & Pages'
@@ -263,7 +262,6 @@ export const accountArrays = () => [
   //     }
   //   ]
   // },
-
 
   // {
   //   title: 'Pages',
@@ -828,7 +826,7 @@ export const automationArray = () => [
       }
     ]
   },
-  
+
   {
     title: 'Email ',
     icon: 'clarity:email-line',
@@ -927,10 +925,9 @@ export const settingsArray = () => [
   {
     title: 'User Roles',
     icon: 'tabler:settings',
-    path: '/roles',
-
+    path: '/roles'
   },
-  
+
   {
     title: 'Business Setting',
     icon: 'fluent:chat-12-regular',
@@ -1019,6 +1016,5 @@ export const settingsArray = () => [
         icon: 'tabler:circle-filled'
       }
     ]
-  },
-  
+  }
 ]

@@ -48,7 +48,7 @@ const AddCard = props => {
   // ** Deletes form
   const data = useSelector(state => state.invoice.data)
   const invoiceDataArray = useSelector(state => state.myInvoice.data)
-  invoiceDataArray.map(item => console.log('item', item))
+  invoiceDataArray && invoiceDataArray.map(item => console.log('item', item))
   console.log('invoice data ary', invoiceDataArray)
 
   useEffect(() => {

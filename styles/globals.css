@@ -402,6 +402,10 @@ code[class*='language-'] {
 }
 .node-images {
   margin-top: 4px;
+  margin-bottom: 4px;
+}
+.css-r1nnr0-MuiTreeItem-content .MuiTreeItem-label {
+  font-weight: 600;
 }
 .node-images .css-9l5vo-MuiCollapse-wrapperInner {
   display: flex;
@@ -415,4 +419,10 @@ code[class*='language-'] {
 }
 .css-161j9ok-MuiTreeView-root {
   display: block;
+}
+.media-doc-icon {
+  color: #625b5b;
+}
+.media-doc-icon:hover {
+  color: #1852fe;
 }

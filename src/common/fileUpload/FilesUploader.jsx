@@ -36,7 +36,6 @@ const FilesUploader = ({ files, setFiles, onChange }) => {
       return <Icon icon='tabler:file-description' />
     }
   }
-
   const handleRemoveFile = file => {
     const uploadedFiles = files
     const filtered = uploadedFiles.filter(i => i.name !== file.name)

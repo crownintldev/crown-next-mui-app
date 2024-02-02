@@ -47,7 +47,8 @@ const EditFilesUploader = ({
   }
 
   const renderPreviousFiles = file => {
-    return <Image width={38} height={38} alt={file.name ?? ""} src={file.url ?? ""} />
+    
+    return <Image width={38} height={38} alt={file.fileName ?? ""} src={file.url ?? ""} />
   }
 
   const handleRemoveFile = file => {
@@ -61,8 +62,6 @@ const EditFilesUploader = ({
     setPreviousFiles(removeFile)
     setRemoveFiles([...removeFiles, file.public_id])
   }
-  // console.log('previousFiles', previousFiles)
-  // console.log('removeFiles', removeFiles)
 
   const fileList = files.map(file => (
     <ListItem key={file.name}>

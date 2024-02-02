@@ -389,7 +389,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               placeholder='Choose Refer'
             />
           </Grid>
-        
+
           {!editId ? (
             <Grid item md={6}>
               <Box sx={{ width: '200px' }}>

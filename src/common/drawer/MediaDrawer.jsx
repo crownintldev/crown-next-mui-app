@@ -1,4 +1,3 @@
-
 // React Imports
 import React, { useState } from 'react'
 
@@ -13,6 +12,7 @@ import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
 
 import Icon from 'src/@core/components/icon'
+import { Divider } from '@mui/material'
 
 const MediaDrawer = ({ open, onClose, data }) => {
   const [expanded, setExpanded] = useState([])
@@ -40,85 +40,56 @@ const MediaDrawer = ({ open, onClose, data }) => {
           expanded={expanded}
           onNodeToggle={handleTreeItemToggle}
         >
-          <TreeItem nodeId='passportId' label='passportId'>
-
-            {data.passportId.files ? (
-              data.passportId.files.map((item, index) => (
-                <>
-                  <TreeItem
-                    key={`${index}+${item.fileName}`}
-                    nodeId={`${index}+${item.fileName}`}
-                    label={
-                      <div className='media-img-container'>
-                        {item.fileType === 'image/png' ? (
-                          <Icon icon='tabler:file-type-png' width={24} height={24} />
-                        ) : (
-                          item.fileType ===
-                          'image/jpg'(<Icon icon='tabler:file-type-jpg' width={24} height={24} />)
-                        )}
-                        {/* {item.fileName} */}
-                        <Image src={item.url} height={150} width={150} />
-                      </div>
-                    }
-                  />
-                  <TreeItem
-                    key={`${index}+${item.url}`}
-                    nodeId={`${index}+${item.url}`}
-                    label={
-                      <div>
-                        <Icon icon='tabler:image' width={24} height={24} />
-                        {`filename: ${item.fileName}`}
-                      </div>
-                    }
-                    onClick={event =>
-                      handleTreeItemClick(event, `${index}+${item.fileUrl}`, item.fileUrl)
-                    }
-                  />
-                  {/* <TreeItem
-                    key={`${index}+${item.fileName}`}
-                    nodeId={`${index}+${item.fileName}`}
-                    label={
-                      <div>
-                        {item.fileType === 'image/png' ? (
-                          <Icon icon='tabler:file-type-png' width={24} height={24} />
-                        ) : item.fileType === 'image/jpeg' ? (
-                          <Icon icon='tabler:file-type-jpg' width={24} height={24} />
-                        ) : (
-                          <span>{item.fileName}</span>
-                        )}
-                        {item.fileName}
-                      </div>
-                    }
-                  /> */}
-                  {/* <TreeItem
-                    key={`${index}+${item.fileType}`}
-                    nodeId={`${index}+${item.fileType}`}
-                    label={
-                      <div>
-                        <Icon icon='tabler:file-type-jpg' width={24} height={24} />
-                        {`filename: ${item.fileName}`}
-                      </div>
-                    }
-                  /> */}
-                  <TreeItem
-                    key={`${index}+${item.fileUrl}`}
-                    nodeId={`${index}+${item.fileUrl}`}
-                    label={
-                      <div>
-                        <Icon icon='tabler:link' width={24} height={24} />
-                        {`filename: ${item.fileName}`}
-                      </div>
-                    }
-                    onClick={event =>
-                      handleTreeItemClick(event, `${index}+${item.fileUrl}`, item.fileUrl)
-                    }
-                  />
-                </>
+          <TreeItem nodeId='passport' label='passport'>
+            {data.passport && data.passport.files ? (
+              data.passport.files.map((item, index) => (
+                <div key={index}>
+                  {item.fileType.startsWith('image/') ? ( // Check if it's an image
+                    <TreeItem
+                      key={`${index}+${item.url}`}
+                      nodeId={`${index}+${item.url}`}
+                      label={
+                        <div className='media-img-container'>
+                          {item.fileType === 'image/png' ? (
+                            <Icon icon='tabler:file-type-png' width={24} height={24} />
+                          ) : (
+                            <Icon icon='tabler:file-type-jpg' width={24} height={24} />
+                          )}
+                          <Image src={item.url} height={80} width={80} className='media-image' />
+                          <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
+                          {/* Truncate to 10 characters */}
+                        </div>
+                      }
+                    />
+                  ) : item.fileType === 'application/pdf' ||
+                    item.fileType === 'application/docx' ? ( // Check if it's a PDF or DOCX
+                    <TreeItem
+                      key={`${index}+${item.url}`}
+                      nodeId={`${index}+${item.url}`}
+                      label={
+                        <div className='media-img-container'>
+                          {item.fileType === 'application/pdf' ? (
+                            <Icon icon='tabler:file-type-pdf' width={24} height={24} />
+                          ) : (
+                            <Icon icon='tabler:file-type-doc' width={24} height={24} />
+                          )}
+                          <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
+                          {/* Truncate to 10 characters */}
+                        </div>
+                      }
+                    />
+                  ) : (
+                    // If it's neither an image nor a PDF/DOCX, display "File Not Supported"
+                    <div className='media-img-container'>
+                      <Icon icon='tabler:file-type-unknown' width={24} height={24} />
+                      <span className='tooltip'>File Not Supported</span>
+                    </div>
+                  )}
+                </div>
               ))
             ) : (
               <h3>No Files Found...</h3>
             )}
-
           </TreeItem>
         </TreeView>
         <Button variant='contained' color='primary' onClick={onClose} sx={{ mt: 10 }}>

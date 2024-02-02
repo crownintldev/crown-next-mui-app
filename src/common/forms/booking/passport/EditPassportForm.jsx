@@ -98,7 +98,7 @@ const EditPassportForm = ({ toggle, _id, removeSelection, setFormSize }) => {
   const [date, setDate] = useState(new Date())
 
   const dispatch = useDispatch()
-  const passportId = useSelector(state => state.passport.data.find(item => item._id === _id))
+  const passport = useSelector(state => state.passport.data.find(item => item._id === _id))
 
   // onModel
   const [agents, setAgents] = useState()
@@ -157,20 +157,20 @@ const EditPassportForm = ({ toggle, _id, removeSelection, setFormSize }) => {
     setValue('deletedFiles', removeFiles)
   }, [previousFiles, removeFiles])
   useEffect(() => {
-    if (passportId) {
-      setPreviousFiles(passportId.files)
-      Object.keys(passportId).forEach(key => {
+    if (passport) {
+      setPreviousFiles(passport.files)
+      Object.keys(passport).forEach(key => {
         // @ts-ignore
-        setValue('by', passportId.by?._id)
-        setValue('dob', dayjs(passportId.dob))
-        setValue('doe', dayjs(passportId.doe))
-        setValue(key, passportId[key])
+        setValue('by', passport.by?._id)
+        setValue('dob', dayjs(passport.dob))
+        setValue('doe', dayjs(passport.doe))
+        setValue(key, passport[key])
 
         // @ts-ignore
-        // fetchFiles(passportId?.files)
+        // fetchFiles(passport?.files)
       })
     }
-  }, [passportId, setValue])
+  }, [passport, setValue])
   const watchedOnModel = watch('onModel')
 
   const handleClose = () => {
@@ -183,7 +183,7 @@ const EditPassportForm = ({ toggle, _id, removeSelection, setFormSize }) => {
 
   const onSubmit = async data => {
     console.log(data)
-    if (passportId.status === 'booked') {
+    if (passport.status === 'booked') {
       setValue('by', '')
       setValue('onModel', '')
     }

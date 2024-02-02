@@ -541,7 +541,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PassportSubmitButton
-            editId={editId?.passport || editId?._id || ''}
+            editId={editId?.passportId || editId?._id || ''}
             dispatch={dispatch}
             watch={watch}
             toggle={toggle}

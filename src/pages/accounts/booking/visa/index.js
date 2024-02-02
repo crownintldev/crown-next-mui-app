@@ -11,7 +11,6 @@ import Image from 'next/image'
 //Forms
 import EditVisaBookingForm from 'src/common/forms/booking/visaBooking/EditVisaBookingForm'
 import PassportForm from 'src/common/forms/booking/passport/PassportForm'
-import EditPassportForm from 'src/common/forms/booking/passport/EditPassportForm'
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 
 // redux
@@ -27,7 +26,6 @@ import MediaDrawer from 'src/common/drawer/MediaDrawer'
 const index = ({ apiData }) => {
   const openMediaDrawer = row => {
 
-    console.log('row data', row.original)
     setSelectedRowData(row.original)
     setMediaDrawerOpen(true)
   }

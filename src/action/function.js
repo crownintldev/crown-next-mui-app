@@ -2,8 +2,9 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { axiosErrorMessage, capitalizeSplitDash } from 'src/utils/helperfunction'
 import { AccountApi } from 'config'
-import { accessToken } from './auth-action'
+import { getCookie } from './auth-action'
 
+const accessToken = getCookie('jwt')
 export const createApi = async ({
   api,
   apidomain,
@@ -16,13 +17,16 @@ export const createApi = async ({
   removeSelection
 }) => {
   const baseURL = apidomain || AccountApi
+ 
   try {
-    const response = await axios.post(`${baseURL}/${api}/create`, data, {
+    const response = await axios.post(`${baseURL}/${api}/create`, data, 
+    {
       withCredentials: true,
       headers: {
-        Authorization: accessToken
+        Authorization: `Bearer ${accessToken}`
       }
-    })
+    }
+    )
 
     // console.log(response.data.data)
     if (removeSelection) {
@@ -61,12 +65,14 @@ export const updateApi = async ({
   removeSelection
 }) => {
   try {
-    const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/${api}/update/${_id}`, data, {
+    const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/${api}/update/${_id}`, data,
+     {
       withCredentials: true,
       headers: {
-        Authorization: accessToken
+        Authorization: `Bearer ${accessToken}`
       }
-    })
+    }
+    )
     if (response.data.data) {
       dispatch(
         fetchData({
@@ -110,7 +116,7 @@ export const updateManyApi = async ({
     const response = await axios.put(`${baseURL}/${myapi}`, data, {
       withCredentials: true,
       headers: {
-        Authorization: accessToken
+        Authorization: `Bearer ${accessToken}`
       }
     })
     if (response) {

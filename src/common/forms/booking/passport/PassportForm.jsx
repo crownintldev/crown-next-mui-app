@@ -139,7 +139,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     resolver: yupResolver(schema)
   })
   const passportNumber = getValues('passportNumber')
-
   useEffect(() => {
     if (editId?.passportNumber) {
       Object.keys(editId).forEach(key => {
@@ -169,7 +168,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   //   }
   // }
   // console.log(editId)
-  console.log(editId)
+  // console.log(editId)
   useEffect(() => {
     setFormSize(1200)
     if (passportNumber.length === 9 && !_id) {

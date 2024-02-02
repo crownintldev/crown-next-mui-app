@@ -16,13 +16,17 @@ const toQueryString = params => {
 }
 
 // ** Fetch Visa Booking
-export const fetchData = createAsyncThunk('appAccounts/fetchData', async params => {
+export const fetchData = createAsyncThunk('appAccounts/fetchData', async (params, thunkAPI)=> {
+  const currentState = thunkAPI.getState()
   const queryString = toQueryString(params)
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/account?${queryString}`, {
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/account?${queryString}`,
+  {
+    withCredentials: true,
     headers: {
-      Authorization: accessToken
+      Authorization: `Bearer ${currentState.token.data}`
     }
-  })
+  }
+  )
 
   // console.log(response)
   return response.data

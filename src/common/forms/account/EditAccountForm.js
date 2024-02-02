@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
+import { getCookie } from 'src/action/auth-action'
 
 // ** MUI Imports
 import Button from '@mui/material/Button'
@@ -69,7 +70,7 @@ const defaultValues = {
 // ------------------visaBooking Form-----------------------
 const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   const theme = useTheme()
-
+  const accessToken = getCookie('jwt')
   // ** State
   const dispatch = useDispatch()
 
@@ -122,7 +123,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
 
   const amountRemaining = totalAmount - (paidAmount + discountAmount)
 
-  console.log('reming data', paidAmount, discountAmount, typeof paidAmount, typeof discountAmount)
+  // console.log('reming data', paidAmount, discountAmount, typeof paidAmount, typeof discountAmount)
   useEffect(() => {
     if (ids.length > 0) {
       setValue('accountIds', ids)
@@ -138,7 +139,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
         { totalAmount: 0, paidAmount: 0, remainingAmount: 0, discount: 0 }
       )
 
-      console.log('data', data)
+      // console.log('data', data)
       setValue('paid', data.paidAmount)
       setValue('total', data.totalAmount)
       setValue('discount', data.discount)
@@ -152,7 +153,12 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
 
   const onSubmit = async data => {
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/account/update`, data)
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/account/update`, data,{
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
       if (response) {
         dispatch(
           fetchData({

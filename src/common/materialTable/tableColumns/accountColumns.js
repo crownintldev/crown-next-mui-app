@@ -45,10 +45,10 @@ export const useChildTableColumns = () =>
   useMemo(() => [
     { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
     {
-      accessorKey: 'passportId.passportNumber',
+      accessorKey: 'passport.passportNumber',
       header: 'Passport Number'
     },
-    { accessorKey: 'passportId.givenName', header: 'Given Name', Cell: defaultCellRenderer },
+    { accessorKey: 'passport.givenName', header: 'Given Name', Cell: defaultCellRenderer },
     {
       accessorKey: 'processing.processingFee',
       header: 'Processing Fee',

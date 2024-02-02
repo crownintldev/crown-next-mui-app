@@ -45,7 +45,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
           visaBookingIds.map((item, index) => {
             return (
               <Box className='flex space-x-2' key={index}>
-                {index + 1}: &nbsp; <p>Passport#: {item?.passportId?.passportNumber}</p>
+                {index + 1}: &nbsp; <p>Passport#: {item?.passport?.passportNumber}</p>
                 <p>
                   {`${item.confirmed ? `Confirmed Fees: ${item.confirmed.totalFee}` : ''}`}
                   {`${

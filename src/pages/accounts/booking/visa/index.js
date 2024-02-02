@@ -26,6 +26,8 @@ import MediaDrawer from 'src/common/drawer/MediaDrawer'
 
 const index = ({ apiData }) => {
   const openMediaDrawer = row => {
+
+    console.log('row data', row.original)
     setSelectedRowData(row.original)
     setMediaDrawerOpen(true)
   }
@@ -89,7 +91,7 @@ const index = ({ apiData }) => {
   }
   return (
     <div>
-     
+
 
       {formDrawer()}
       <MaterialTable

@@ -40,13 +40,13 @@ const index = ({ apiData }) => {
       href: ''
     }),
     columnData({
-      field: 'passportId.passportNumber',
+      field: 'passport.passportNumber',
       headerName: 'Passport Number',
       href: ''
     }),
     columnData({
       minWidth: 200,
-      field: 'passportId.givenName',
+      field: 'passport.givenName',
       headerName: 'Given Name',
       href: ''
     }),

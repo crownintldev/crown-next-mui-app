@@ -365,8 +365,47 @@ code[class*='language-'] {
   align-items: center;
   margin-top: 36px;
 }
+.css-161j9ok-MuiTreeView-root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.media-image {
+  /* box-shadow: 0px 0px 6px 1px rgb(226, 224, 224); */
+  border-radius: 3px;
+}
 .media-img-container {
   display: flex;
-  align-items: center;
   flex-direction: column-reverse;
+  align-items: center;
+}
+.tooltip {
+  position: absolute;
+  bottom: 100%; /* Position it above the container */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+  white-space: nowrap;
+  pointer-events: none; /* Allow interactions with elements beneath the tooltip */
+}
+
+.media-img-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.css-9l5vo-MuiCollapse-wrapperInner {
+  display: flex;
+  margin-top: 12px;
+  gap: 20px;
+}
+.css-r1nnr0-MuiTreeItem-content.Mui-selected {
+  background-color: white !important;
 }

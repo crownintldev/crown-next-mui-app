@@ -178,7 +178,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     } else if (_id) {
       setEditId(passportIdFromState)
     }
-  }, [passportNumber,_id])
+  }, [passportNumber, _id])
 
   // console.log(editId)
 
@@ -271,8 +271,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   useEffect(() => {
     filterItems(searchFields)
   }, [searchFields, watchedOnModel, clients, agents, company])
-
-
 
   return (
     <div>
@@ -544,7 +542,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PassportSubmitButton
-            editId={editId?.passportId || editId?._id || ''}
+            editId={editId?.passport || editId?._id || ''}
             dispatch={dispatch}
             watch={watch}
             toggle={toggle}

@@ -38,6 +38,7 @@ const MaterialTable = ({
   } = drawerProps
   const theme = useTheme()
   const dispatch = useDispatch()
+  const [showTrash, setShowTrash] = useState(false)
   const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
   const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
@@ -73,7 +74,8 @@ const MaterialTable = ({
             searchTerm: globalFilter,
             columnFilters: JSON.stringify(columnFilters),
             sortField,
-            sortOrder
+            sortOrder,
+            deleted: showTrash
           })
         )
       }
@@ -86,7 +88,8 @@ const MaterialTable = ({
           limit: pagination.pageSize,
           page: pagination.pageIndex + 1,
           sortField,
-          sortOrder
+          sortOrder,
+          deleted: showTrash
         })
       )
     }
@@ -95,7 +98,7 @@ const MaterialTable = ({
     return () => {
       window.removeEventListener('keydown', handleEnterPress)
     }
-  }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
+  }, [dispatch, showTrash, setPagination, pagination, globalFilter, columnFilters, sorting])
 
   const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
   useEffect(() => {
@@ -224,15 +227,16 @@ const MaterialTable = ({
         }}
       >
         <Tab
+          onClick={() => setShowTrash(false)}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
-       
               <InboxIcon style={{ marginRight: '4px' }} /> Default
             </div>
           }
           value='default'
         />
         <Tab
+          onClick={() => setShowTrash(true)}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <DeleteIcon style={{ marginRight: '4px' }} /> Trash

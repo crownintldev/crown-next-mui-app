@@ -13,6 +13,10 @@ import Icon from 'src/@core/components/icon'
 import { useDispatch } from 'react-redux'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
+import { getCookie } from 'src/action/auth-action'
+import { TryOutlined } from '@mui/icons-material'
+
+const accessToken = getCookie('jwt')
 
 const TableHeader = props => {
   const dispatch = useDispatch()
@@ -46,9 +50,19 @@ const TableHeader = props => {
       return toast.error('api not found', { position: 'top-center' })
     }
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/remove`, {
-        ids: selectedIds
-      })
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/${api}/remove`,
+        {
+          ids: selectedIds,
+          deleted:true
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
       if (response.data) {
         dispatch(
           fetchData({
@@ -155,8 +169,6 @@ const TableHeader = props => {
           </div> */}
           {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
-
-    
       </Box>
     </Box>
   )

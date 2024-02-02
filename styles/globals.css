@@ -400,12 +400,19 @@ code[class*='language-'] {
   visibility: visible;
   opacity: 1;
 }
-
+.node-images {
+  margin-top: 4px;
+}
 .node-images .css-9l5vo-MuiCollapse-wrapperInner {
   display: flex;
   margin-top: 12px;
-  gap: 20px;
+  justify-content: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 .css-r1nnr0-MuiTreeItem-content.Mui-selected {
   background-color: white !important;
+}
+.css-161j9ok-MuiTreeView-root {
+  display: block;
 }

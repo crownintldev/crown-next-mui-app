@@ -40,7 +40,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
           expanded={expanded}
           onNodeToggle={handleTreeItemToggle}
         >
-          <TreeItem nodeId='passport' label='passport' className='node-images'>
+          <TreeItem nodeId='Images' label='Images' className='node-images'>
             {data.passport && data.passport.files ? (
               data.passport.files.map((item, index) => (
                 <div key={index}>
@@ -62,6 +62,17 @@ const MediaDrawer = ({ open, onClose, data }) => {
                       }
                     />
                   )}
+                </div>
+              ))
+            ) : (
+              <h3>No Image Found...</h3>
+            )}
+          </TreeItem>
+          <Divider />
+          <TreeItem nodeId='documents' label='Documents' className='node-images'>
+            {data.passport && data.passport.files ? (
+              data.passport.files.map((item, index) => (
+                <div key={index}>
                   {item.fileType.startsWith('application/') && ( // Check if it's a PDF or DOCX
                     <TreeItem
                       key={`${index}+${item.url}`}
@@ -69,9 +80,9 @@ const MediaDrawer = ({ open, onClose, data }) => {
                       label={
                         <div className='media-img-container'>
                           {item.fileType === 'application/pdf' ? (
-                            <Icon icon='tabler:file-type-pdf' width={24} height={24} />
+                            <Icon icon='tabler:file-type-pdf' width={75} height={75} />
                           ) : (
-                            <Icon icon='tabler:file-type-doc' width={24} height={24} />
+                            <Icon icon='tabler:file-type-doc' width={75} height={75} />
                           )}
                           <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
                           {/* Truncate to 10 characters */}
@@ -82,7 +93,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
                 </div>
               ))
             ) : (
-              <h3>No Files Found...</h3>
+              <h3>Document Not Found...</h3>
             )}
           </TreeItem>
         </TreeView>

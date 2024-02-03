@@ -1,6 +1,7 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { axiosErrorMessage, capitalizeSplitDash } from 'src/utils/helperfunction'
+import axiosInstance from 'src/utils/axiosInstance'
 import { AccountApi } from 'config'
 import { getCookie } from './auth-action'
 
@@ -17,16 +18,14 @@ export const createApi = async ({
   removeSelection
 }) => {
   const baseURL = apidomain || AccountApi
- 
+
   try {
-    const response = await axios.post(`${baseURL}/${api}/create`, data, 
-    {
+    const response = await axios.post(`${baseURL}/${api}/create`, data, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
-    }
-    )
+    })
 
     // console.log(response.data.data)
     if (removeSelection) {
@@ -56,6 +55,7 @@ export const createApi = async ({
 export const updateApi = async ({
   _id,
   api,
+  apidomain,
   data,
   dispatch,
   fetchData,
@@ -64,15 +64,9 @@ export const updateApi = async ({
   message,
   removeSelection
 }) => {
+  const baseURL = apidomain || AccountApi
   try {
-    const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/${api}/update/${_id}`, data,
-     {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    }
-    )
+    const response = await axiosInstance.put(`${baseURL}/${api}/update/${_id}`, data)
     if (response.data.data) {
       dispatch(
         fetchData({
@@ -138,3 +132,37 @@ export const updateManyApi = async ({
     toast.error(axiosErrorMessage(err), { position: 'top-center' })
   }
 }
+
+export const handleDeleteApi = async ({
+  api,
+  ids,
+  completeApi,
+  apidomain,
+  dispatch,
+  fetchData,
+  toggle,
+  reset,
+  message,
+  removeSelection
+}) => {
+  const baseURL = apidomain || AccountApi;
+
+  // Confirmation dialog
+  const confirmDeletion = window.confirm("Are you sure you want to delete this item?");
+
+  if (confirmDeletion) {
+    try {
+      const response = await axiosInstance.post(`${baseURL}/${api}/remove`, { ids });
+      dispatch(fetchData({}));
+      toast.success(message ? message : `${capitalizeSplitDash(api)} Deleted Successfully`, {
+        position: 'top-center'
+      });
+    } catch (err) {
+      console.error(axiosErrorMessage(err));
+      toast.error(axiosErrorMessage(err), { position: 'top-center' });
+    }
+  } else {
+    // Optionally handle the cancellation
+    console.log("Deletion cancelled.");
+  }
+};

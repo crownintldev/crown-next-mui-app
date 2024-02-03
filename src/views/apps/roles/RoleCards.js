@@ -1,10 +1,8 @@
 // ** React Imports
 import { useEffect, useState } from 'react'
-import SelectField from 'src/common/dataEntry/SelectField'
-
 // ** Next Import
 import Link from 'next/link'
-
+import { capitalizeValue } from 'src/utils/helperfunction'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -37,19 +35,20 @@ import Icon from 'src/@core/components/icon'
 import CustomTextField from 'src/@core/components/mui/text-field'
 
 // ** actions
-import { useDispatch } from 'react-redux'
-import { createApi } from 'src/action/function'
+import { useDispatch, useSelector } from 'react-redux'
+import { createApi, updateApi, handleDeleteApi } from 'src/action/function'
 import { fetchRole } from 'src/store'
 import { AuthApi } from 'config'
-// const cardData = [
-//   { totalUsers: 4, title: 'Administrator', avatars: ['1.png', '2.png', '3.png', '4.png'] },
-//   {
-//     totalUsers: 7,
-//     title: 'Accountant',
-//     avatars: ['5.png', '6.png', '7.png', '8.png', '1.png', '2.png', '3.png']
-//   },
-//   { totalUsers: 5, title: 'Entry', avatars: ['4.png', '5.png', '6.png', '7.png', '8.png'] }
-// ]
+
+const cardData = [
+  { totalUsers: 4, title: 'Administrator', avatars: ['1.png', '2.png', '3.png', '4.png'] },
+  {
+    totalUsers: 7,
+    title: 'Accountant',
+    avatars: ['s', 'b', '7.png', '8.png', '1.png', '2.png', '3.png']
+  },
+  { totalUsers: 5, title: 'Entry', avatars: ['4.png', '5.png', '6.png', '7.png', '8.png'] }
+]
 
 const rolesArr = [
   'Account',
@@ -64,26 +63,40 @@ const rolesArr = [
 const RolesCards = () => {
   // ** States
   const dispatch = useDispatch()
+  const roles = useSelector((state) => state.role.data)
   const [open, setOpen] = useState(false)
   const [dialogTitle, setDialogTitle] = useState('Add')
+  const [editRoleId, setEditRoleId] = useState('')
   const [selectedCheckbox, setSelectedCheckbox] = useState([])
   const [roleTitle, setRoleTitle] = useState('')
   const [isIndeterminateCheckbox, setIsIndeterminateCheckbox] = useState(false)
   const handleClickOpen = () => setOpen(true)
-
-  //
   const [selectApp, setSelectApp] = useState(['account'])
 
+  // console.log(editRole)
   const handleSubmit = () => {
     const data = { title: roleTitle, list: selectedCheckbox, appPermissions: selectApp }
-    createApi({
-      dispatch,
-      fetchData: fetchRole,
-      api: 'role',
-      data,
-      reset: handleClose,
-      apidomain: AuthApi
-    })
+    if (dialogTitle === 'Add') {
+      createApi({
+        dispatch,
+        fetchData: fetchRole,
+        api: 'role',
+        data,
+        reset: handleClose,
+        apidomain: AuthApi
+      })
+    }
+    if (dialogTitle === 'Edit') {
+      updateApi({
+        _id: editRoleId,
+        dispatch,
+        fetchData: fetchRole,
+        api: 'role',
+        data,
+        reset: handleClose,
+        apidomain: AuthApi
+      })
+    }
   }
 
   const handleClose = () => {
@@ -92,22 +105,24 @@ const RolesCards = () => {
     setIsIndeterminateCheckbox(false)
   }
 
-  const togglePermission = id => {
-    const arr = selectedCheckbox
-    if (selectedCheckbox.includes(id)) {
-      arr.splice(arr.indexOf(id), 1)
-      setSelectedCheckbox([...arr])
-    } else {
-      arr.push(id)
-      setSelectedCheckbox([...arr])
-    }
+  const togglePermission = (id) => {
+    setSelectedCheckbox((current) => {
+      const newArr = [...current]
+      const index = newArr.indexOf(id)
+      if (index !== -1) {
+        newArr.splice(index, 1)
+      } else {
+        newArr.push(id)
+      }
+      return newArr
+    })
   }
 
   const handleSelectAllCheckbox = () => {
     if (isIndeterminateCheckbox) {
       setSelectedCheckbox([])
     } else {
-      rolesArr.forEach(row => {
+      rolesArr.forEach((row) => {
         const id = row.toLowerCase().split(' ').join('-')
         togglePermission(`${id}-read`)
         togglePermission(`${id}-create`)
@@ -116,6 +131,9 @@ const RolesCards = () => {
     }
   }
   useEffect(() => {
+    dispatch(fetchRole({}))
+  }, [dispatch])
+  useEffect(() => {
     if (selectedCheckbox.length > 0 && selectedCheckbox.length < rolesArr.length * 3) {
       setIsIndeterminateCheckbox(true)
     } else {
@@ -123,68 +141,118 @@ const RolesCards = () => {
     }
   }, [selectedCheckbox])
 
-  // const renderCards = () =>
-  //   cardData.map((item, index) => (
-  //     <Grid item xs={12} sm={6} lg={4} key={index}>
-  //       <Card>
-  //         <CardContent>
-  //           <Box
+  const handleEditRole = (item) => {
+    setRoleTitle(item.title)
+    setSelectedCheckbox(item.list)
+    setEditRoleId(item._id)
+  }
+
+  const renderCards = () =>
+    roles.map((item, index) => (
+      <Grid item xs={12} sm={6} lg={4} key={index}>
+        <Card>
+          <CardContent>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
+                <Typography variant='h4' sx={{ mb: 1 }}>
+                  {capitalizeValue(item.title)}
+                </Typography>
+
+                <Typography
+                  href='/'
+                  component={Link}
+                  sx={{ color: 'primary.main', textDecoration: 'none' }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleClickOpen()
+                    setDialogTitle('Edit')
+                    handleEditRole(item)
+                  }}
+                >
+                  Edit Role
+                </Typography>
+              </Box>
+              <IconButton
+                size='small'
+                sx={{ color: '#c00' }}
+                onClick={() =>
+                  handleDeleteApi({
+                    ids: [item._id],
+                    dispatch,
+                    fetchData: fetchRole,
+                    api: 'role',
+                    apidomain: AuthApi
+                  })
+                }
+              >
+                <Icon icon='material-symbols:delete' />
+              </IconButton>
+            </Box>
+          </CardContent>
+        </Card>
+      </Grid>
+    ))
+  // cardData.map((item, index) => (
+  //   <Grid item xs={12} sm={6} lg={4} key={index}>
+  //     <Card>
+  //       <CardContent>
+  //         <Box
+  //           sx={{
+  //             mb: 1.5,
+  //             display: 'flex',
+  //             justifyContent: 'space-between',
+  //             alignItems: 'center'
+  //           }}
+  //         >
+  //           <Typography
+  //             sx={{ color: 'text.secondary' }}
+  //           >{`Total ${item.totalUsers} users`}</Typography>
+  //           <AvatarGroup
+  //             max={4}
+  //             className='pull-up'
   //             sx={{
-  //               mb: 1.5,
-  //               display: 'flex',
-  //               justifyContent: 'space-between',
-  //               alignItems: 'center'
+  //               '& .MuiAvatar-root': {
+  //                 width: 32,
+  //                 height: 32,
+  //                 fontSize: theme => theme.typography.body2.fontSize
+  //               }
   //             }}
   //           >
+  //             {item.avatars.map((img, index) => (
+  //               <Avatar key={index} alt={item.title} src={`/images/avatars/${img}`} />
+  //             ))}
+  //           </AvatarGroup>
+  //         </Box>
+  //         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+  //           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
+  //             <Typography variant='h4' sx={{ mb: 1 }}>
+  //               {item.title}
+  //             </Typography>
   //             <Typography
-  //               sx={{ color: 'text.secondary' }}
-  //             >{`Total ${item.totalUsers} users`}</Typography>
-  //             <AvatarGroup
-  //               max={4}
-  //               className='pull-up'
-  //               sx={{
-  //                 '& .MuiAvatar-root': {
-  //                   width: 32,
-  //                   height: 32,
-  //                   fontSize: theme => theme.typography.body2.fontSize
-  //                 }
+  //               href='/'
+  //               component={Link}
+  //               sx={{ color: 'primary.main', textDecoration: 'none' }}
+  //               onClick={e => {
+  //                 e.preventDefault()
+  //                 handleClickOpen()
+  //                 setDialogTitle('Edit')
   //               }}
   //             >
-  //               {item.avatars.map((img, index) => (
-  //                 <Avatar key={index} alt={item.title} src={`/images/avatars/${img}`} />
-  //               ))}
-  //             </AvatarGroup>
+  //               Edit Role
+  //             </Typography>
   //           </Box>
-  //           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-  //             <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-  //               <Typography variant='h4' sx={{ mb: 1 }}>
-  //                 {item.title}
-  //               </Typography>
-  //               <Typography
-  //                 href='/'
-  //                 component={Link}
-  //                 sx={{ color: 'primary.main', textDecoration: 'none' }}
-  //                 onClick={e => {
-  //                   e.preventDefault()
-  //                   handleClickOpen()
-  //                   setDialogTitle('Edit')
-  //                 }}
-  //               >
-  //                 Edit Role
-  //               </Typography>
-  //             </Box>
-  //             <IconButton size='small' sx={{ color: 'text.disabled' }}>
-  //               <Icon icon='tabler:copy' />
-  //             </IconButton>
-  //           </Box>
-  //         </CardContent>
-  //       </Card>
-  //     </Grid>
-  //   ))
+  //           <IconButton size='small' sx={{ color: 'text.disabled' }}>
+  //             <Icon icon='tabler:copy' />
+  //           </IconButton>
+  //         </Box>
+  //       </CardContent>
+  //     </Card>
+  //   </Grid>
+  // ))
 
   return (
     <Grid container spacing={6} className='match-height'>
-      {/* {renderCards()} */}
+      {renderCards()}
       {/* Add Role Card */}
       <Grid item xs={12} sm={6} lg={4}>
         <Card
@@ -232,14 +300,17 @@ const RolesCards = () => {
           </Grid>
         </Card>
       </Grid>
+      {/* ///////////////////////////////////////////////////////////// */}
+      {/* Dialog */}
+      {/* ///////////////////////////////////////////////////////////// */}
       {/* modal roles assign */}
       <Dialog fullWidth maxWidth='md' scroll='body' onClose={() => setOpen(!open)} open={open}>
         <DialogTitle
           component='div'
           sx={{
             textAlign: 'center',
-            px: theme => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`],
-            pt: theme => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
+            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`],
+            pt: (theme) => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
           }}
         >
           <Typography variant='h3'>{`${dialogTitle} Role`}</Typography>
@@ -248,8 +319,8 @@ const RolesCards = () => {
 
         <DialogContent
           sx={{
-            pb: theme => `${theme.spacing(5)} !important`,
-            px: theme => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`]
+            pb: (theme) => `${theme.spacing(5)} !important`,
+            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`]
           }}
         >
           <Box sx={{ my: 4 }}>
@@ -258,7 +329,8 @@ const RolesCards = () => {
                 fullWidth
                 label='Role Title'
                 placeholder='Enter Role Title'
-                onChange={e => setRoleTitle(e.target.value)}
+                value={roleTitle}
+                onChange={(e) => setRoleTitle(e.target.value)}
               />
             </FormControl>
           </Box>
@@ -275,8 +347,8 @@ const RolesCards = () => {
                         alignItems: 'center',
                         textTransform: 'capitalize',
                         '& svg': { ml: 1, cursor: 'pointer' },
-                        color: theme => theme.palette.text.secondary,
-                        fontSize: theme => theme.typography.h6.fontSize
+                        color: (theme) => theme.palette.text.secondary,
+                        fontSize: (theme) => theme.typography.h6.fontSize
                       }}
                     >
                       Administrator Access
@@ -321,7 +393,7 @@ const RolesCards = () => {
                         sx={{
                           fontWeight: 600,
                           whiteSpace: 'nowrap',
-                          fontSize: theme => theme.typography.h6.fontSize
+                          fontSize: (theme) => theme.typography.h6.fontSize
                         }}
                       >
                         {i}
@@ -380,8 +452,8 @@ const RolesCards = () => {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            px: theme => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`],
-            pb: theme => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
+            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(15)} !important`],
+            pb: (theme) => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
           }}
         >
           <Box className='demo-space-x'>

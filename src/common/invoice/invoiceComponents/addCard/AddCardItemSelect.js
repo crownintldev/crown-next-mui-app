@@ -9,7 +9,8 @@ import Paper from '@mui/material/Paper'
 import visaBooking from 'src/store/apps/booking/visaBooking'
 
 const AddCardItemSelect = ({ visaBookingIds }) => {
-  console.log('visa bookingID', visaBookingIds)
+
+ // console.log('visa booking', visaBookingIds)
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='invoice table'>
@@ -31,7 +32,6 @@ const AddCardItemSelect = ({ visaBookingIds }) => {
             visaBookingIds.map((invoice, index) => (
               <TableRow key={index}>
                 <TableCell align='right'>{invoice.passportId.passportNumber}</TableCell>
-                <TableCell align='right'>{invoice.passportId.givenName}</TableCell>
                 <TableCell align='right'>{invoice.passportId.givenName}</TableCell>
                 <TableCell align='right'>{invoice.status}</TableCell>
                 <TableCell align='right'>{invoice.visaId.category}</TableCell>

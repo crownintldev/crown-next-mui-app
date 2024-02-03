@@ -23,7 +23,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
     remaining = 0,
     discount = 0
 
-  console.log(data)
+  // console.log(data)
 
   // ** Hook
   const visaBookingIds =
@@ -31,12 +31,13 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
   const feeData = useSelector(state => state.myInvoice.data)
 
   // calculating total Invoices
-  feeData.map(feeItem => {
-    total += feeItem.amount.total
-    paid += feeItem.amount.paid
-    remaining += feeItem.amount.remaining
-    discount += feeItem.amount.discount
-  })
+  feeData &&
+    feeData.map(feeItem => {
+      total += feeItem.amount.total
+      paid += feeItem.amount.paid
+      remaining += feeItem.amount.remaining
+      discount += feeItem.amount.discount
+    })
 
   return (
     <Grid container xl={{ mb: 5 }} xs={{ mb: 5 }} sx={{ mb: 5 }}>

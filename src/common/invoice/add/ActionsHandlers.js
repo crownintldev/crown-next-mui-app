@@ -113,20 +113,22 @@ const ActionsHandlers = ({ open, onClose, data }) => {
     })
   }
 
-  const multiRender = data.map((invoiceData, index) => (
-    <React.Fragment key={index}>
-      {index === 0 && <AddCardHeader />}
-      <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
-      <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
-      {index < data.length - 1 && <hr />}
-      {index + 1 === data.length && !hasRenderedTotal && (
-        <>
-          <AddCardItemWithTotal data={itemTotalData} />
-          {setHasRenderedTotal(true)}{' '}
-        </>
-      )}
-    </React.Fragment>
-  ))
+  const multiRender =
+    data &&
+    data.map((invoiceData, index) => (
+      <React.Fragment key={index}>
+        {index === 0 && <AddCardHeader />}
+        <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
+        <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
+        {index < data.length - 1 && <hr />}
+        {index + 1 === data.length && !hasRenderedTotal && (
+          <>
+            <AddCardItemWithTotal data={itemTotalData} />
+            {setHasRenderedTotal(true)}{' '}
+          </>
+        )}
+      </React.Fragment>
+    ))
 
   const options = [
     { label: 'Account', link: '/accounts/account/' },

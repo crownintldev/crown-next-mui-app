@@ -23,7 +23,7 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
     remaining = 0,
     discount = 0
 
-  console.log(data)
+  // console.log(data)
 
   // ** Hook
   const visaBookingIds =

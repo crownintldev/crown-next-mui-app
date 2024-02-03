@@ -105,14 +105,15 @@ const AuthProvider = ({ children }) => {
     signup(params)
       .then(response => {
         // params.rememberMe ? authenticate(response.data) : ''
-        authenticate(response.data)
-        setUser(response.data.data)
-        const returnUrl = router.query.returnUrl
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-        router.replace(redirectURL)
+        authenticate(response.data, () => {
+          dispatch(setToken(response.data.accessToken))
+          setUser(response.data.data)
+          const returnUrl = router.query.returnUrl
+          const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+          router.replace(redirectURL)
+        })
       })
       .catch(err => {
-        console.log('===auth context===', err)
         if (errorCallback) errorCallback(err)
       })
   }

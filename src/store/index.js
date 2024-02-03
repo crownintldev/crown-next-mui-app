@@ -94,7 +94,7 @@ export const store = configureStore({
     token:generateReducer('token').reducer,
     // auth 
     user: generate('user', fetchUser),
-    // role: generate('role', fetchRole),
+    role: generate('role', fetchRole),
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

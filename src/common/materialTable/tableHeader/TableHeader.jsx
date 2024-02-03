@@ -14,11 +14,12 @@ import { useDispatch } from 'react-redux'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
 import { getCookie } from 'src/action/auth-action'
+import axiosInstance from 'src/utils/axiosInstance'
 import { TryOutlined } from '@mui/icons-material'
 
 const accessToken = getCookie('jwt')
 
-const TableHeader = props => {
+const TableHeader = (props) => {
   const dispatch = useDispatch()
 
   // ** Props
@@ -31,38 +32,44 @@ const TableHeader = props => {
     table,
     tableData,
     removeSelection,
+    showTrash,
     headerMenu
   } = props
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
   const handleClose = () => {
     setAnchorEl(null)
   }
-
-  const handleRemove = async () => {
+  const handleRemove = async (cond) => {
     if (!api) {
       return toast.error('api not found', { position: 'top-center' })
     }
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/${api}/remove`,
-        {
-          ids: selectedIds,
-          deleted:true
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${accessToken}`
+    const apiEndpoint =
+      cond === 'undo' && showTrash
+        ? `${process.env.NEXT_PUBLIC_API}/${api}/remove`
+        : showTrash
+        ? `${process.env.NEXT_PUBLIC_API}/${api}/permanentRemove`
+        : `${process.env.NEXT_PUBLIC_API}/${api}/remove`
+    let requestBody =
+      cond === 'undo' && showTrash
+        ? {
+            ids: selectedIds,
+            deleted: false
           }
-        }
-      )
+        : showTrash
+        ? {}
+        : {
+            ids: selectedIds,
+            deleted: true
+          }
+    try {
+      const response = await axiosInstance.post(apiEndpoint, requestBody)
       if (response.data) {
         dispatch(
           fetchData({
@@ -97,12 +104,6 @@ const TableHeader = props => {
           alignItems: 'center'
         }}
       >
-        {/* {buttonTitle && (
-          <Button onClick={toggle} variant='contained'  sx={{ '& svg': { mr: 2 } }}>
-            <Icon fontSize='1.125rem' icon='tabler:plus' />
-            {buttonTitle}
-          </Button>
-        )} */}
         <IconButton onClick={handleClick}>
           <Icon
             fontSize='1.5rem'
@@ -156,7 +157,33 @@ const TableHeader = props => {
                   >
                     <Icon fontSize='0.8rem' icon='tabler:minus' />
                     {/* {api === 'visa' && 'Delete Visa Service'} */}
-                    {`Delete ${capitalizeSplitDash(api)}`}
+                    {!showTrash && `Delete ${capitalizeSplitDash(api)}`}
+                    {showTrash && 'Delete Permanent'}
+                  </Box>
+                </MenuItem>
+              </div>
+            </div>
+          )}
+          {api && selectedIds && selectedIds.length > 0 && showTrash && (
+            <div onClick={handleClose}>
+              <div onClick={() => handleRemove('undo')}>
+                <MenuItem
+                  sx={{
+                    py: 1,
+                    m: 0
+                  }}
+                >
+                  <Box
+                    sx={{
+                      fontSize: '0.8em',
+                      display: 'flex',
+                      alignItems: 'center',
+                      columnGap: '4px',
+                      color: '#ff9800'
+                    }}
+                  >
+                    <Icon fontSize='0.8rem' icon='tabler:minus' />
+                    {showTrash && 'Undo Delete'}
                   </Box>
                 </MenuItem>
               </div>

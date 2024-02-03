@@ -68,7 +68,8 @@ const defaultValues = {
 const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelection }) => {
   const dispatch = useDispatch()
   //   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
-  let roles = useSelector(state => state.role.data)
+  let roles = useSelector(state => state?.role?.data)
+
   const editIds = useSelector(
     state =>
       ids &&

@@ -46,9 +46,6 @@ export const createFetchDataThunk = (name, api, apidomain) => {
         }
       }
     )
-   
-
-    // console.log(api, response);
     return response.data
   })
 }

@@ -15,12 +15,15 @@ import CardContent from '@mui/material/CardContent'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Stack from '@mui/material/Stack'
+import axiosInstance from 'src/utils/axiosInstance'
+import toast from 'react-hot-toast'
 
 // Other Imports
 import ActionsHandlers from './ActionsHandlers'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
+import { axiosErrorMessage } from 'src/utils/helperfunction'
 
 const OptionsWrapper = styled(Box)(() => ({
   display: 'flex',
@@ -31,8 +34,8 @@ const OptionsWrapper = styled(Box)(() => ({
 const AddActions = () => {
   const [paymentMethod, setPaymentMethod] = useState(null)
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
-  const invoiceDataArray = useSelector(state => state.myInvoice.data)
-
+  const invoiceDataArray = useSelector((state) => state.myInvoice.data)
+  // console.log(invoiceDataArray)
   const paymentMethods = [
     { name: 'Bank Transfer' },
     { name: 'Debit Card' },
@@ -42,11 +45,26 @@ const AddActions = () => {
 
   const defaultProps = {
     options: paymentMethods,
-    getOptionLabel: option => option.name
+    getOptionLabel: (option) => option.name
   }
 
-  const handleActionMethodChange = () => {
-    // Set the state to open the modal
+  const handleInvoiceStore = async () => {
+    try {
+      const response = await axiosInstance.post(
+        `${process.env.NEXT_PUBLIC_API}/invoice/create`,
+        {invoiceDataArray}
+      )
+      toast.success(`Invoice Create Successfully`, {
+        position: 'top-center'
+      })
+      console.log(response)
+    } catch (err) {
+      toast.error(axiosErrorMessage(err), { position: 'top-center' })
+    }
+  }
+
+  const handleOpenPreviewModal = () => {
+    // Set the state to close the modal
     setPreviewModalOpen(true)
   }
 
@@ -60,15 +78,20 @@ const AddActions = () => {
       <Grid item xs={12}>
         <Card>
           <CardContent>
-            <Button fullWidth variant='contained' sx={{ mb: 2, '& svg': { mr: 2 } }}>
+            <Button
+              fullWidth
+              variant='contained'
+              sx={{ mb: 2, '& svg': { mr: 2 } }}
+              onClick={handleInvoiceStore}
+            >
               <Icon fontSize='1.125rem' icon='tabler:send' />
-              Send Invoice
+              Store Invoice
             </Button>
             <Button
               fullWidth
               variant='contained'
               sx={{ mb: 2, '& svg': { mr: 2 } }}
-              onClick={handleActionMethodChange}
+              onClick={handleOpenPreviewModal}
             >
               <Icon fontSize='1.125rem' icon='tabler:submit' />
               Preview
@@ -89,7 +112,7 @@ const AddActions = () => {
             {...defaultProps}
             id='payment-methods'
             clearOnEscape
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField {...params} label='Select your payment' variant='standard' />
             )}
           />

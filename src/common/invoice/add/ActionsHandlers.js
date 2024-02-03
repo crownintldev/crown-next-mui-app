@@ -237,12 +237,13 @@ const ActionsHandlers = ({ open, onClose, data }) => {
             <Button variant='contained' onClick={printGenerator} sx={{ marginRight: 2 }}>
               Print
             </Button>
-            <Button variant='contained' onClick={pdfDownloader} sx={{ marginRight: 2 }}>
+
+            {/* <Button variant='contained' onClick={pdfDownloader} sx={{ marginRight: 2 }}>
               Download PDF
             </Button>
             <Button variant='contained' onClick={screenShotHandler} sx={{ marginRight: 2 }}>
               Screenshot
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       </Modal>

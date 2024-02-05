@@ -39,7 +39,7 @@ const MaterialTable = ({
   const theme = useTheme()
   const dispatch = useDispatch()
   const [showTrash, setShowTrash] = useState(false)
-  const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
+  const { data, total, isLoading, isError } = useSelector((state) => state[stateSelector])
   const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
   // Table state
@@ -65,7 +65,7 @@ const MaterialTable = ({
     let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt'
     let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1
 
-    const handleEnterPress = event => {
+    const handleEnterPress = (event) => {
       if (event.key === 'Enter') {
         dispatch(
           fetchData({
@@ -100,7 +100,7 @@ const MaterialTable = ({
     }
   }, [dispatch, showTrash, setPagination, pagination, globalFilter, columnFilters, sorting])
 
-  const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
+  const selectedRowIds = Object.keys(rowSelection).filter((key) => rowSelection[key])
   useEffect(() => {
     setSelectionRow(selectedRowIds)
   }, [rowSelection])
@@ -178,8 +178,8 @@ const MaterialTable = ({
     enableExpanding: hasSubRows(data),
 
     // enableExpanding: true,
-    renderTopToolbarCustomActions: renderCustomActions,
-    getRowId: row => row._id, // Adjust based on your data's unique identifier
+    renderTopToolbarCustomActions: CreateForm || selectionRow.length>0? renderCustomActions : ()=>{},
+    getRowId: (row) => row._id, // Adjust based on your data's unique identifier
     manualFiltering: true,
     manualPagination: true,
     manualSorting: true,

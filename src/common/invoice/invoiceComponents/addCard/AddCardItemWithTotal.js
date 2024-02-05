@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 
 import { useSelector } from 'react-redux'
+import { currencyFormatter } from 'src/utils/helperfunction'
 
 const CalcWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -17,7 +18,7 @@ const CalcWrapper = styled(Box)(({ theme }) => ({
   }
 }))
 
-const AddCardItemWithTotal = ({ data, invoiceData }) => {
+const AddCardItemWithTotal = ({data, invoiceDataArray }) => {
   let total = 0,
     paid = 0,
     remaining = 0,
@@ -28,15 +29,14 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
   // ** Hook
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : []
-  const feeData = useSelector(state => state.myInvoice.data)
 
   // calculating total Invoices
-  feeData &&
-    feeData.map(feeItem => {
-      total += feeItem.amount.total
-      paid += feeItem.amount.paid
-      remaining += feeItem.amount.remaining
-      discount += feeItem.amount.discount
+  invoiceDataArray &&
+  invoiceDataArray.map(feeItem => {
+      total += feeItem?.amount?.total
+      paid += feeItem?.amount?.paid
+      remaining += feeItem?.amount?.remaining
+      discount += feeItem?.amount?.discount
     })
 
   return (
@@ -48,10 +48,10 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
               <Box className='flex space-x-2' key={index}>
                 {index + 1}: &nbsp; <p>Passport#: {item?.passport?.passportNumber}</p>
                 <p>
-                  {`${item.confirmed ? `Confirmed Fees: ${item.confirmed.totalFee}` : ''}`}
+                  {`${item?.confirmed ? `Confirmed Fees: ${item?.confirmed.totalFee}` : ''}`}
                   {`${
                     item?.processing?.processingFee
-                      ? `Processing Fees: ${item.processing.processingFee}, Visa Fee: ${item.processing.visaFee}`
+                      ? `Processing Fees: ${item?.processing?.processingFee}, Visa Fee: ${item?.processing?.visaFee}`
                       : ''
                   }`}
                 </p>
@@ -74,21 +74,21 @@ const AddCardItemWithTotal = ({ data, invoiceData }) => {
         <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
           <CalcWrapper>
             <Typography sx={{ color: 'text.secondary' }}>Total: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>Rs {total}</Typography>
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>{currencyFormatter(total,"PKR")}</Typography>
           </CalcWrapper>
           <CalcWrapper>
             <Typography sx={{ color: 'text.secondary' }}>Paid: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>Rs {paid}</Typography>
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>{currencyFormatter(paid,"PKR")}</Typography>
           </CalcWrapper>
           <CalcWrapper sx={{ mb: '0 !important' }}>
             <Typography sx={{ color: 'text.secondary' }}>Remaining: </Typography>
             <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Rs {remaining}
+            {currencyFormatter(remaining,"PKR")}
             </Typography>
           </CalcWrapper>
           <CalcWrapper sx={{ mb: '0 !important' }}>
             <Typography sx={{ color: 'text.secondary' }}>Discount</Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>Rs {discount}</Typography>
+            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}> {currencyFormatter(discount || 0,"PKR")}</Typography>
           </CalcWrapper>
         </Box>
       </Grid>

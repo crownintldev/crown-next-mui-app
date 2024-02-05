@@ -31,13 +31,8 @@ const CustomInput = forwardRef(({ ...props }, ref) => {
   )
 })
 
-const now = new Date()
-const tomorrowDate = now.setDate(now.getDate() + 7)
-
-const AddCardHeader = ({ invoiceNumber }) => {
-  const [issueDate, setIssueDate] = useState(new Date())
-  const [dueDate, setDueDate] = useState(new Date(tomorrowDate))
-
+const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
+  const { issueDate, setIssueDate, dueDate, setDueDate, detail } = cardHeader
   // ** Hook
   const theme = useTheme()
 
@@ -52,14 +47,11 @@ const AddCardHeader = ({ invoiceNumber }) => {
             </Typography>
           </Box>
           <div>
-            <Typography sx={{ mb: 2, color: 'text.secondary' }}>
-              Office 149, 450 South Brand Brooklyn
-            </Typography>
-            <Typography sx={{ mb: 2, color: 'text.secondary' }}>
-              San Diego County, CA 91905, USA
+            <Typography sx={{ mb: 2, color: 'text.secondary', maxWidth: '20em' }}>
+              {detail.address}
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              +1 (123) 456 7891, +44 (876) 543 2198
+              {detail.contacts}
             </Typography>
           </div>
         </Box>
@@ -94,7 +86,7 @@ const AddCardHeader = ({ invoiceNumber }) => {
               id='issue-date'
               selected={issueDate}
               customInput={<CustomInput />}
-              onChange={date => setIssueDate(date)}
+              onChange={(date) => setIssueDate(date)}
             />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -105,7 +97,7 @@ const AddCardHeader = ({ invoiceNumber }) => {
               id='due-date'
               selected={dueDate}
               customInput={<CustomInput />}
-              onChange={date => setDueDate(date)}
+              onChange={(date) => setDueDate(date)}
             />
           </Box>
         </Box>

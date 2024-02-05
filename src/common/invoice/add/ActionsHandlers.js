@@ -29,7 +29,7 @@ import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTo
 import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
 import { useTheme } from '@emotion/react'
 
-const ActionsHandlers = ({ open, onClose, data }) => {
+const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
   const itemTotalData = useSelector(state => state.invoice.data)
   const [hasRenderedTotal, setHasRenderedTotal] = useState(false)
   const [selectedOption, setSelectedOption] = useState(null)
@@ -117,7 +117,7 @@ const ActionsHandlers = ({ open, onClose, data }) => {
     data &&
     data.map((invoiceData, index) => (
       <React.Fragment key={index}>
-        {index === 0 && <AddCardHeader />}
+        {index === 0 && <AddCardHeader cardHeader={cardHeader}/>}
         <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
         <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
         {index < data.length - 1 && <hr />}

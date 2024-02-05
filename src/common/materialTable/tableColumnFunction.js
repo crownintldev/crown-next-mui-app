@@ -1,6 +1,7 @@
 import CustomChip from 'src/@core/components/mui/chip'
 import dayjs from 'dayjs'
 import { Chip } from '@mui/material'
+import { currencyFormatter } from 'src/utils/helperfunction'
 
 const statusObj = {
   booked: 'success',
@@ -27,15 +28,18 @@ export const renderStatusCell = ({ cell }) => {
   )
 }
 
-const capitalize = value => <div style={{ textTransform: 'capitalize' }}>{value}</div>
-const uppercase = value => <div style={{ textTransform: 'uppercase' }}>{value}</div>
+const capitalize = (value) => <div style={{ textTransform: 'capitalize' }}>{value}</div>
+const uppercase = (value) => <div style={{ textTransform: 'uppercase' }}>{value}</div>
 
 export const defaultCellRenderer = ({ row, column }) => {
   const value = column.id.split('.').reduce((acc, curr) => acc?.[curr], row.original)
-
   // Check if the value is not undefined and not null
   return value !== undefined && value !== null ? (
-    capitalize(value)
+    typeof value === 'number' ? (
+      currencyFormatter(value, 'PKR')
+    ) : (
+      capitalize(value)
+    )
   ) : (
     <span style={{ color: '#ffa600ff' }}>N/A</span>
   )
@@ -63,15 +67,15 @@ export const dateFormat = ({ cell }) => {
 
 export const ArrayCellRenderer = ({ cell }) => {
   const data = cell.getValue()
-// console.log(data)
+  // console.log(data)
   return (
     <div>
-      {data.map(service => (
+      {data?.map((service) => (
         <Chip sx={{ mr: 1 }} key={service} label={service} />
       ))}
     </div>
   )
 }
-export const CellRowId=({row})=>{
-  return row.index+1;
+export const CellRowId = ({ row }) => {
+  return row.index + 1
 }

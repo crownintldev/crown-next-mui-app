@@ -1,22 +1,24 @@
 import { useMemo } from 'react'
 
-import { defaultCellRenderer,ArrayCellRenderer } from 'src/common/materialTable/tableColumnFunction'
+import {
+  defaultCellRenderer,
+  ArrayCellRenderer
+} from 'src/common/materialTable/tableColumnFunction'
 import { dateFormat } from 'src/common/materialTable/tableColumnFunction'
 
-const useUserColumns = () =>
+const useInvoiceColumns = () =>
   useMemo(
     () => [
-      // { accessorKey: '_id', header: 'ID', size: 100 },
-      { accessorKey: 'username', header: 'User Name', Cell: defaultCellRenderer },
-
-      { accessorKey: 'email', header: 'Email', Cell: defaultCellRenderer },
-      { accessorKey: 'status', header: 'Status', Cell: defaultCellRenderer },
-      { accessorKey: 'roles.title', header: 'Roles', Cell: defaultCellRenderer },
-      { accessorKey: 'appPermissions', header: 'App Permissions', Cell: ArrayCellRenderer },
-      { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
-      { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }
+      { accessorKey: 'invoiceNumber', header: 'Invoice Number', Cell: defaultCellRenderer },
+      { accessorKey: 'members', header: 'Members', Cell: ArrayCellRenderer },
+      { accessorKey: 'billing.total', header: 'Total', Cell: defaultCellRenderer },
+      { accessorKey: 'billing.paid', header: 'Paid', Cell: defaultCellRenderer },
+      { accessorKey: 'bill.remaining', header: 'Remaining', Cell: defaultCellRenderer },
+      { accessorKey: 'billing.discount', header: 'Discount', Cell: defaultCellRenderer },
+      { accessorKey: 'issueDate', header: 'Issue Date', Cell: dateFormat },
+      { accessorKey: 'dueDate', header: 'Due Date', Cell: dateFormat }
     ],
     []
   )
 
-export default useUserColumns
+export default useInvoiceColumns

@@ -11,7 +11,7 @@ import {
   defaultCellRenderer,
   defaultCellUpperCase,
   conditionValue,
-  dateFormat
+  dateFormat,
 } from 'src/common/materialTable/tableColumnFunction'
 
 export const useTableColumns = () =>
@@ -32,10 +32,10 @@ export const useTableColumns = () =>
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Refer Phone #' },
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
-      { accessorKey: 'amount.paid', header: 'Paid Amount', size: 100 },
-      { accessorKey: 'amount.remaining', header: 'Remaining Amount', size: 100 },
-      { accessorKey: 'amount.total', header: 'Total Amount', size: 100 },
-      { accessorKey: 'amount.discount', header: 'Discount', size: 100 },
+      { accessorKey: 'amount.paid', header: 'Paid Amount', size: 100,Cell:defaultCellRenderer },
+      { accessorKey: 'amount.remaining', header: 'Remaining Amount', size: 100,Cell:defaultCellRenderer },
+      { accessorKey: 'amount.total', header: 'Total Amount', size: 100,Cell:defaultCellRenderer },
+      { accessorKey: 'amount.discount', header: 'Discount', size: 100,Cell:defaultCellRenderer },
       { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
     ],
     []

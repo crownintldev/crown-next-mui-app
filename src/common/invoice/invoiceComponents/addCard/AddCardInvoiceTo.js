@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer'
 import { styled, useTheme } from '@mui/material/styles'
 import TableCell from '@mui/material/TableCell'
 import { useSelector } from 'react-redux'
+import { currencyFormatter } from 'src/utils/helperfunction'
 
 //
 const MUITableCell = styled(TableCell)(({ theme }) => ({
@@ -22,7 +23,7 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
 
 const AddCardInvoiceTo = ({ clientData, amount }) => {
   const theme = useTheme()
-  console.log('amount', amount)
+  // console.log('amount', amount)
 
   return (
     <Grid container xl={{ mt: 5 }} xs={{ mt: 5 }} sx={{ mt: 5 }}>
@@ -87,7 +88,7 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
                         </MUITableCell>
                         <MUITableCell>
                           <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                            Rs: {amount.total}
+                             {currencyFormatter(amount.total,"PKR")} 
                           </Typography>
                         </MUITableCell>
                       </TableRow>
@@ -97,7 +98,7 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
                         </MUITableCell>
                         <MUITableCell>
                           <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                            Rs: {amount.paid}
+                          {currencyFormatter(amount.paid,"PKR")} 
                           </Typography>
                         </MUITableCell>
                       </TableRow>
@@ -109,7 +110,7 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
                         </MUITableCell>
                         <MUITableCell>
                           <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                            Rs: {amount.remaining}
+                          {currencyFormatter(amount.remaining,"PKR")} 
                           </Typography>
                         </MUITableCell>
                       </TableRow>
@@ -119,7 +120,7 @@ const AddCardInvoiceTo = ({ clientData, amount }) => {
                         </MUITableCell>
                         <MUITableCell>
                           <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                            Rs: {amount.discount}
+                          {currencyFormatter(amount.discount ?? 0,"PKR")} 
                           </Typography>
                         </MUITableCell>
                       </TableRow>

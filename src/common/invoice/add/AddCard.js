@@ -30,7 +30,7 @@ import { useSelector } from 'react-redux'
 
 const AddCard = props => {
   // ** Props
-  const { clients, invoiceNumber, selectedClient, setSelectedClient, toggleAddCustomerDrawer } =
+  const { clients, invoiceNumber, selectedClient, setSelectedClient, toggleAddCustomerDrawer,cardHeader,invoiceDataArray } =
     props
 
   // ** States
@@ -47,13 +47,7 @@ const AddCard = props => {
 
   // ** Deletes form
   const data = useSelector(state => state.invoice.data)
-  const invoiceDataArray = useSelector(state => state.myInvoice.data)
-  // invoiceDataArray && invoiceDataArray.map(item => console.log('item', item))
-  // console.log('invoice data ary', invoiceDataArray)
 
-  useEffect(() => {
-    // console.log('Updated invoices', data)
-  }, [data])
 
   const options = [
     { label: 'Account', link: '/accounts/account/' },
@@ -71,7 +65,7 @@ const AddCard = props => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        <AddCardHeader invoiceNumber={invoiceNumber} />
+        <AddCardHeader invoiceNumber={invoiceNumber} cardHeader={cardHeader} />
       </CardContent>
 
       <Divider />
@@ -156,7 +150,7 @@ const AddCard = props => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        <AddCardItemWithTotal data={data} invoiceData={invoiceData} />
+        <AddCardItemWithTotal data={data} invoiceDataArray={invoiceDataArray}/>
       </CardContent>
 
       <Divider />

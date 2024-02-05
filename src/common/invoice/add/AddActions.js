@@ -31,10 +31,11 @@ const OptionsWrapper = styled(Box)(() => ({
   justifyContent: 'space-between'
 }))
 
-const AddActions = () => {
+const AddActions = ({ cardHeader, invoiceDataArray }) => {
+  const { detail, issueDate, dueDate, setIssueDate, setDueDate } = cardHeader
   const [paymentMethod, setPaymentMethod] = useState(null)
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
-  const invoiceDataArray = useSelector((state) => state.myInvoice.data)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   // console.log(invoiceDataArray)
   const paymentMethods = [
     { name: 'Bank Transfer' },
@@ -49,17 +50,35 @@ const AddActions = () => {
   }
 
   const handleInvoiceStore = async () => {
+    if (isSubmitting) return
+    setIsSubmitting(true)
+    const initialTotals = { total: 0, paid: 0, remaining: 0, discount: 0 }
+
+    const billing = invoiceDataArray.reduce((acc, feeItem) => {
+      acc.total += feeItem.amount.total
+      acc.paid += feeItem.amount.paid
+      acc.remaining += feeItem.amount.remaining
+      acc.discount += feeItem.amount.discount ?? 0
+      return acc
+    }, initialTotals)
+    const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
     try {
-      const response = await axiosInstance.post(
-        `${process.env.NEXT_PUBLIC_API}/invoice/create`,
-        {invoiceDataArray}
-      )
+      const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/invoice/create`, {
+        invoiceDataArray,
+        members,
+        billing,
+        detail,
+        issueDate,
+        dueDate
+      })
       toast.success(`Invoice Create Successfully`, {
         position: 'top-center'
       })
       console.log(response)
     } catch (err) {
       toast.error(axiosErrorMessage(err), { position: 'top-center' })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -102,6 +121,7 @@ const AddActions = () => {
               open={isPreviewModalOpen}
               onClose={handleClosePreviewModal}
               data={invoiceDataArray}
+              cardHeader={cardHeader}
             />
           </CardContent>
         </Card>

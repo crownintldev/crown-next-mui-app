@@ -54,19 +54,22 @@ const TableHeader = (props) => {
       cond === 'undo' && showTrash
         ? `${process.env.NEXT_PUBLIC_API}/${api}/remove`
         : showTrash
-        ? `${process.env.NEXT_PUBLIC_API}/${api}/permanentRemove`
+        ? `${process.env.NEXT_PUBLIC_API}/${api}/remove`
         : `${process.env.NEXT_PUBLIC_API}/${api}/remove`
     let requestBody =
       cond === 'undo' && showTrash
         ? {
             ids: selectedIds,
-            deleted: false
+            deleted: "false"
           }
         : showTrash
-        ? {}
+        ? {
+          ids: selectedIds,
+          deleted: "permanent"
+        }
         : {
             ids: selectedIds,
-            deleted: true
+            deleted: "true"
           }
     try {
       const response = await axiosInstance.post(apiEndpoint, requestBody)

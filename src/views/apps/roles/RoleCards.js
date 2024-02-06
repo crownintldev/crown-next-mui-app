@@ -54,7 +54,7 @@ const rolesArr = [
   'Account',
   'Visa Booking',
   'Visa Service',
-  'Members',
+  'Member',
   'Supplier',
   'Expense',
   'Invoice'

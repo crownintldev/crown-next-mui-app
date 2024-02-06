@@ -29,8 +29,14 @@ import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTo
 import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
 import { useTheme } from '@emotion/react'
 
-const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
-  const itemTotalData = useSelector(state => state.invoice.data)
+const ActionsHandlers = ({
+  open,
+  onClose,
+  invoiceDataArray,
+  cardHeader,
+  invoiceNumber
+}) => {
+  const itemTotalData = useSelector((state) => state.myInvoice.data)
   const [hasRenderedTotal, setHasRenderedTotal] = useState(false)
   const [selectedOption, setSelectedOption] = useState(null)
 
@@ -45,7 +51,8 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
 
   const pdfDownloader = () => {
     const modalContent = componentPDF.current
-    const actionButtons = modalContent.querySelector('#action-buttons')
+    const actionButtons =
+      modalContent.querySelector('#action-buttons')
     if (actionButtons) {
       actionButtons.style.display = 'none'
     }
@@ -57,37 +64,40 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
     document.body.appendChild(tempContainer)
 
     // Capture the screenshot of the temporary container using html2canvas
-    html2canvas(tempContainer, { scale: 2, allowTaint: true }).then(canvas => {
-      // Convert the canvas to a data URL
-      const screenshotUrl = canvas.toDataURL('image/png')
+    html2canvas(tempContainer, { scale: 2, allowTaint: true }).then(
+      (canvas) => {
+        // Convert the canvas to a data URL
+        const screenshotUrl = canvas.toDataURL('image/png')
 
-      const pdf = new jsPDF('p', 'mm', 'a4')
+        const pdf = new jsPDF('p', 'mm', 'a4')
 
-      // Add the captured image to the PDF
-      pdf.addImage(
-        screenshotUrl,
-        'PNG',
-        0,
-        0,
-        pdf.internal.pageSize.width,
-        pdf.internal.pageSize.height
-      )
+        // Add the captured image to the PDF
+        pdf.addImage(
+          screenshotUrl,
+          'PNG',
+          0,
+          0,
+          pdf.internal.pageSize.width,
+          pdf.internal.pageSize.height
+        )
 
-      // Save the PDF
-      pdf.save('invoice_screenshot.pdf')
+        // Save the PDF
+        pdf.save('invoice_screenshot.pdf')
 
-      document.body.removeChild(tempContainer)
-      if (actionButtons) {
-        actionButtons.style.display = 'block'
+        document.body.removeChild(tempContainer)
+        if (actionButtons) {
+          actionButtons.style.display = 'block'
+        }
       }
-    })
+    )
   }
 
   // Taking screenshot handler
   const screenShotHandler = () => {
     const modalContent = componentPDF.current
 
-    const actionButtons = modalContent.querySelector('#action-buttons')
+    const actionButtons =
+      modalContent.querySelector('#action-buttons')
     if (actionButtons) {
       actionButtons.style.display = 'none'
     }
@@ -97,7 +107,7 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
     document.body.appendChild(tempContainer)
 
     // Capture the screenshot of the temporary container using html2canvas
-    html2canvas(tempContainer).then(canvas => {
+    html2canvas(tempContainer).then((canvas) => {
       // Convert the canvas to a data URL
       const screenshotUrl = canvas.toDataURL('image/png')
       const link = document.createElement('a')
@@ -114,19 +124,32 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
   }
 
   const multiRender =
-    data &&
-    data.map((invoiceData, index) => (
+    invoiceDataArray &&
+    invoiceDataArray.map((invoiceData, index) => (
       <React.Fragment key={index}>
-        {index === 0 && <AddCardHeader cardHeader={cardHeader}/>}
-        <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
-        <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
-        {index < data.length - 1 && <hr />}
-        {index + 1 === data.length && !hasRenderedTotal && (
-          <>
-            <AddCardItemWithTotal data={itemTotalData} />
-            {setHasRenderedTotal(true)}{' '}
-          </>
+        {index === 0 && (
+          <AddCardHeader
+            cardHeader={cardHeader}
+            invoiceNumber={invoiceNumber}
+          />
         )}
+        <AddCardInvoiceTo
+          clientData={invoiceData.by}
+          amount={invoiceData.amount}
+        />
+        <AddCardItemSelect
+          visaBookingIds={invoiceData.visaBookingIds}
+        />
+        {index < invoiceDataArray.length - 1 && <hr />}
+        {index + 1 === invoiceDataArray.length &&
+          !hasRenderedTotal && (
+            <>
+              <AddCardItemWithTotal
+                invoiceDataArray={invoiceDataArray}
+              />
+              {setHasRenderedTotal(true)}{' '}
+            </>
+          )}
       </React.Fragment>
     ))
 
@@ -141,7 +164,12 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
   }
 
   return (
-    <div style={{ position: 'relative !important', height: '100% !important' }}>
+    <div
+      style={{
+        position: 'relative !important',
+        height: '100% !important'
+      }}
+    >
       <Modal
         open={open}
         onClose={onClose}
@@ -174,7 +202,12 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
           <IconButton
             id='close-button'
             onClick={onClose}
-            sx={{ position: 'absolute', top: 0, right: 0, color: 'black' }}
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              color: 'black'
+            }}
           >
             <CloseIcon />
           </IconButton>
@@ -187,10 +220,12 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
               level='L'
             />
           </div>
-          {data && data.length > 0 ? (
+          {invoiceDataArray && invoiceDataArray.length > 0 ? (
             <>
               {multiRender}
-              <AddCardItemWithTotal data={itemTotalData} />
+              <AddCardItemWithTotal
+                invoiceDataArray={invoiceDataArray}
+              />
             </>
           ) : (
             <Box
@@ -212,9 +247,14 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
                   <Autocomplete
                     id='custom-autocomplete'
                     options={options}
-                    getOptionLabel={option => option.label}
+                    getOptionLabel={(option) => option.label}
                     onChange={handleOptionSelect}
-                    renderInput={params => <TextField {...params} label='Select your creation' />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label='Select your creation'
+                      />
+                    )}
                     renderOption={(props, option) => (
                       <Link href={option.link}>
                         <li {...props}>
@@ -234,7 +274,11 @@ const ActionsHandlers = ({ open, onClose, data,cardHeader }) => {
               mt: '10'
             }}
           >
-            <Button variant='contained' onClick={printGenerator} sx={{ marginRight: 2 }}>
+            <Button
+              variant='contained'
+              onClick={printGenerator}
+              sx={{ marginRight: 2 }}
+            >
               Print
             </Button>
 

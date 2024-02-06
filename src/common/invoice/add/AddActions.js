@@ -1,6 +1,7 @@
 // *** React Import
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -31,7 +32,8 @@ const OptionsWrapper = styled(Box)(() => ({
   justifyContent: 'space-between'
 }))
 
-const AddActions = ({ cardHeader, invoiceDataArray }) => {
+const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }) => {
+  const router = useRouter()
   const { detail, issueDate, dueDate, setIssueDate, setDueDate } = cardHeader
   const [paymentMethod, setPaymentMethod] = useState(null)
   const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
@@ -62,19 +64,24 @@ const AddActions = ({ cardHeader, invoiceDataArray }) => {
       return acc
     }, initialTotals)
     const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
+    const axiosBody={
+      invoiceDataArray,
+      members,
+      billing,
+      detail,
+      issueDate,
+      dueDate
+    }
+    const apiRequest = invoiceEditId ? 
+    await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/invoice/update/${invoiceEditId}`, axiosBody)
+    :
+    await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/invoice/create`, axiosBody)
     try {
-      const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/invoice/create`, {
-        invoiceDataArray,
-        members,
-        billing,
-        detail,
-        issueDate,
-        dueDate
-      })
-      toast.success(`Invoice Create Successfully`, {
+      const response = apiRequest
+      toast.success(`Invoice ${invoiceEditId?"Update":"Create"} Successfully`, {
         position: 'top-center'
       })
-      console.log(response)
+      invoiceEditId && router.push("/accounts/invoice/list")
     } catch (err) {
       toast.error(axiosErrorMessage(err), { position: 'top-center' })
     } finally {
@@ -104,7 +111,7 @@ const AddActions = ({ cardHeader, invoiceDataArray }) => {
               onClick={handleInvoiceStore}
             >
               <Icon fontSize='1.125rem' icon='tabler:send' />
-              Store Invoice
+              {invoiceEditId?"Update Invoice" : "Store Invoice"} 
             </Button>
             <Button
               fullWidth
@@ -120,8 +127,9 @@ const AddActions = ({ cardHeader, invoiceDataArray }) => {
             <ActionsHandlers
               open={isPreviewModalOpen}
               onClose={handleClosePreviewModal}
-              data={invoiceDataArray}
+              invoiceDataArray={invoiceDataArray}
               cardHeader={cardHeader}
+              invoiceNumber={invoiceNumber}
             />
           </CardContent>
         </Card>

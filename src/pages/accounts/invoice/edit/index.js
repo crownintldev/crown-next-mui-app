@@ -30,10 +30,8 @@ const InvoiceAdd = ({ apiClientData }) => {
   const toggleAddCustomerDrawer = () => setAddCustomerOpen(!addCustomerOpen)
   // card Header State
   const tomorrowDate = new Date().setDate(new Date().getDate() + 7)
-  // const [issueDate, setIssueDate] = useState(invoiceData?.issueDate)
-  // const [dueDate, setDueDate] = useState(invoiceData?.dueDate)
-  const [issueDate, setIssueDate] = useState(new Date())
-  const [dueDate, setDueDate] = useState(new Date(tomorrowDate))
+  const [issueDate, setIssueDate] = useState(invoiceData?.issueDate)
+  const [dueDate, setDueDate] = useState(invoiceData?.dueDate)
 
   return (
     <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
@@ -41,7 +39,7 @@ const InvoiceAdd = ({ apiClientData }) => {
         <Grid item xl={9} md={8} xs={12}>
           <AddCard
             clients={clients}
-            invoiceNumber={invoiceData.invoiceNumber}
+            invoiceNumber={invoiceData?.invoiceNumber || ""}
             selectedClient={selectedClient}
             setSelectedClient={setSelectedClient}
             toggleAddCustomerDrawer={toggleAddCustomerDrawer}
@@ -53,6 +51,8 @@ const InvoiceAdd = ({ apiClientData }) => {
           <AddActions
             cardHeader={{ detail: cardHeaderDetails, setIssueDate, setDueDate, issueDate, dueDate }}
             invoiceDataArray={invoiceData?.invoiceDataArray}
+            invoiceEditId={invoiceData._id}
+            invoiceNumber={invoiceData?.invoiceNumber || ""}
           />
         </Grid>
       </Grid>

@@ -13,7 +13,7 @@ import { useTheme } from '@mui/material/styles'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
-
+import DatePickerField from 'src/common/dataEntry/DatePicker'
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
 
@@ -50,9 +50,7 @@ const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
             <Typography sx={{ mb: 2, color: 'text.secondary', maxWidth: '20em' }}>
               {detail.address}
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              {detail.contacts}
-            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>{detail.contacts}</Typography>
           </div>
         </Box>
       </Grid>
@@ -82,23 +80,25 @@ const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
             <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>
               Date Issued:
             </Typography>
-            <DatePicker
+            <DatePickerField value={issueDate} onChange={(date) => setIssueDate(date)} />
+            {/* <DatePicker
               id='issue-date'
               selected={issueDate}
               customInput={<CustomInput />}
               onChange={(date) => setIssueDate(date)}
-            />
+            /> */}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography sx={{ mr: 3, width: '100px', color: 'text.secondary' }}>
               Date Due:
             </Typography>
-            <DatePicker
+            <DatePickerField value={dueDate} onChange={(date) => setDueDate(date)} />
+            {/* <DatePicker
               id='due-date'
               selected={dueDate}
               customInput={<CustomInput />}
               onChange={(date) => setDueDate(date)}
-            />
+            /> */}
           </Box>
         </Box>
       </Grid>

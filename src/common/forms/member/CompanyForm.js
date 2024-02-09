@@ -8,10 +8,6 @@ import * as yup from 'yup'
 const schema = yup.object().shape({
   companyName: yup.string().required('Required'),
   phone: yup.number().required('Required'),
-  phone: yup.number().required('Required'),
-  cnic: yup.string().required('Required'),
-  ownerContact: yup.string().required('Required'),
-  address: yup.string().required('Required')
 })
 
 const defaultValues = {
@@ -27,13 +23,13 @@ const chooseFields = [
   {
     name: 'companyName',
     placeholder: `Enter Company Name`,
-    label: `Company Name`
+    required: true
   },
   {
     name: 'phone',
     placeholder: `Enter Phone Number`,
-    label: `Phone`,
-    type: 'number'
+    type: 'number',
+    required: true
   },
   {
     name: 'licenseNo',

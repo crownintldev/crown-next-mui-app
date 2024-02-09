@@ -6,6 +6,7 @@ import EditVisaBookingForm from '../visaBooking/EditVisaBookingForm'
 import { fetchVisaBooking } from 'src/store'
 import axios from 'axios'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
+import axiosInstance from 'src/utils/axiosInstance'
 
 const PassportSubmitButton = ({
   dispatch,
@@ -23,7 +24,6 @@ const PassportSubmitButton = ({
 
   const onSubmit = async () => {
     try {
-      console.log('============', data)
       let formData = new FormData()
       Object.keys(data).forEach(key => {
         if (key !== 'files') {
@@ -38,14 +38,14 @@ const PassportSubmitButton = ({
       //   console.log(responseAction)
       let res
       if (!editId) {
-        res = await axios.post(`${process.env.NEXT_PUBLIC_API}/passport/create`, formData)
+        res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/passport/create`, formData)
         dispatch(
           fetchVisaBooking({
             newData: res.data.data
           })
         )
       } else {
-        res = await axios.put(`${process.env.NEXT_PUBLIC_API}/passport/update/${editId}`, formData)
+        res = await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/passport/update/${editId}`, formData)
         dispatch(
           fetchVisaBooking({
             updateData: res.data.data

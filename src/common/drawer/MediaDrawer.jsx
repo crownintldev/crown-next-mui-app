@@ -52,7 +52,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
             {data.passport && data.passport.files ? (
               data.passport.files.map((item, index) => (
                 <div key={index}>
-                  {item.fileType.startsWith('image/') && ( // Check if it's an image
+                  {item.type.startsWith('image/') && ( // Check if it's an image
                     <TreeItem
                       key={`${index}+${item.url}`}
                       nodeId={`${index}+${item.url}`}
@@ -74,7 +74,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
                             />
                           )} */}
                           <Image src={item.url} height={80} width={80} className='media-image' />
-                          <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
+                          <span className='tooltip'>{item.name.substring(0, 10)}</span>{' '}
                           {/* Truncate to 10 characters */}
                         </div>
                       }

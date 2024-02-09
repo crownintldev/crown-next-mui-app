@@ -47,7 +47,7 @@ const EditFilesUploader = ({
   }
   const renderPreviousFiles = file => {
     
-    return <Image width={38} height={38} alt={file.fileName ?? ""} src={file.url ?? ""} />
+    return <Image width={38} height={38} alt={file.name ?? ""} src={file.url ?? ""} />
   }
 
   const handleRemoveFile = file => {

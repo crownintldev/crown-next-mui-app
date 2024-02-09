@@ -11,7 +11,6 @@ const useAgentAndClientColumns = () =>
       { accessorKey: 'fullName', header: 'Full Name', Cell: defaultCellRenderer },
       { accessorKey: 'phone', header: 'Phone', Cell: defaultCellRenderer },
       { accessorKey: 'cnic', header: 'Cnic', Cell: defaultCellRenderer },
-      { accessorKey: 'passportNumber', header: 'Passport Number', Cell: defaultCellRenderer },
       { accessorKey: 'address', header: 'Address', Cell: defaultCellRenderer },
       { accessorKey: 'passportCount', header: 'Visa Passport', Cell: defaultCellRenderer },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },

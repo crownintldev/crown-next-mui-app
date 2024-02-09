@@ -21,6 +21,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm, Controller } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { createApi, updateApi } from 'src/action/function'
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 
 const CommonForm1 = ({
   toggle,
@@ -49,7 +50,6 @@ const CommonForm1 = ({
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
-  console.log('+++++++++++++++++++', editId)
   useEffect(() => {
     if (editId) {
       Object.keys(editId).forEach(key => {
@@ -77,32 +77,9 @@ const CommonForm1 = ({
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
+      
         {chooseFields.map((item, index) => {
-          const { name, label, placeholder, type } = item
-
-          return (
-            <>
-              <Controller
-                key={index}
-                name={name}
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { value, onChange } }) => (
-                  <CustomTextField
-                    fullWidth
-                    type={type ? type : 'text'}
-                    value={value ? capitalizeValue(value) : ''}
-                    sx={{ mb: 4 }}
-                    label={label ? label : capitalizeCamelSpace(name)}
-                    onChange={onChange}
-                    placeholder={placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`}
-                    error={Boolean(errors[name])}
-                    helperText={errors[name]?.message || ''}
-                  />
-                )}
-              />
-            </>
-          )
+          return <CustomHookTextField item={item} control={control} errors={errors} />
         })}
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

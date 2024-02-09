@@ -8,16 +8,12 @@ import CommonForm1 from '../commonForms/CommonForm1'
 const schema = yup.object().shape({
   fullName: yup.string().required('required'),
   phone: yup.number().required('required'),
-  cnic: yup.string().required('required'),
-  passportNumber: yup.string().required('required'),
-  address: yup.string().required('required')
 })
 
 const defaultValues = {
   fullName: '',
   phone: '',
   cnic: '',
-  passportNumber: '',
   address: ''
 }
 
@@ -33,23 +29,20 @@ const AgentandClientForm = ({
     {
       name: 'fullName',
       placeholder: `Enter Full Name`,
-      label: `Full Name`
+      label: `Full Name`,
+      required: true
     },
     {
       name: 'phone',
       placeholder: `Enter Phone Number`,
       label: `Phone`,
-      type: 'number'
+      type: 'number',
+      required: true
     },
     {
       name: 'cnic',
       placeholder: `Enter Cnic Number`,
       label: `Cnic Number`
-    },
-    {
-      name: 'passportNumber',
-      placeholder: `Enter Passport Number`,
-      label: `Passport Number`
     },
     {
       name: 'address',

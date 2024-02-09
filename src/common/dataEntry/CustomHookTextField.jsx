@@ -4,10 +4,10 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import { capitalizeCamelSpace, capitalizeValue } from 'src/utils/helperfunction'
 import { MuiTextAreaHookField } from './MuiTextAreaHookField'
 
-const CustomHookTextField = ({chooseFields, control, errors, required, item }) => {
+const CustomHookTextField = ({chooseFields, control, errors, item }) => {
   // function textfield
   const textField = item => {
-    const { textarea, rows, name, label, placeholder, type, value: myValue, myvalue } = item
+    const { textarea, rows, name, label,required, placeholder, type, value: myValue, myvalue } = item
 
     return (
       <>

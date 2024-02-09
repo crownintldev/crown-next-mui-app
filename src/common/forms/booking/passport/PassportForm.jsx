@@ -250,7 +250,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
         <Grid container spacing={6}>
           {passportField1.map(item => (
             <Grid item md={6} lg={4} key={item.name}>
-              <CustomHookTextField item={item} control={control} errors={errors} required={true} />
+              <CustomHookTextField item={item} control={control} errors={errors} />
             </Grid>
           ))}
 

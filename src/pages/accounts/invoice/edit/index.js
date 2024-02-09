@@ -51,7 +51,7 @@ const InvoiceAdd = ({ apiClientData }) => {
           <AddActions
             cardHeader={{ detail: cardHeaderDetails, setIssueDate, setDueDate, issueDate, dueDate }}
             invoiceDataArray={invoiceData?.invoiceDataArray}
-            invoiceEditId={invoiceData._id}
+            invoiceEditId={invoiceData?._id}
             invoiceNumber={invoiceData?.invoiceNumber || ""}
           />
         </Grid>

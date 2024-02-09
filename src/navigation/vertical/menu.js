@@ -149,16 +149,16 @@ export const accountArrays = () => [
         path: '/invoice/list',
         icon: 'tabler:circle-filled'
       },
-      {
-        title: 'Preview',
-        path: '/invoice/preview',
-        icon: 'tabler:circle-filled'
-      },
-      {
-        title: 'Edit',
-        path: '/invoice/edit',
-        icon: 'tabler:circle-filled'
-      },
+      // {
+      //   title: 'Preview',
+      //   path: '/invoice/preview',
+      //   icon: 'tabler:circle-filled'
+      // },
+      // {
+      //   title: 'Edit',
+      //   path: '/invoice/edit',
+      //   icon: 'tabler:circle-filled'
+      // },
       {
         title: 'Add',
         path: '/invoice/add',

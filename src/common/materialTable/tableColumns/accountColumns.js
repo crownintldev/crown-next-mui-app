@@ -12,6 +12,7 @@ import {
   defaultCellUpperCase,
   conditionValue,
   dateFormat,
+  CellRowId
 } from 'src/common/materialTable/tableColumnFunction'
 
 export const useTableColumns = () =>
@@ -27,7 +28,7 @@ export const useTableColumns = () =>
           </IconButton>
         )
       },
-      { accessorKey: '_id', header: 'ID', size: 100 },
+      { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
       { accessorKey: 'onModel', header: 'Refer', size: 100, Cell: defaultCellRenderer },
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Refer Phone #' },

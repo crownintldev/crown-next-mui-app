@@ -25,7 +25,7 @@ import { capitalizeValue } from 'src/utils/helperfunction'
 import { fetchVisaService } from 'src/store'
 
 //get by data
-import axios from 'axios'
+import axiosInstance from 'src/utils/axiosInstance'
 import { listVisaCategory } from 'src/action/visaIdSelector/visaCategory'
 import { listVisaDestination } from 'src/action/visaIdSelector/visaDestination'
 import { listVisaDuration } from 'src/action/visaIdSelector/visaDuration'
@@ -189,7 +189,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     // console.log(data)
 
     try {
-      const response = await axios.put(`${process.env.NEXT_PUBLIC_API}/visa-booking/update`, data)
+      const response = await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/visa-booking/update`, data)
       if (response) {
         dispatch(fetchVisaBooking({ updateData: response.data.data }))
         setFindVisa({

@@ -4,13 +4,14 @@ import { useMemo } from 'react'
 
 import {
   defaultCellRenderer,
-  defaultCellUpperCase
+  defaultCellUpperCase,
+  CellRowId
 } from 'src/common/materialTable/tableColumnFunction'
 
 const useTableColumns = () =>
   useMemo(
     () => [
-    { accessorKey: '_id', header: 'ID', size: 100 },
+    { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
       {
         accessorKey: 'supplierVisaService.supplier.name',
         header: 'Supplier Name',

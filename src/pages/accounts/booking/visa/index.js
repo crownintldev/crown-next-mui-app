@@ -24,8 +24,9 @@ import FormDrawer from 'src/common/drawer/FormDrawer'
 import MediaDrawer from 'src/common/drawer/MediaDrawer'
 
 const index = ({ apiData }) => {
-  const openMediaDrawer = row => {
-    console.log('media data', row.original)
+  // open media drawer handler
+  const openMediaDrawer = (row) => {
+    console.log('row data', row.original)
     setSelectedRowData(row.original)
     setMediaDrawerOpen(true)
   }

@@ -74,14 +74,18 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   // ** State
   const dispatch = useDispatch()
 
-  const accountItems = useSelector(state =>
+  const accountItems = useSelector((state) =>
     ids
-      .map(id => state.account.data.length > 0 && state.account.data.find(item => item._id === id))
-      .map(item => {
+      .map(
+        (id) =>
+          state.account.data.length > 0 &&
+          state.account.data.find((item) => item._id === id)
+      )
+      .map((item) => {
         return {
-          visaBookingDetails: item?.visaBookingIds?.map(visaBooking => ({
-            passportNumber: visaBooking.passportId?.passportNumber,
-            givenName: visaBooking.passportId?.givenName
+          visaBookingDetails: item?.visaBookingIds?.map((visaBooking) => ({
+            passportNumber: visaBooking.passport?.passportNumber,
+            givenName: visaBooking.passport?.givenName
           })),
           amount: item?.amount,
           _id: item?._id,
@@ -113,7 +117,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
     paid: 0
   })
 
-  const handleAmountChange = event => {
+  const handleAmountChange = (event) => {
     const { name, value: newValue } = event.target
     setAmount({ ...amount, [name]: newValue })
   }
@@ -151,14 +155,18 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
     reset()
   }
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/account/update`, data,{
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${accessToken}`
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/account/update`,
+        data,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
-      })
+      )
       if (response) {
         dispatch(
           fetchData({
@@ -178,12 +186,14 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
     }
   }
 
-  const renderSelectedValue = selectedIds => {
+  const renderSelectedValue = (selectedIds) => {
     return selectedIds
-      .map(id => {
-        const item = accountItems.find(item => item._id === id)
+      .map((id) => {
+        const item = accountItems.find((item) => item._id === id)
 
-        return item ? item.visaBookingDetails.map((item, index) => `${item.passportNumber} `) : ''
+        return item
+          ? item.visaBookingDetails.map((item, index) => `${item.passportNumber} `)
+          : ''
       })
       .filter(Boolean) // Removes any undefined or empty values
       .join(', ')
@@ -223,7 +233,9 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
                   <MenuItem key={index} value={`${item._id}`} className='!overflow-auto'>
                     {item.visaBookingDetails &&
                       item.visaBookingDetails.length > 0 &&
-                      item.visaBookingDetails.map((item, index) => `${item.passportNumber} `)}
+                      item.visaBookingDetails.map(
+                        (item, index) => `${item.passportNumber} `
+                      )}
                   </MenuItem>
                 ))}
               </CustomTextField>
@@ -257,7 +269,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
                 value={field.value} // Use field.value from 'react-hook-form'
                 sx={{ mb: 4 }}
                 label='Total Amount'
-                onChange={e => {
+                onChange={(e) => {
                   field.onChange(e)
                   handleAmountChange(e) // Call your custom handler
                 }}
@@ -276,7 +288,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
                 value={field.value} // Use field.value from 'react-hook-form'
                 sx={{ mb: 4 }}
                 label='Paid Amount'
-                onChange={e => {
+                onChange={(e) => {
                   field.onChange(e)
                   handleAmountChange(e) // Call your custom handler
                 }}

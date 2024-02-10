@@ -16,7 +16,7 @@ import { Controller, useForm } from 'react-hook-form'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchRole } from 'src/store'
+import { fetchRole, fetchBranch } from 'src/store'
 
 // action
 import { createApi, updateManyApi } from 'src/action/function'
@@ -65,23 +65,31 @@ const defaultValues = {
   password: ''
 }
 
-const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelection }) => {
+const UserForm = ({
+  toggle,
+  fetchApi,
+  api,
+  _id: ids,
+  stateSelector,
+  removeSelection
+}) => {
   const dispatch = useDispatch()
   //   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
-  let roles = useSelector(state => state?.role?.data)
+  let roles = useSelector((state) => state?.role?.data)
+  let branches = useSelector((state) => state?.branch?.data)
 
   const editIds = useSelector(
-    state =>
+    (state) =>
       ids &&
       ids.length > 0 &&
       ids
-        .map(id => state?.user?.data.find(item => item?._id === id))
-        .map(item => {
+        .map((id) => state?.user?.data.find((item) => item?._id === id))
+        .map((item) => {
           return {
             email: item.email,
             roles: item?.roles?._id,
-            status:item?.status,
-            appPermissions:item?.appPermissions,
+            status: item?.status,
+            appPermissions: item?.appPermissions,
             _id: item?._id
           }
         })
@@ -90,6 +98,7 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
 
   useEffect(() => {
     dispatch(fetchRole({}))
+    dispatch(fetchBranch({}))
   }, [])
 
   const {
@@ -123,7 +132,7 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
     toggle()
     reset()
   }
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault()
     if (editIds) {
       updateManyApi({
@@ -146,10 +155,10 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
       label: `User Password Change`
     }
   ]
-  const renderSelectedValue = selectedIds => {
+  const renderSelectedValue = (selectedIds) => {
     return selectedIds
-      ?.map(id => {
-        const item = editIds.find(item => item._id === id)
+      ?.map((id) => {
+        const item = editIds.find((item) => item._id === id)
 
         return item ? `${item.email}` : ''
       })
@@ -200,6 +209,15 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
         label='Role'
         placeholder='Choose Roles'
       />
+      <SelectHookField
+        control={control}
+        errors={errors}
+        name='branch'
+        showValue='name'
+        options={branches ?? []}
+        label='Branch'
+        placeholder='Choose Branch'
+      />
       <SimpleSelectHookField
         control={control}
         errors={errors}
@@ -208,7 +226,11 @@ const UserForm = ({ toggle, fetchApi, api, _id: ids, stateSelector, removeSelect
         label='Status'
         placeholder='select Status'
       />
-      <CustomHookTextField chooseFields={chooseFields} control={control} errors={errors} />
+      <CustomHookTextField
+        chooseFields={chooseFields}
+        control={control}
+        errors={errors}
+      />
 
       <Controller
         name='appPermissions'

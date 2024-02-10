@@ -43,6 +43,7 @@ import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 //Form
 import AgentandClientForm from 'src/common/forms/member/AgentandClientForm'
 import CompanyForm from 'src/common/forms/member/CompanyForm'
+import countries from './Countries'
 
 const schema = yup.object().shape({
   cnic: yup
@@ -101,6 +102,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const passportIdFromState = useSelector(
     (state) => state.visaBooking?.data?.find((item) => item._id === _id)?.passport
   )
+
+  console.log('countries', countries)
   // let editId = useSelector(
   //   state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
   // )
@@ -193,6 +196,10 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     {
       name: 'givenName',
       required: true
+    },
+    {
+      name: 'pob',
+      required: true
     }
   ]
 
@@ -261,6 +268,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     name: `${item.fullName || item.companyName} ${item.phone}`,
     _id: item._id
   }))
+  const countryOptions = countries.map((country) => country.name)
 
   return (
     <div>
@@ -278,7 +286,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               control={control}
               errors={errors}
               name={'country'}
-              options={['Pakistan', 'Iran', 'Afghanistan', 'Saudi Arbia', 'Turki']}
+              options={countryOptions}
               label={'Country'}
               placeholder='Search Countries'
               select={true}
@@ -293,7 +301,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               control={control}
               errors={errors}
               name={'nationality'}
-              options={['Pakistani', 'Indian', 'Afghani']}
+              options={countryOptions}
               label={'Nationality'}
               placeholder='Search Nationality'
               select={true}
@@ -318,7 +326,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               }}
             />
           </Grid>
-          <Grid item md={6} lg={4}>
+          {/* <Grid item md={6} lg={4}>
             <SimpleSelectHookField
               control={control}
               errors={errors}
@@ -332,7 +340,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                 disableCloseOnSelect: true
               }}
             />
-          </Grid>
+          </Grid> */}
           <Grid item md={6} lg={4} sx={{ mb: 4 }}>
             <DatePickerHookField
               name='dob'
@@ -421,7 +429,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               placeholder='Choose Refer'
             />
           </Grid>
-          
+
           {!editId ? (
             <Grid item md={6}>
               <Box sx={{ width: '200px' }}>

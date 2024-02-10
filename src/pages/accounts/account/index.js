@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import GroupTable from 'src/common/materialTable/groupTable/GroupTable'
 import {
@@ -11,11 +11,21 @@ import EditAccountForm from 'src/common/forms/account/EditAccountForm'
 
 // redux
 import { fetchData } from 'src/store/apps/account'
+import MediaDrawer from 'src/common/drawer/MediaDrawer'
 //
 const index = ({ apiData }) => {
-  const columns = useTableColumns()
+  // open media drawer handler
+  const openMediaDrawer = (row) => {
+    console.log('acc row data', row.original)
+    setSelectedRowData(row.original)
+    setMediaDrawerOpen(true)
+  }
+
+  const columns = useTableColumns(openMediaDrawer)
   const childColumns = useChildTableColumns()
-  //
+  const [selectedRowData, setSelectedRowData] = useState(null)
+  const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false)
+
   return (
     <div>
       <GroupTable
@@ -36,6 +46,13 @@ const index = ({ apiData }) => {
           multiSelected: true
         }}
       />
+      {mediaDrawerOpen && (
+        <MediaDrawer
+          open={mediaDrawerOpen}
+          onClose={() => setMediaDrawerOpen(false)}
+          data={selectedRowData}
+        />
+      )}
     </div>
   )
 }

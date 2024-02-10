@@ -25,7 +25,10 @@ import { generateReducer } from './apps/sliceActionReducer'
 // Usage example
 export const fetchVisaCategory = createFetchDataThunk('visaCategory', 'visa-category')
 
-export const fetchVisaDestination = createFetchDataThunk('visaDestination', 'visa-destination')
+export const fetchVisaDestination = createFetchDataThunk(
+  'visaDestination',
+  'visa-destination'
+)
 
 export const fetchVisaDuration = createFetchDataThunk('visaDuration', 'visa-duration')
 
@@ -43,14 +46,20 @@ export const fetchVisaBooking = createFetchDataThunk('visaBooking', 'visa-bookin
 
 export const fetchSupplier = createFetchDataThunk('supplier', 'supplier')
 
-export const fetchSupplierCategory = createFetchDataThunk('supplierCategory', 'supplier-category')
+export const fetchSupplierCategory = createFetchDataThunk(
+  'supplierCategory',
+  'supplier-category'
+)
 
 export const fetchSupplierVisaService = createFetchDataThunk(
   'supplierVisaService',
   'supplier-visa-service'
 )
 
-export const fetchExpenseCategory = createFetchDataThunk('expenseCategory', 'expense-category')
+export const fetchExpenseCategory = createFetchDataThunk(
+  'expenseCategory',
+  'expense-category'
+)
 
 export const fetchExpenseType = createFetchDataThunk('expenseType', 'expense-type')
 
@@ -59,8 +68,21 @@ export const fetchExpense = createFetchDataThunk('expense', 'expense')
 export const fetchInvoice = createFetchDataThunk('invoice', 'invoice')
 
 //Auth App
-export const fetchUser= createFetchDataThunk('user', 'user',process.env.NEXT_PUBLIC_AUTH)
-export const fetchRole= createFetchDataThunk('role', 'role',process.env.NEXT_PUBLIC_AUTH)
+export const fetchUser = createFetchDataThunk(
+  'user',
+  'user',
+  process.env.NEXT_PUBLIC_AUTH
+)
+export const fetchRole = createFetchDataThunk(
+  'role',
+  'role',
+  process.env.NEXT_PUBLIC_AUTH
+)
+export const fetchBranch = createFetchDataThunk(
+  'branch',
+  'branch',
+  process.env.NEXT_PUBLIC_AUTH
+)
 
 export const store = configureStore({
   reducer: {
@@ -89,12 +111,13 @@ export const store = configureStore({
     expenseType: generate('expenseType', fetchExpenseType),
     invoice: generate('invoice', fetchInvoice),
     myInvoice: generateReducer('myInvoice').reducer,
-    token:generateReducer('token').reducer,
-    // auth 
+    token: generateReducer('token').reducer,
+    // auth
     user: generate('user', fetchUser),
     role: generate('role', fetchRole),
+    branch: generate('branch', fetchBranch)
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false
     })

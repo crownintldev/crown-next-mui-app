@@ -80,8 +80,8 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
       .map(item => {
         return {
           visaBookingDetails: item?.visaBookingIds?.map(visaBooking => ({
-            passportNumber: visaBooking.passport?.passportNumber,
-            givenName: visaBooking.passport?.givenName
+            passportNumber: visaBooking.passportId?.passportNumber,
+            givenName: visaBooking.passportId?.givenName
           })),
           amount: item?.amount,
           _id: item?._id,

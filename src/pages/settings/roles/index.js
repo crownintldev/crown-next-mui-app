@@ -45,7 +45,6 @@ const RolesComponent = () => {
           columns={columns}
           drawerProps={{
             editFormTitle: 'Edit User',
-
             //header buttons drawer
             editButtonTitle: 'Edit User',
             CreateForm: "",

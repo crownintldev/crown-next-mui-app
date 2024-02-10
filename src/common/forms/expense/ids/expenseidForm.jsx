@@ -22,7 +22,6 @@ import { createApi, updateApi } from 'src/action/function'
 
 //dataEntry
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
-import axios from 'axios'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
 
 const schema = yup.object().shape({

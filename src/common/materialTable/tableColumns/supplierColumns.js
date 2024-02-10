@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
 import { defaultCellRenderer } from 'src/common/materialTable/tableColumnFunction'
-import { dateFormat, ArrayCellRenderer } from 'src/common/materialTable/tableColumnFunction'
+import { dateFormat, ArrayCellRenderer,CellRowId } from 'src/common/materialTable/tableColumnFunction'
 
 const useSupplierColumns = () =>
   useMemo(
     () => [
 
-    { accessorKey: '_id', header: 'ID', size: 100 },
+      { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
       { accessorKey: 'name', header: 'Name', Cell: defaultCellRenderer },
       { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
       { accessorKey: 'phone', header: 'Phone', Cell: defaultCellRenderer },

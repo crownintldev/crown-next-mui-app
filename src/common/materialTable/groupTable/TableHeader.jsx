@@ -22,16 +22,16 @@ import { getReducer } from 'src/store/apps/sliceActionReducer'
 import { getCookie } from 'src/action/auth-action'
 
 const accessToken = getCookie('jwt')
-const TableHeader = props => {
+const TableHeader = (props) => {
   const router = useRouter()
   const theme = useTheme()
   const dispatch = useDispatch()
   const setInvoice = getReducer('myInvoice')
 
   // useSelector
-  const accountData = useSelector(state => state.account.data)
+  const accountData = useSelector((state) => state.account.data)
 
-  const data = useSelector(state => state?.myInvoice?.data)
+  const data = useSelector((state) => state?.myInvoice?.data)
 
   // ** Props
   const {
@@ -51,7 +51,7 @@ const TableHeader = props => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
@@ -61,7 +61,7 @@ const TableHeader = props => {
 
   const handleInvoice = () => {
     const invoiceValues = selectionRow.map(
-      id => accountData?.length > 0 && accountData.find(item => item._id === id)
+      (id) => accountData?.length > 0 && accountData.find((item) => item._id === id)
     )
     dispatch(setInvoice(invoiceValues))
     router.push('/accounts/invoice/add/')
@@ -70,25 +70,31 @@ const TableHeader = props => {
 
   const handleEject = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/account/eject`,
-        ejectValue,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        }
+      const isConfirmed = window.confirm(
+        'Are you sure you want to eject, Paid and Discount will be 0 after this?'
       )
-      if (response.data) {
-        dispatch(
-          fetchData({
-            limit: 20,
-            page: 1
-          })
+
+      if (isConfirmed) {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API}/account/eject`,
+          ejectValue,
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
         )
-        setChildRowSelection({})
-        toast.success('Eject Successfully', { position: 'top-center' })
+        if (response.data) {
+          dispatch(
+            fetchData({
+              limit: 20,
+              page: 1
+            })
+          )
+          setChildRowSelection({})
+          toast.success('Eject Successfully', { position: 'top-center' })
+        }
       }
     } catch (error) {
       console.log(axiosErrorMessage(error))

@@ -35,7 +35,7 @@ import SelectHookField from 'src/common/dataEntry/SelectHookField'
 //form
 import SupplierVisaForm from '../../supplier-visa-service/SupplierVisaForm'
 import { fetchSupplierVisaService } from 'src/store'
-import axios from 'axios'
+import axiosInstance from 'src/utils/axiosInstance'
 import { fetchActionData } from 'src/action/fetchData'
 
 const requiredError = ['category', 'destination', 'duration', 'type']
@@ -67,7 +67,7 @@ const defaultValues = {
 }
 
 export const findSupplierVisa = data => {
-  return axios.post(`${process.env.NEXT_PUBLIC_API}/supplier-visa-service/findSupplierVisa`, data)
+  return axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/supplier-visa-service/findSupplierVisa`, data)
 }
 
 const VisaServiceForm = ({

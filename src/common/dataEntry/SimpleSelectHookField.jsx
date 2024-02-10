@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import CustomAutocomplete from 'src/@core/components/mui/autocomplete'
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -12,6 +12,8 @@ const SimpleSelectHookField = ({
   placeholder,
   disableClearable
 }) => {
+  // const [inputValue, setInputValue] = useState('')
+
   return (
     <Controller
       name={name}
@@ -22,14 +24,17 @@ const SimpleSelectHookField = ({
           sx={{ mb: 4 }}
           options={options ? options : ['confirmed', 'processing']}
           id='autocomplete-size-medium'
-          value={value || null} 
+          value={value || null}
+          // onInputChange={(event, newInputValue) => {
+          //   setInputValue(newInputValue)
+          // }}
           getOptionLabel={(option) => option || ''}
           isOptionEqualToValue={(option, value) => option === value}
           onChange={(event, newValue) => {
             onChange(newValue)
           }}
           disableClearable={disableClearable || false}
-          renderInput={params => (
+          renderInput={(params) => (
             <CustomTextField
               {...params}
               size='small'

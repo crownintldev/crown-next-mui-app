@@ -7,6 +7,7 @@ const statusObj = {
   booked: 'success',
   active: 'success',
   pending: 'warning',
+  rejected: 'error',
   inactive: 'secondary',
   inprocess: 'info'
 }

@@ -34,9 +34,7 @@ import SelectHookField from 'src/common/dataEntry/SelectHookField'
 
 //form
 import IdNameForm from '../idnameForm/IdNameForm'
-import SelectField from 'src/common/dataEntry/SelectField'
 import SupplierForm from 'src/common/forms/supplier/SupplierForm'
-import { getValue } from '@mui/system'
 
 const requiredError = ['category', 'destination', 'duration', 'type', 'supplier']
 
@@ -95,6 +93,7 @@ const SupplierVisaForm = ({
   const supplier = useSelector(state =>
     state?.supplier?.data?.map(item => ({ name: `${item.name} ${item.phone}`, _id: item._id }))
   )
+  console.log(supplier)
 
   useEffect(() => {
     dispatch(fetchVisaCategory({}))
@@ -276,7 +275,7 @@ const SupplierVisaForm = ({
           ButtonTitle='Add Supplier'
           drawerTitle='Add Supplier Form'
           Form={SupplierForm}
-          fetchApi={fetchVisaDestination}
+          fetchApi={fetchSupplier}
           formName='Supplier'
           api='supplier'
         />

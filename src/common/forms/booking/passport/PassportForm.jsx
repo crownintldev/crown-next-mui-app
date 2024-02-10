@@ -30,7 +30,6 @@ import { useForm, Controller } from 'react-hook-form'
 // vuexy components
 import FilesUploader from 'src/common/fileUpload/FilesUploader'
 
-//
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
@@ -38,15 +37,18 @@ import EditFilesUploader from 'src/common/fileUpload/EditFileUploader'
 import dayjs from 'dayjs'
 import { MuiTextAreaHookField } from 'src/common/dataEntry/MuiTextAreaHookField'
 import SelectHookField from 'src/common/dataEntry/SelectHookField'
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
 // import MuiTextAreaHookField from 'src/common/dataEntry/MuiTextAreaHookField'
 
+//Form
+import AgentandClientForm from 'src/common/forms/member/AgentandClientForm'
+import CompanyForm from 'src/common/forms/member/CompanyForm'
+
 const schema = yup.object().shape({
-  bookletNumber: yup.string().required('Booklet Number is required'),
   cnic: yup
     .string()
-    .required('CNIC Number is required')
     .matches(/^[0-9]{13}$|^[0-9]{5}-[0-9]{7}-[0-9]$/, 'Invalid CNIC format')
-    .test('is-numeric', 'Invalid CNIC format, only numbers are allowed', value => {
+    .test('is-numeric', 'Invalid CNIC format, only numbers are allowed', (value) => {
       if (!value) return true // Skip validation if value is empty
 
       return /^\d+$/.test(value.replace(/-/g, ''))
@@ -60,14 +62,11 @@ const schema = yup.object().shape({
   pob: yup.string().required('Place of Birth is required'),
   gender: yup.string().required('Gender is required'),
   givenName: yup.string().required('Given Name is required'),
-  fatherName: yup.string().required('Father name is required'),
-  issuingAuthority: yup.string().required('Issuing Authority is required'),
   nationality: yup.string().required('Nationality is required'),
   passportNumber: yup.string().required('Passport Number is required'),
   religion: yup.string().required('Religion is required'),
   remarks: yup.string().required('Remarks is required'),
   surname: yup.string().required('Surname is required'),
-  trackingNumber: yup.string().required('Tracking Number is required'),
   onModel: yup.string().required('Refer Category is required'),
   by: yup.string().required('Refer is required'),
   files: yup.array().required('Files Are Missing')
@@ -100,7 +99,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const dispatch = useDispatch()
   const [editId, setEditId] = useState('')
   const passportIdFromState = useSelector(
-    state => state.visaBooking?.data?.find(item => item._id === _id)?.passport
+    (state) => state.visaBooking?.data?.find((item) => item._id === _id)?.passport
   )
   // let editId = useSelector(
   //   state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
@@ -111,9 +110,9 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const [removeFiles, setRemoveFiles] = useState([])
 
   // onModel
-  const clients = useSelector(state => state.client?.data)
-  const company = useSelector(state => state.company?.data)
-  const agents = useSelector(state => state.agent?.data)
+  const clients = useSelector((state) => state.client?.data)
+  const company = useSelector((state) => state.company?.data)
+  const agents = useSelector((state) => state.agent?.data)
 
   useEffect(() => {
     setFormSize(1200)
@@ -139,7 +138,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const passportNumber = getValues('passportNumber')
   useEffect(() => {
     if (editId?.passportNumber) {
-      Object.keys(editId).forEach(key => {
+      Object.keys(editId).forEach((key) => {
         setValue(key, editId[key])
       })
       setPreviousFiles(editId.files)
@@ -185,8 +184,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     },
     {
       name: 'cnic',
-      type: 'text',
-      required: true
+      type: 'text'
     },
     {
       name: 'surname',
@@ -200,15 +198,13 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
 
   const passportField2 = [
     {
-      name: 'fatherName',
-      required: true
+      name: 'fatherName'
     },
     {
       name: 'issuingAuthority'
     },
     {
-      name: 'trackingNumber',
-      required: true
+      name: 'trackingNumber'
     },
     {
       textarea: true,
@@ -224,21 +220,44 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     top: '2px',
     left: '-3px'
   }
-  const listStyles = { borderLeft: '2px solid #1852fe', height: '42px', marginBottom: '5px' }
-
-  const supplier = useSelector(state =>
-    state?.supplier?.data?.map(item => ({ name: `${item.name} ${item.phone}`, _id: item._id }))
-  )
-  let byItems = []
-  if (watchedOnModel === 'Client') {
-    byItems = clients
-  } else if (watchedOnModel === 'Agent') {
-    byItems = agents
-  } else if (watchedOnModel === 'Company') {
-    byItems = company
+  const listStyles = {
+    borderLeft: '2px solid #1852fe',
+    height: '42px',
+    marginBottom: '5px'
   }
 
-  const byItem = byItems.map(item => ({
+  const supplier = useSelector((state) =>
+    state?.supplier?.data?.map((item) => ({
+      name: `${item.name} ${item.phone}`,
+      _id: item._id
+    }))
+  )
+  let byItems = []
+  let fetchMember
+  let MemberForm
+  let formName
+  let api
+  if (watchedOnModel === 'Client') {
+    byItems = clients
+    fetchMember = fetchClient
+    MemberForm = AgentandClientForm
+    formName = 'Client'
+    api = 'client'
+  } else if (watchedOnModel === 'Agent') {
+    byItems = agents
+    fetchMember = fetchAgent
+    MemberForm = AgentandClientForm
+    formName = 'Agent'
+    api = 'agent'
+  } else if (watchedOnModel === 'Company') {
+    byItems = company
+    fetchMember = fetchCompany
+    MemberForm = CompanyForm
+    formName = 'Company'
+    api = 'company'
+  }
+
+  const byItem = byItems.map((item) => ({
     name: `${item.fullName || item.companyName} ${item.phone}`,
     _id: item._id
   }))
@@ -248,7 +267,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       {/* <MuiTextAreaHookField/> */}
       <form>
         <Grid container spacing={6}>
-          {passportField1.map(item => (
+          {passportField1.map((item) => (
             <Grid item md={6} lg={4} key={item.name}>
               <CustomHookTextField item={item} control={control} errors={errors} />
             </Grid>
@@ -358,9 +377,14 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               }}
             />
           </Grid>
-          {passportField2.map(item => (
+          {passportField2.map((item) => (
             <Grid item md={6} lg={4} key={item.name}>
-              <CustomHookTextField item={item} control={control} errors={errors} required={true} />
+              <CustomHookTextField
+                item={item}
+                control={control}
+                errors={errors}
+                required={true}
+              />
             </Grid>
           ))}
           <Grid item md={6} lg={4}>
@@ -369,7 +393,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               errors={errors}
               name={'onModel'}
               options={['Client', 'Company', 'Agent']}
-              label={'Refer'}
+              label={'Refer Category'}
               placeholder='Select Refer'
               select={true}
               MenuProps={{
@@ -378,6 +402,14 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               }}
             />
           </Grid>
+          <CustomOpenDrawer
+            ButtonTitle={`Add ${watchedOnModel}`}
+            drawerTitle={`Add ${watchedOnModel} Form`}
+            Form={MemberForm}
+            fetchApi={fetchMember}
+            formName={formName}
+            api={api}
+          />
           <Grid item md={6} lg={4}>
             <SelectHookField
               control={control}
@@ -389,7 +421,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               placeholder='Choose Refer'
             />
           </Grid>
-
+          
           {!editId ? (
             <Grid item md={6}>
               <Box sx={{ width: '200px' }}>
@@ -400,7 +432,11 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
                   render={({ field: { onChange, onBlur, value } }) => (
                     <>
                       <label htmlFor='files'>Upload Files</label>
-                      <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
+                      <FilesUploader
+                        setFiles={setFiles}
+                        files={files}
+                        onChange={onChange}
+                      />
                     </>
                   )}
                 />

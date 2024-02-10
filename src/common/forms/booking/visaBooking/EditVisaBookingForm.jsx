@@ -216,7 +216,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
 
   const selectVisaId = () => {
     if (!visa) {
-      return findVisa.category && findVisa.destination && findVisa.duration && findVisa.type ? (
+      return (
         <Box sx={{ pb: 4 }}>
           <Typography variant='p' color='error' sx={{ fontSize: '0.7em' }}>
             Not Found Visa Service
@@ -231,7 +231,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             Add Visa Service
           </Button>
         </Box>
-      ) : null
+      ) 
     }
 
     return (

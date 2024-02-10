@@ -21,11 +21,6 @@ const MediaDrawer = ({ open, onClose, data }) => {
     setExpanded(nodeIds)
   }
 
-  const handleTreeItemClick = (event, nodeId, url) => {
-    // Open the URL in a new tab when a TreeItem is clicked
-    window.open(url, '_blank')
-  }
-
   return (
     <Drawer anchor='right' open={open} onClose={onClose}>
       <Box p={2} width={500} className='media-drawer'>
@@ -58,7 +53,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
                       nodeId={`${index}+${item.url}`}
                       label={
                         <div className='media-img-container'>
-                          {/* {item.fileType === 'image/png' ? (
+                          {/* {item.type === 'image/png' ? (
                             <Icon
                               icon='tabler:file-type-png'
                               width={24}
@@ -73,7 +68,12 @@ const MediaDrawer = ({ open, onClose, data }) => {
                               className='media-doc-icon'
                             />
                           )} */}
-                          <Image src={item.url} height={80} width={80} className='media-image' />
+                          <Image
+                            src={item.url}
+                            height={80}
+                            width={80}
+                            className='media-image'
+                          />
                           <span className='tooltip'>{item.name.substring(0, 10)}</span>{' '}
                           {/* Truncate to 10 characters */}
                         </div>
@@ -91,17 +91,23 @@ const MediaDrawer = ({ open, onClose, data }) => {
             {data.passport && data.passport.files ? (
               data.passport.files.map((item, index) => (
                 <div key={index}>
-                  {item.fileType.startsWith('application/') && ( // Check if it's a PDF or DOCX
+                  {item.type.startsWith('application/') && ( // Check if it's a PDF or DOCX
                     <TreeItem
                       key={`${index}+${item.url}`}
                       nodeId={`${index}+${item.url}`}
                       label={
                         <div className='media-img-container'>
-                          {item.fileType === 'application/pdf' ? (
+                          {item.type === 'application/pdf' ? (
                             <div>
                               <Icon icon='tabler:file-type-pdf' width={60} height={60} />
-                              <span className='tooltip'>{item.fileName.substring(0, 10)}</span>
-                              <a href={item.fileUrl} target='_blank' rel='noopener noreferrer'>
+                              <span className='tooltip'>
+                                {item.name.substring(0, 10)}
+                              </span>
+                              <a
+                                href={item.fileUrl}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                              >
                                 <Icon
                                   icon='tabler:eye'
                                   width={24}
@@ -113,8 +119,14 @@ const MediaDrawer = ({ open, onClose, data }) => {
                           ) : (
                             <div>
                               <Icon icon='tabler:file-type-doc' width={60} height={60} />
-                              <span className='tooltip'>{item.fileName.substring(0, 10)}</span>
-                              <a href={item.fileUrl} target='_blank' rel='noopener noreferrer'>
+                              <span className='tooltip'>
+                                {item.name.substring(0, 10)}
+                              </span>
+                              <a
+                                href={item.fileUrl}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                              >
                                 <Icon
                                   icon='tabler:eye'
                                   width={24}
@@ -124,7 +136,7 @@ const MediaDrawer = ({ open, onClose, data }) => {
                               </a>
                             </div>
                           )}
-                          <span className='tooltip'>{item.fileName.substring(0, 10)}</span>{' '}
+                          <span className='tooltip'>{item.name.substring(0, 10)}</span>{' '}
                           {/* Truncate to 10 characters */}
                         </div>
                       }

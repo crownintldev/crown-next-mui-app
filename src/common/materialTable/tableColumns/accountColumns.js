@@ -11,7 +11,7 @@ import {
   defaultCellRenderer,
   defaultCellUpperCase,
   conditionValue,
-  dateFormat,
+  dateFormat
 } from 'src/common/materialTable/tableColumnFunction'
 
 export const useTableColumns = () =>
@@ -32,10 +32,30 @@ export const useTableColumns = () =>
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Refer Phone #' },
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
-      { accessorKey: 'amount.paid', header: 'Paid Amount', size: 100,Cell:defaultCellRenderer },
-      { accessorKey: 'amount.remaining', header: 'Remaining Amount', size: 100,Cell:defaultCellRenderer },
-      { accessorKey: 'amount.total', header: 'Total Amount', size: 100,Cell:defaultCellRenderer },
-      { accessorKey: 'amount.discount', header: 'Discount', size: 100,Cell:defaultCellRenderer },
+      {
+        accessorKey: 'amount.paid',
+        header: 'Paid Amount',
+        size: 100,
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'amount.remaining',
+        header: 'Remaining Amount',
+        size: 100,
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'amount.total',
+        header: 'Total Amount',
+        size: 100,
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'amount.discount',
+        header: 'Discount',
+        size: 100,
+        Cell: defaultCellRenderer
+      },
       { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
     ],
     []
@@ -48,7 +68,11 @@ export const useChildTableColumns = () =>
       accessorKey: 'passport.passportNumber',
       header: 'Passport Number'
     },
-    { accessorKey: 'passport.givenName', header: 'Given Name', Cell: defaultCellRenderer },
+    {
+      accessorKey: 'passport.givenName',
+      header: 'Given Name',
+      Cell: defaultCellRenderer
+    },
     {
       accessorKey: 'processing.processingFee',
       header: 'Processing Fee',
@@ -65,7 +89,11 @@ export const useChildTableColumns = () =>
       Cell: defaultCellRenderer
     },
     // minWidth converted to size
-    { accessorKey: 'visaId.destination', header: 'Destination', Cell: defaultCellRenderer },
+    {
+      accessorKey: 'visaId.destination',
+      header: 'Destination',
+      Cell: defaultCellRenderer
+    },
     { accessorKey: 'visaId.category', header: 'Category', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.type', header: 'Type', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.duration', header: 'Duration', Cell: defaultCellRenderer }

@@ -9,6 +9,7 @@ const accessToken = getCookie('jwt')
 export const createApi = async ({
   api,
   apidomain,
+  completeApi,
   data,
   dispatch,
   fetchData,
@@ -18,9 +19,9 @@ export const createApi = async ({
   removeSelection
 }) => {
   const baseURL = apidomain || AccountApi
-
+  let myapi = completeApi ? completeApi : `${api}/create`
   try {
-    const response = await axios.post(`${baseURL}/${api}/create`, data, {
+    const response = await axios.post(`${baseURL}/${myapi}`, data, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -43,7 +44,7 @@ export const createApi = async ({
       if (reset) {
         reset()
       }
-      toast.success(message ? message : `${capitalizeSplitDash(api)} Create Successfully`, {
+      toast.success(message ? message : api?`${capitalizeSplitDash(api)} Create Successfully`:"Create Successfully", {
         position: 'top-center'
       })
     }
@@ -65,6 +66,7 @@ export const updateApi = async ({
   removeSelection
 }) => {
   const baseURL = apidomain || AccountApi
+
   try {
     const response = await axiosInstance.put(`${baseURL}/${api}/update/${_id}`, data)
     if (response.data.data) {

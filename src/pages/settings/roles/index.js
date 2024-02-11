@@ -44,10 +44,12 @@ const RolesComponent = () => {
           stateSelector='user'
           columns={columns}
           drawerProps={{
+            formTitle:"Create User",
             editFormTitle: 'Edit User',
             //header buttons drawer
+            buttonTitle: 'Create User',
             editButtonTitle: 'Edit User',
-            CreateForm: "",
+            CreateForm: UserForm,
             EditForm: UserForm,
             multiSelected:true
           }}

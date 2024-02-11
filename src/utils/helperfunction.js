@@ -48,7 +48,7 @@ export const capitalizeValue = (str) => {
 
 //relace dash (-) with space and ever next word is capital,
 export function capitalizeSplitDash(str) {
-  return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase())
+  return str ? str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase()):""
 }
 
 // remove undefined

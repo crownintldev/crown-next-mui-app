@@ -57,9 +57,9 @@ const EditFilesUploader = ({
   }
 
   const handlePrevRemoveFile = file => {
-    let removeFile = previousFiles.filter(prevFile => prevFile.url !== file.url)
+    let removeFile = previousFiles?.filter(prevFile => prevFile.url !== file.url)
     setPreviousFiles(removeFile)
-    setRemoveFiles([...removeFiles, file.public_id])
+    setRemoveFiles([...removeFiles, file?.fileId])
   }
 
   const fileList = files.map(file => (
@@ -141,7 +141,7 @@ const EditFilesUploader = ({
           <Typography>Drop Files / Browse.</Typography>
         </Box>
       </div>
-      {previousFiles.length > 0 && <List>{prevFileList}</List>}
+      {previousFiles && previousFiles.length > 0 && <List>{prevFileList}</List>}
       {files.length ? (
         <Fragment>
           <List>{fileList}</List>

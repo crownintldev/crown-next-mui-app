@@ -23,29 +23,39 @@ const PassportSubmitButton = ({
   let data = watch()
 
   const onSubmit = async () => {
+    let formData = new FormData()
     try {
-      let formData = new FormData()
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         if (key !== 'files') {
           formData.append(key, data[key])
         }
       })
-      data?.files?.forEach(file => {
+      data?.files?.forEach((file) => {
         formData.append('files', file)
       })
-
-      //   const responseAction = await dispatch(addPassport(formData))
-      //   console.log(responseAction)
+      if (data.deletedFiles.length > 0) {
+        data.deletedFiles.forEach((fileId) => {
+          formData.append('deletedFiles', fileId)
+        })
+      }
       let res
       if (!editId) {
-        res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/passport/create`, formData)
+        res = await axiosInstance.post(
+          `${process.env.NEXT_PUBLIC_API}/passport/create`,
+          formData
+        )
         dispatch(
           fetchVisaBooking({
             newData: res.data.data
           })
         )
+        toast.success('Insert Successfully', { position: 'top-center' })
       } else {
-        res = await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/passport/update/${editId}`, formData)
+        res = await axiosInstance.put(
+          `${process.env.NEXT_PUBLIC_API}/passport/update/${editId}`,
+          formData
+        )
+        toast.success('Update Successfully', { position: 'top-center' })
         dispatch(
           fetchVisaBooking({
             updateData: res.data.data
@@ -62,10 +72,12 @@ const PassportSubmitButton = ({
       if (removeSelection) {
         removeSelection()
       }
-      toast.success('Insert Successfully', { position: 'top-center' })
+  
       setDrawerOpen(true)
+      formData = new FormData()
     } catch (err) {
       toast.error(axiosErrorMessage(err), { position: 'top-center' })
+      formData = new FormData()
     }
   }
 

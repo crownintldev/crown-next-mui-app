@@ -103,7 +103,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     (state) => state.visaBooking?.data?.find((item) => item._id === _id)?.passport
   )
 
-  console.log('countries', countries)
+  // console.log('countries', countries)
   // let editId = useSelector(
   //   state => state.visaBooking?.data?.find(item => item._id === _id)?.passportId
   // )
@@ -166,9 +166,10 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   // console.log(editId)
 
   useEffect(() => {
-    setValue('deletedFiles', [removeFiles])
-  }, [previousFiles, removeFiles])
-
+    setValue('deletedFiles', removeFiles)
+  }, [previousFiles, setRemoveFiles])
+// console.log("removeFiles",removeFiles)
+// console.log("getValue",getValues("deletedFiles"))
   const watchedOnModel = watch('onModel')
 
   const handleClose = () => {

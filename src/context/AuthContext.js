@@ -84,6 +84,8 @@ const AuthProvider = ({ children }) => {
   }, [])
 
   const handleLogin = (params, errorCallback) => {
+    setUser(null)
+    removeAuthenticate('userData', 'jwt')
     signin(params)
       .then(response => {
         // params.rememberMe ? authenticate(response.data) : ''
@@ -101,22 +103,22 @@ const AuthProvider = ({ children }) => {
       })
   }
 
-  const handleRegister = (params, errorCallback) => {
-    signup(params)
-      .then(response => {
-        // params.rememberMe ? authenticate(response.data) : ''
-        authenticate(response.data, () => {
-          dispatch(setToken(response.data.accessToken))
-          setUser(response.data.data)
-          const returnUrl = router.query.returnUrl
-          const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-          router.replace(redirectURL)
-        })
-      })
-      .catch(err => {
-        if (errorCallback) errorCallback(err)
-      })
-  }
+  // const handleRegister = (params, errorCallback) => {
+  //   signup(params)
+  //     .then(response => {
+  //       // params.rememberMe ? authenticate(response.data) : ''
+  //       authenticate(response.data, () => {
+  //         dispatch(setToken(response.data.accessToken))
+  //         setUser(response.data.data)
+  //         const returnUrl = router.query.returnUrl
+  //         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+  //         router.replace(redirectURL)
+  //       })
+  //     })
+  //     .catch(err => {
+  //       if (errorCallback) errorCallback(err)
+  //     })
+  // }
 
   const handleLogout = () => {
     setUser(null)
@@ -132,7 +134,7 @@ const AuthProvider = ({ children }) => {
     setUser,
     setLoading,
     login: handleLogin,
-    register: handleRegister,
+    // register: handleRegister,
     logout: handleLogout
   }
 

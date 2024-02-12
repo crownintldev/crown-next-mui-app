@@ -44,7 +44,7 @@ const MenuProps = {
   }
 }
 
-const requiredError = ['ids', 'roles']
+const requiredError = ['']
 
 const yupField = requiredError.reduce((acc, item) => {
   acc[item] = yup
@@ -62,7 +62,10 @@ const defaultValues = {
   roles: '',
   appPermissions: ['account'],
   status: '',
-  password: ''
+  password: '',
+  username:'',
+  email:'',
+  password:''
 }
 
 const UserForm = ({
@@ -74,7 +77,6 @@ const UserForm = ({
   removeSelection
 }) => {
   const dispatch = useDispatch()
-  //   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
   let roles = useSelector((state) => state?.role?.data)
   let branches = useSelector((state) => state?.branch?.data)
 
@@ -134,7 +136,7 @@ const UserForm = ({
   }
   const onSubmit = (e) => {
     e.preventDefault()
-    if (editIds) {
+    if (editIds && ids && ids.length>0) {
       updateManyApi({
         completeApi: 'user/editUserbyAdministrator',
         apidomain: AuthApi,
@@ -145,15 +147,39 @@ const UserForm = ({
         reset,
         removeSelection
       })
+    }else{
+      createApi({ completeApi:"auth/signup",apidomain: AuthApi,   data: getValues(), dispatch, fetchData: fetchApi, toggle, reset })
     }
   }
 
-  const chooseFields = [
+  const userFields = [
     {
-      name: 'password',
-      placeholder: `Enter Password **Not Required`,
-      label: `User Password Change`
+      name: 'username',
+      placeholder: `Enter Username`,
+      label: `Username`,
+      required: true
+    },
+    {
+      name: 'email',
+      placeholder: `Enter Email`,
+      label: `Email`,
+      required: true
     }
+  ]
+
+  const passwordField = [
+    ids && ids.length
+      ? {
+          name: 'password',
+          placeholder: `Enter Password **Not Required`,
+          label: `User Password Change`
+        }
+      : {
+          name: 'password',
+          placeholder: `Enter Password`,
+          label: `Password`,
+          required: true
+        }
   ]
   const renderSelectedValue = (selectedIds) => {
     return selectedIds
@@ -168,37 +194,50 @@ const UserForm = ({
 
   return (
     <form>
-      <Controller
-        name='ids'
+      {ids && ids.length > 0 ? (
+        <Controller
+          name='ids'
+          control={control}
+          render={({ field }) => (
+            <CustomTextField
+              sx={{ mb: 6 }}
+              select
+              fullWidth
+              label='Users Selected'
+              id='select-multiple-checkbox'
+              SelectProps={{
+                MenuProps,
+                displayEmpty: true,
+                multiple: true,
+                value: field.value,
+                onChange: field.onChange,
+                renderValue: renderSelectedValue
+              }}
+            >
+              <MenuItem value='' disabled>
+                Select Users
+              </MenuItem>
+              {editIds &&
+                editIds.length > 0 &&
+                editIds.map((item, index) => (
+                  <MenuItem key={index} value={`${item._id}`}>
+                    {`${item.email}`}
+                  </MenuItem>
+                ))}
+            </CustomTextField>
+          )}
+        />
+      ) : (
+        <CustomHookTextField
+          chooseFields={userFields}
+          control={control}
+          errors={errors}
+        />
+      )}
+      <CustomHookTextField
+        chooseFields={passwordField}
         control={control}
-        render={({ field }) => (
-          <CustomTextField
-            sx={{ mb: 6 }}
-            select
-            fullWidth
-            label='Users Selected'
-            id='select-multiple-checkbox'
-            SelectProps={{
-              MenuProps,
-              displayEmpty: true,
-              multiple: true,
-              value: field.value,
-              onChange: field.onChange,
-              renderValue: renderSelectedValue
-            }}
-          >
-            <MenuItem value='' disabled>
-              Select Users
-            </MenuItem>
-            {editIds &&
-              editIds.length > 0 &&
-              editIds.map((item, index) => (
-                <MenuItem key={index} value={`${item._id}`}>
-                  {`${item.email}`}
-                </MenuItem>
-              ))}
-          </CustomTextField>
-        )}
+        errors={errors}
       />
       <SelectHookField
         control={control}
@@ -225,11 +264,6 @@ const UserForm = ({
         options={['pending', 'active', 'block']}
         label='Status'
         placeholder='select Status'
-      />
-      <CustomHookTextField
-        chooseFields={chooseFields}
-        control={control}
-        errors={errors}
       />
 
       <Controller

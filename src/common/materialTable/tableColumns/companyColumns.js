@@ -14,7 +14,7 @@ const useCompanyColumns = () =>
       { accessorKey: 'ownerContact', header: 'Owner Contact', Cell: defaultCellRenderer },
       { accessorKey: 'cnic', header: 'Cnic', Cell: defaultCellRenderer },
       { accessorKey: 'address', header: 'Address', Cell: defaultCellRenderer },
-      { accessorKey: 'passportCount', header: 'Visa Passport', Cell: defaultCellRenderer },
+      { accessorKey: 'passportCount', header: 'passportCount' },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
       { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }
     ],

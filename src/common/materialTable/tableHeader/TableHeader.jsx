@@ -33,7 +33,8 @@ const TableHeader = (props) => {
     tableData,
     removeSelection,
     showTrash,
-    headerMenu
+    headerMenu,
+    setActiveTab
   } = props
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -51,25 +52,25 @@ const TableHeader = (props) => {
       return toast.error('api not found', { position: 'top-center' })
     }
     const apiEndpoint =
-      cond === 'undo' && showTrash
+      cond === 'undo' && showTrash === 'true'
         ? `${process.env.NEXT_PUBLIC_API}/${api}/remove`
-        : showTrash
-        ? `${process.env.NEXT_PUBLIC_API}/${api}/remove`
+        : showTrash === 'true'
+        ? `${process.env.NEXT_PUBLIC_API}/${api}/permanentRemove`
         : `${process.env.NEXT_PUBLIC_API}/${api}/remove`
     let requestBody =
-      cond === 'undo' && showTrash
+      cond === 'undo' && showTrash === 'true'
         ? {
             ids: selectedIds,
-            deleted: "false"
+            deleted: 'false'
           }
-        : showTrash
+        : showTrash === 'true'
         ? {
-          ids: selectedIds,
-          deleted: "permanent"
-        }
+            ids: selectedIds,
+            deleted: 'permanent'
+          }
         : {
             ids: selectedIds,
-            deleted: "true"
+            deleted: 'true'
           }
     try {
       const response = await axiosInstance.post(apiEndpoint, requestBody)
@@ -80,6 +81,7 @@ const TableHeader = (props) => {
             page: 1
           })
         )
+        setActiveTab('default')
         removeSelection()
         toast.success('Delete Successfully', { position: 'top-center' })
       }
@@ -160,14 +162,14 @@ const TableHeader = (props) => {
                   >
                     <Icon fontSize='0.8rem' icon='tabler:minus' />
                     {/* {api === 'visa' && 'Delete Visa Service'} */}
-                    {!showTrash && `Delete ${capitalizeSplitDash(api)}`}
-                    {showTrash && 'Delete Permanent'}
+                    {showTrash === 'false' && `Delete ${capitalizeSplitDash(api)}`}
+                    {showTrash === 'true' && 'Delete Permanent'}
                   </Box>
                 </MenuItem>
               </div>
             </div>
           )}
-          {api && selectedIds && selectedIds.length > 0 && showTrash && (
+          {api && selectedIds && selectedIds.length > 0 && showTrash === 'true' && (
             <div onClick={handleClose}>
               <div onClick={() => handleRemove('undo')}>
                 <MenuItem
@@ -186,7 +188,7 @@ const TableHeader = (props) => {
                     }}
                   >
                     <Icon fontSize='0.8rem' icon='tabler:minus' />
-                    {showTrash && 'Undo Delete'}
+                    {showTrash === 'true' && 'Undo Delete'}
                   </Box>
                 </MenuItem>
               </div>
@@ -197,7 +199,8 @@ const TableHeader = (props) => {
               {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
             </div>
           </div> */}
-          {headerMenu && headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
+          {headerMenu &&
+            headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
       </Box>
     </Box>

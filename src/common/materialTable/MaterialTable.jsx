@@ -38,7 +38,7 @@ const MaterialTable = ({
   } = drawerProps
   const theme = useTheme()
   const dispatch = useDispatch()
-  const [showTrash, setShowTrash] = useState(false)
+  const [showTrash, setShowTrash] = useState("false")
   const { data, total, isLoading, isError } = useSelector((state) => state[stateSelector])
   const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
@@ -93,7 +93,6 @@ const MaterialTable = ({
         })
       )
     }
-
     // Cleanup the event listener
     return () => {
       window.removeEventListener('keydown', handleEnterPress)
@@ -107,7 +106,13 @@ const MaterialTable = ({
 
   // Function to handle tab changes
   const handleTabChange = (event, newValue) => {
-    setActiveTab(newValue)
+    setActiveTab(newValue);
+    if(newValue === "default"){
+      setShowTrash("false")
+    }else{
+      setShowTrash("true")
+    }
+    
   }
 
   // Conditionally render the table component based on the active tab
@@ -144,6 +149,7 @@ const MaterialTable = ({
         tableData={data}
         removeSelection={handleRemoveSelection}
         showTrash={showTrash}
+        setActiveTab={setActiveTab}
         headerMenu={headerMenu}
       />
     )
@@ -228,7 +234,7 @@ const MaterialTable = ({
         }}
       >
         <Tab
-          onClick={() => setShowTrash(false)}
+          // onClick={() => setShowTrash("false")}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <InboxIcon style={{ marginRight: '4px' }} /> Default
@@ -237,7 +243,7 @@ const MaterialTable = ({
           value='default'
         />
         <Tab
-          onClick={() => setShowTrash(true)}
+          // onClick={() => setShowTrash("true")}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <DeleteIcon style={{ marginRight: '4px' }} /> Trash

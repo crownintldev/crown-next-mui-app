@@ -1,7 +1,7 @@
 import { mkConfig, generateCsv, download } from 'export-to-csv'
 
 export const hasSubRows = data => {
-  return data.some(row => row.subRows && row.subRows.length > 0)
+  return data?.some(row => row.subRows && row.subRows.length > 0)
 }
 
 //export csv,pdf function
@@ -12,7 +12,7 @@ const csvConfig = mkConfig({
 })
 
 export const handleExportRows = rows => {
-  const rowData = rows.map(row => row.original)
+  const rowData = rows?.map(row => row.original)
   const csv = generateCsv(csvConfig)(rowData)
   download(csvConfig)(csv)
 }

@@ -63,6 +63,7 @@ const LoginPage = () => {
   const imageSource =
     skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
+    console.log(process.env.NEXT_PUBLIC_API)
   return (
     <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
       {!hidden ? (

@@ -36,10 +36,10 @@ jobs:
       run: export NODE_OPTIONS="--max_old_space_size=4096"
 
     - name: Stop Existing Process
-      run: pm2 stop npm || true # '|| true' ensures that the workflow doesn't fail if pm2 stop fails
+      run: pm2 stop "travokey-frontend" || true # '|| true' ensures that the workflow doesn't fail if pm2 stop fails
 
     - name: Start Application
-      run: pm2 start npm --name travokey-frontend
+      run: pm2 start travokey-frontend
 
     - name: Deployment Status
       run: echo "Deployment successfull!"

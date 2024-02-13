@@ -36,7 +36,7 @@ const CustomHookTextField = ({chooseFields, control, errors, item }) => {
                       ? ''
                       : myValue
                     : value !== undefined
-                    ? capitalizeValue(value)
+                    ? value.toUpperCase()
                     : ''
                 }
                 sx={{ mb: 4 }}

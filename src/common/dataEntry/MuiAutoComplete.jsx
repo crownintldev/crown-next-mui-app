@@ -8,7 +8,7 @@ const MuiAutoComplete = ({
   width = 250,
   style,
   options = [],
-  getOptionLabel = option => option,
+  getOptionLabel = (option) => option,
   onChange,
   label = 'Select Item',
   id = 'autocomplete-outlined',
@@ -22,7 +22,7 @@ const MuiAutoComplete = ({
     id,
     getOptionLabel,
     onChange,
-    renderInput: params => <TextField {...params} label={label} />
+    renderInput: (params) => <TextField {...params} label={label} />
   }
 
   // If value is provided, include it in the props
@@ -37,11 +37,11 @@ const MuiAutoComplete = ({
         renderOption ||
         ((props, option) => (
           <Box component='li' {...props}>
-            {getOptionLabel(option)}
+            {getOptionLabel((option) => option.toUpperCase())}
           </Box>
         ))
       }
-      renderInput={params => <TextField {...params} label={label} />}
+      renderInput={(params) => <TextField {...params} label={label} />}
     />
   )
 }

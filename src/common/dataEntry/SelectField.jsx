@@ -9,7 +9,7 @@ const SelectField = ({ options, label, placeholder, value, setValue, disableClea
       options={options ? options : ['xyz', 'xyz']}
       id='autocomplete-size-medium'
       value={value}
-      getOptionLabel={option => option || ''}
+      getOptionLabel={option => option.toUpperCase() || ''}
       onChange={(event, newValue) => {
         setValue(newValue)
       }}

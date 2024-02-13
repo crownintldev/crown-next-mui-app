@@ -118,7 +118,7 @@ const MaterialTable = ({
   // Conditionally render the table component based on the active tab
   const renderTableComponent = () => {
     if (activeTab === 'default') {
-      return <MaterialReactTable table={table} className='custom-table-styles' />
+      return <MaterialReactTable  table={table} className='custom-table-styles' />
     } else if (activeTab === 'trash') {
       // Pass the trashed rows to the table in the "Trash" tab
       return <MaterialReactTable table={table} data={trashedRows} className='custom-table-styles' />
@@ -180,8 +180,13 @@ const MaterialTable = ({
   const table = useMaterialReactTable({
     columns,
     data: data,
+   
     ...tablePropsData,
+    enableBottomToolbar: true,
+    enableStickyHeader: true,
+    enableStickyFooter: true,
     enableExpanding: hasSubRows(data),
+    // muiTableContainerProps: { sx: { maxHeight: '400px' } },
 
     // enableExpanding: true,
     renderTopToolbarCustomActions: CreateForm || selectionRow.length>0? renderCustomActions : ()=>{},

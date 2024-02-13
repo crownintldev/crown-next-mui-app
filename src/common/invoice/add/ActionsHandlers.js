@@ -51,8 +51,7 @@ const ActionsHandlers = ({
 
   const pdfDownloader = () => {
     const modalContent = componentPDF.current
-    const actionButtons =
-      modalContent.querySelector('#action-buttons')
+    const actionButtons = modalContent.querySelector('#action-buttons')
     if (actionButtons) {
       actionButtons.style.display = 'none'
     }
@@ -64,40 +63,37 @@ const ActionsHandlers = ({
     document.body.appendChild(tempContainer)
 
     // Capture the screenshot of the temporary container using html2canvas
-    html2canvas(tempContainer, { scale: 2, allowTaint: true }).then(
-      (canvas) => {
-        // Convert the canvas to a data URL
-        const screenshotUrl = canvas.toDataURL('image/png')
+    html2canvas(tempContainer, { scale: 2, allowTaint: true }).then((canvas) => {
+      // Convert the canvas to a data URL
+      const screenshotUrl = canvas.toDataURL('image/png')
 
-        const pdf = new jsPDF('p', 'mm', 'a4')
+      const pdf = new jsPDF('p', 'mm', 'a4')
 
-        // Add the captured image to the PDF
-        pdf.addImage(
-          screenshotUrl,
-          'PNG',
-          0,
-          0,
-          pdf.internal.pageSize.width,
-          pdf.internal.pageSize.height
-        )
+      // Add the captured image to the PDF
+      pdf.addImage(
+        screenshotUrl,
+        'PNG',
+        0,
+        0,
+        pdf.internal.pageSize.width,
+        pdf.internal.pageSize.height
+      )
 
-        // Save the PDF
-        pdf.save('invoice_screenshot.pdf')
+      // Save the PDF
+      pdf.save('invoice_screenshot.pdf')
 
-        document.body.removeChild(tempContainer)
-        if (actionButtons) {
-          actionButtons.style.display = 'block'
-        }
+      document.body.removeChild(tempContainer)
+      if (actionButtons) {
+        actionButtons.style.display = 'block'
       }
-    )
+    })
   }
 
   // Taking screenshot handler
   const screenShotHandler = () => {
     const modalContent = componentPDF.current
 
-    const actionButtons =
-      modalContent.querySelector('#action-buttons')
+    const actionButtons = modalContent.querySelector('#action-buttons')
     if (actionButtons) {
       actionButtons.style.display = 'none'
     }
@@ -128,28 +124,17 @@ const ActionsHandlers = ({
     invoiceDataArray.map((invoiceData, index) => (
       <React.Fragment key={index}>
         {index === 0 && (
-          <AddCardHeader
-            cardHeader={cardHeader}
-            invoiceNumber={invoiceNumber}
-          />
+          <AddCardHeader cardHeader={cardHeader} invoiceNumber={invoiceNumber} />
         )}
-        <AddCardInvoiceTo
-          clientData={invoiceData.by}
-          amount={invoiceData.amount}
-        />
-        <AddCardItemSelect
-          visaBookingIds={invoiceData.visaBookingIds}
-        />
+        <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
+        <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
         {index < invoiceDataArray.length - 1 && <hr />}
-        {index + 1 === invoiceDataArray.length &&
-          !hasRenderedTotal && (
-            <>
-              <AddCardItemWithTotal
-                invoiceDataArray={invoiceDataArray}
-              />
-              {setHasRenderedTotal(true)}{' '}
-            </>
-          )}
+        {index + 1 === invoiceDataArray.length && !hasRenderedTotal && (
+          <>
+            <AddCardItemWithTotal invoiceDataArray={invoiceDataArray} />
+            {setHasRenderedTotal(true)}{' '}
+          </>
+        )}
       </React.Fragment>
     ))
 
@@ -223,9 +208,7 @@ const ActionsHandlers = ({
           {invoiceDataArray && invoiceDataArray.length > 0 ? (
             <>
               {multiRender}
-              <AddCardItemWithTotal
-                invoiceDataArray={invoiceDataArray}
-              />
+              <AddCardItemWithTotal invoiceDataArray={invoiceDataArray} />
             </>
           ) : (
             <Box
@@ -250,10 +233,7 @@ const ActionsHandlers = ({
                     getOptionLabel={(option) => option.label}
                     onChange={handleOptionSelect}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label='Select your creation'
-                      />
+                      <TextField {...params} label='Select your creation' />
                     )}
                     renderOption={(props, option) => (
                       <Link href={option.link}>
@@ -274,11 +254,7 @@ const ActionsHandlers = ({
               mt: '10'
             }}
           >
-            <Button
-              variant='contained'
-              onClick={printGenerator}
-              sx={{ marginRight: 2 }}
-            >
+            <Button variant='contained' onClick={printGenerator} sx={{ marginRight: 2 }}>
               Print
             </Button>
 

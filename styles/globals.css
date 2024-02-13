@@ -319,6 +319,24 @@ code[class*='language-'] {
 .MuiAutocomplete-hasClearIcon.css-14xg4mo-MuiAutocomplete-root .MuiOutlinedInput-root {
   height: 36px;
 }
+.css-1pa8pj7-MuiTableRow-root {
+  text-transform: lowercase;
+}
+
+/* invoice print styles start */
+.css-1pa8pj7-MuiTableRow-root
+  .MuiTableCell-head:not(.MuiTableCell-paddingCheckbox):first-child,
+.css-1pa8pj7-MuiTableRow-root
+  .MuiTableCell-root:not(.MuiTableCell-paddingCheckbox):first-child {
+  /* padding-left: 1.5rem; */
+  letter-spacing: 0px;
+}
+/* invoice print styles stopped */
+.css-1ej5bwj-MuiTableHead-root .MuiTableCell-head {
+  padding: 7px;
+  padding-left: 0px;
+  letter-spacing: 0px;
+}
 .css-18fbx67-MuiFormLabel-root-MuiInputLabel-root {
   top: -9px;
 }

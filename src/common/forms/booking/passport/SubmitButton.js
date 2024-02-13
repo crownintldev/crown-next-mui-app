@@ -72,7 +72,7 @@ const PassportSubmitButton = ({
       if (removeSelection) {
         removeSelection()
       }
-  
+
       setDrawerOpen(true)
       formData = new FormData()
     } catch (err) {

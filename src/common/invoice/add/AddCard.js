@@ -28,10 +28,17 @@ import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTo
 
 import { useSelector } from 'react-redux'
 
-const AddCard = props => {
+const AddCard = (props) => {
   // ** Props
-  const { clients, invoiceNumber, selectedClient, setSelectedClient, toggleAddCustomerDrawer,cardHeader,invoiceDataArray } =
-    props
+  const {
+    clients,
+    invoiceNumber,
+    selectedClient,
+    setSelectedClient,
+    toggleAddCustomerDrawer,
+    cardHeader,
+    invoiceDataArray
+  } = props
 
   // ** States
   //AddCardInvoiceTo states
@@ -46,8 +53,7 @@ const AddCard = props => {
   const theme = useTheme()
 
   // ** Deletes form
-  const data = useSelector(state => state.invoice.data)
-
+  const data = useSelector((state) => state.invoice.data)
 
   const options = [
     { label: 'Account', link: '/accounts/account/' },
@@ -94,9 +100,11 @@ const AddCard = props => {
                 <Autocomplete
                   id='custom-autocomplete'
                   options={options}
-                  getOptionLabel={option => option.label}
+                  getOptionLabel={(option) => option.label}
                   onChange={handleOptionSelect}
-                  renderInput={params => <TextField {...params} label='Select your creation' />}
+                  renderInput={(params) => (
+                    <TextField {...params} label='Select your creation' />
+                  )}
                   renderOption={(props, option) => (
                     <Link href={option.link}>
                       <li {...props}>
@@ -110,7 +118,7 @@ const AddCard = props => {
           </Box>
         ) : (
           // Normal rendering
-          invoiceDataArray.map(item => {
+          invoiceDataArray.map((item) => {
             const { by: clientData, amount, visaBookingIds } = item
 
             return (
@@ -150,7 +158,7 @@ const AddCard = props => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        <AddCardItemWithTotal data={data} invoiceDataArray={invoiceDataArray}/>
+        <AddCardItemWithTotal data={data} invoiceDataArray={invoiceDataArray} />
       </CardContent>
 
       <Divider />

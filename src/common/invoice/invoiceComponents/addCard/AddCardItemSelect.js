@@ -9,21 +9,20 @@ import Paper from '@mui/material/Paper'
 import visaBooking from 'src/store/apps/booking/visaBooking'
 
 const AddCardItemSelect = ({ visaBookingIds }) => {
-
- // console.log('visa booking', visaBookingIds)
+  // console.log('visa booking', visaBookingIds)
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='invoice table'>
+      <Table aria-label='invoice table'>
         <TableHead>
           <TableRow>
-            <TableCell align='right'>Passport Number</TableCell>
-            <TableCell align='right'>Given Name</TableCell>
+            <TableCell align='right'>Passport no#</TableCell>
+            <TableCell align='right'>Given name</TableCell>
             <TableCell align='right'>Status</TableCell>
-            <TableCell align='right'>Visa Category</TableCell>
-            <TableCell align='right'>Visa Confirmation / Processing</TableCell>
-            <TableCell align='right'>Visa Destination</TableCell>
-            <TableCell align='right'>Visa Duration</TableCell>
-            <TableCell align='right'>Visa Type</TableCell>
+            <TableCell align='right'>Visa category</TableCell>
+            <TableCell align='right'>Visa confirm/process</TableCell>
+            <TableCell align='right'>Visa destination</TableCell>
+            <TableCell align='right'>Visa duration</TableCell>
+            <TableCell align='right'>Visa type</TableCell>
             {/* Add more headers as needed */}
           </TableRow>
         </TableHead>
@@ -40,8 +39,12 @@ const AddCardItemSelect = ({ visaBookingIds }) => {
                 )}
                 {invoice.visaId.processing && (
                   <>
-                    <TableCell align='right'>{invoice.visaId.processing.processingFee}</TableCell>
-                    <TableCell align='right'>{invoice.visaId.processing.visaFee}</TableCell>
+                    <TableCell align='right'>
+                      {invoice.visaId.processing.processingFee}
+                    </TableCell>
+                    <TableCell align='right'>
+                      {invoice.visaId.processing.visaFee}
+                    </TableCell>
                   </>
                 )}
                 <TableCell align='right'>{invoice.visaId.category}</TableCell>

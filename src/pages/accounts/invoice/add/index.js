@@ -44,15 +44,26 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
             selectedClient={selectedClient}
             setSelectedClient={setSelectedClient}
             toggleAddCustomerDrawer={toggleAddCustomerDrawer}
-            cardHeader={{ detail: cardHeaderDetails, setIssueDate, setDueDate, issueDate, dueDate }}
+            cardHeader={{
+              detail: cardHeaderDetails,
+              setIssueDate,
+              setDueDate,
+              issueDate,
+              dueDate
+            }}
             invoiceDataArray={invoiceData}
           />
         </Grid>
         <Grid item xl={3} md={4} xs={12}>
           <AddActions
-          cardHeader={{ detail: cardHeaderDetails, setIssueDate, setDueDate, issueDate, dueDate }}
-          invoiceDataArray={invoiceData}
-
+            cardHeader={{
+              detail: cardHeaderDetails,
+              setIssueDate,
+              setDueDate,
+              issueDate,
+              dueDate
+            }}
+            invoiceDataArray={invoiceData}
           />
         </Grid>
       </Grid>

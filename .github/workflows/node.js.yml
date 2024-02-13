@@ -1,0 +1,45 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: self-hosted
+
+    env:
+      NEXT_PUBLIC_JWT_EXPIRATION: 9d
+      NEXT_PUBLIC_JWT_SECRET: dd5f3089-40c3-403d-af14-d0c228b05cb4
+      NEXT_PUBLIC_JWT_REFRESH_TOKEN_SECRET: 7c4c1c50-3230-45bf-9eae-c9b2e401c767
+      NEXT_PUBLIC_API: https://crownoffice-backend-production.up.railway.app/api
+      NEXT_PUBLIC_AUTH: https://evisa-travokey-authorization-production.up.railway.app/api
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set Node.js Version
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.x
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci --force
+
+    - name: Build Application
+      run: npm run build
+
+    - name: Optimize Memory Usage
+      run: export NODE_OPTIONS="--max_old_space_size=4096"
+
+    - name: Stop Existing Process
+      run: pm2 stop npm || true # '|| true' ensures that the workflow doesn't fail if pm2 stop fails
+
+    - name: Start Application
+      run: pm2 start npm --name travokey-frontend
+
+    - name: Deployment Status
+      run: echo "Deployment successfull!"

@@ -39,7 +39,7 @@ export const defaultCellRenderer = ({ row, column }) => {
     typeof value === 'number' ? (
       currencyFormatter(value, 'PKR')
     ) : (
-      capitalize(value)
+      uppercase(value)
     )
   ) : (
     <span style={{ color: '#ffa600ff' }}>N/A</span>
@@ -57,10 +57,17 @@ export const defaultCellUpperCase = ({ row, column }) => {
   )
 }
 
+// For Members Only
 export const conditionValue = ({ cell }) => {
   const data = cell.getValue()
-  return data?.fullName ? capitalize(data?.fullName) : capitalize(data?.companyName)
+  return data?.fullName ? uppercase(data?.fullName) : uppercase(data?.companyName)
 }
+export const modelCondition=({cell})=>{
+  const data = cell.getValue();
+  return data === "Agent"? <span style={{border:"1px solid green"}}>Ag</span> : data === "Client" ? <span style={{border:"1px solid purple"}}>Cl</span> : data === "Company" && <span style={{border:"1px solid brown"}}>Co</span>
+}
+
+
 
 export const dateFormat = ({ cell }) => {
   return dayjs(cell.getValue()).format('YYYY-MM-DD')

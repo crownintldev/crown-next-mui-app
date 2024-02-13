@@ -28,7 +28,7 @@ const SimpleSelectHookField = ({
           // onInputChange={(event, newInputValue) => {
           //   setInputValue(newInputValue)
           // }}
-          getOptionLabel={(option) => option || ''}
+          getOptionLabel={(option) => option ? option.toUpperCase() : ''}
           isOptionEqualToValue={(option, value) => option === value}
           onChange={(event, newValue) => {
             onChange(newValue)

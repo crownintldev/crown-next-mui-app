@@ -30,11 +30,16 @@ const SelectHookField = ({
           options={options && options.length > 0 ? options : []}
           id='autocomplete-size-medium'
           disableClearable={disableClearable}
+          // getOptionLabel={option =>
+          //   option[showValue]
+          //     ? option[showValue].charAt(0).toUpperCase() + option[showValue].slice(1)
+          //     : ''
+          // }
           getOptionLabel={option =>
-            option[showValue]
-              ? option[showValue].charAt(0).toUpperCase() + option[showValue].slice(1)
-              : ''
-          }
+  option[showValue]
+    ? option[showValue].toUpperCase()
+    : ''
+}
           isOptionEqualToValue={(option, value) => option._id === value?._id}
           renderInput={params => (
             <CustomTextField

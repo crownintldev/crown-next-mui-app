@@ -38,7 +38,7 @@ const MaterialTable = ({
   } = drawerProps
   const theme = useTheme()
   const dispatch = useDispatch()
-  const [showTrash, setShowTrash] = useState(false)
+  const [showTrash, setShowTrash] = useState("false")
   const { data, total, isLoading, isError } = useSelector((state) => state[stateSelector])
   const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
@@ -93,7 +93,6 @@ const MaterialTable = ({
         })
       )
     }
-
     // Cleanup the event listener
     return () => {
       window.removeEventListener('keydown', handleEnterPress)
@@ -107,13 +106,19 @@ const MaterialTable = ({
 
   // Function to handle tab changes
   const handleTabChange = (event, newValue) => {
-    setActiveTab(newValue)
+    setActiveTab(newValue);
+    if(newValue === "default"){
+      setShowTrash("false")
+    }else{
+      setShowTrash("true")
+    }
+    
   }
 
   // Conditionally render the table component based on the active tab
   const renderTableComponent = () => {
     if (activeTab === 'default') {
-      return <MaterialReactTable table={table} className='custom-table-styles' />
+      return <MaterialReactTable  table={table} className='custom-table-styles' />
     } else if (activeTab === 'trash') {
       // Pass the trashed rows to the table in the "Trash" tab
       return <MaterialReactTable table={table} data={trashedRows} className='custom-table-styles' />
@@ -144,6 +149,7 @@ const MaterialTable = ({
         tableData={data}
         removeSelection={handleRemoveSelection}
         showTrash={showTrash}
+        setActiveTab={setActiveTab}
         headerMenu={headerMenu}
       />
     )
@@ -174,8 +180,13 @@ const MaterialTable = ({
   const table = useMaterialReactTable({
     columns,
     data: data,
+   
     ...tablePropsData,
+    enableBottomToolbar: true,
+    enableStickyHeader: true,
+    enableStickyFooter: true,
     enableExpanding: hasSubRows(data),
+    // muiTableContainerProps: { sx: { maxHeight: '400px' } },
 
     // enableExpanding: true,
     renderTopToolbarCustomActions: CreateForm || selectionRow.length>0? renderCustomActions : ()=>{},
@@ -228,7 +239,7 @@ const MaterialTable = ({
         }}
       >
         <Tab
-          onClick={() => setShowTrash(false)}
+          // onClick={() => setShowTrash("false")}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <InboxIcon style={{ marginRight: '4px' }} /> Default
@@ -237,7 +248,7 @@ const MaterialTable = ({
           value='default'
         />
         <Tab
-          onClick={() => setShowTrash(true)}
+          // onClick={() => setShowTrash("true")}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <DeleteIcon style={{ marginRight: '4px' }} /> Trash

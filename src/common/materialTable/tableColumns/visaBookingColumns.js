@@ -3,9 +3,11 @@ import { useMemo } from 'react'
 import {
   renderStatusCell,
   defaultCellRenderer,
+  conditionValue,
   dateFormat,
   defaultCellUpperCase,
-  CellRowId
+  CellRowId,
+  modelCondition
 } from 'src/common/materialTable/tableColumnFunction'
 import PermMediaIcon from '@mui/icons-material/PermMedia'
 import { IconButton } from '@mui/material'
@@ -26,12 +28,22 @@ const useTableColumns = (openMediaDrawer) =>
       { accessorKey: '_id', header: 'ID', Cell: CellRowId },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       {
+        accessorKey: 'passport.passportNumber',
+        header: 'Passport #',
+        Cell: defaultCellRenderer
+      },
+      {
         accessorKey: 'passport.givenName',
         header: 'Given Name',
         Cell: defaultCellRenderer
       },
+      // Member
+      { accessorKey: 'onModel', header: 'Refer', Cell: modelCondition },
+      { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
+      { accessorKey: 'by.phone', header: 'Phone', Cell: defaultCellRenderer },
+
       { accessorKey: 'passport.surname', header: 'Surname', Cell: defaultCellRenderer },
-      { accessorKey: 'passport.cnic', header: 'CNIC', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.cnic', header: 'Pass - CNIC', Cell: defaultCellRenderer },
       { accessorKey: 'passport.country', header: 'Country', Cell: defaultCellUpperCase },
       { accessorKey: 'passport.dob', header: 'Date of Birth', Cell: dateFormat },
       { accessorKey: 'passport.doe', header: 'Date of Expiry', Cell: dateFormat },
@@ -52,11 +64,7 @@ const useTableColumns = (openMediaDrawer) =>
         header: 'Nationality',
         Cell: defaultCellUpperCase
       },
-      {
-        accessorKey: 'passport.passportNumber',
-        header: 'Passport Number',
-        Cell: defaultCellRenderer
-      },
+    
       {
         accessorKey: 'passport.pob',
         header: 'Place of Birth',
@@ -74,24 +82,19 @@ const useTableColumns = (openMediaDrawer) =>
         header: 'Tracking Number',
         Cell: defaultCellRenderer
       },
-
-      // passport end
-      { accessorKey: 'onModel', header: 'Refer', Cell: defaultCellRenderer },
-      { accessorKey: 'RefName', header: 'Refer Name', Cell: defaultCellRenderer },
-      { accessorKey: 'phone', header: 'Phone', Cell: defaultCellRenderer },
-
+// visa
       {
-        accessorKey: 'processing.processingFee',
+        accessorKey: 'visa.processing.processingFee',
         header: 'Processing Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'processing.visaFee',
+        accessorKey: 'visa.processing.visaFee',
         header: 'Processing - Visa Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'confirmed.totalFee',
+        accessorKey: 'visa.confirmed.totalFee',
         header: 'Confirmed - Total Fee',
         Cell: defaultCellRenderer
       },

@@ -42,4 +42,4 @@ jobs:
       run: pm2 start travokey-frontend
 
     - name: Deployment Status
-      run: echo "Deployment successfull!"
+      run: echo "Deployment successfully!"

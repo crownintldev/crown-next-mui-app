@@ -47,6 +47,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true)
     const checkUser = isAuth()
     const accessToken = getCookie('jwt')
+    console.log(checkUser)
     if (checkUser && accessToken) {
       setUser(checkUser)
       // setCookie('jwt', accessToken)
@@ -57,11 +58,12 @@ const AuthProvider = ({ children }) => {
       !router.pathname.includes('login')
     ) {
       router.replace('/login')
-    } else {
-      setLoading(false)
-      removeAuthenticate('userData', 'jwt')
-      router.replace('/login')
     }
+    //  else {
+    //   setLoading(false)
+    //   removeAuthenticate('userData', 'jwt')
+    //   router.replace('/login')
+    // }
   }, [])
   // useEffect(() => {
   //   const accessToken = getCookie('jwt')

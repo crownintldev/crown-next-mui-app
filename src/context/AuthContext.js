@@ -77,14 +77,11 @@ const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${accessToken}`
             }
           })
-          .then(async (response) => {
+          .then((response) => {
             authenticate(response.data, () => {
               dispatch(setToken(response.data.accessToken))
               setUser(response.data.data)
               setLoading(false)
-              const returnUrl = router.query.returnUrl
-              const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-              router.replace(redirectURL)
             })
           })
           .catch(() => {

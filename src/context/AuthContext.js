@@ -50,7 +50,6 @@ const AuthProvider = ({ children }) => {
   //   console.log(checkUser)
   //   if (checkUser && accessToken) {
   //     setUser(checkUser)
-  //     // setCookie('jwt', accessToken)
   //     dispatch(setToken(accessToken))
   //     setLoading(false)
   //   } else if (
@@ -80,26 +79,27 @@ const AuthProvider = ({ children }) => {
           })
           .then(async (response) => {
             authenticate(response.data, () => {
-              setUser(response.data.data)
-              setCookie('jwt', response.data.accessToken)
               dispatch(setToken(response.data.accessToken))
+              setUser(response.data.data)
               setLoading(false)
+              const returnUrl = router.query.returnUrl
+              const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+              router.replace(redirectURL)
             })
           })
           .catch(() => {
             removeAuthenticate('userData', 'jwt')
             setUser(null)
             setLoading(false)
-            if (
-              authConfig.onTokenExpiration === 'logout' &&
-              !router.pathname.includes('login')
-            ) {
-              router.replace('/login')
-            }
+            router.replace('/login')
+            // if (!router.pathname.includes('login')) {
+            //   router.replace('/login')
+            // }
           })
       } else {
         setLoading(false)
         removeAuthenticate('userData', 'jwt')
+        router.replace('/login')
       }
     }
     initAuth()

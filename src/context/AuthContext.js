@@ -43,6 +43,19 @@ const AuthProvider = ({ children }) => {
 
   // ** Hooks
   const router = useRouter()
+  console.log(isAuth())
+ const authCheck=()=>{
+  if(isAuth()){
+    const accessToken = getCookie('jwt')
+    setUser(isAuth())
+    dispatch(setToken(accessToken))
+    setLoading(false)
+  }
+  else{
+    router.replace('/login')
+  }
+}
+useEffect(()=>{authCheck()},[])
   // useEffect(() => {
   //   setLoading(false)
   //   const checkUser = isAuth()
@@ -65,46 +78,46 @@ const AuthProvider = ({ children }) => {
   //   }
   // }, [])
   
-  useEffect(() => {
-    const accessToken = getCookie('jwt')
-    const initAuth = async () => {
-      console.log("accessToken",accessToken)
-      console.log("isAuth",isAuth())
-      if (accessToken) {
-        setLoading(true)
-        await axios
-          .get(authConfig.meEndpoint, {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          })
-          .then((response) => {
-            authenticate(response.data, () => {
-              console.log(response.data)
-              dispatch(setToken(response.data.accessToken))
-              setUser(response.data.data)
-              setLoading(false)
-            })
-          })
-          .catch(() => {
-            removeAuthenticate('userData', 'jwt')
-            setUser(null)
-            setLoading(false)
-            router.replace('/login')
-            // if (!router.pathname.includes('login')) {
-            //   router.replace('/login')
-            // }
-          })
-      } else {
-        setLoading(false)
-        // removeAuthenticate('userData', 'jwt')
-        router.replace('/login')
-      }
-    }
-    initAuth()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   const accessToken = getCookie('jwt')
+  //   const initAuth = async () => {
+  //     console.log("accessToken",accessToken)
+  //     console.log("isAuth",isAuth())
+  //     if (accessToken) {
+  //       setLoading(true)
+  //       await axios
+  //         .get(authConfig.meEndpoint, {
+  //           withCredentials: true,
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`
+  //           }
+  //         })
+  //         .then((response) => {
+  //           authenticate(response.data, () => {
+  //             console.log(response.data)
+  //             dispatch(setToken(response.data.accessToken))
+  //             setUser(response.data.data)
+  //             setLoading(false)
+  //           })
+  //         })
+  //         .catch(() => {
+  //           removeAuthenticate('userData', 'jwt')
+  //           setUser(null)
+  //           setLoading(false)
+  //           router.replace('/login')
+  //           // if (!router.pathname.includes('login')) {
+  //           //   router.replace('/login')
+  //           // }
+  //         })
+  //     } else {
+  //       setLoading(false)
+  //       // removeAuthenticate('userData', 'jwt')
+  //       router.replace('/login')
+  //     }
+  //   }
+  //   initAuth()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   const handleLogin = (params, errorCallback) => {
     setUser(null)

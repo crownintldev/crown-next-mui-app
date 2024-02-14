@@ -79,6 +79,7 @@ const AuthProvider = ({ children }) => {
           })
           .then((response) => {
             authenticate(response.data, () => {
+              console.log(response.data)
               dispatch(setToken(response.data.accessToken))
               setUser(response.data.data)
               setLoading(false)

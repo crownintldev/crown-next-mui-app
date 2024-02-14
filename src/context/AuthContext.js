@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
-    setLoading(true)
+    setLoading(false)
     const checkUser = isAuth()
     const accessToken = getCookie('jwt')
     console.log(checkUser)

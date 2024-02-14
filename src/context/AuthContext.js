@@ -44,50 +44,70 @@ const AuthProvider = ({ children }) => {
   // ** Hooks
   const router = useRouter()
   useEffect(() => {
+    setLoading(true)
+    const checkUser = isAuth()
     const accessToken = getCookie('jwt')
-    const initAuth = async () => {
-      if (accessToken) {
-        setLoading(true)
-        await axios
-          .get(authConfig.meEndpoint, {
-            withCredentials: true,
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          })
-          .then(async response => {
-            authenticate(response.data, () => {
-              setUser(response.data.data)
-              setCookie('jwt', response.data.accessToken)
-              dispatch(setToken(response.data.accessToken))
-              setLoading(false)
-            })
-          })
-          .catch(() => {
-            removeAuthenticate('userData', 'jwt')
-            localStorage.removeItem('refreshToken')
-            // localStorage.removeItem('userData')
-            // localStorage.removeItem('accessToken')
-            setUser(null)
-            setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-              router.replace('/login')
-            }
-          })
-      } else {
-        setLoading(false)
-        removeAuthenticate('userData', 'jwt')
-      }
+    if (checkUser && accessToken) {
+      setUser(checkUser)
+      // setCookie('jwt', accessToken)
+      dispatch(setToken(accessToken))
+      setLoading(false)
+    } else if (
+      authConfig.onTokenExpiration === 'logout' &&
+      !router.pathname.includes('login')
+    ) {
+      router.replace('/login')
+    } else {
+      setLoading(false)
+      removeAuthenticate('userData', 'jwt')
+      router.replace('/login')
     }
-    initAuth()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  // useEffect(() => {
+  //   const accessToken = getCookie('jwt')
+  //   const initAuth = async () => {
+  //     if (accessToken) {
+  //       setLoading(true)
+  //       await axios
+  //         .get(authConfig.meEndpoint, {
+  //           withCredentials: true,
+  //           headers: {
+  //             Authorization: `Bearer ${accessToken}`
+  //           }
+  //         })
+  //         .then(async (response) => {
+  //           authenticate(response.data, () => {
+  //             setUser(response.data.data)
+  //             setCookie('jwt', response.data.accessToken)
+  //             dispatch(setToken(response.data.accessToken))
+  //             setLoading(false)
+  //           })
+  //         })
+  //         .catch(() => {
+  //           removeAuthenticate('userData', 'jwt')
+  //           setUser(null)
+  //           setLoading(false)
+  //           if (
+  //             authConfig.onTokenExpiration === 'logout' &&
+  //             !router.pathname.includes('login')
+  //           ) {
+  //             router.replace('/login')
+  //           }
+  //         })
+  //     } else {
+  //       setLoading(false)
+  //       removeAuthenticate('userData', 'jwt')
+  //     }
+  //   }
+  //   initAuth()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   const handleLogin = (params, errorCallback) => {
     setUser(null)
     removeAuthenticate('userData', 'jwt')
     signin(params)
-      .then(response => {
+      .then((response) => {
         // params.rememberMe ? authenticate(response.data) : ''
         authenticate(response.data, () => {
           dispatch(setToken(response.data.accessToken))
@@ -97,7 +117,7 @@ const AuthProvider = ({ children }) => {
           router.replace(redirectURL)
         })
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('===auth context===', err)
         if (errorCallback) errorCallback(err)
       })
@@ -123,8 +143,6 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     setUser(null)
     removeAuthenticate('userData', 'jwt')
-    // window.localStorage.removeItem('userData')
-    // window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')
   }
 

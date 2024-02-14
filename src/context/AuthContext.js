@@ -64,9 +64,9 @@ const AuthProvider = ({ children }) => {
   //     router.replace('/login')
   //   }
   // }, [])
-  const accessToken = getCookie('jwt')
+  
   useEffect(() => {
-    
+    const accessToken = getCookie('jwt')
     const initAuth = async () => {
       console.log("accessToken",accessToken)
       console.log("isAuth",isAuth())
@@ -98,7 +98,7 @@ const AuthProvider = ({ children }) => {
           })
       } else {
         setLoading(false)
-        removeAuthenticate('userData', 'jwt')
+        // removeAuthenticate('userData', 'jwt')
         router.replace('/login')
       }
     }

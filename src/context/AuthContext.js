@@ -67,9 +67,10 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const accessToken = getCookie('jwt')
     const initAuth = async () => {
+      console.log("accessToken",accessToken)
+      console.log("isAuth",isAuth())
       if (accessToken) {
         setLoading(true)
-        removeAuthenticate('userData', 'jwt')
         await axios
           .get(authConfig.meEndpoint, {
             withCredentials: true,

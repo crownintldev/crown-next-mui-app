@@ -43,67 +43,68 @@ const AuthProvider = ({ children }) => {
 
   // ** Hooks
   const router = useRouter()
-  useEffect(() => {
-    setLoading(false)
-    const checkUser = isAuth()
-    const accessToken = getCookie('jwt')
-    console.log(checkUser)
-    if (checkUser && accessToken) {
-      setUser(checkUser)
-      // setCookie('jwt', accessToken)
-      dispatch(setToken(accessToken))
-      setLoading(false)
-    } else if (
-      authConfig.onTokenExpiration === 'logout' &&
-      !router.pathname.includes('login')
-    ) {
-      router.replace('/login')
-    }
-    //  else {
-    //   setLoading(false)
-    //   removeAuthenticate('userData', 'jwt')
-    //   router.replace('/login')
-    // }
-  }, [])
   // useEffect(() => {
+  //   setLoading(false)
+  //   const checkUser = isAuth()
   //   const accessToken = getCookie('jwt')
-  //   const initAuth = async () => {
-  //     if (accessToken) {
-  //       setLoading(true)
-  //       await axios
-  //         .get(authConfig.meEndpoint, {
-  //           withCredentials: true,
-  //           headers: {
-  //             Authorization: `Bearer ${accessToken}`
-  //           }
-  //         })
-  //         .then(async (response) => {
-  //           authenticate(response.data, () => {
-  //             setUser(response.data.data)
-  //             setCookie('jwt', response.data.accessToken)
-  //             dispatch(setToken(response.data.accessToken))
-  //             setLoading(false)
-  //           })
-  //         })
-  //         .catch(() => {
-  //           removeAuthenticate('userData', 'jwt')
-  //           setUser(null)
-  //           setLoading(false)
-  //           if (
-  //             authConfig.onTokenExpiration === 'logout' &&
-  //             !router.pathname.includes('login')
-  //           ) {
-  //             router.replace('/login')
-  //           }
-  //         })
-  //     } else {
-  //       setLoading(false)
-  //       removeAuthenticate('userData', 'jwt')
-  //     }
+  //   console.log(checkUser)
+  //   if (checkUser && accessToken) {
+  //     setUser(checkUser)
+  //     // setCookie('jwt', accessToken)
+  //     dispatch(setToken(accessToken))
+  //     setLoading(false)
+  //   } else if (
+  //     authConfig.onTokenExpiration === 'logout' &&
+  //     !router.pathname.includes('login')
+  //   ) {
+  //     router.replace('/login')
   //   }
-  //   initAuth()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //    else {
+  //     setLoading(false)
+  //     removeAuthenticate('userData', 'jwt')
+  //     router.replace('/login')
+  //   }
   // }, [])
+  useEffect(() => {
+    const accessToken = getCookie('jwt')
+    const initAuth = async () => {
+      if (accessToken) {
+        setLoading(true)
+        removeAuthenticate('userData', 'jwt')
+        await axios
+          .get(authConfig.meEndpoint, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          })
+          .then(async (response) => {
+            authenticate(response.data, () => {
+              setUser(response.data.data)
+              setCookie('jwt', response.data.accessToken)
+              dispatch(setToken(response.data.accessToken))
+              setLoading(false)
+            })
+          })
+          .catch(() => {
+            removeAuthenticate('userData', 'jwt')
+            setUser(null)
+            setLoading(false)
+            if (
+              authConfig.onTokenExpiration === 'logout' &&
+              !router.pathname.includes('login')
+            ) {
+              router.replace('/login')
+            }
+          })
+      } else {
+        setLoading(false)
+        removeAuthenticate('userData', 'jwt')
+      }
+    }
+    initAuth()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleLogin = (params, errorCallback) => {
     setUser(null)

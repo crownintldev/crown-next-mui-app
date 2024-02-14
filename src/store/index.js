@@ -1,7 +1,9 @@
 // ** Toolkit imports
 import { configureStore } from '@reduxjs/toolkit'
 import { createFetchDataThunk } from './apps/sliceGenerator'
-import { accessToken } from 'src/action/auth-action'
+import { combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from "redux-persist/lib/storage";
 // ** Reducers
 import chat from 'src/store/apps/chat'
 import user from 'src/store/apps/user'
@@ -84,41 +86,52 @@ export const fetchBranch = createFetchDataThunk(
   process.env.NEXT_PUBLIC_AUTH
 )
 
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user']
+}
+const rootReducer = combineReducers({
+  user,
+  chat,
+  email,
+  calendar,
+  permissions,
+  passport,
+  account,
+  createApp,
+  visaBooking: generate('visaBooking', fetchVisaBooking),
+  visaService: generate('visaService', fetchVisaService),
+  visaCategory: generate('visaCategory', fetchVisaCategory),
+  visaDestination: generate('visaDestination', fetchVisaDestination),
+  visaDuration: generate('visaDuration', fetchVisaDuration),
+  visaType: generate('visaType', fetchVisaType),
+  agent: generate('agent', fetchAgent),
+  company: generate('company', fetchCompany),
+  client: generate('client', fetchClient),
+  supplier: generate('supplier', fetchSupplier),
+  supplierCategory: generate('supplierCategory', fetchSupplierCategory),
+  supplierVisaService: generate('supplierVisaService', fetchSupplierVisaService),
+  expense: generate('expense', fetchExpense),
+  expenseCategory: generate('expenseCategory', fetchExpenseCategory),
+  expenseType: generate('expenseType', fetchExpenseType),
+  invoice: generate('invoice', fetchInvoice),
+  myInvoice: generateReducer('myInvoice').reducer,
+  token: generateReducer('token').reducer,
+  // auth
+  user: generate('user', fetchUser),
+  role: generate('role', fetchRole),
+  branch: generate('branch', fetchBranch)
+})
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
-  reducer: {
-    user,
-    chat,
-    email,
-    calendar,
-    permissions,
-    passport,
-    account,
-    createApp,
-    visaBooking: generate('visaBooking', fetchVisaBooking),
-    visaService: generate('visaService', fetchVisaService),
-    visaCategory: generate('visaCategory', fetchVisaCategory),
-    visaDestination: generate('visaDestination', fetchVisaDestination),
-    visaDuration: generate('visaDuration', fetchVisaDuration),
-    visaType: generate('visaType', fetchVisaType),
-    agent: generate('agent', fetchAgent),
-    company: generate('company', fetchCompany),
-    client: generate('client', fetchClient),
-    supplier: generate('supplier', fetchSupplier),
-    supplierCategory: generate('supplierCategory', fetchSupplierCategory),
-    supplierVisaService: generate('supplierVisaService', fetchSupplierVisaService),
-    expense: generate('expense', fetchExpense),
-    expenseCategory: generate('expenseCategory', fetchExpenseCategory),
-    expenseType: generate('expenseType', fetchExpenseType),
-    invoice: generate('invoice', fetchInvoice),
-    myInvoice: generateReducer('myInvoice').reducer,
-    token: generateReducer('token').reducer,
-    // auth
-    user: generate('user', fetchUser),
-    role: generate('role', fetchRole),
-    branch: generate('branch', fetchBranch)
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false
     })
 })
+
+export const persistor = persistStore(store)

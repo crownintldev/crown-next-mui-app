@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Router } from 'next/router'
 
 // ** Store Imports
-import { store } from 'src/store'
+import { persistor, store } from 'src/store'
 import { Provider } from 'react-redux'
 
 // ** Loader Import
@@ -55,6 +55,7 @@ import 'src/iconify-bundle/icons-bundle-react'
 
 // ** Global css styles
 import '../../styles/globals.css'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -98,6 +99,7 @@ const App = props => {
 
   return (
     <Provider store={store}>
+    <PersistGate persistor={persistor}>
       <CacheProvider value={emotionCache}>
         <Head>
           <title>{`${themeConfig.templateName} - Travokey Company`}</title>
@@ -137,6 +139,7 @@ const App = props => {
           </SettingsProvider>
         </AuthProvider>
       </CacheProvider>
+      </PersistGate>
     </Provider>
   )
 }

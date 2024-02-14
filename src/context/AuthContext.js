@@ -43,6 +43,7 @@ const AuthProvider = ({ children }) => {
 
   // ** Hooks
   const router = useRouter()
+  
   console.log(isAuth())
  const authCheck=()=>{
   if(isAuth()){
@@ -57,27 +58,6 @@ const AuthProvider = ({ children }) => {
   }
 }
 useEffect(()=>{authCheck()},[])
-  // useEffect(() => {
-  //   setLoading(false)
-  //   const checkUser = isAuth()
-  //   const accessToken = getCookie('jwt')
-  //   console.log(checkUser)
-  //   if (checkUser && accessToken) {
-  //     setUser(checkUser)
-  //     dispatch(setToken(accessToken))
-  //     setLoading(false)
-  //   } else if (
-  //     authConfig.onTokenExpiration === 'logout' &&
-  //     !router.pathname.includes('login')
-  //   ) {
-  //     router.replace('/login')
-  //   }
-  //    else {
-  //     setLoading(false)
-  //     removeAuthenticate('userData', 'jwt')
-  //     router.replace('/login')
-  //   }
-  // }, [])
   
   // useEffect(() => {
   //   const accessToken = getCookie('jwt')

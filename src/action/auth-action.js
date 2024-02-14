@@ -10,39 +10,39 @@ export const signup = user => {
 
 //cookie
 export const setCookie = (key, value) => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     Cookies.set(key, value, {
       expires: 1
     })
-  }
+  // }
 }
 
 export const removeCookie = key => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     Cookies.remove(key, {
       expires: 1
     })
-  }
+  // }
 }
 
 export const getCookie = key => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     return Cookies.get("jwt")
-  }
+  // }
 }
 export const accessToken = getCookie('jwt')
 
 //localStorage
 export const setLocalStorage = (key, value) => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     localStorage.setItem(key, JSON.stringify(value))
-  }
+  // }
 }
 
 export const removeLocalStorage = key => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     return localStorage.removeItem(key)
-  }
+  // }
 }
 
 export const removeAuthenticate = (localStorageKey, token) => {
@@ -58,12 +58,12 @@ export const authenticate = (data, next) => {
 }
 
 export const isAuth = () => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     const cookieChecked = getCookie('accessToken')
     if (cookieChecked) {
       if (localStorage.getItem('userData')) {
         return JSON.parse(localStorage.getItem('userData'))
       }
     }
-  }
+  // }
 }

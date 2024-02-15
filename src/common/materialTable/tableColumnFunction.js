@@ -5,11 +5,14 @@ import { currencyFormatter } from 'src/utils/helperfunction'
 
 const statusObj = {
   booked: 'success',
-  active: 'success',
   pending: 'warning',
   rejected: 'error',
-  inactive: 'secondary',
-  inprocess: 'info'
+  inprocess: 'info',
+  verification:"info",
+  approved:'success',
+  returned:"error",
+  cancelled:'error',
+  paid:'success',
 }
 
 export const renderStatusCell = ({ cell }) => {

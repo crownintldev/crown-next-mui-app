@@ -84,17 +84,17 @@ const useTableColumns = (openMediaDrawer) =>
       },
 // visa
       {
-        accessorKey: 'visa.processing.processingFee',
+        accessorKey: 'processing.processingFee',
         header: 'Processing Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'visa.processing.visaFee',
+        accessorKey: 'processing.visaFee',
         header: 'Processing - Visa Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'visa.confirmed.totalFee',
+        accessorKey: 'confirmed.totalFee',
         header: 'Confirmed - Total Fee',
         Cell: defaultCellRenderer
       },

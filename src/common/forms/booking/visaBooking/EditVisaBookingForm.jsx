@@ -53,6 +53,7 @@ const ITEM_PADDING_TOP = 8
 
 // reuse function
 import { removeUndefined } from 'src/utils/helperfunction'
+import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
 
 const MenuProps = {
   PaperProps: {
@@ -80,23 +81,39 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   const dispatch = useDispatch()
 
   const visaBookingItems = useSelector(
-    state =>
+    (state) =>
       ids &&
       ids.length > 0 &&
       ids
-        .map(id => state?.visaBooking?.data.find(item => item?._id === id))
-        .map(item => {
+        .map((id) => state?.visaBooking?.data.find((item) => item?._id === id))
+        .map((item) => {
           return {
             passportNumber: item?.passport?.passportNumber,
             status: item?.status,
             givenName: item?.passport?.givenName,
-            _id: item?._id
+            _id: item?._id,
+            visa: item.visa,
+            processing:item.processing,
+            confirmed:item.confirmed
           }
         })
   )
   useEffect(() => {
     setFormSize(400)
   }, [])
+
+  const statusList = [
+    'pending',
+    'booked',
+    'inprocess',
+    'verification',
+    'approved',
+    'rejected',
+    'returned',
+    'cancelled',
+    'inprocessCancelled',
+    'paid'
+  ]
 
   // selectIds
   const [destination, setDestination] = useState([])
@@ -112,11 +129,12 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   })
   const [selectedValue, setSelectedValue] = useState('')
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setSelectedValue(event.target.value)
   }
 
   const [visa, setVisa] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetchActionData(listVisaCategory, setCategory)
@@ -127,7 +145,18 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   useEffect(() => {
     const { destination, category, duration, type } = findVisa
     if (destination && category && type && duration) {
-      fetchActionData(() => findVisaId({ destination, category, type, duration }), setVisa)
+      const getVisa = async () => {
+        try {
+          setLoading(true)
+          const res = await findVisaId({ destination, category, type, duration })
+          setVisa(res.data.data)
+          setLoading(false)
+        } catch (err) {
+          setLoading(false)
+          console.log(err)
+        }
+      }
+      getVisa()
     }
   }, [findVisa])
 
@@ -145,9 +174,29 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
+  // console.log(watch())
   useEffect(() => {
-    if (ids) {
-      setValue('visaBookingIds', ids)
+    setValue('visaBookingIds', ids)
+    if (ids.length === 1) {
+      setValue('status', visaBookingItems[0].status)
+      if (visaBookingItems[0]?.visa) {
+        let { destination, duration, category, type } = visaBookingItems[0].visa
+        setFindVisa({
+          destination: destination?._id,
+          duration: duration?._id,
+          category: category?._id,
+          type: type?._id
+        })
+        if(visaBookingItems[0]?.processing){
+          setValue('confirmed', undefined)
+         setValue("paymentType","processing")
+        }else if(visaBookingItems[0]?.confirmed){
+          setValue('processing', undefined)
+          setValue("paymentType","confirmed")
+        }
+        setValue('visaId', visa._id)
+      }
+    } else if (ids.length > 1) {
       setValue('status', 'booked')
       if (visa && visa.length === 0) {
         setValue('visaId', '')
@@ -171,25 +220,28 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     reset()
   }
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     if (!visa._id) {
       return toast.error('add Visa Must', { position: 'top-center' })
     }
     setValue('visaId', visa._id)
     const paymentType = watch('paymentType')
     if (paymentType === 'confirmed') {
-      setValue(paymentType, visa.confirmed)
+      setValue("confirmed", visa.confirmed)
       setValue('processing', undefined)
     }
     if (paymentType === 'processing') {
-      setValue(paymentType, visa.processing)
+      setValue("processing", visa.processing)
       setValue('confirmed', undefined)
     }
     removeUndefined(data)
     // console.log(data)
 
     try {
-      const response = await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/visa-booking/update`, data)
+      const response = await axiosInstance.put(
+        `${process.env.NEXT_PUBLIC_API}/visa-booking/update`,
+        data
+      )
       if (response) {
         dispatch(fetchVisaBooking({ updateData: response.data.data }))
         setFindVisa({
@@ -231,14 +283,14 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             Add Visa Service
           </Button>
         </Box>
-      ) 
+      )
     }
 
     return (
       <Box sx={{ mb: 2 }}>
         <Grid container spacing={2}>
           {['confirmed', 'processing'].map(
-            type =>
+            (type) =>
               visa[type] && (
                 <Grid item key={type}>
                   <Controller
@@ -293,10 +345,10 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     )
   }
 
-  const renderSelectedValue = selectedIds => {
+  const renderSelectedValue = (selectedIds) => {
     return selectedIds
-      .map(id => {
-        const item = visaBookingItems.find(item => item._id === id)
+      .map((id) => {
+        const item = visaBookingItems.find((item) => item._id === id)
 
         return item ? `${item.passportNumber} ${item.givenName}` : ''
       })
@@ -325,6 +377,11 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
               fullWidth
               label='Passport Selected'
               id='select-multiple-checkbox'
+              InputProps={{
+                style: {
+                  textTransform: 'uppercase'
+                }
+              }}
               SelectProps={{
                 MenuProps,
                 displayEmpty: true,
@@ -335,71 +392,45 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
               }}
             >
               <MenuItem value='' disabled>
-                Select Passport
+                SELECT PASSPORT
               </MenuItem>
               {visaBookingItems &&
                 visaBookingItems.length > 0 &&
                 visaBookingItems.map((item, index) => (
                   <MenuItem key={index} value={`${item._id}`}>
-                    {`${item.passportNumber} ${item.givenName}`}
+                    {`${item.passportNumber.toUpperCase()} ${item.givenName.toUpperCase()}`}
                   </MenuItem>
                 ))}
             </CustomTextField>
           )}
         />
-        <Controller
-          name='status'
+        <SimpleSelectHookField
           control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <CustomTextField
-              select
-              fullWidth
-              label='Status'
-              error={Boolean(errors.status)}
-              helperText={errors.status?.message}
-              {...field} // Spread the field object
-              SelectProps={{
-                value: field.value,
-                displayEmpty: true,
-                onChange: e => field.onChange(e)
-              }}
-              sx={{ mb: 4 }}
-            >
-              <MenuItem value='' disabled>
-                Select a Status
-              </MenuItem>
-              <MenuItem value='pending'>pending</MenuItem>
-              <MenuItem value='booked'>booked</MenuItem>
-              <MenuItem value='inprocess'>inprocess</MenuItem>
-              <MenuItem value='verification'>verification</MenuItem>
-              <MenuItem value='approved'>approved</MenuItem>
-              <MenuItem value='rejected'>rejected</MenuItem>
-              <MenuItem value='returned'>returned</MenuItem>
-              <MenuItem value='cancelled'>cancelled</MenuItem>
-              <MenuItem value='inprocessCancelled'>inprocessCancelled</MenuItem>
-              <MenuItem value='paid'>paid</MenuItem>
-            </CustomTextField>
-          )}
+          errors={errors}
+          name={'status'}
+          options={statusList}
+          label={'Status'}
+          placeholder='Select a Status'
         />
+
         <CustomTextField
           select
           fullWidth
           sx={{ mb: 6 }}
           label='Destination'
           SelectProps={{
-            value: findVisa.destination,
+            value: findVisa.destination ?? '',
             displayEmpty: true,
-            onChange: e => setFindVisa({ ...findVisa, destination: e.target.value })
+            onChange: (e) => setFindVisa({ ...findVisa, destination: e.target.value })
           }}
         >
           <MenuItem value='' disabled>
             Select a destination
           </MenuItem>
           {destination?.length > 0 &&
-            destination.map(item => (
+            destination.map((item) => (
               <MenuItem key={item._id} value={item._id}>
-                {item?.name}
+                {item?.name.toUpperCase()}
               </MenuItem>
             ))}
         </CustomTextField>
@@ -410,18 +441,18 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           sx={{ mb: 6 }}
           label='Category'
           SelectProps={{
-            value: findVisa.category,
+            value: findVisa.category ?? '',
             displayEmpty: true,
-            onChange: e => setFindVisa({ ...findVisa, category: e.target.value })
+            onChange: (e) => setFindVisa({ ...findVisa, category: e.target.value })
           }}
         >
           <MenuItem value='' disabled>
             Select a category
           </MenuItem>
           {category?.length > 0 &&
-            category.map(item => (
+            category.map((item) => (
               <MenuItem key={item._id} value={item._id}>
-                {capitalizeValue(item?.name)}
+                {item?.name.toUpperCase()}
               </MenuItem>
             ))}
         </CustomTextField>
@@ -432,18 +463,18 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           sx={{ mb: 6 }}
           label='Type'
           SelectProps={{
-            value: findVisa.type,
+            value: findVisa.type ?? '',
             displayEmpty: true,
-            onChange: e => setFindVisa({ ...findVisa, type: e.target.value })
+            onChange: (e) => setFindVisa({ ...findVisa, type: e.target.value })
           }}
         >
           <MenuItem value='' disabled>
             Select a type
           </MenuItem>
           {type?.length > 0 &&
-            type.map(item => (
+            type.map((item) => (
               <MenuItem key={item._id} value={item._id}>
-                <div style={{ textTransform: 'capitalize' }}>{item?.name}</div>
+                {item?.name.toUpperCase()}
               </MenuItem>
             ))}
         </CustomTextField>
@@ -454,23 +485,23 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           sx={{ mb: 6 }}
           label='Duration'
           SelectProps={{
-            value: findVisa.duration,
+            value: findVisa.duration ?? '',
             displayEmpty: true,
-            onChange: e => setFindVisa({ ...findVisa, duration: e.target.value })
+            onChange: (e) => setFindVisa({ ...findVisa, duration: e.target.value })
           }}
         >
           <MenuItem value='' disabled>
             Select a duration
           </MenuItem>
           {duration?.length > 0 &&
-            duration.map(item => (
+            duration.map((item) => (
               <MenuItem key={item._id} value={item._id}>
-                {item?.name}
+                {item?.name.toUpperCase()}
               </MenuItem>
             ))}
         </CustomTextField>
 
-        {selectVisaId()}
+        {loading ? 'loading ...' : selectVisaId()}
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' color='primary' sx={{ mr: 3 }}>

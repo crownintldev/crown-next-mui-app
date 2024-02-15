@@ -22,7 +22,7 @@ const SelectHookField = ({
       render={({ field: { onChange, value, ...field } }) => (
         <CustomAutocomplete
           {...field}
-          value={options?.find(option => option._id === value) || null}
+          value={options?.find((option) => option._id === value) || null}
           onChange={(event, newValue) => {
             onChange(newValue ? newValue._id : null)
           }}
@@ -35,13 +35,11 @@ const SelectHookField = ({
           //     ? option[showValue].charAt(0).toUpperCase() + option[showValue].slice(1)
           //     : ''
           // }
-          getOptionLabel={option =>
-  option[showValue]
-    ? option[showValue].toUpperCase()
-    : ''
-}
+          getOptionLabel={(option) =>
+            option[showValue] ? option[showValue].toUpperCase() : ''
+          }
           isOptionEqualToValue={(option, value) => option._id === value?._id}
-          renderInput={params => (
+          renderInput={(params) => (
             <CustomTextField
               {...params}
               size='small'

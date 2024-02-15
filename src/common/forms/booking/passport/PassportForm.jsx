@@ -218,24 +218,24 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     }
   ]
 
-  const iconStyles = {
-    fontSize: '14px',
-    position: 'relative',
-    top: '2px',
-    left: '-3px'
-  }
-  const listStyles = {
-    borderLeft: '2px solid #1852fe',
-    height: '42px',
-    marginBottom: '5px'
-  }
+  // const iconStyles = {
+  //   fontSize: '14px',
+  //   position: 'relative',
+  //   top: '2px',
+  //   left: '-3px'
+  // }
+  // const listStyles = {
+  //   borderLeft: '2px solid #1852fe',
+  //   height: '42px',
+  //   marginBottom: '5px'
+  // }
 
-  const supplier = useSelector((state) =>
-    state?.supplier?.data?.map((item) => ({
-      name: `${item.name} ${item.phone}`,
-      _id: item._id
-    }))
-  )
+  // const supplier = useSelector((state) =>
+  //   state?.supplier?.data?.map((item) => ({
+  //     name: `${item.name} ${item.phone}`,
+  //     _id: item._id
+  //   }))
+  // )
   let byItems = []
   let fetchMember
   let MemberForm
@@ -286,11 +286,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               options={countryOptions}
               label={'Country'}
               placeholder='Search Countries'
-              select={true}
-              MenuProps={{
-                disablePortal: true,
-                disableCloseOnSelect: true
-              }}
             />
           </Grid>
           <Grid item md={6} lg={4}>
@@ -301,11 +296,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               options={countryOptions}
               label={'Nationality'}
               placeholder='Search Nationality'
-              select={true}
-              MenuProps={{
-                disablePortal: true,
-                disableCloseOnSelect: true
-              }}
             />
           </Grid>
           <Grid item md={6} lg={4}>
@@ -316,11 +306,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               options={['Male', 'Female', 'Other']}
               label={'Gender'}
               placeholder='Search Gender'
-              select={true}
-              MenuProps={{
-                disablePortal: true,
-                disableCloseOnSelect: true
-              }}
             />
           </Grid>
           {/* <Grid item md={6} lg={4}>
@@ -375,11 +360,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               options={['Islam', 'Christan', 'Hindu', 'Sikh']}
               label={'Religion'}
               placeholder='Search Religion'
-              select={true}
-              MenuProps={{
-                disablePortal: true,
-                disableCloseOnSelect: true
-              }}
             />
           </Grid>
           {passportField2.map((item) => (
@@ -400,11 +380,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
               options={['Client', 'Company', 'Agent']}
               label={'Refer Category'}
               placeholder='Select Refer'
-              select={true}
-              MenuProps={{
-                disablePortal: true,
-                disableCloseOnSelect: true
-              }}
             />
           </Grid>
           <CustomOpenDrawer

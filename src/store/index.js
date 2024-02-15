@@ -89,7 +89,7 @@ export const fetchBranch = createFetchDataThunk(
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user']
+  whitelist: ['token','loginUser']
 }
 const rootReducer = combineReducers({
   user,
@@ -120,6 +120,7 @@ const rootReducer = combineReducers({
   token: generateReducer('token').reducer,
   // auth
   user: generate('user', fetchUser),
+  loginUser: generateReducer('loginUser').reducer,
   role: generate('role', fetchRole),
   branch: generate('branch', fetchBranch)
 })

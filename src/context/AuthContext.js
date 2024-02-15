@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getReducer } from 'src/store/apps/sliceActionReducer'
 // ** Axios
 import axios from 'axios'
@@ -43,9 +43,8 @@ const AuthProvider = ({ children }) => {
   const setToken = getReducer('token')
   const setLoginUser = getReducer('loginUser')
 
-  const loginUser = useSelector(state=>state.loginUser?.data);
-  const token = useSelector(state=>state.token?.data);
-  console.log(loginUser)
+  const loginUser = useSelector((state) => state.loginUser?.data)
+  const token = useSelector((state) => state.token?.data)
   // ** Hooks
   const router = useRouter()
 
@@ -88,6 +87,7 @@ const AuthProvider = ({ children }) => {
           })
           .catch(() => {
             removeAuthenticate('userData', 'jwt')
+            dispatch(setToken(null))
             setUser(null)
             setLoading(false)
             router.replace('/login')
@@ -98,6 +98,7 @@ const AuthProvider = ({ children }) => {
       } else {
         setLoading(false)
         removeAuthenticate('userData', 'jwt')
+        dispatch(setToken(null))
         router.replace('/login')
       }
     }
@@ -146,6 +147,7 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     setUser(null)
     removeAuthenticate('userData', 'jwt')
+    dispatch(setToken(null))
     router.push('/login')
   }
 

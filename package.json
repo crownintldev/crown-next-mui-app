@@ -10,7 +10,7 @@
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
-    "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
+    "gitpush": "git add . && git commit -m \"$(date +'%d-%m-%y %I:%M %p')\" && git push",
     "gitmerge": "git checkout main && git pull origin main && git merge hamail && git commit -m 'main' && git push && git checkout hamail",
     "salikpush": "git add . && git commit -m \"salik-committed $(date +'%d-%m-%y %I:%M %p')\" && git push"
   },

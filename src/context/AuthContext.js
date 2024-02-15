@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getReducer } from 'src/store/apps/sliceActionReducer'
 // ** Axios
 import axios from 'axios'
@@ -41,7 +41,10 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(defaultProvider.loading)
   const dispatch = useDispatch()
   const setToken = getReducer('token')
+  const setLoginUser = getReducer('loginUser')
 
+  const loginUser = useSelector((state) => state.loginUser?.data)
+  const token = useSelector((state) => state.token?.data)
   // ** Hooks
   const router = useRouter()
 
@@ -64,13 +67,13 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const accessToken = getCookie('jwt')
     const initAuth = async () => {
-      if (accessToken) {
+      if (token) {
         setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${accessToken}`
+              Authorization: `Bearer ${token}`
             }
           })
           .then((response) => {
@@ -83,6 +86,7 @@ const AuthProvider = ({ children }) => {
           })
           .catch(() => {
             removeAuthenticate('userData', 'jwt')
+            dispatch(setToken(null))
             setUser(null)
             setLoading(false)
             router.replace('/login')
@@ -93,6 +97,7 @@ const AuthProvider = ({ children }) => {
       } else {
         setLoading(false)
         removeAuthenticate('userData', 'jwt')
+        dispatch(setToken(null))
         router.replace('/login')
       }
     }
@@ -108,6 +113,7 @@ const AuthProvider = ({ children }) => {
         // params.rememberMe ? authenticate(response.data) : ''
         authenticate(response.data, () => {
           dispatch(setToken(response.data.accessToken))
+          dispatch(setLoginUser(response.data.data))
           setUser(response.data.data)
           const returnUrl = router.query.returnUrl
           const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
@@ -140,6 +146,7 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     setUser(null)
     removeAuthenticate('userData', 'jwt')
+    dispatch(setToken(null))
     router.push('/login')
   }
 

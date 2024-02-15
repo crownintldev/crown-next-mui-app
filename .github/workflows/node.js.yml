@@ -1,0 +1,59 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: self-hosted
+
+    env:
+      NEXT_PUBLIC_JWT_EXPIRATION: 9d
+      NEXT_PUBLIC_JWT_SECRET: dd5f3089-40c3-403d-af14-d0c228b05cb4
+      NEXT_PUBLIC_JWT_REFRESH_TOKEN_SECRET: 7c4c1c50-3230-45bf-9eae-c9b2e401c767
+      NEXT_PUBLIC_API: http://89.116.21.11/api
+      NEXT_PUBLIC_AUTH: http://89.116.21.11/authapi
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      
+    - name: Cache Node Modules
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+  
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Build Application
+      run: npm run build
+
+    - name: Optimize Memory Usage
+      run: export NODE_OPTIONS="--max_old_space_size=4096"
+
+    - name: Stop Existing PM2 Process if It Exists
+      run: |
+          if pm2 list | grep -q "travokey-auth"; then
+            pm2 delete "travokey-frontend"
+          else
+            echo "PM2 process 'travokey-frontend' not found, skipping stop command."
+          fi
+    - name: Start Application
+      run: pm2 start npm --name "travokey-frontend" -- run start
+  
+    # - name: Stop Existing Process
+    #   run: pm2 stop "travokey-frontend" || true # '|| true' ensures that the workflow doesn't fail if pm2 stop fails
+
+    # - name: Start Application
+    #   run: pm2 start travokey-frontend
+
+    - name: Deployment Status
+      run: echo "Deployment successfully!"
+
+      # pm2 start npm --name "travokey-frontend" -- run start

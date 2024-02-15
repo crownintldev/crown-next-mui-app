@@ -37,12 +37,30 @@ const AuthContext = createContext(defaultProvider)
 const AuthProvider = ({ children }) => {
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
+  const [auth, setAuth] = useState(null)
   const [loading, setLoading] = useState(defaultProvider.loading)
   const dispatch = useDispatch()
   const setToken = getReducer('token')
 
   // ** Hooks
   const router = useRouter()
+
+  // console.log(isAuth())
+  // const authCheck = () => {
+  //   if (isAuth()) {
+  //     const accessToken = getCookie('jwt')
+  //     setUser(isAuth())
+  //     dispatch(setToken(accessToken))
+  //     setLoading(false)
+  //   } else {
+  //     setLoading(false)
+  //     router.replace('/login')
+  //   }
+  // }
+  // useEffect(() => {
+  //   authCheck()
+  // }, [])
+
   useEffect(() => {
     const accessToken = getCookie('jwt')
     const initAuth = async () => {
@@ -55,28 +73,27 @@ const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${accessToken}`
             }
           })
-          .then(async response => {
+          .then((response) => {
             authenticate(response.data, () => {
-              setUser(response.data.data)
-              setCookie('jwt', response.data.accessToken)
+              // console.log(response.data)
               dispatch(setToken(response.data.accessToken))
+              setUser(response.data.data)
               setLoading(false)
             })
           })
           .catch(() => {
             removeAuthenticate('userData', 'jwt')
-            localStorage.removeItem('refreshToken')
-            // localStorage.removeItem('userData')
-            // localStorage.removeItem('accessToken')
             setUser(null)
             setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
-              router.replace('/login')
-            }
+            router.replace('/login')
+            // if (!router.pathname.includes('login')) {
+            //   router.replace('/login')
+            // }
           })
       } else {
         setLoading(false)
         removeAuthenticate('userData', 'jwt')
+        router.replace('/login')
       }
     }
     initAuth()
@@ -87,7 +104,7 @@ const AuthProvider = ({ children }) => {
     setUser(null)
     removeAuthenticate('userData', 'jwt')
     signin(params)
-      .then(response => {
+      .then((response) => {
         // params.rememberMe ? authenticate(response.data) : ''
         authenticate(response.data, () => {
           dispatch(setToken(response.data.accessToken))
@@ -97,7 +114,7 @@ const AuthProvider = ({ children }) => {
           router.replace(redirectURL)
         })
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('===auth context===', err)
         if (errorCallback) errorCallback(err)
       })
@@ -123,8 +140,6 @@ const AuthProvider = ({ children }) => {
   const handleLogout = () => {
     setUser(null)
     removeAuthenticate('userData', 'jwt')
-    // window.localStorage.removeItem('userData')
-    // window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')
   }
 

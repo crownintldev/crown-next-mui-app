@@ -26,9 +26,9 @@ export const removeCookie = key => {
 }
 
 export const getCookie = key => {
-  if (typeof window !== 'undefined') {
+  // if (typeof window !== 'undefined') {
     return Cookies.get("jwt")
-  }
+  // }
 }
 export const accessToken = getCookie('jwt')
 
@@ -59,7 +59,7 @@ export const authenticate = (data, next) => {
 
 export const isAuth = () => {
   if (typeof window !== 'undefined') {
-    const cookieChecked = getCookie('accessToken')
+    const cookieChecked = getCookie('jwt')
     if (cookieChecked) {
       if (localStorage.getItem('userData')) {
         return JSON.parse(localStorage.getItem('userData'))

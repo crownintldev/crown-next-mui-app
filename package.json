@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
     "gitpush": "git add . && git commit -m 'hamail' && git push origin hamail",
-    "gitmerge": "git checkout main && git pull origin main && git merge hamail && git commit -m 'main' && git push origin main && git checkout hamail",
+    "gitmerge": "git checkout main && git pull origin main && git merge hamail && git commit -m 'main' && git push && git checkout hamail",
     "salikpush": "git add . && git commit -m \"salik-committed $(date +'%d-%m-%y %I:%M %p')\" && git push"
   },
   "dependencies": {
@@ -94,6 +94,7 @@
     "react-to-pdf": "^1.0.1",
     "react-to-print": "^2.14.15",
     "recharts": "2.5.0",
+    "redux-persist": "^6.0.0",
     "stylis": "4.1.4",
     "stylis-plugin-rtl": "2.1.1",
     "yup": "1.1.1"

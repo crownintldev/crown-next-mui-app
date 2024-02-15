@@ -35,7 +35,6 @@ export const createFetchDataThunk = (name, api, apidomain) => {
 
       return { data: updatedData }
     }
-   
     const queryString = toQueryString(params)
     const response = await axios.get(
       `${apidomain ? apidomain : process.env.NEXT_PUBLIC_API}/${api}?${queryString}`,

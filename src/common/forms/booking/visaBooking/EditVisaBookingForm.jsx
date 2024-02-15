@@ -41,6 +41,7 @@ import { useForm, Controller } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { fetchActionData } from 'src/action/fetchData'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
+import { fetchVisaCategory,fetchVisaDestination,fetchVisaDuration,fetchVisaType } from 'src/store'
 
 const schema = yup.object().shape({
   visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
@@ -74,8 +75,8 @@ const defaultValues = {
 
 // ------------------visaBooking Form-----------------------
 const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
   // ** State
   const dispatch = useDispatch()
@@ -115,11 +116,11 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     'paid'
   ]
 
-  // selectIds
-  const [destination, setDestination] = useState([])
-  const [type, setType] = useState([])
-  const [duration, setDuration] = useState([])
-  const [category, setCategory] = useState([])
+  // use selector of visa-ids
+  const destination = useSelector(state=>state.visaDestination.data)
+  const category = useSelector(state=>state.visaCategory.data)
+  const duration = useSelector(state=>state.visaDuration.data)
+  const type = useSelector(state=>state.visaType.data)
 
   const [findVisa, setFindVisa] = useState({
     destination: '',
@@ -137,10 +138,10 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetchActionData(listVisaCategory, setCategory)
-    fetchActionData(listVisaDestination, setDestination)
-    fetchActionData(listVisaDuration, setDuration)
-    fetchActionData(listVisaType, setType)
+    dispatch(fetchVisaCategory({}));
+    dispatch(fetchVisaDestination({}));
+    dispatch(fetchVisaDuration({}));
+    dispatch(fetchVisaType({}));
   }, [])
   useEffect(() => {
     const { destination, category, duration, type } = findVisa
@@ -242,6 +243,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         `${process.env.NEXT_PUBLIC_API}/visa-booking/update`,
         data
       )
+      console.log(response)
       if (response) {
         dispatch(fetchVisaBooking({ updateData: response.data.data }))
         setFindVisa({

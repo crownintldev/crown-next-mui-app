@@ -30,7 +30,7 @@ export const createFetchDataThunk = (name, api, apidomain) => {
         const updateItem = params.updateData.find(updateItem => updateItem._id === item._id)
 
         // If updateItem exists, merge it with the existing item
-        return updateItem ? { ...item, ...updateItem } : item
+        return updateItem ? updateItem : item
       })
 
       return { data: updatedData }

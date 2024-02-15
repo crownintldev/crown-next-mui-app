@@ -8,11 +8,11 @@ const statusObj = {
   pending: 'warning',
   rejected: 'error',
   inprocess: 'info',
-  verification:"info",
-  approved:'success',
-  returned:"error",
-  cancelled:'error',
-  paid:'success',
+  verification: 'info',
+  approved: 'success',
+  returned: 'error',
+  cancelled: 'error',
+  paid: 'success'
 }
 
 export const renderStatusCell = ({ cell }) => {
@@ -63,14 +63,32 @@ export const defaultCellUpperCase = ({ row, column }) => {
 // For Members Only
 export const conditionValue = ({ cell }) => {
   const data = cell.getValue()
-  return data?.fullName ? uppercase(data?.fullName) : uppercase(data?.companyName)
+  return data?.fullName ? (
+    <div style={{display:"flex"}}>
+      {uppercase(data?.fullName)}&nbsp;
+      {data.refer && (
+        <span style={{ border: '1px solid green' }}>{data?.refer.substring(0, 2)}</span>
+      )}
+    </div>
+  ) : (
+    <>
+      {uppercase(data?.companyName)}&nbsp;
+      {data.refer && (
+        <span style={{ border: '1px solid green' }}>{data?.refer.substring(0, 2)}</span>
+      )}
+    </>
+  )
 }
-export const modelCondition=({cell})=>{
-  const data = cell.getValue();
-  return data === "Agent"? <span style={{border:"1px solid green"}}>Ag</span> : data === "Client" ? <span style={{border:"1px solid purple"}}>Cl</span> : data === "Company" && <span style={{border:"1px solid brown"}}>Co</span>
+export const modelCondition = ({ cell }) => {
+  const data = cell.getValue()
+  return data === 'Agent' ? (
+    <span style={{ border: '1px solid green' }}>Ag</span>
+  ) : data === 'Client' ? (
+    <span style={{ border: '1px solid purple' }}>Cl</span>
+  ) : (
+    data === 'Company' && <span style={{ border: '1px solid brown' }}>Co</span>
+  )
 }
-
-
 
 export const dateFormat = ({ cell }) => {
   return dayjs(cell.getValue()).format('YYYY-MM-DD')

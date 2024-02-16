@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { store } from '../store/index'
+import { store } from '../store'
 
 export const signin = user => {
   return axios.post(`${process.env.NEXT_PUBLIC_AUTH}/auth/signin`, user)
@@ -25,13 +25,14 @@ export const removeCookie = key => {
     })
   }
 }
-
+export const reduxToken=()=>{
+  const state = store.getState();
+  return state.token.data;
+}
 export const getCookie = key => {
-  const state = store?.getState();
-  return state?.token?.data
-  // if (typeof window !== 'undefined') {
-    // return Cookies.get("jwt")
-  // }
+  if (typeof window !== 'undefined') {
+    return Cookies.get("jwt")
+  }
 }
 export const accessToken = getCookie('jwt')
 

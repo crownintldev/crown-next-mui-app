@@ -4,8 +4,9 @@ import { axiosErrorMessage, capitalizeSplitDash } from 'src/utils/helperfunction
 import axiosInstance from 'src/utils/axiosInstance'
 import { AccountApi } from 'config'
 import { getCookie } from './auth-action'
+import { reduxToken } from './auth-action'
 
-const accessToken = getCookie('jwt')
+const accessToken = reduxToken()
 export const createApi = async ({
   api,
   apidomain,

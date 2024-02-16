@@ -1,6 +1,6 @@
 import { getCookie } from 'src/action/auth-action';
 import axios from 'axios';
-
+import { reduxToken } from 'src/action/auth-action';
 const axiosInstance = axios.create({
   withCredentials: true,
   headers: {
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(config => {
-    const accessToken = getCookie('jwt')
+    const accessToken = reduxToken()
   if (accessToken) {
     config.headers['Authorization'] = `Bearer ${accessToken}`;
   }

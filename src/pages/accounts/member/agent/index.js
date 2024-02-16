@@ -5,14 +5,12 @@ import useAgentAndClientColumns from 'src/common/materialTable/tableColumns/agen
 import { store } from 'src/store'
 //Forms
 import AgentandClientForm from 'src/common/forms/member/AgentandClientForm'
-
+import { reduxToken } from 'src/action/auth-action'
 // redux
 import { fetchAgent } from 'src/store'
-
+console.log(reduxToken())
 const index = ({ apiData }) => {
   const columns = useAgentAndClientColumns()
-  const state = store.getState();
-  console.log(state.token.data)
   return (
     <div>
       <MaterialTable

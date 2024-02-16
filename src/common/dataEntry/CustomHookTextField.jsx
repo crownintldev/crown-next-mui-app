@@ -4,10 +4,20 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import { capitalizeCamelSpace, capitalizeValue } from 'src/utils/helperfunction'
 import { MuiTextAreaHookField } from './MuiTextAreaHookField'
 
-const CustomHookTextField = ({chooseFields, control, errors, item }) => {
+const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
   // function textfield
-  const textField = item => {
-    const { textarea, rows, name, label,required, placeholder, type, value: myValue, myvalue } = item
+  const textField = (item) => {
+    const {
+      textarea,
+      rows,
+      name,
+      label,
+      required,
+      placeholder,
+      type,
+      value: myValue,
+      myvalue
+    } = item
 
     return (
       <>
@@ -20,34 +30,38 @@ const CustomHookTextField = ({chooseFields, control, errors, item }) => {
             rows={rows}
           />
         ) : ( */}
-          <Controller
-            // key={name}
-            name={name}
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { value, onChange } }) => (
-              <CustomTextField
-                required={required}
-                fullWidth
-                type={type ? type : 'text'}
-                value={
-                  myvalue
-                    ? myValue === undefined
-                      ? ''
-                      : myValue
-                    : value !== undefined
-                    ? value.toUpperCase()
-                    : ''
-                }
-                sx={{ mb: 4 }}
-                label={label ? label : capitalizeCamelSpace(name)}
-                onChange={onChange}
-                placeholder={placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`}
-                error={Boolean(errors[name])}
-                helperText={errors[name]?.message || ''}
-              />
-            )}
-          />
+        <Controller
+          // key={name}
+          name={name}
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { value, onChange } }) => (
+            <CustomTextField
+              required={required}
+              fullWidth
+              type={type ? type : 'text'}
+              value={
+                myvalue
+                  ? myValue === undefined
+                    ? ''
+                    : myValue
+                  : value !== undefined
+                  ? typeof value === "number"
+                    ? value
+                    : value?.toUpperCase()
+                  : ''
+              }
+              sx={{ mb: 4 }}
+              label={label ? label : capitalizeCamelSpace(name)}
+              onChange={onChange}
+              placeholder={
+                placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`
+              }
+              error={Boolean(errors[name])}
+              helperText={errors[name]?.message || ''}
+            />
+          )}
+        />
         {/* )} */}
       </>
     )
@@ -56,7 +70,7 @@ const CustomHookTextField = ({chooseFields, control, errors, item }) => {
   return (
     <>
       {chooseFields
-        ? chooseFields.map(item => {
+        ? chooseFields.map((item) => {
             return textField(item)
           })
         : textField(item)}

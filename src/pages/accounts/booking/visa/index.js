@@ -26,7 +26,7 @@ import MediaDrawer from 'src/common/drawer/MediaDrawer'
 const index = ({ apiData }) => {
   // open media drawer handler
   const openMediaDrawer = (row) => {
-    console.log('row data', row.original)
+    // console.log('row data', row.original)
     setSelectedRowData(row.original)
     setMediaDrawerOpen(true)
   }
@@ -57,10 +57,10 @@ const index = ({ apiData }) => {
       setRemoveSelection(removeSelection)
       toggleDrawer()
     }
-    const handleEditPassport = () => {
-      setShowAddPassport(false) // Hide the "Add Passport" menu item
-      handleDrawer()
-    }
+    // const handleEditPassport = () => {
+    //   setShowAddPassport(false) // Hide the "Add Passport" menu item
+    //   handleDrawer()
+    // }
     return (
       <>
         {selectedIds && selectedIds.length === 1 && (

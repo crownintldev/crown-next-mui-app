@@ -21,7 +21,8 @@ import {
   fetchVisaDestination,
   fetchVisaDuration,
   fetchVisaType,
-  fetchSupplier
+  fetchSupplier,
+  fetchVisaService
 } from 'src/store'
 
 // action
@@ -93,7 +94,7 @@ const SupplierVisaForm = ({
   const supplier = useSelector(state =>
     state?.supplier?.data?.map(item => ({ name: `${item.name} ${item.phone}`, _id: item._id }))
   )
-  console.log(supplier)
+  // console.log(supplier)
 
   useEffect(() => {
     dispatch(fetchVisaCategory({}))
@@ -145,7 +146,7 @@ const SupplierVisaForm = ({
         api,
         data,
         dispatch,
-        fetchData: fetchApi,
+        fetchData: fetchVisaService,
         toggle,
         reset,
         removeSelection
@@ -155,7 +156,7 @@ const SupplierVisaForm = ({
         api,
         data,
         dispatch,
-        fetchData: fetchApi,
+        fetchData: fetchVisaService,
         toggle,
         reset,
         removeSelection

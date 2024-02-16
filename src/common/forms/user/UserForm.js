@@ -62,10 +62,11 @@ const defaultValues = {
   roles: '',
   appPermissions: ['account'],
   status: '',
+  branch:'',
   password: '',
-  username:'',
-  email:'',
-  password:''
+  username: '',
+  email: '',
+  password: ''
 }
 
 const UserForm = ({
@@ -91,6 +92,7 @@ const UserForm = ({
             email: item.email,
             roles: item?.roles?._id,
             status: item?.status,
+            branch:item?.branch?._id,
             appPermissions: item?.appPermissions,
             _id: item?._id
           }
@@ -122,6 +124,7 @@ const UserForm = ({
     if (ids.length === 1) {
       setValue('roles', editIds[0].roles)
       setValue('status', editIds[0].status)
+      setValue('branch', editIds[0].branch)
       setValue('ids', ids)
     } else if (ids.length > 1) {
       setValue('ids', ids)
@@ -136,7 +139,7 @@ const UserForm = ({
   }
   const onSubmit = (e) => {
     e.preventDefault()
-    if (editIds && ids && ids.length>0) {
+    if (editIds && ids && ids.length > 0) {
       updateManyApi({
         completeApi: 'user/editUserbyAdministrator',
         apidomain: AuthApi,
@@ -147,8 +150,16 @@ const UserForm = ({
         reset,
         removeSelection
       })
-    }else{
-      createApi({ completeApi:"auth/signup",apidomain: AuthApi,   data: getValues(), dispatch, fetchData: fetchApi, toggle, reset })
+    } else {
+      createApi({
+        completeApi: 'auth/signup',
+        apidomain: AuthApi,
+        data: getValues(),
+        dispatch,
+        fetchData: fetchApi,
+        toggle,
+        reset
+      })
     }
   }
 

@@ -52,6 +52,7 @@ const cardData = [
 
 const rolesArr = [
   'Account',
+  'Passport',
   'Visa Booking',
   'Visa Service',
   'Member',

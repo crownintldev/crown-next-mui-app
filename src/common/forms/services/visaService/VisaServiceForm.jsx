@@ -141,7 +141,7 @@ const VisaServiceForm = ({
   }, [selectDestination, selectCategory, selectDuration, selectType])
 
   useEffect(() => {
-    if ((editId && editId.processing) || editId.confirmed) {
+    if ((editId && editId?.processing) || editId?.confirmed) {
     } else {
       setValue('confirmed.totalFee', supplierVisa?.confirmed?.totalFee)
       setValue('processing.visaFee', supplierVisa?.processing?.visaFee)

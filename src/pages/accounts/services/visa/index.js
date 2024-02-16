@@ -20,7 +20,7 @@ const index = ({ apiData }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   const [selectedIds, setSelectedIds] = useState('')
-  const [removeSelection, setRemoveSelection] = useState(null)
+  const [removeSelection, setRemoveSelection] = useState({})
   const [Form, SetForm] = useState({
     Form: null
   })
@@ -36,14 +36,14 @@ const index = ({ apiData }) => {
       stateSelector="visaService"
       anchor={'right'}
       _id={selectedIds[0] || ''}
-      removeSelection={removeSelection || ''}
+      removeSelection={removeSelection.removeSelection || ''}
     />
   }
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
     setSelectedIds(selectedIds)
     const handleDrawer = () => {
       SetForm({ Form: SupplierVisaForm })
-      setRemoveSelection(setRemoveSelection)
+      setRemoveSelection({removeSelection})
       toggleDrawer()
     }
     return (

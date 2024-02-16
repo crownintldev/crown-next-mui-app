@@ -104,16 +104,16 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   }, [])
 
   const statusList = [
-    'pending',
-    'booked',
-    'inprocess',
-    'verification',
-    'approved',
-    'rejected',
-    'returned',
-    'cancelled',
-    'inprocessCancelled',
-    'paid'
+    "pending",
+    "booked",
+    "inprocess",
+    "verification",
+    "in Embassy",
+    "approved",
+    "rejected",
+    "returned",
+    "cancelled",
+    "delivered",
   ]
 
   // use selector of visa-ids

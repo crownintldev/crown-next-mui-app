@@ -35,7 +35,7 @@ const index = ({ apiData }) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   const [selectedIds, setSelectedIds] = useState('')
-  const [removeSelection, setRemoveSelection] = useState(null)
+  const [removeSelection, setRemoveSelection] = useState({})
   const [showAddPassport, setShowAddPassport] = useState(true)
   const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false)
   const [selectedRowData, setSelectedRowData] = useState(null)
@@ -48,13 +48,13 @@ const index = ({ apiData }) => {
       Form={PassportForm}
       anchor={'right'}
       _id={selectedIds[0] || ''}
-      removeSelection={removeSelection || ''}
+      removeSelection={removeSelection.removeSelection || ''}
     />
   )
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
     const handleDrawer = () => {
       setSelectedIds(selectedIds)
-      setRemoveSelection(removeSelection)
+      setRemoveSelection({removeSelection})
       toggleDrawer()
     }
     // const handleEditPassport = () => {
@@ -66,7 +66,7 @@ const index = ({ apiData }) => {
         {selectedIds && selectedIds.length === 1 && (
           <>
             <div onClick={handleClose}>
-              <div onClick={toggleDrawer}>
+              <div>
                 <MenuItem onClick={handleDrawer} sx={{ py: 1, m: 0 }}>
                   <Box
                     sx={{

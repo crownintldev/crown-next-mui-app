@@ -160,7 +160,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       getVisa()
     }
   }, [findVisa])
-
+// console.log(visaBookingItems)
   const {
     reset,
     control,

@@ -76,14 +76,16 @@ const defaultValues = {
 const SupplierVisaForm = ({
   toggle,
   fetchApi,
-  api = 'supplier-visa-service',
+  // api = 'supplier-visa-service',
   _id,
   stateSelector,
   removeSelection
 }) => {
+  let api = 'supplier-visa-service'
+  // console.log("_id",_id)
   const dispatch = useDispatch()
   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
-
+// console.log(editId)
   // ** State
   const [payMethod, setPayMethod] = useState('confirmed')
   const category = useSelector(state => state?.visaCategory?.data)
@@ -121,14 +123,13 @@ const SupplierVisaForm = ({
 
   useEffect(() => {
     if (editId) {
-      Object.keys(editId).forEach(key => {
-        setValue(key, editId[key])
-      })
       setValue('category', editId?.category?._id)
       setValue('type', editId?.type?._id)
       setValue('duration', editId?.duration?._id)
       setValue('destination', editId?.destination?._id)
-      setValue('supplier', editId?.supplier?._id)
+      setValue('supplier', editId?.supplierVisaService?.supplier?._id)
+      setValue('confirmed', editId?.supplierVisaService?.confirmed)
+      setValue('processing', editId?.supplierVisaService?.processing)
     } else {
       reset()
     }
@@ -142,7 +143,7 @@ const SupplierVisaForm = ({
   const onSubmit = async data => {
     if (editId) {
       updateApi({
-        _id,
+        _id:editId.supplierVisaService._id,
         api,
         data,
         dispatch,

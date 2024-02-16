@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+//redux
 import { useDispatch, useSelector } from 'react-redux'
+import { getReducer } from 'src/store/apps/sliceActionReducer'
+
 import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
 import FormDrawer from '../drawer/FormDrawer'
 import TableHeader from './tableHeader/TableHeader'
@@ -125,6 +128,7 @@ const MaterialTable = ({
     }
   }
 
+  //Row Selection
   const handleRemoveSelection = () => {
     setRowSelection({})
   }
@@ -201,6 +205,7 @@ const MaterialTable = ({
         }
       : undefined,
     enableRowSelection: true,
+    // onRowSelectionChange: onRowSelectionChange,
     onRowSelectionChange: setRowSelection,
     initialState: { showColumnFilters: false, density: 'compact' },
     rowSelection,

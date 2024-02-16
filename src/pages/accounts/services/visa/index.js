@@ -22,55 +22,58 @@ const index = ({ apiData }) => {
   const [selectedIds, setSelectedIds] = useState('')
   const [removeSelection, setRemoveSelection] = useState(null)
   const [Form, SetForm] = useState({
-    Form:null
+    Form: null
   })
 
   // let Form = null
-  const formDrawer = () => (
-    <FormDrawer
+ 
+  const formDrawer = () => {
+   return <FormDrawer
       open={drawerOpen}
       toggle={toggleDrawer}
-      drawerTitle={'Add Supplier Service'}
+      drawerTitle={'Edit Supplier Service'}
       Form={Form.Form}
+      stateSelector="visaService"
       anchor={'right'}
       _id={selectedIds[0] || ''}
       removeSelection={removeSelection || ''}
     />
-  )
+  }
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
+    setSelectedIds(selectedIds)
     const handleDrawer = () => {
-      SetForm({Form:SupplierVisaForm})
-      setSelectedIds(selectedIds)
-      setRemoveSelection(removeSelection)
+      SetForm({ Form: SupplierVisaForm })
+      setRemoveSelection(setRemoveSelection)
       toggleDrawer()
     }
     return (
-      
-      <div onClick={handleDrawer}>
-        <div onClick={handleClose}>
-          <div>
-            <MenuItem  sx={{ py: 1, m: 0 }}>
-              <Box
-                sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: '#2b60fe'
-                }}
-              >
-                <Icon fontSize='0.8rem' icon='tabler:plus' />
-                Add Supplier
-              </Box>
-            </MenuItem>
+      <div>
+        {selectedIds && selectedIds.length === 1 && (
+          <div onClick={handleClose}>
+            <div onClick={toggleDrawer}>
+              <MenuItem onClick={handleDrawer} sx={{ py: 1, m: 0 }}>
+                <Box
+                  sx={{
+                    fontSize: '0.8em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    columnGap: '4px',
+                    color: '#2b60fe'
+                  }}
+                >
+                  <Icon fontSize='0.8rem' icon='tabler:plus' />
+                  Edit Sup Visa Service
+                </Box>
+              </MenuItem>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     )
   }
   return (
     <div>
-      {formDrawer(Form)}
+      {formDrawer()}
       <MaterialTable
         api={'visa-service'}
         apiData={apiData}
@@ -79,13 +82,13 @@ const index = ({ apiData }) => {
         columns={columns}
         headerMenu={headerMenu}
         drawerProps={{
-          formTitle: 'Visa Service Sale Rate',
-          editFormTitle: 'Edit Visa Service Sale Rate',
+          formTitle: 'Visa Service',
+          editFormTitle: 'Edit Visa Service',
 
           //header buttons drawer
-          buttonTitle: 'Add New Visa Service',
+          buttonTitle: 'Add Service',
           editButtonTitle: 'Edit Visa Service',
-          CreateForm: VisaServiceForm,
+          CreateForm: SupplierVisaForm,
           EditForm: VisaServiceForm
         }}
       />

@@ -105,35 +105,37 @@ export const accountArrays = () => [
             icon: 'tabler:circle-filled'
           }
         ]
-      }
+      },
+      {
+        title: 'Supplier',
+        icon: 'tabler:truck-delivery',
+        children: [
+          {
+            title: 'Supplier Category',
+            path: '/supplier/supplier-category',
+            icon: 'tabler:circle-filled'
+          },
+          // {
+          //   title: 'Visa Service',
+          //   path: '/supplier/supplier-visa-service',
+          //   icon: 'tabler:circle-filled'
+          // },
+          {
+            title: 'Supplier List',
+            path: '/supplier/supplier-list',
+            icon: 'tabler:circle-filled'
+          }
+        ]
+      },
     ]
   },
+  
   {
     title: 'Account',
     path: '/account',
     icon: 'tabler:file-dollar'
   },
-  {
-    title: 'Supplier',
-    icon: 'tabler:truck-delivery',
-    children: [
-      {
-        title: 'Supplier Category',
-        path: '/supplier/supplier-category',
-        icon: 'tabler:circle-filled'
-      },
-      {
-        title: 'Visa Service',
-        path: '/supplier/supplier-visa-service',
-        icon: 'tabler:circle-filled'
-      },
-      {
-        title: 'Supplier List',
-        path: '/supplier/supplier-list',
-        icon: 'tabler:circle-filled'
-      }
-    ]
-  },
+ 
 
   {
     title: 'Expense',

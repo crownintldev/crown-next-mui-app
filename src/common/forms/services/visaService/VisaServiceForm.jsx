@@ -66,8 +66,11 @@ const defaultValues = {
   }
 }
 
-export const findSupplierVisa = data => {
-  return axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/supplier-visa-service/findSupplierVisa`, data)
+export const findSupplierVisa = (data) => {
+  return axiosInstance.post(
+    `${process.env.NEXT_PUBLIC_API}/supplier-visa-service/findSupplierVisa`,
+    data
+  )
 }
 
 const VisaServiceForm = ({
@@ -79,15 +82,17 @@ const VisaServiceForm = ({
   removeSelection
 }) => {
   const dispatch = useDispatch()
-  let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
+  let editId = useSelector((state) =>
+    state[stateSelector]?.data?.find((item) => item._id === _id)
+  )
 
   // ** State
   const [payMethod, setPayMethod] = useState('confirmed')
   const [supplierVisa, setSupplierVisa] = useState(null)
-  const category = useSelector(state => state?.visaCategory?.data)
-  const destination = useSelector(state => state?.visaDestination?.data)
-  const type = useSelector(state => state?.visaType?.data)
-  const duration = useSelector(state => state?.visaDuration?.data)
+  const category = useSelector((state) => state?.visaCategory?.data)
+  const destination = useSelector((state) => state?.visaDestination?.data)
+  const type = useSelector((state) => state?.visaType?.data)
+  const duration = useSelector((state) => state?.visaDuration?.data)
 
   useEffect(() => {
     dispatch(fetchVisaCategory({}))
@@ -136,10 +141,13 @@ const VisaServiceForm = ({
   }, [selectDestination, selectCategory, selectDuration, selectType])
 
   useEffect(() => {
-    setValue('confirmed.totalFee', supplierVisa?.confirmed?.totalFee)
-    setValue('processing.visaFee', supplierVisa?.processing?.visaFee)
-    setValue('processing.processingFee', supplierVisa?.processing?.processingFee)
-    setValue('supplierVisaService', supplierVisa?._id)
+    if ((editId && editId.processing) || editId.confirmed) {
+    } else {
+      setValue('confirmed.totalFee', supplierVisa?.confirmed?.totalFee)
+      setValue('processing.visaFee', supplierVisa?.processing?.visaFee)
+      setValue('processing.processingFee', supplierVisa?.processing?.processingFee)
+      setValue('supplierVisaService', supplierVisa?._id)
+    }
   }, [supplierVisa])
 
   // -- end find supplier visa service
@@ -147,7 +155,7 @@ const VisaServiceForm = ({
   // editId handle
   useEffect(() => {
     if (editId) {
-      Object.keys(editId).forEach(key => {
+      Object.keys(editId).forEach((key) => {
         setValue(key, editId[key])
       })
       setValue('category', editId?.category?._id)
@@ -165,7 +173,7 @@ const VisaServiceForm = ({
     reset()
   }
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     // console.log(data)
     if (editId) {
       updateApi({
@@ -289,7 +297,7 @@ const VisaServiceForm = ({
             Form={SupplierVisaForm}
             fetchApi={fetchSupplierVisaService}
             api='supplier-visa-service'
-            anchor="right"
+            anchor='right'
           />
         )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

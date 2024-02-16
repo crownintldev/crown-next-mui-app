@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { getCookie } from 'src/action/auth-action'
-
+import axiosInstance from 'src/utils/axiosInstance'
 // ** MUI Imports
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -69,9 +68,8 @@ const defaultValues = {
 
 // ------------------visaBooking Form-----------------------
 const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
-  const theme = useTheme()
-  const accessToken = getCookie('jwt')
-  // ** State
+  const theme = useTheme();
+    // ** State
   const dispatch = useDispatch()
 
   const accountItems = useSelector((state) =>
@@ -157,16 +155,9 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${process.env.NEXT_PUBLIC_API}/account/update`,
-        data,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        }
-      )
+        data)
       if (response) {
         dispatch(
           fetchData({

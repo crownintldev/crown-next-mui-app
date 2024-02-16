@@ -13,11 +13,9 @@ import Icon from 'src/@core/components/icon'
 import { useDispatch } from 'react-redux'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
-import { getCookie } from 'src/action/auth-action'
 import axiosInstance from 'src/utils/axiosInstance'
 import { TryOutlined } from '@mui/icons-material'
 
-const accessToken = getCookie('jwt')
 
 const TableHeader = (props) => {
   const dispatch = useDispatch()

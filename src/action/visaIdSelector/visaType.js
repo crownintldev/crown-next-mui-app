@@ -1,13 +1,11 @@
-import axios from 'axios'
-import { getCookie } from 'src/action/auth-action'
-const accessToken = getCookie('jwt')
+import axiosInstance from 'src/utils/axiosInstance'
 // export const addVisaType = (name) => {
 //     return axios.post(`${API}/visa-type/create`,
 //     {name})
 // }
 
 export const listVisaType = async () => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API}/visa-type`,{
+  return axiosInstance.get(`${process.env.NEXT_PUBLIC_API}/visa-type`,{
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${accessToken}`

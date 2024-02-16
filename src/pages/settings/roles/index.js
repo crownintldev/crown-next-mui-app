@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 
 // ** Custom Components Imports
 import PageHeader from 'src/@core/components/page-header'
+import { AuthApi } from 'config'
 
 // ** Demo Components Imports
 import Table from 'src/views/apps/roles/Table'
@@ -15,6 +16,7 @@ import AuthTable from 'src/common/tables/authTable/AuthTable'
 import DialogModal from 'src/views/apps/roles/Dialog'
 //form
 import UserForm from 'src/common/forms/user/UserForm'
+
 
 const RolesComponent = () => {
   const columns = useUserColumns()
@@ -44,6 +46,7 @@ const RolesComponent = () => {
           stateSelector='user'
           columns={columns}
           drawerProps={{
+            apidomain:AuthApi,
             formTitle:"Create User",
             editFormTitle: 'Edit User',
             //header buttons drawer

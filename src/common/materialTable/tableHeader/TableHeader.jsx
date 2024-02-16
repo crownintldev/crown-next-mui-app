@@ -15,8 +15,7 @@ import { axiosErrorMessage } from 'src/utils/helperfunction'
 import { capitalizeSplitDash } from 'src/utils/helperfunction'
 import axiosInstance from 'src/utils/axiosInstance'
 import { TryOutlined } from '@mui/icons-material'
-
-
+import { AccountApi } from 'config'
 const TableHeader = (props) => {
   const dispatch = useDispatch()
 
@@ -32,12 +31,13 @@ const TableHeader = (props) => {
     removeSelection,
     showTrash,
     headerMenu,
-    setActiveTab
+    setActiveTab,
+    apidomain
   } = props
-
+  const baseURL = apidomain ?? AccountApi
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
-
+// console.log(baseURL)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -51,10 +51,10 @@ const TableHeader = (props) => {
     }
     const apiEndpoint =
       cond === 'undo' && showTrash === 'true'
-        ? `${process.env.NEXT_PUBLIC_API}/${api}/remove`
+        ? `${baseURL}/${api}/remove`
         : showTrash === 'true'
-        ? `${process.env.NEXT_PUBLIC_API}/${api}/permanentRemove`
-        : `${process.env.NEXT_PUBLIC_API}/${api}/remove`
+        ? `${baseURL}/${api}/permanentRemove`
+        : `${baseURL}/${api}/remove`
     let requestBody =
       cond === 'undo' && showTrash === 'true'
         ? {

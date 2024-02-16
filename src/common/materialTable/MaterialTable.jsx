@@ -37,7 +37,8 @@ const MaterialTable = ({
     editButtonTitle,
     EditForm,
     CreateForm,
-    multiSelected = false
+    multiSelected = false,
+    apidomain
   } = drawerProps
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -150,6 +151,7 @@ const MaterialTable = ({
         fetchData={fetchData}
         api={api}
         table={table}
+        apidomain={apidomain}
         tableData={data}
         removeSelection={handleRemoveSelection}
         showTrash={showTrash}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
 import useAgentAndClientColumns from 'src/common/materialTable/tableColumns/agentAndClient'
-
+import { store } from 'src/store'
 //Forms
 import AgentandClientForm from 'src/common/forms/member/AgentandClientForm'
 
@@ -11,7 +11,8 @@ import { fetchAgent } from 'src/store'
 
 const index = ({ apiData }) => {
   const columns = useAgentAndClientColumns()
-
+  const state = store.getState();
+  console.log(state.token.data)
   return (
     <div>
       <MaterialTable

@@ -41,7 +41,12 @@ import { useForm, Controller } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { fetchActionData } from 'src/action/fetchData'
 import { axiosErrorMessage } from 'src/utils/helperfunction'
-import { fetchVisaCategory,fetchVisaDestination,fetchVisaDuration,fetchVisaType } from 'src/store'
+import {
+  fetchVisaCategory,
+  fetchVisaDestination,
+  fetchVisaDuration,
+  fetchVisaType
+} from 'src/store'
 
 const schema = yup.object().shape({
   visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
@@ -55,6 +60,7 @@ const ITEM_PADDING_TOP = 8
 // reuse function
 import { removeUndefined } from 'src/utils/helperfunction'
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField'
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
 
 const MenuProps = {
   PaperProps: {
@@ -73,12 +79,33 @@ const defaultValues = {
   status: 'booked'
 }
 
+const statusList = [
+  'pending',
+  'booked',
+  'inprocess',
+  'verification',
+  'in Embassy',
+  'approved',
+  'rejected',
+  'returned',
+  'cancelled',
+  'delivered'
+]
+
 // ------------------visaBooking Form-----------------------
 const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
-
+  useEffect(() => {
+    setFormSize(400)
+  }, [])
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   // ** State
+  const [selectedValue, setSelectedValue] = useState('')
+  const [visa, setVisa] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [manuallyAmount, setManuallyAmount] = useState(false)
+
+  //dispatch
   const dispatch = useDispatch()
 
   const visaBookingItems = useSelector(
@@ -94,33 +121,17 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             givenName: item?.passport?.givenName,
             _id: item?._id,
             visa: item.visa,
-            processing:item.processing,
-            confirmed:item.confirmed
+            processing: item.processing,
+            confirmed: item.confirmed
           }
         })
   )
-  useEffect(() => {
-    setFormSize(400)
-  }, [])
-
-  const statusList = [
-    "pending",
-    "booked",
-    "inprocess",
-    "verification",
-    "in Embassy",
-    "approved",
-    "rejected",
-    "returned",
-    "cancelled",
-    "delivered",
-  ]
 
   // use selector of visa-ids
-  const destination = useSelector(state=>state.visaDestination.data)
-  const category = useSelector(state=>state.visaCategory.data)
-  const duration = useSelector(state=>state.visaDuration.data)
-  const type = useSelector(state=>state.visaType.data)
+  const destination = useSelector((state) => state.visaDestination.data)
+  const category = useSelector((state) => state.visaCategory.data)
+  const duration = useSelector((state) => state.visaDuration.data)
+  const type = useSelector((state) => state.visaType.data)
 
   const [findVisa, setFindVisa] = useState({
     destination: '',
@@ -128,20 +139,16 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     type: '',
     duration: ''
   })
-  const [selectedValue, setSelectedValue] = useState('')
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value)
   }
 
-  const [visa, setVisa] = useState('')
-  const [loading, setLoading] = useState(false)
-
   useEffect(() => {
-    dispatch(fetchVisaCategory({}));
-    dispatch(fetchVisaDestination({}));
-    dispatch(fetchVisaDuration({}));
-    dispatch(fetchVisaType({}));
+    dispatch(fetchVisaCategory({}))
+    dispatch(fetchVisaDestination({}))
+    dispatch(fetchVisaDuration({}))
+    dispatch(fetchVisaType({}))
   }, [])
   useEffect(() => {
     const { destination, category, duration, type } = findVisa
@@ -160,7 +167,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       getVisa()
     }
   }, [findVisa])
-// console.log(visaBookingItems)
+  // console.log(visaBookingItems)
   const {
     reset,
     control,
@@ -175,7 +182,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
-  // console.log(watch())
+  // edit ids
   useEffect(() => {
     setValue('visaBookingIds', ids)
     if (ids.length === 1) {
@@ -188,12 +195,12 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           category: category?._id,
           type: type?._id
         })
-        if(visaBookingItems[0]?.processing){
+        if (visaBookingItems[0]?.processing) {
           setValue('confirmed', undefined)
-         setValue("paymentType","processing")
-        }else if(visaBookingItems[0]?.confirmed){
+          setValue('paymentType', 'processing')
+        } else if (visaBookingItems[0]?.confirmed) {
           setValue('processing', undefined)
-          setValue("paymentType","confirmed")
+          setValue('paymentType', 'confirmed')
         }
         setValue('visaId', visa._id)
       }
@@ -221,29 +228,33 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     reset()
   }
 
+  const paymentType = watch('paymentType')
+  // onSubmit
   const onSubmit = async (data) => {
     if (!visa._id) {
       return toast.error('add Visa Must', { position: 'top-center' })
     }
     setValue('visaId', visa._id)
-    const paymentType = watch('paymentType')
+
     if (paymentType === 'confirmed') {
-      setValue("confirmed", visa.confirmed)
+      if (!manuallyAmount) {
+        setValue('confirmed', visa.confirmed)
+      }
       setValue('processing', undefined)
     }
     if (paymentType === 'processing') {
-      setValue("processing", visa.processing)
+      if (!manuallyAmount) {
+        setValue('processing', visa.processing)
+      }
       setValue('confirmed', undefined)
     }
     removeUndefined(data)
-    // console.log(data)
-
     try {
       const response = await axiosInstance.put(
         `${process.env.NEXT_PUBLIC_API}/visa-booking/update`,
         data
       )
-      console.log(response)
+      // console.log(response)
       if (response) {
         dispatch(fetchVisaBooking({ updateData: response.data.data }))
         setFindVisa({
@@ -268,6 +279,49 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     }
   }
 
+  const renderSelectedValue = (selectedIds) => {
+    return selectedIds
+      .map((id) => {
+        const item = visaBookingItems.find((item) => item._id === id)
+
+        return item ? `${item.passportNumber} ${item.givenName}` : ''
+      })
+      .filter(Boolean) // Removes any undefined or empty values
+      .join(', ')
+  }
+
+  const manuallyAmountFields = manuallyAmount
+    ? paymentType === 'confirmed'
+      ? [
+          {
+            name: 'confirmed.totalFee',
+            type: 'number',
+            placeholder: 'Enter Total Fee',
+            label: 'Confirmed - Total Fee',
+            value: watch('confirmed.totalFee'),
+            myvalue: true
+          }
+        ]
+      : [
+          {
+            name: 'processing.processingFee',
+            type: 'number',
+            placeholder: 'Enter Processing Fee',
+            label: 'Processing - Processing Fee',
+            value: watch('processing.processingFee'),
+            myvalue: true
+          },
+          {
+            name: 'processing.visaFee',
+            placeholder: 'Enter Visa Fee',
+            type: 'number',
+            label: 'Processing - Visa Fee',
+            value: watch('processing.visaFee'),
+            myvalue: true
+          }
+        ]
+    : []
+
   const selectVisaId = () => {
     if (!visa) {
       return (
@@ -290,72 +344,82 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
 
     return (
       <Box sx={{ mb: 2 }}>
-        <Grid container spacing={2}>
-          {['confirmed', 'processing'].map(
-            (type) =>
-              visa[type] && (
-                <Grid item key={type}>
-                  <Controller
-                    name='paymentType'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value } }) => (
-                      <Box
-                        sx={{
-                          border: 1,
-                          borderColor: 'grey.700',
-                          p: 2,
-                          height: '7rem',
-                          display: 'flex',
-                          alignItems: 'center'
-                        }}
-                      >
-                        <Radio
-                          checked={value === type}
-                          onChange={() => onChange(type)}
-                          value={type}
-                          name='radio-buttons'
-                          inputProps={{ 'aria-label': type }}
-                        />
-                        <div>
-                          <Typography
-                            variant='h6'
-                            component='h4'
-                            sx={{ fontWeight: 'bold', mb: '4px' }}
-                          >
-                            {type === 'confirmed' ? 'Confirmed Fee' : 'Processing Fee:'}
-                          </Typography>
-                          <span>
-                            &nbsp;
-                            {type === 'confirmed'
-                              ? `Total Fee: ${visa.confirmed.totalFee}`
-                              : `Processing Fee: ${visa.processing.processingFee}`}
-                          </span>
-                          {type === 'processing' && <br />}
-                          {type === 'processing' && (
-                            <span>&nbsp;Visa Fee: {visa.processing.visaFee}</span>
-                          )}
-                        </div>
-                      </Box>
-                    )}
-                  />
-                </Grid>
-              )
-          )}
-        </Grid>
+        {!manuallyAmount ? (
+          <Grid container spacing={2}>
+            {['confirmed', 'processing'].map(
+              (type) =>
+                visa[type] && (
+                  <Grid item key={type}>
+                    <Controller
+                      name='paymentType'
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { onChange, value } }) => (
+                        <Box
+                          sx={{
+                            border: 1,
+                            borderColor: 'grey.700',
+                            p: 2,
+                            height: '7rem',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <Radio
+                            checked={value === type}
+                            onChange={() => onChange(type)}
+                            value={type}
+                            name='radio-buttons'
+                            inputProps={{ 'aria-label': type }}
+                          />
+                          <div>
+                            <Typography
+                              variant='h6'
+                              component='h4'
+                              sx={{ fontWeight: 'bold', mb: '4px' }}
+                            >
+                              {type === 'confirmed' ? 'Confirmed Fee' : 'Processing Fee:'}
+                            </Typography>
+                            <span>
+                              &nbsp;
+                              {type === 'confirmed'
+                                ? `Total Fee: ${visa.confirmed.totalFee}`
+                                : `Processing Fee: ${visa.processing.processingFee}`}
+                            </span>
+                            {type === 'processing' && <br />}
+                            {type === 'processing' && (
+                              <span>&nbsp;Visa Fee: {visa.processing.visaFee}</span>
+                            )}
+                          </div>
+                        </Box>
+                      )}
+                    />
+                  </Grid>
+                )
+            )}
+          </Grid>
+        ) : (
+          <CustomHookTextField
+            chooseFields={manuallyAmountFields}
+            control={control}
+            errors={errors}
+            required={true}
+          />
+        )}
+
+        <p
+          onClick={() => setManuallyAmount(!manuallyAmount)}
+          style={{
+            textDecoration: 'underline',
+            color: 'blue',
+            padding: '10px 0',
+            cursor: 'pointer'
+          }}
+        >
+          {manuallyAmount ? 'or Choose Selected Amount' : 'or Enter Amount Manually'}
+        </p>
       </Box>
     )
-  }
-
-  const renderSelectedValue = (selectedIds) => {
-    return selectedIds
-      .map((id) => {
-        const item = visaBookingItems.find((item) => item._id === id)
-
-        return item ? `${item.passportNumber} ${item.givenName}` : ''
-      })
-      .filter(Boolean) // Removes any undefined or empty values
-      .join(', ')
   }
 
   return (

@@ -4,15 +4,18 @@ import { Chip } from '@mui/material'
 import { currencyFormatter } from 'src/utils/helperfunction'
 
 const statusObj = {
-  booked: 'success',
+  booked: 'primary',
   pending: 'warning',
   rejected: 'error',
   inprocess: 'info',
+  "in Embassy": 'primary',
   verification: 'info',
   approved: 'success',
   returned: 'error',
   cancelled: 'error',
-  paid: 'success'
+  delivered:'success',
+  rejected: 'error',
+  trash: 'error'
 }
 
 export const renderStatusCell = ({ cell }) => {

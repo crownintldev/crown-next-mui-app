@@ -38,7 +38,6 @@ const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       // Member
-      { accessorKey: 'onModel', header: 'Refer', Cell: modelCondition },
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Phone', Cell: defaultCellRenderer },
 
@@ -64,7 +63,7 @@ const useTableColumns = (openMediaDrawer) =>
         header: 'Nationality',
         Cell: defaultCellUpperCase
       },
-    
+
       {
         accessorKey: 'passport.pob',
         header: 'Place of Birth',
@@ -82,7 +81,7 @@ const useTableColumns = (openMediaDrawer) =>
         header: 'Tracking Number',
         Cell: defaultCellRenderer
       },
-// visa
+      // visa
       {
         accessorKey: 'processing.processingFee',
         header: 'Processing Fee',
@@ -96,6 +95,21 @@ const useTableColumns = (openMediaDrawer) =>
       {
         accessorKey: 'confirmed.totalFee',
         header: 'Confirmed - Total Fee',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'total',
+        header: 'Total Amount',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'increment',
+        header: 'Increment',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'discount',
+        header: 'Discount',
         Cell: defaultCellRenderer
       },
       {

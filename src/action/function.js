@@ -64,7 +64,7 @@ export const updateApi = async ({
   toggle,
   reset,
   message,
-  removeSelection
+  removeSelection,
 }) => {
   const baseURL = apidomain || AccountApi
 
@@ -105,7 +105,8 @@ export const updateManyApi = async ({
   toggle,
   reset,
   message,
-  removeSelection
+  removeSelection,
+  optional
 }) => {
   const baseURL = apidomain || AccountApi
   let myapi = completeApi ? completeApi : `${api}/data`
@@ -126,6 +127,54 @@ export const updateManyApi = async ({
       }
       if (removeSelection) {
         removeSelection()
+      }
+      if(optional){
+        optional()
+      }
+    }
+
+    // console.log(response)
+    toast.success('Update Successfully', { position: 'top-center' })
+  } catch (err) {
+    toast.error(axiosErrorMessage(err), { position: 'top-center' })
+  }
+}
+
+export const createManyApi = async ({
+  api,
+  completeApi,
+  apidomain,
+  data,
+  dispatch,
+  fetchData,
+  toggle,
+  reset,
+  message,
+  removeSelection,
+  optional
+}) => {
+  const baseURL = apidomain || AccountApi
+  let myapi = completeApi ? completeApi : `${api}/create`
+  try {
+    const response = await axios.post(`${baseURL}/${myapi}`, data, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    if (response) {
+      dispatch(fetchData({ updateData: response.data.data }))
+      if (toggle) {
+        toggle()
+      }
+      if (reset) {
+        reset()
+      }
+      if (removeSelection) {
+        removeSelection()
+      }
+      if(optional){
+        optional()
       }
     }
 

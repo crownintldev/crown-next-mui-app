@@ -16,7 +16,8 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
       placeholder,
       type,
       value: myValue,
-      myvalue
+      myvalue,
+      disabled
     } = item
 
     return (
@@ -35,8 +36,8 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
           name={name}
           control={control}
           rules={{ required: true }}
-          render={({ field: { value, onChange } }) => (
-            <CustomTextField
+          render={({ field: { value, onChange } }) => { 
+           return <CustomTextField
               required={required}
               fullWidth
               type={type ? type : 'text'}
@@ -54,13 +55,14 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
               sx={{ mb: 4 }}
               label={label ? label : capitalizeCamelSpace(name)}
               onChange={onChange}
+              disabled={disabled}
               placeholder={
                 placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`
               }
               error={Boolean(errors[name])}
               helperText={errors[name]?.message || ''}
             />
-          )}
+          }}
         />
         {/* )} */}
       </>

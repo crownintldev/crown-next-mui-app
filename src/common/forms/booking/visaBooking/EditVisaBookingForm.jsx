@@ -87,15 +87,17 @@ const defaultValues = {
 
 const statusList = [
   'pending',
+  'editing',
   'booked',
   'inprocess',
   'verification',
   'in Embassy',
   'approved',
-  'rejected',
   'returned',
   'cancelled',
-  'delivered'
+  'delivered',
+  'rejected',
+  'trash'
 ];
 
 // ------------------visaBooking Form-----------------------
@@ -303,7 +305,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       await updateManyApi({ completeApi: 'visa-booking/update', ...apiConfig });
     }
   };
- 
+
   // *************Selected Ids Handle
   const renderSelectedValue = (selectedIds) => {
     return selectedIds

@@ -1,44 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import DataTable from 'src/common/table/DataTable'
-import MaterialTable from 'src/common/materialTable/MaterialTable'
-import { useMemo } from 'react'
-import { columnData } from 'src/common/table/columnDataFunction'
-import CustomChip from 'src/@core/components/mui/chip'
-import useTableColumns from 'src/common/materialTable/tableColumns/visaBookingColumns'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import DataTable from 'src/common/table/DataTable';
+import MaterialTable from 'src/common/materialTable/MaterialTable';
+import { useMemo } from 'react';
+import { columnData } from 'src/common/table/columnDataFunction';
+import CustomChip from 'src/@core/components/mui/chip';
+import useTableColumns from 'src/common/materialTable/tableColumns/visaBookingColumns';
+import Image from 'next/image';
 
 //Forms
-import EditVisaBookingForm from 'src/common/forms/booking/visaBooking/EditVisaBookingForm'
-import PassportForm from 'src/common/forms/booking/passport/PassportForm'
-import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
+import EditVisaBookingForm from 'src/common/forms/booking/visaBooking/EditVisaBookingForm';
+import PassportForm from 'src/common/forms/booking/passport/PassportForm';
 
 // redux
-import { fetchVisaBooking } from 'src/store'
-import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet'
+import { fetchVisaBooking } from 'src/store';
+import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet';
 //headerMenu
-import { MenuItem } from '@mui/material'
-import { Box } from '@mui/system'
-import Icon from 'src/@core/components/icon'
-import FormDrawer from 'src/common/drawer/FormDrawer'
-import MediaDrawer from 'src/common/drawer/MediaDrawer'
+import NewHeaderMenuVisaBooking from 'src/common/materialTable/tableHeader/newHeaderMenu/NewMenu-VisaBooking';
+//
+import { MenuItem } from '@mui/material';
+import { Box } from '@mui/system';
+import Icon from 'src/@core/components/icon';
+import FormDrawer from 'src/common/drawer/FormDrawer';
+import MediaDrawer from 'src/common/drawer/MediaDrawer';
 
 const index = ({ apiData }) => {
   // open media drawer handler
   const openMediaDrawer = (row) => {
     // console.log('row data', row.original)
-    setSelectedRowData(row.original)
-    setMediaDrawerOpen(true)
-  }
+    setSelectedRowData(row.original);
+    setMediaDrawerOpen(true);
+  };
 
-  const columns = useTableColumns(openMediaDrawer)
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
-  const [selectedIds, setSelectedIds] = useState('')
-  const [removeSelection, setRemoveSelection] = useState({})
-  const [showAddPassport, setShowAddPassport] = useState(true)
-  const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false)
-  const [selectedRowData, setSelectedRowData] = useState(null)
+  const columns = useTableColumns(openMediaDrawer);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  const [selectedIds, setSelectedIds] = useState('');
+  const [removeSelection, setRemoveSelection] = useState({});
+  const [showAddPassport, setShowAddPassport] = useState(true);
+  const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState(null);
 
   const formDrawer = () => (
     <FormDrawer
@@ -50,13 +51,13 @@ const index = ({ apiData }) => {
       _id={selectedIds[0] || ''}
       removeSelection={removeSelection.removeSelection || ''}
     />
-  )
+  );
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
     const handleDrawer = () => {
-      setSelectedIds(selectedIds)
-      setRemoveSelection({removeSelection})
-      toggleDrawer()
-    }
+      setSelectedIds(selectedIds);
+      setRemoveSelection({ removeSelection });
+      toggleDrawer();
+    };
     // const handleEditPassport = () => {
     //   setShowAddPassport(false) // Hide the "Add Passport" menu item
     //   handleDrawer()
@@ -86,8 +87,17 @@ const index = ({ apiData }) => {
           </>
         )}
       </>
-    )
-  }
+    );
+  };
+  const NewHeaderMenu = ({ selectedIds, toggle, removeSelection }) => {
+    return (
+      <NewHeaderMenuVisaBooking
+        selectedIds={selectedIds}
+        toggle={toggle}
+        removeSelection={removeSelection}
+      />
+    );
+  };
   return (
     <div>
       {formDrawer()}
@@ -98,6 +108,7 @@ const index = ({ apiData }) => {
         stateSelector='visaBooking'
         columns={columns}
         headerMenu={headerMenu}
+        NewHeaderMenu={NewHeaderMenu}
         drawerProps={{
           formTitle: 'Add Passport',
           buttonTitle: 'Add Passport',
@@ -116,27 +127,27 @@ const index = ({ apiData }) => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
 export const getStaticProps = async () => {
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/visa-bookings/card`)
-    const apiData = res.data
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/visa-bookings/card`);
+    const apiData = res.data;
 
     return {
       props: {
         apiData
       }
-    }
+    };
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
     return {
       props: {
         apiData: []
       }
-    }
+    };
   }
-}
+};
 
-export default index
+export default index;

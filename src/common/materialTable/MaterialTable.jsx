@@ -27,7 +27,8 @@ const MaterialTable = ({
   apiData,
   drawerProps,
   api,
-  headerMenu
+  headerMenu,
+  NewHeaderMenu
 }) => {
   // console.log('apiData', apiData)
   const {
@@ -157,6 +158,7 @@ const MaterialTable = ({
         showTrash={showTrash}
         setActiveTab={setActiveTab}
         headerMenu={headerMenu}
+        NewHeaderMenu={NewHeaderMenu}
       />
     )
   }

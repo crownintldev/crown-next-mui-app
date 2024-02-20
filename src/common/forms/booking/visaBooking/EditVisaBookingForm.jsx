@@ -294,16 +294,16 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       removeSelection,
       optional
     };
-    if (isCreating) {
-      const userConfirmed = window.confirm(
-        'Are you sure you want to Add New Visa With Same Passport?'
-      );
-      if (userConfirmed) {
-        await createManyApi({ api: 'visa-booking', ...apiConfig });
-      }
-    } else {
+    // if (isCreating) {
+    //   const userConfirmed = window.confirm(
+    //     'Are you sure you want to Add New Visa With Same Passport?'
+    //   );
+    //   if (userConfirmed) {
+    //     await createManyApi({ api: 'visa-booking', ...apiConfig });
+    //   }
+    // } else {
       await updateManyApi({ completeApi: 'visa-booking/update', ...apiConfig });
-    }
+    // }
   };
 
   // *************Selected Ids Handle

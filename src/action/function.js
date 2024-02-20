@@ -163,7 +163,8 @@ export const createManyApi = async ({
       }
     })
     if (response) {
-      dispatch(fetchData({ updateData: response.data.data }))
+      dispatch(fetchData({limit:20}))
+      // dispatch(fetchData({  newData: response.data.data}))
       if (toggle) {
         toggle()
       }

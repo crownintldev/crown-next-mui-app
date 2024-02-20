@@ -119,9 +119,9 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
 
   useEffect(() => {
     setFormSize(1200)
-    dispatch(fetchAgent({}))
-    dispatch(fetchClient({}))
-    dispatch(fetchCompany({}))
+    dispatch(fetchAgent({limit:100}))
+    dispatch(fetchClient({limit:100}))
+    dispatch(fetchCompany({limit:100}))
   }, [])
 
   const {

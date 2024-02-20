@@ -31,8 +31,9 @@ const TableHeader = (props) => {
     removeSelection,
     showTrash,
     headerMenu,
+    NewHeaderMenu,
     setActiveTab,
-    apidomain
+    apidomain,
   } = props
   const baseURL = apidomain ?? AccountApi
   const [anchorEl, setAnchorEl] = useState(null)
@@ -98,7 +99,7 @@ const TableHeader = (props) => {
     setIsHovered(false)
   }
   return (
-    <Box>
+    <Box style={{display:"flex"}}>
       <Box
         sx={{
           rowGap: 2,
@@ -201,6 +202,7 @@ const TableHeader = (props) => {
             headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
       </Box>
+      {NewHeaderMenu && NewHeaderMenu({ selectedIds, toggle, removeSelection })}
     </Box>
   )
 }

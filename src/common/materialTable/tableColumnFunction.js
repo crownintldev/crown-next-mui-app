@@ -5,8 +5,8 @@ import { currencyFormatter } from 'src/utils/helperfunction'
 
 const statusObj = {
   booked: 'primary',
+  editing: 'primary',
   pending: 'warning',
-  rejected: 'error',
   inprocess: 'info',
   "in Embassy": 'primary',
   verification: 'info',

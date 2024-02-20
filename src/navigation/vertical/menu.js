@@ -6,7 +6,7 @@ export const homeArray = () => [
     // badgeContent: 'new',
     // badgeColor: 'error',
   }
-]
+];
 
 export const accountArrays = () => [
   {
@@ -75,67 +75,63 @@ export const accountArrays = () => [
     title: 'Services',
     icon: 'tabler:packages',
     children: [
-      {
-        title: 'Visa Service',
-        children: [
-          {
-            title: 'Visa Destination',
-            path: '/services/visaId/destination',
-            icon: 'tabler:circle-filled'
-          },
-          {
-            title: 'Visa Type',
-            path: '/services/visaId/type',
-            icon: 'tabler:circle-filled'
-          },
-          {
-            title: 'Visa Category',
-            path: '/services/visaId/category',
-            icon: 'tabler:circle-filled'
-          },
+      // {
+      //   title: 'Visa Service Relation',
+      //   children: [
+      //     {
+      //       title: 'Visa Destination',
+      //       path: '/services/visaId/destination',
+      //       icon: 'tabler:circle-filled'
+      //     },
+      //     {
+      //       title: 'Visa Type',
+      //       path: '/services/visaId/type',
+      //       icon: 'tabler:circle-filled'
+      //     },
+      //     {
+      //       title: 'Visa Category',
+      //       path: '/services/visaId/category',
+      //       icon: 'tabler:circle-filled'
+      //     },
 
-          {
-            title: 'Visa Duration',
-            path: '/services/visaId/duration',
-            icon: 'tabler:circle-filled'
-          },
-          {
-            title: 'Visa Rate Detail',
-            path: '/services/visa',
-            icon: 'tabler:circle-filled'
-          }
-        ]
-      },
+      //     {
+      //       title: 'Visa Duration',
+      //       path: '/services/visaId/duration',
+      //       icon: 'tabler:circle-filled'
+      //     },
+
+      //   ]
+      // },
+
       {
-        title: 'Supplier',
-        icon: 'tabler:truck-delivery',
-        children: [
-          {
-            title: 'Supplier Category',
-            path: '/supplier/supplier-category',
-            icon: 'tabler:circle-filled'
-          },
-          // {
-          //   title: 'Visa Service',
-          //   path: '/supplier/supplier-visa-service',
-          //   icon: 'tabler:circle-filled'
-          // },
-          {
-            title: 'Supplier List',
-            path: '/supplier/supplier-list',
-            icon: 'tabler:circle-filled'
-          }
-        ]
+        title: 'Visa Service Rate',
+        path: '/services/visa',
+        icon: 'tabler:circle-filled'
       },
+
+      {
+        title: 'Supplier Category',
+        path: '/supplier/supplier-category',
+        icon: 'tabler:circle-filled'
+      },
+      // {
+      //   title: 'Visa Service',
+      //   path: '/supplier/supplier-visa-service',
+      //   icon: 'tabler:circle-filled'
+      // },
+      {
+        title: 'Supplier List',
+        path: '/supplier/supplier-list',
+        icon: 'tabler:circle-filled'
+      }
     ]
   },
-  
+
   {
     title: 'Account',
     path: '/account',
     icon: 'tabler:file-dollar'
   },
- 
 
   {
     title: 'Expense',
@@ -770,7 +766,7 @@ export const accountArrays = () => [
   //     }
   //   ]
   // }
-]
+];
 
 export const ticketingArrays = () => [
   {
@@ -801,7 +797,7 @@ export const ticketingArrays = () => [
     icon: 'tabler:mail',
     path: '/apps/email'
   }
-]
+];
 
 export const automationArray = () => [
   {
@@ -892,7 +888,7 @@ export const automationArray = () => [
       }
     ]
   }
-]
+];
 
 export const databaseArray = () => [
   {
@@ -918,7 +914,7 @@ export const databaseArray = () => [
       }
     ]
   }
-]
+];
 
 export const settingsArray = () => [
   {
@@ -1019,4 +1015,4 @@ export const settingsArray = () => [
       }
     ]
   }
-]
+];

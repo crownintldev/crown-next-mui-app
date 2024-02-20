@@ -64,7 +64,7 @@ const ITEM_PADDING_TOP = 8;
 import { removeUndefined } from 'src/utils/helperfunction';
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
-import { createManyApi, updateManyApi } from 'src/action/function';
+import { createApi, createManyApi, updateManyApi } from 'src/action/function';
 
 const MenuProps = {
   PaperProps: {
@@ -76,7 +76,8 @@ const MenuProps = {
 };
 
 const defaultValues = {
-  visaBookingIds: [],
+  passportId: '',
+  passportNumber: '',
   visaId: '',
   confirmed: '',
   processing: '',
@@ -101,7 +102,8 @@ const statusList = [
 ];
 
 // ------------------visaBooking Form-----------------------
-const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize }) => {
+const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) => {
+  //   console.log(_id);
   useEffect(() => {
     setFormSize(400);
   }, []);
@@ -115,25 +117,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   //dispatch
   const dispatch = useDispatch();
 
-  const visaBookingItems = useSelector(
-    (state) =>
-      ids &&
-      ids.length > 0 &&
-      ids?.map((id) => state?.visaBooking?.data.find((item) => item?._id === id))
-        .map((item) => {
-          return {
-            passportNumber: item?.passport?.passportNumber,
-            status: item?.status,
-            givenName: item?.passport?.givenName,
-            _id: item?._id,
-            visa: item.visa,
-            processing: item.processing,
-            confirmed: item.confirmed,
-            total: item.total,
-            increment: item.increment,
-            discount: item.discount
-          };
-        })
+  const visaBookingItem = useSelector(
+    (state) => _id && state?.visaBooking?.data.find((item) => item?._id === _id)
   );
 
   // use selector of visa-ids
@@ -148,10 +133,6 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     type: '',
     duration: ''
   });
-
-  // const handleChange = (event) => {
-  //   setSelectedValue(event.target.value)
-  // }
 
   useEffect(() => {
     dispatch(fetchVisaCategory({}));
@@ -193,24 +174,25 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   });
   //************************ edit ids ****************************
   useEffect(() => {
-    setValue('visaBookingIds', ids);
-    if (ids.length === 1) {
-      setValue('status', visaBookingItems[0].status);
-      setValue('total', visaBookingItems[0].total);
-      setValue('increment', visaBookingItems[0].increment);
-      setValue('discount', visaBookingItems[0].discount);
-      if (visaBookingItems[0]?.visa) {
-        let { destination, duration, category, type } = visaBookingItems[0].visa;
+    setValue('passportId', visaBookingItem.passport.passportId);
+    setValue('passportNumber', visaBookingItem.passport.passportNumber);
+    if (_id) {
+      setValue('status', visaBookingItem.status);
+      setValue('total', visaBookingItem.total);
+      setValue('increment', visaBookingItem.increment);
+      setValue('discount', visaBookingItem.discount);
+      if (visaBookingItem?.visa) {
+        let { destination, duration, category, type } = visaBookingItem.visa;
         setFindVisa({
           destination: destination?._id,
           duration: duration?._id,
           category: category?._id,
           type: type?._id
         });
-        if (visaBookingItems[0]?.processing) {
+        if (visaBookingItem?.processing) {
           setValue('confirmed', undefined);
           setValue('paymentType', 'processing');
-        } else if (visaBookingItems[0]?.confirmed) {
+        } else if (visaBookingItem?.confirmed) {
           setValue('processing', undefined);
           setValue('paymentType', 'confirmed');
         }
@@ -224,8 +206,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       // if (visa._id) {
       // }
     }
-  }, [ids]);
-  //******************* */  Payment Handle ************************************
+  }, [_id]);
+  //******************* Payment Handle ************************************
   const paymentType = watch('paymentType');
   let increment = watch('increment');
   let discount = watch('discount');
@@ -269,12 +251,13 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     reset();
   };
   //************************** */ onSubmit For Create and Update ***********************
-  const handleOnSubmit = async (data) => {
+  const handleOnSubmit =  async(e) => {
+    e.preventDefault();
+    const data = getValues()
     if (!visa._id) {
       return toast.error('add Visa Must', { position: 'top-center' });
     }
     removeUndefined(data);
-    // const data = getValues()
     const optional = () => {
       setFindVisa({
         destination: '',
@@ -292,30 +275,23 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       removeSelection,
       optional
     };
-    // if (isCreating) {
-    //   const userConfirmed = window.confirm(
-    //     'Are you sure you want to Add New Visa With Same Passport?'
-    //   );
-    //   if (userConfirmed) {
-    //     await createManyApi({ api: 'visa-booking', ...apiConfig });
-    //   }
-    // } else {
-      await updateManyApi({ completeApi: 'visa-booking/update', ...apiConfig });
-    // }
+    const userConfirmed = window.confirm(
+      'Are you sure you want to Add New Visa With Same Passport?'
+    );
+    if (userConfirmed) {
+      await createApi({ api: 'visa-booking', ...apiConfig });
+    }
   };
 
-  // *************Selected Ids Handle
-  const renderSelectedValue = (selectedIds) => {
-    return selectedIds
-      .map((id) => {
-        const item = visaBookingItems.find((item) => item._id === id);
-
-        return item ? `${item.passportNumber} ${item.givenName}` : '';
-      })
-      .filter(Boolean) // Removes any undefined or empty values
-      .join(', ');
-  };
   // ************Input Field****
+  const passportField = [
+    {
+      name: 'passportNumber',
+      label: 'Passport Number',
+      disabled: true
+    }
+  ];
+
   const amountHandleFields = [
     {
       name: 'increment',
@@ -428,42 +404,11 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         fetchApi={fetchVisaService}
       />
       <form>
-        <Controller
-          name='visaBookingIds'
+        <CustomHookTextField
+          chooseFields={passportField}
           control={control}
-          render={({ field }) => (
-            <CustomTextField
-              sx={{ mb: 6 }}
-              select
-              fullWidth
-              label='Passport Selected'
-              id='select-multiple-checkbox'
-              InputProps={{
-                style: {
-                  textTransform: 'uppercase'
-                }
-              }}
-              SelectProps={{
-                MenuProps,
-                displayEmpty: true,
-                multiple: true,
-                value: field.value,
-                onChange: field.onChange,
-                renderValue: renderSelectedValue
-              }}
-            >
-              <MenuItem value='' disabled>
-                SELECT PASSPORT
-              </MenuItem>
-              {visaBookingItems &&
-                visaBookingItems.length > 0 &&
-                visaBookingItems.map((item, index) => (
-                  <MenuItem key={index} value={`${item._id}`}>
-                    {`${item.passportNumber.toUpperCase()} ${item.givenName.toUpperCase()}`}
-                  </MenuItem>
-                ))}
-            </CustomTextField>
-          )}
+          errors={errors}
+          required={true}
         />
         <SimpleSelectHookField
           control={control}
@@ -574,11 +519,12 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             variant='contained'
             color='primary'
             sx={{ mr: 3 }}
-            onClick={handleSubmit(handleOnSubmit)}
+            type="submit"
+            onClick={handleOnSubmit}
           >
             Submit
           </Button>
-       
+
           <Button variant='tonal' color='secondary' onClick={handleClose} sx={{ mr: 3 }}>
             Cancel
           </Button>
@@ -588,4 +534,4 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   );
 };
 
-export default EditVisaBookingForm;
+export default CreateVisaBookingForm;

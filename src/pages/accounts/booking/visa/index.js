@@ -4,7 +4,6 @@ import DataTable from 'src/common/table/DataTable';
 import MaterialTable from 'src/common/materialTable/MaterialTable';
 import { useMemo } from 'react';
 import { columnData } from 'src/common/table/columnDataFunction';
-import CustomChip from 'src/@core/components/mui/chip';
 import useTableColumns from 'src/common/materialTable/tableColumns/visaBookingColumns';
 import Image from 'next/image';
 
@@ -17,6 +16,8 @@ import { fetchVisaBooking } from 'src/store';
 import { ReduxFetchAndGet } from 'src/utils/ReduxFetchAndGet';
 //headerMenu
 import NewHeaderMenuVisaBooking from 'src/common/materialTable/tableHeader/newHeaderMenu/NewMenu-VisaBooking';
+import HeaderMenuVisaBooking from 'src/common/materialTable/tableHeader/headerMenu/HeaderMenu-VisaBooking';
+import HeaderMenuDrawer from 'src/common/materialTable/tableHeader/headerMenu/HeaderMenuDrawer';
 //
 import { MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
@@ -37,67 +38,32 @@ const index = ({ apiData }) => {
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const [selectedIds, setSelectedIds] = useState('');
   const [removeSelection, setRemoveSelection] = useState({});
-  const [showAddPassport, setShowAddPassport] = useState(true);
   const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
+  const [Form, SetForm] = useState({
+    Form: null
+  });
 
-  const formDrawer = () => (
-    <FormDrawer
-      open={drawerOpen}
-      toggle={toggleDrawer}
-      drawerTitle={'Edit Passport'}
-      Form={PassportForm}
-      anchor={'right'}
-      _id={selectedIds[0] || ''}
-      removeSelection={removeSelection.removeSelection || ''}
-    />
-  );
+  const formDrawer = () =>
+    HeaderMenuDrawer({
+      selectedIds,
+      drawerOpen,
+      toggleDrawer,
+      Form: Form.Form,
+      removeSelection: removeSelection.removeSelection
+    });
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
-    const handleDrawer = () => {
-      setSelectedIds(selectedIds);
-      setRemoveSelection({ removeSelection });
-      toggleDrawer();
-    };
-    // const handleEditPassport = () => {
-    //   setShowAddPassport(false) // Hide the "Add Passport" menu item
-    //   handleDrawer()
-    // }
-    return (
-      <>
-        {selectedIds && selectedIds.length === 1 && (
-          <>
-            <div onClick={handleClose}>
-              <div>
-                <MenuItem onClick={handleDrawer} sx={{ py: 1, m: 0 }}>
-                  <Box
-                    sx={{
-                      fontSize: '0.8em',
-                      display: 'flex',
-                      alignItems: 'center',
-                      columnGap: '4px',
-                      color: '#2b60fe'
-                    }}
-                  >
-                    <Icon fontSize='0.8rem' icon='tabler:plus' />
-                    Edit Passport Booking
-                  </Box>
-                </MenuItem>
-              </div>
-            </div>
-          </>
-        )}
-      </>
-    );
+    return HeaderMenuVisaBooking({
+      setSelectedIds,
+      setRemoveSelection,
+      SetForm,
+      toggleDrawer,
+      selectedIds,
+      handleClose,
+      removeSelection
+    });
   };
-  const NewHeaderMenu = ({ selectedIds, toggle, removeSelection }) => {
-    return (
-      <NewHeaderMenuVisaBooking
-        selectedIds={selectedIds}
-        toggle={toggle}
-        removeSelection={removeSelection}
-      />
-    );
-  };
+
   return (
     <div>
       {formDrawer()}
@@ -107,8 +73,9 @@ const index = ({ apiData }) => {
         fetchData={fetchVisaBooking}
         stateSelector='visaBooking'
         columns={columns}
+        // headerMenu={HeaderMenuVisaBooking}
         headerMenu={headerMenu}
-        NewHeaderMenu={NewHeaderMenu}
+        NewHeaderMenu={NewHeaderMenuVisaBooking}
         drawerProps={{
           formTitle: 'Add Passport',
           buttonTitle: 'Add Passport',

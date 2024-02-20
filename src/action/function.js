@@ -17,7 +17,8 @@ export const createApi = async ({
   toggle,
   reset,
   message,
-  removeSelection
+  removeSelection,
+  optional
 }) => {
   const baseURL = apidomain || AccountApi
   let myapi = completeApi ? completeApi : `${api}/create`
@@ -44,6 +45,9 @@ export const createApi = async ({
       }
       if (reset) {
         reset()
+      }
+      if(optional){
+        optional()
       }
       toast.success(message ? message : api?`${capitalizeSplitDash(api)} Create Successfully`:"Create Successfully", {
         position: 'top-center'

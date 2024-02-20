@@ -17,6 +17,7 @@ import FormDrawer from 'src/common/drawer/FormDrawer'
 
 const index = ({ apiData }) => {
   const columns = useTableColumns()
+  //drawer
   const [drawerOpen, setDrawerOpen] = useState(false)
   const toggleDrawer = () => setDrawerOpen(!drawerOpen)
   const [selectedIds, setSelectedIds] = useState('')
@@ -26,7 +27,6 @@ const index = ({ apiData }) => {
   })
 
   // let Form = null
- 
   const formDrawer = () => {
    return <FormDrawer
       open={drawerOpen}

@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import toast from 'react-hot-toast';
 import Icon from 'src/@core/components/icon';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-//
-import { axiosErrorMessage } from 'src/utils/helperfunction';
-import { capitalizeSplitDash } from 'src/utils/helperfunction';
-import axiosInstance from 'src/utils/axiosInstance';
+
 //redux
 import { useDispatch } from 'react-redux';
 import { fetchVisaBooking } from 'src/store';

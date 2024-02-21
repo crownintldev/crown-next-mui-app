@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 //redux
-import { useDispatch, useSelector } from 'react-redux';
-import { getReducer } from 'src/store/apps/sliceActionReducer';
+import { useDispatch, useSelector } from 'react-redux'
+import { getReducer } from 'src/store/apps/sliceActionReducer'
 
-import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details';
-import FormDrawer from '../drawer/FormDrawer';
-import TableHeader from './tableHeader/TableHeader';
+import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
+import FormDrawer from '../drawer/FormDrawer'
+import TableHeader from './tableHeader/TableHeader'
 
 // MUI Imports
-import { LinearProgress, Tab, Tabs } from '@mui/material';
-import { useTheme } from '@mui/material';
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { Grid } from '@mui/material';
-import InboxIcon from '@mui/icons-material/Inbox'; // Import appropriate icons
-import DeleteIcon from '@mui/icons-material/Delete'; // Import appropriate icons
+import { LinearProgress, Tab, Tabs } from '@mui/material'
+import { useTheme } from '@mui/material'
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
+import { Grid } from '@mui/material'
+import InboxIcon from '@mui/icons-material/Inbox' // Import appropriate icons
+import DeleteIcon from '@mui/icons-material/Delete' // Import appropriate icons
 
 //functions
-import { hasSubRows, muiLinearProgressProps, tableProps } from './functions';
-import Icon from 'src/@core/components/icon';
+import { hasSubRows, muiLinearProgressProps, tableProps } from './functions'
+import Icon from 'src/@core/components/icon'
 
 const MaterialTable = ({
   fetchData,
@@ -45,31 +45,30 @@ const MaterialTable = ({
   const dispatch = useDispatch()
   const [showTrash, setShowTrash] = useState("false")
   const { data, total, isLoading, isError } = useSelector((state) => state[stateSelector])
-
   const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
   // Table state
 
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState('');
-  const [sorting, setSorting] = useState([]);
-  const [rowSelection, setRowSelection] = useState({});
-  const [selectionRow, setSelectionRow] = useState([]);
+  const [columnFilters, setColumnFilters] = useState([])
+  const [globalFilter, setGlobalFilter] = useState('')
+  const [sorting, setSorting] = useState([])
+  const [rowSelection, setRowSelection] = useState({})
+  const [selectionRow, setSelectionRow] = useState([])
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 20
-  });
-  const [trashedRows, setTrashedRows] = useState([]); // State to track trashed rows
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  })
+  const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   //drawer
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
 
   // console.log(globalFilter)
   useEffect(() => {
-    let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt';
-    let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1;
+    let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt'
+    let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1
 
     const handleEnterPress = (event) => {
       if (event.key === 'Enter') {
@@ -83,11 +82,11 @@ const MaterialTable = ({
             sortOrder,
             deleted: showTrash
           })
-        );
+        )
       }
-    };
+    }
 
-    window.addEventListener('keydown', handleEnterPress);
+    window.addEventListener('keydown', handleEnterPress)
     if (!globalFilter && columnFilters.length === 0) {
       dispatch(
         fetchData({
@@ -97,57 +96,44 @@ const MaterialTable = ({
           sortOrder,
           deleted: showTrash
         })
-      );
+      )
     }
     // Cleanup the event listener
     return () => {
-      window.removeEventListener('keydown', handleEnterPress);
-    };
-  }, [
-    dispatch,
-    showTrash,
-    setPagination,
-    pagination,
-    globalFilter,
-    columnFilters,
-    sorting
-  ]);
+      window.removeEventListener('keydown', handleEnterPress)
+    }
+  }, [dispatch, showTrash, setPagination, pagination, globalFilter, columnFilters, sorting])
 
-  const selectedRowIds = Object.keys(rowSelection).filter((key) => rowSelection[key]);
+  const selectedRowIds = Object.keys(rowSelection).filter((key) => rowSelection[key])
   useEffect(() => {
-    setSelectionRow(selectedRowIds);
-  }, [rowSelection]);
+    setSelectionRow(selectedRowIds)
+  }, [rowSelection])
 
   // Function to handle tab changes
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
-    if (newValue === 'default') {
-      setShowTrash('false');
-    } else {
-      setShowTrash('true');
+    if(newValue === "default"){
+      setShowTrash("false")
+    }else{
+      setShowTrash("true")
     }
-  };
+    
+  }
 
   // Conditionally render the table component based on the active tab
   const renderTableComponent = () => {
     if (activeTab === 'default') {
-      return <MaterialReactTable table={table} className='custom-table-styles' />;
+      return <MaterialReactTable  table={table} className='custom-table-styles' />
     } else if (activeTab === 'trash') {
       // Pass the trashed rows to the table in the "Trash" tab
-      return (
-        <MaterialReactTable
-          table={table}
-          data={trashedRows}
-          className='custom-table-styles'
-        />
-      );
+      return <MaterialReactTable table={table} data={trashedRows} className='custom-table-styles' />
     }
-  };
+  }
 
   //Row Selection
   const handleRemoveSelection = () => {
-    setRowSelection({});
-  };
+    setRowSelection({})
+  }
 
   const renderCustomActions = ({ table }) => {
     return (
@@ -174,8 +160,8 @@ const MaterialTable = ({
         headerMenu={headerMenu}
         NewHeaderMenu={NewHeaderMenu}
       />
-    );
-  };
+    )
+  }
 
   //apidata
   const cards = () => {
@@ -188,21 +174,21 @@ const MaterialTable = ({
                 <Grid item xs={12} md={3} sm={6} key={index}>
                   <CardStatsHorizontalWithDetails {...item} />
                 </Grid>
-              );
+              )
             })}
           </Grid>
         )}
       </Grid>
-    );
-  };
+    )
+  }
 
-  const tablePropsData = tableProps(theme);
+  const tablePropsData = tableProps(theme)
 
   // table start
   const table = useMaterialReactTable({
     columns,
     data: data,
-
+   
     ...tablePropsData,
     enableBottomToolbar: true,
     enableStickyHeader: true,
@@ -211,8 +197,7 @@ const MaterialTable = ({
     // muiTableContainerProps: { sx: { maxHeight: '400px' } },
 
     // enableExpanding: true,
-    renderTopToolbarCustomActions:
-      CreateForm || selectionRow.length > 0 ? renderCustomActions : () => {},
+    renderTopToolbarCustomActions: CreateForm || selectionRow.length>0? renderCustomActions : ()=>{},
     getRowId: (row) => row._id, // Adjust based on your data's unique identifier
     manualFiltering: true,
     manualPagination: true,
@@ -244,7 +229,7 @@ const MaterialTable = ({
       sorting
     },
     muiLinearProgressProps: muiLinearProgressProps
-  });
+  })
 
   return (
     <>
@@ -281,17 +266,11 @@ const MaterialTable = ({
           value='trash'
         />
       </Tabs>
-      <div
-        style={{ backgroundColor: '#FFF', borderRadius: '10px' }}
-        className='custom-scrollbar'
-      >
+      <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* Conditionally render the table component */}
         {renderTableComponent()}
       </div>
-      <div
-        style={{ backgroundColor: '#FFF', borderRadius: '10px' }}
-        className='custom-scrollbar'
-      >
+      <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* <TableProvider> */}
         {isLoading && (
           <LinearProgress
@@ -329,7 +308,7 @@ const MaterialTable = ({
         stateSelector={stateSelector}
       />
     </>
-  );
-};
+  )
+}
 
-export default MaterialTable;
+export default MaterialTable

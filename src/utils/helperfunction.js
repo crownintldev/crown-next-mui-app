@@ -74,17 +74,3 @@ export const currencyFormatter = (value, currency = null, format = 'en-PK') => {
 };
 
 
-export const hasAdministrativeManageAll = (user, ability) => {
-  if (user && ability.rules.length > 0) {
-    let hasAbility = user.permissionsDetails?.some(
-      (permissionDetail) =>
-        permissionDetail.permission === 'administrative' &&
-        permissionDetail.actions?.includes('manageAll')
-    )
-    if (hasAbility) {
-      return true
-    } else {
-      return false
-    }
-  }
-}

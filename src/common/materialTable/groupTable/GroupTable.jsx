@@ -132,6 +132,10 @@ const Example = ({
             ? buttonTitle
             : ''
         }
+        childTable={{
+          visaBookingIds: childSelectionRow,
+          accountId: parentId
+        }}
         ejectValue={{
           visaBookingIds: childSelectionRow,
           accountId: parentId

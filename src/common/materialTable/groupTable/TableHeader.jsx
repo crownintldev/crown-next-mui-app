@@ -1,78 +1,79 @@
 // ** MUI Imports
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import axios from 'axios'
-import Box from '@mui/material/Box'
-import { Theme, useTheme } from '@mui/material/styles'
-import toast from 'react-hot-toast'
-import { IconButton, Menu, MenuItem } from '@mui/material'
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import { Theme, useTheme } from '@mui/material/styles';
+import toast from 'react-hot-toast';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 
 // import { mdiCallToAction } from '@mdi/js';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 
 // ** Custom Component Import
-import CustomTextField from 'src/@core/components/mui/text-field'
-import Icon from 'src/@core/components/icon'
-import { useDispatch, useSelector } from 'react-redux'
+import CustomTextField from 'src/@core/components/mui/text-field';
+import Icon from 'src/@core/components/icon';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import { setInvoice } from 'src/store/apps/myInvoice'
-import { axiosErrorMessage } from 'src/utils/helperfunction'
-import ExportButton from '../tableHeader/ExportButton'
-import { getReducer } from 'src/store/apps/sliceActionReducer'
-import { getCookie } from 'src/action/auth-action'
+import { axiosErrorMessage } from 'src/utils/helperfunction';
+import ExportButton from '../tableHeader/ExportButton';
+import { getReducer } from 'src/store/apps/sliceActionReducer';
+import { getCookie } from 'src/action/auth-action';
 
-const accessToken = getCookie('jwt')
+const accessToken = getCookie('jwt');
 const TableHeader = (props) => {
-  const router = useRouter()
-  const theme = useTheme()
-  const dispatch = useDispatch()
-  const setInvoice = getReducer('myInvoice')
+  const router = useRouter();
+  const theme = useTheme();
+  const dispatch = useDispatch();
+  const setInvoice = getReducer('myInvoice');
 
   // useSelector
-  const accountData = useSelector((state) => state.account.data)
+  const accountData = useSelector((state) => state.account.data);
 
-  const data = useSelector((state) => state?.myInvoice?.data)
+  const data = useSelector((state) => state?.myInvoice?.data);
 
   // ** Props
   const {
     toggle,
     buttonTitle,
-    ejectValue,
     fetchData,
     setChildRowSelection,
     selectionRow,
     api,
     table,
-    tableData
-  } = props
+    tableData,
+    childTable
+  } = props;
 
   // console.log(selectionRow)
-
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
+  const { visaBookingIds, accountId } = childTable;
+  const ejectValue = { visaBookingIds, accountId };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const handleInvoice = () => {
     const invoiceValues = selectionRow.map(
       (id) => accountData?.length > 0 && accountData.find((item) => item._id === id)
-    )
-    dispatch(setInvoice(invoiceValues))
-    router.push('/accounts/invoice/add/')
-    handleClose()
-  }
+    );
+    dispatch(setInvoice(invoiceValues));
+    router.push('/accounts/invoice/add/');
+    handleClose();
+  };
 
   const handleEject = async () => {
     try {
       const isConfirmed = window.confirm(
         'Are you sure you want to eject, Paid and Discount will be 0 after this?'
-      )
+      );
 
       if (isConfirmed) {
         const response = await axios.post(
@@ -84,27 +85,27 @@ const TableHeader = (props) => {
               Authorization: `Bearer ${accessToken}`
             }
           }
-        )
+        );
         if (response.data) {
           dispatch(
             fetchData({
               limit: 20,
               page: 1
             })
-          )
-          setChildRowSelection({})
-          toast.success('Eject Successfully', { position: 'top-center' })
+          );
+          setChildRowSelection({});
+          toast.success('Eject Successfully', { position: 'top-center' });
         }
       }
     } catch (error) {
-      console.log(axiosErrorMessage(error))
-      toast.error(axiosErrorMessage(error), { position: 'top-center' })
+      console.log(axiosErrorMessage(error));
+      toast.error(axiosErrorMessage(error), { position: 'top-center' });
     }
-  }
+  };
 
   const handleRemove = async () => {
     if (!api) {
-      return toast.error('api not found', { position: 'top-center' })
+      return toast.error('api not found', { position: 'top-center' });
     }
     try {
       const response = await axios.post(
@@ -118,21 +119,21 @@ const TableHeader = (props) => {
             Authorization: `Bearer ${accessToken}`
           }
         }
-      )
+      );
       if (response.data) {
         dispatch(
           fetchData({
             limit: 20,
             page: 1
           })
-        )
-        toast.success('Delete Successfully', { position: 'top-center' })
+        );
+        toast.success('Delete Successfully', { position: 'top-center' });
       }
     } catch (error) {
-      console.log(axiosErrorMessage(error))
-      toast.error(axiosErrorMessage(error), { position: 'top-center' })
+      console.log(axiosErrorMessage(error));
+      toast.error(axiosErrorMessage(error), { position: 'top-center' });
     }
-  }
+  };
 
   return (
     <Box>
@@ -193,7 +194,7 @@ const TableHeader = (props) => {
         <ExportButton table={table} tableData={tableData} />
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default TableHeader
+export default TableHeader;

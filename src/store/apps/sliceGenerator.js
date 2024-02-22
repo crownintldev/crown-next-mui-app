@@ -67,7 +67,7 @@ const generateSlice = ({ name, fetchData }) => {
     name,
     initialState: {
       data: [],
-      initialData: [],
+      // initialData: [],
       total: 0,
       isLoading: false,
       isError: false

@@ -189,7 +189,6 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
       .filter(Boolean) // Removes any undefined or empty values
       .join(', ')
   }
-
   return (
     <div>
       {!testValidityRefer ? (

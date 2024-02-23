@@ -149,7 +149,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       setValue('dob', dayjs(editId.dob))
       setValue('doe', dayjs(editId.doe))
       setValue('doi', dayjs(editId.doi))
-    } else {
+    } 
+    else {
       reset()
     }
   }, [setValue, editId])

@@ -76,7 +76,7 @@ export const conditionValue = ({ cell }) => {
   ) : (
     <>
       {uppercase(data?.companyName)}&nbsp;
-      {data.refer && (
+      {data?.refer && (
         <span style={{ border: '1px solid green' }}>{data?.refer.substring(0, 2)}</span>
       )}
     </>

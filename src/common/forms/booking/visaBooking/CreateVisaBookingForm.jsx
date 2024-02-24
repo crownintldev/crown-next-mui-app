@@ -49,7 +49,7 @@ import {
 } from 'src/store';
 
 const schema = yup.object().shape({
-  visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
+  // visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
   status: yup.string().required('Status is required.'),
   total: yup.number().typeError('Increment must be a number'),
   increment: yup.number().typeError('Increment must be a number'),
@@ -174,6 +174,7 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
   });
   //************************ edit ids ****************************
   useEffect(() => {
+    setValue('visaBookingId', _id);
     setValue('passportId', visaBookingItem.passport.passportId);
     setValue('passportNumber', visaBookingItem.passport.passportNumber);
     if (_id) {

@@ -1,12 +1,12 @@
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import { axiosErrorMessage, capitalizeSplitDash } from 'src/utils/helperfunction'
-import axiosInstance from 'src/utils/axiosInstance'
-import { AccountApi } from 'config'
-import { getCookie } from './auth-action'
-import { reduxToken } from './auth-action'
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { axiosErrorMessage, capitalizeSplitDash } from 'src/utils/helperfunction';
+import axiosInstance from 'src/utils/axiosInstance';
+import { AccountApi } from 'config';
+import { getCookie } from './auth-action';
+import { reduxToken } from './auth-action';
 
-const accessToken = reduxToken()
+const accessToken = reduxToken();
 export const createApi = async ({
   api,
   apidomain,
@@ -20,43 +20,50 @@ export const createApi = async ({
   removeSelection,
   optional
 }) => {
-  const baseURL = apidomain || AccountApi
-  let myapi = completeApi ? completeApi : `${api}/create`
+  const baseURL = apidomain || AccountApi;
+  let myapi = completeApi ? completeApi : `${api}/create`;
   try {
     const response = await axios.post(`${baseURL}/${myapi}`, data, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
-    })
+    });
 
     // console.log(response.data.data)
     if (removeSelection) {
-      removeSelection()
+      removeSelection();
     }
     if (response.data.data) {
       dispatch(
         fetchData({
           newData: response.data.data
         })
-      )
+      );
       if (toggle) {
-        toggle()
+        toggle();
       }
       if (reset) {
-        reset()
+        reset();
       }
-      if(optional){
-        optional()
+      if (optional) {
+        optional();
       }
-      toast.success(message ? message : api?`${capitalizeSplitDash(api)} Create Successfully`:"Create Successfully", {
-        position: 'top-center'
-      })
+      toast.success(
+        message
+          ? message
+          : api
+          ? `${capitalizeSplitDash(api)} Create Successfully`
+          : 'Create Successfully',
+        {
+          position: 'top-center'
+        }
+      );
     }
   } catch (err) {
-    toast.error(axiosErrorMessage(err), { position: 'top-center' })
+    toast.error(axiosErrorMessage(err), { position: 'top-center' });
   }
-}
+};
 
 export const updateApi = async ({
   _id,
@@ -65,39 +72,42 @@ export const updateApi = async ({
   data,
   dispatch,
   fetchData,
+  fetchList,
   toggle,
   reset,
   message,
-  removeSelection,
+  removeSelection
 }) => {
-  const baseURL = apidomain || AccountApi
+  const baseURL = apidomain || AccountApi;
 
+  const fetchApi = fetchData
+    ? fetchData({ updateData: response.data.data })
+    : fetchList({});
   try {
-    const response = await axiosInstance.put(`${baseURL}/${api}/update/${_id}`, data)
+    const response = await axiosInstance.put(`${baseURL}/${api}/update/${_id}`, data);
     if (response.data.data) {
-      dispatch(
-        fetchData({
-          updateData: response.data.data
-        })
-      )
+      dispatch(fetchApi);
       if (toggle) {
-        toggle()
+        toggle();
       }
       if (reset) {
-        reset()
+        reset();
       }
-      toast.success(message ? message : `${capitalizeSplitDash(api)} Update Successfully`, {
-        position: 'top-center'
-      })
+      toast.success(
+        message ? message : `${capitalizeSplitDash(api)} Update Successfully`,
+        {
+          position: 'top-center'
+        }
+      );
       if (removeSelection) {
-        removeSelection()
+        removeSelection();
       }
     }
   } catch (err) {
-    console.error(axiosErrorMessage(err))
-    toast.error(axiosErrorMessage(err), { position: 'top-center' })
+    console.error(axiosErrorMessage(err));
+    toast.error(axiosErrorMessage(err), { position: 'top-center' });
   }
-}
+};
 
 export const updateManyApi = async ({
   api,
@@ -112,37 +122,37 @@ export const updateManyApi = async ({
   removeSelection,
   optional
 }) => {
-  const baseURL = apidomain || AccountApi
-  let myapi = completeApi ? completeApi : `${api}/data`
+  const baseURL = apidomain || AccountApi;
+  let myapi = completeApi ? completeApi : `${api}/data`;
   try {
     const response = await axios.put(`${baseURL}/${myapi}`, data, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
-    })
+    });
     if (response) {
-      dispatch(fetchData({ updateData: response.data.data }))
+      dispatch(fetchData({ updateData: response.data.data }));
       if (toggle) {
-        toggle()
+        toggle();
       }
       if (reset) {
-        reset()
+        reset();
       }
       if (removeSelection) {
-        removeSelection()
+        removeSelection();
       }
-      if(optional){
-        optional()
+      if (optional) {
+        optional();
       }
     }
 
     // console.log(response)
-    toast.success('Update Successfully', { position: 'top-center' })
+    toast.success('Update Successfully', { position: 'top-center' });
   } catch (err) {
-    toast.error(axiosErrorMessage(err), { position: 'top-center' })
+    toast.error(axiosErrorMessage(err), { position: 'top-center' });
   }
-}
+};
 
 export const createManyApi = async ({
   api,
@@ -157,38 +167,38 @@ export const createManyApi = async ({
   removeSelection,
   optional
 }) => {
-  const baseURL = apidomain || AccountApi
-  let myapi = completeApi ? completeApi : `${api}/create`
+  const baseURL = apidomain || AccountApi;
+  let myapi = completeApi ? completeApi : `${api}/create`;
   try {
     const response = await axios.post(`${baseURL}/${myapi}`, data, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
-    })
+    });
     if (response) {
-      dispatch(fetchData({limit:20}))
+      dispatch(fetchData({ limit: 20 }));
       // dispatch(fetchData({  newData: response.data.data}))
       if (toggle) {
-        toggle()
+        toggle();
       }
       if (reset) {
-        reset()
+        reset();
       }
       if (removeSelection) {
-        removeSelection()
+        removeSelection();
       }
-      if(optional){
-        optional()
+      if (optional) {
+        optional();
       }
     }
 
     // console.log(response)
-    toast.success('Update Successfully', { position: 'top-center' })
+    toast.success('Update Successfully', { position: 'top-center' });
   } catch (err) {
-    toast.error(axiosErrorMessage(err), { position: 'top-center' })
+    toast.error(axiosErrorMessage(err), { position: 'top-center' });
   }
-}
+};
 
 export const handleDeleteApi = async ({
   api,
@@ -205,21 +215,24 @@ export const handleDeleteApi = async ({
   const baseURL = apidomain || AccountApi;
 
   // Confirmation dialog
-  const confirmDeletion = window.confirm("Are you sure you want to delete this item?");
+  const confirmDeletion = window.confirm('Are you sure you want to delete this item?');
 
   if (confirmDeletion) {
     try {
       const response = await axiosInstance.post(`${baseURL}/${api}/remove`, { ids });
       dispatch(fetchData({}));
-      toast.success(message ? message : `${capitalizeSplitDash(api)} Deleted Successfully`, {
-        position: 'top-center'
-      });
+      toast.success(
+        message ? message : `${capitalizeSplitDash(api)} Deleted Successfully`,
+        {
+          position: 'top-center'
+        }
+      );
     } catch (err) {
       console.error(axiosErrorMessage(err));
       toast.error(axiosErrorMessage(err), { position: 'top-center' });
     }
   } else {
     // Optionally handle the cancellation
-    console.log("Deletion cancelled.");
+    console.log('Deletion cancelled.');
   }
 };

@@ -87,7 +87,6 @@ const defaultValues = {
 
 const statusList = [
   'pending',
-  'editing',
   'booked',
   'inprocess',
   'verification',

@@ -1,46 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { useTheme } from '@mui/material/styles'
-import axiosInstance from 'src/utils/axiosInstance'
+import React, { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material/styles';
+import axiosInstance from 'src/utils/axiosInstance';
 // ** MUI Imports
-import Button from '@mui/material/Button'
-import MenuItem from '@mui/material/MenuItem'
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
 // ** Custom Component Import
-import CustomTextField from 'src/@core/components/mui/text-field'
+import CustomTextField from 'src/@core/components/mui/text-field';
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 
 // ** Actions Imports
-import { fetchData } from 'src/store/apps/account'
+import { fetchData } from 'src/store/apps/account';
 
 //helper function
-import { axiosErrorMessage, isAllSameinArray } from 'src/utils/helperfunction'
+import { axiosErrorMessage, isAllSameinArray } from 'src/utils/helperfunction';
 
 //get by data
-import axios from 'axios'
+import axios from 'axios';
 
 // ** Third Party Imports
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useForm, Controller } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { Typography } from '@mui/material'
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { Typography } from '@mui/material';
+import { updateApi } from 'src/action/function';
 
 const showErrors = (field, valueLen, min) => {
   if (valueLen === 0) {
-    return `${field} field is required`
+    return `${field} field is required`;
   } else if (valueLen > 0 && valueLen < min) {
-    return `${field} must be at least ${min} characters`
+    return `${field} must be at least ${min} characters`;
   } else {
-    return ''
+    return '';
   }
-}
+};
 
 //custom vuexy select style
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
 
 const MenuProps = {
   PaperProps: {
@@ -49,7 +50,7 @@ const MenuProps = {
       width: 250
     }
   }
-}
+};
 
 const schema = yup.object().shape({
   accountIds: yup.array().of(yup.string()).required('Passports are required.')
@@ -57,20 +58,20 @@ const schema = yup.object().shape({
   // visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
   // visaId: yup.string().required('Visa ID is required.'),
   // status: yup.string().required('Status is required.')
-})
+});
 
 const defaultValues = {
   accountIds: [],
   paid: 0,
   total: 0,
   discount: 0
-}
+};
 
 // ------------------visaBooking Form-----------------------
 const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   const theme = useTheme();
-    // ** State
-  const dispatch = useDispatch()
+  // ** State
+  const dispatch = useDispatch();
 
   const accountItems = useSelector((state) =>
     ids
@@ -89,10 +90,10 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
           _id: item?._id,
           ReferName: item?.by?.fullName ? item?.by?.fullName : item?.by?.companyName,
           onModel: item?.onModel
-        }
+        };
       })
-  )
-  const testValidityRefer = isAllSameinArray(accountItems, 'ReferName')
+  );
+  const testValidityRefer = isAllSameinArray(accountItems, 'ReferName');
 
   // console.log('account item', accountItems)
 
@@ -108,87 +109,78 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
     defaultValues,
     mode: 'onChange',
     resolver: yupResolver(schema)
-  })
+  });
 
   const [amount, setAmount] = useState({
     total: 0,
     paid: 0
-  })
+  });
 
   const handleAmountChange = (event) => {
-    const { name, value: newValue } = event.target
-    setAmount({ ...amount, [name]: newValue })
-  }
-  const totalAmount = Number(watch('total'))
-  const paidAmount = Number(watch('paid'))
-  const discountAmount = watch('discount') ? Number(watch('discount')) : 0
+    const { name, value: newValue } = event.target;
+    setAmount({ ...amount, [name]: newValue });
+  };
+  const totalAmount = Number(watch('total'));
+  const paidAmount = Number(watch('paid'));
+  const discountAmount = watch('discount') ? Number(watch('discount')) : 0;
 
-  const amountRemaining = totalAmount - (paidAmount + discountAmount)
+  const amountRemaining = totalAmount - (paidAmount + discountAmount);
 
   // console.log('reming data', paidAmount, discountAmount, typeof paidAmount, typeof discountAmount)
   useEffect(() => {
     if (ids.length > 0) {
-      setValue('accountIds', ids)
+      setValue('accountIds', ids);
 
       const data = accountItems.reduce(
         (acc, item) => {
-          acc.totalAmount += item.amount.total
-          acc.paidAmount += item.amount.paid
-          acc.discount += item.amount.discount
+          const { total = 0, paid = 0, discount = 0 } = item.amount;
+          acc.totalAmount += total;
+          acc.paidAmount += paid;
+          acc.discount += discount;
 
-          return acc
+          return acc;
         },
         { totalAmount: 0, paidAmount: 0, remainingAmount: 0, discount: 0 }
-      )
+      );
 
       // console.log('data', data)
-      setValue('paid', data.paidAmount)
-      setValue('total', data.totalAmount)
-      setValue('discount', data.discount)
+      setValue('paid', data.paidAmount);
+      setValue('total', data.totalAmount);
+      setValue('discount', data.discount);
     }
-  }, [ids, setValue])
+  }, [ids, setValue]);
 
   const handleClose = () => {
-    toggle()
-    reset()
-  }
+    toggle();
+    reset();
+  };
 
   const onSubmit = async (data) => {
-    try {
-      const response = await axiosInstance.post(
-        `${process.env.NEXT_PUBLIC_API}/account/update`,
-        data)
-      if (response) {
-        dispatch(
-          fetchData({
-            limit: 20,
-            page: 1
-          })
-        )
-        toggle()
-        reset()
-        removeSelection()
-        toast.success('Update Successfully', { position: 'top-center' })
-      }
-      console.log(response)
-    } catch (error) {
-      console.log(axiosErrorMessage(error))
-      toast.error(axiosErrorMessage(error), { position: 'top-center' })
-    }
-  }
+    updateApi({
+      _id: ids[0],
+      api: 'account',
+      data,
+      dispatch,
+      fetchList: fetchData,
+      toggle,
+      reset,
+      removeSelection
+    });
+  };
 
   const renderSelectedValue = (selectedIds) => {
     return selectedIds
       .map((id) => {
-        const item = accountItems.find((item) => item._id === id)
+        const item = accountItems.find((item) => item._id === id);
 
         return item
           ? item.visaBookingDetails.map((item, index) => `${item.passportNumber} `)
-          : ''
+          : '';
       })
       .filter(Boolean) // Removes any undefined or empty values
-      .join(', ')
-  }
+      .join(', ');
+  };
+
   return (
     <div>
       {!testValidityRefer ? (
@@ -254,14 +246,15 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
             rules={{ required: true }}
             render={({ field }) => (
               <CustomTextField
+                disabled
                 fullWidth
                 type='number'
                 value={field.value} // Use field.value from 'react-hook-form'
                 sx={{ mb: 4 }}
                 label='Total Amount'
                 onChange={(e) => {
-                  field.onChange(e)
-                  handleAmountChange(e) // Call your custom handler
+                  field.onChange(e);
+                  handleAmountChange(e); // Call your custom handler
                 }}
                 placeholder='Enter Total Amount'
               />
@@ -279,8 +272,8 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
                 sx={{ mb: 4 }}
                 label='Paid Amount'
                 onChange={(e) => {
-                  field.onChange(e)
-                  handleAmountChange(e) // Call your custom handler
+                  field.onChange(e);
+                  handleAmountChange(e); // Call your custom handler
                 }}
                 placeholder='Enter Paid Amount'
               />
@@ -297,6 +290,10 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
                 value={field.value}
                 sx={{ mb: 4 }}
                 label={'Discount Amount'}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleAmountChange(e); // Call your custom handler
+                }}
                 placeholder={'Enter Discount Amount'}
               />
             )}
@@ -354,7 +351,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
         </form>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default EditAccountForm
+export default EditAccountForm;

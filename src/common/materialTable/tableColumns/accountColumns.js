@@ -1,9 +1,9 @@
 // React Imports
-import { useMemo } from 'react'
+import { useMemo } from 'react';
 
 // MUI Imports
-import PermMediaIcon from '@mui/icons-material/PermMedia'
-import { IconButton } from '@mui/material'
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import { IconButton } from '@mui/material';
 
 // Normal Imports
 import {
@@ -13,7 +13,7 @@ import {
   conditionValue,
   dateFormat,
   CellRowId
-} from 'src/common/materialTable/tableColumnFunction'
+} from 'src/common/materialTable/tableColumnFunction';
 
 export const useTableColumns = (openMediaDrawer) =>
   useMemo(
@@ -52,6 +52,12 @@ export const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       {
+        accessorKey: 'supTotal',
+        header: 'Sup Charges',
+        size: 100,
+        Cell: defaultCellRenderer
+      },
+      {
         accessorKey: 'amount.discount',
         header: 'Discount',
         size: 100,
@@ -60,7 +66,7 @@ export const useTableColumns = (openMediaDrawer) =>
       { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
     ],
     []
-  )
+  );
 
 export const useChildTableColumns = () =>
   useMemo(() => [
@@ -89,7 +95,26 @@ export const useChildTableColumns = () =>
       header: 'Confirmed - Total Fee',
       Cell: defaultCellRenderer
     },
-    // minWidth converted to size
+    {
+      accessorKey: 'increment',
+      header: 'Increment',
+      Cell: defaultCellRenderer
+    },
+    {
+      accessorKey: 'supfee.totalFee',
+      header: 'Sup - Confirmed',
+      Cell: defaultCellRenderer
+    },
+    {
+      accessorKey: 'supfee.processingFee',
+      header: 'Sup - Processing Fee',
+      Cell: defaultCellRenderer
+    },
+    {
+      accessorKey: 'supfee.visaFee',
+      header: 'Sup - Visa Fee',
+      Cell: defaultCellRenderer
+    },
     {
       accessorKey: 'visaId.destination',
       header: 'Destination',
@@ -98,6 +123,6 @@ export const useChildTableColumns = () =>
     { accessorKey: 'visaId.category', header: 'Category', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.type', header: 'Type', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.duration', header: 'Duration', Cell: defaultCellRenderer }
-  ])
+  ]);
 
 // export default useTableColumns

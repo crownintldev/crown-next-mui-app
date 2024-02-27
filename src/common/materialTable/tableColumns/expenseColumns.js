@@ -9,8 +9,8 @@ const useExpenseColumns = () =>
       { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
       { accessorKey: 'title', header: 'Title', Cell: defaultCellRenderer },
 
-      // { accessorKey: 'type', header: 'Type', Cell: defaultCellRenderer },
-      // { accessorKey: 'category', header: 'Category', Cell: defaultCellRenderer },
+      { accessorKey: 'type.name', header: 'Type', Cell: defaultCellRenderer },
+      { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
 
       { accessorKey: 'price', header: 'Price', Cell: defaultCellRenderer },
       { accessorKey: 'description', header: 'Description', Cell: defaultCellRenderer },

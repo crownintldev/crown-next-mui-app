@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 // ** Third Party Imports
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 // ** MUI Imports
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
 // yup
-import { yupResolver } from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup';
 
 // hookform
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
 //redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchVisaCategory,
   fetchVisaDestination,
@@ -23,32 +23,32 @@ import {
   fetchVisaType,
   fetchSupplier,
   fetchVisaService
-} from 'src/store'
+} from 'src/store';
 
 // action
-import { createApi, updateApi } from 'src/action/function'
+import { createApi, updateApi } from 'src/action/function';
 
 //dataEntry
-import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
-import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
-import SelectHookField from 'src/common/dataEntry/SelectHookField'
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
 
 //form
-import IdNameForm from '../idnameForm/IdNameForm'
-import SupplierForm from 'src/common/forms/supplier/SupplierForm'
+import IdNameForm from '../idnameForm/IdNameForm';
+import SupplierForm from 'src/common/forms/supplier/SupplierForm';
 
-const requiredError = ['category', 'destination', 'duration', 'type', 'supplier']
+const requiredError = ['category', 'destination', 'duration', 'type', 'supplier'];
 
 const yupField = requiredError.reduce((acc, item) => {
   acc[item] = yup
     .string()
     .typeError('Field Should not be empty')
-    .required('Field Should not be empty')
+    .required('Field Should not be empty');
 
-  return acc
-}, {})
+  return acc;
+}, {});
 
-const schema = yup.object().shape(yupField)
+const schema = yup.object().shape(yupField);
 
 // const schema = yup.object().shape({
 //   category: yup.string().typeError("Field Should not be empty").required("Field Should not be empty"),
@@ -64,14 +64,10 @@ const defaultValues = {
   duration: '',
   type: '',
   supplier: '',
-  confirmed: {
-    totalFee: ''
-  },
-  processing: {
-    visaFee: '',
-    processingFee: ''
-  }
-}
+  totalFee: 0,
+  visaFee: 0,
+  processingFee: 0
+};
 
 const SupplierVisaForm = ({
   toggle,
@@ -81,30 +77,35 @@ const SupplierVisaForm = ({
   stateSelector,
   removeSelection
 }) => {
-  let api = 'supplier-visa-service'
+  let api = 'supplier-visa-service';
   // console.log("_id",_id)
-  const dispatch = useDispatch()
-  let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
-// console.log(editId)
+  const dispatch = useDispatch();
+  let editId = useSelector((state) =>
+    state[stateSelector]?.data?.find((item) => item._id === _id)
+  );
+  // console.log(editId)
   // ** State
-  const [payMethod, setPayMethod] = useState('confirmed')
-  const category = useSelector(state => state?.visaCategory?.data)
-  const destination = useSelector(state => state?.visaDestination?.data)
-  const type = useSelector(state => state?.visaType?.data)
-  const duration = useSelector(state => state?.visaDuration?.data)
+  const [payMethod, setPayMethod] = useState('confirmed');
+  const category = useSelector((state) => state?.visaCategory?.data);
+  const destination = useSelector((state) => state?.visaDestination?.data);
+  const type = useSelector((state) => state?.visaType?.data);
+  const duration = useSelector((state) => state?.visaDuration?.data);
 
-  const supplier = useSelector(state =>
-    state?.supplier?.data?.map(item => ({ name: `${item.name} ${item.phone}`, _id: item._id }))
-  )
+  const supplier = useSelector((state) =>
+    state?.supplier?.data?.map((item) => ({
+      name: `${item.name} ${item.phone}`,
+      _id: item._id
+    }))
+  );
   // console.log(supplier)
 
   useEffect(() => {
-    dispatch(fetchVisaCategory({}))
-    dispatch(fetchVisaDestination({}))
-    dispatch(fetchVisaType({}))
-    dispatch(fetchVisaDuration({}))
-    dispatch(fetchSupplier({}))
-  }, [])
+    dispatch(fetchVisaCategory({}));
+    dispatch(fetchVisaDestination({}));
+    dispatch(fetchVisaType({}));
+    dispatch(fetchVisaDuration({}));
+    dispatch(fetchSupplier({}));
+  }, []);
 
   const {
     reset,
@@ -119,31 +120,32 @@ const SupplierVisaForm = ({
     defaultValues,
     mode: 'onChange',
     resolver: yupResolver(schema)
-  })
+  });
 
   useEffect(() => {
     if (editId) {
-      setValue('category', editId?.category?._id)
-      setValue('type', editId?.type?._id)
-      setValue('duration', editId?.duration?._id)
-      setValue('destination', editId?.destination?._id)
-      setValue('supplier', editId?.supplierVisaService?.supplier?._id)
-      setValue('confirmed', editId?.supplierVisaService?.confirmed)
-      setValue('processing', editId?.supplierVisaService?.processing)
+      setValue('category', editId?.category?._id);
+      setValue('type', editId?.type?._id);
+      setValue('duration', editId?.duration?._id);
+      setValue('destination', editId?.destination?._id);
+      setValue('supplier', editId?.supplierVisaService?.supplier?._id);
+      setValue('totalFee', editId?.supplierVisaService?.confirmed.totalFee);
+      setValue('processingFee', editId?.supplierVisaService?.processing.processingFee);
+      setValue('visaFee', editId?.supplierVisaService?.processing.visaFee);
     } else {
-      reset()
+      reset();
     }
-  }, [setValue, editId])
+  }, [setValue, editId]);
 
   const handleClose = () => {
-    toggle()
-    reset()
-  }
+    toggle();
+    reset();
+  };
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     if (editId) {
       updateApi({
-        _id:editId.supplierVisaService._id,
+        _id: editId.supplierVisaService._id,
         api,
         data,
         dispatch,
@@ -151,7 +153,7 @@ const SupplierVisaForm = ({
         toggle,
         reset,
         removeSelection
-      })
+      });
     } else {
       createApi({
         api,
@@ -161,41 +163,41 @@ const SupplierVisaForm = ({
         toggle,
         reset,
         removeSelection
-      })
+      });
     }
-  }
+  };
 
-  const choosePaymentMethod =[
+  const choosePaymentMethod = [
     // payMethod === 'confirmed'
     //   ? [
-          {
-            name: 'confirmed.totalFee',
-            type: 'number',
-            placeholder: 'Enter Total Fee',
-            label: 'Confirmed - Total Fee',
-            value: watch('confirmed.totalFee'),
-            myvalue: true
-          },
-      //   ]
-      // : [
-          {
-            name: 'processing.processingFee',
-            type: 'number',
-            placeholder: 'Enter Processing Fee',
-            label: 'Processing - Processing Fee',
-            value: watch('processing.processingFee'),
-            myvalue: true
-          },
-          {
-            name: 'processing.visaFee',
-            placeholder: 'Enter Visa Fee',
-            type: 'number',
-            label: 'Processing - Visa Fee',
-            value: watch('processing.visaFee'),
-            myvalue: true
-          }
-        ]
-        // ]
+    {
+      name: 'totalFee',
+      type: 'number',
+      placeholder: 'Enter Total Fee',
+      label: 'Confirmed - Total Fee',
+      value: watch('totalFee'),
+      myvalue: true
+    },
+    //   ]
+    // : [
+    {
+      name: 'processingFee',
+      type: 'number',
+      placeholder: 'Enter Processing Fee',
+      label: 'Processing - Processing Fee',
+      value: watch('processingFee'),
+      myvalue: true
+    },
+    {
+      name: 'visaFee',
+      placeholder: 'Enter Visa Fee',
+      type: 'number',
+      label: 'Processing - Visa Fee',
+      value: watch('visaFee'),
+      myvalue: true
+    }
+  ];
+  // ]
 
   return (
     <div>
@@ -317,7 +319,7 @@ const SupplierVisaForm = ({
         </Box>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default SupplierVisaForm
+export default SupplierVisaForm;

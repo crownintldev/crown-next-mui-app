@@ -27,7 +27,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Typography } from '@mui/material';
-import { updateApi } from 'src/action/function';
+import { updateApi, updateManyApi } from 'src/action/function';
 
 const showErrors = (field, valueLen, min) => {
   if (valueLen === 0) {
@@ -156,16 +156,26 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   };
 
   const onSubmit = async (data) => {
-    updateApi({
-      _id: ids[0],
-      api: 'account',
+    updateManyApi({
+      accountIds:ids,
+      completeApi: 'account/update',
       data,
       dispatch,
       fetchList: fetchData,
       toggle,
       reset,
       removeSelection
-    });
+    })
+    // updateApi({
+    //   _id: ids[0],
+    //   api: 'account',
+    //   data,
+    //   dispatch,
+    //   fetchList: fetchData,
+    //   toggle,
+    //   reset,
+    //   removeSelection
+    // });
   };
 
   const renderSelectedValue = (selectedIds) => {

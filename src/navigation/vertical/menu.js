@@ -66,6 +66,11 @@ export const accountArrays = () => [
         title: 'Visa Booking',
         path: '/booking/visa',
         icon: 'tabler:circle-filled'
+      },
+      {
+        title: 'Ticket Booking',
+        path: '/booking/ticket',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -126,12 +131,23 @@ export const accountArrays = () => [
       }
     ]
   },
-
   {
     title: 'Account',
-    path: '/account',
-    icon: 'tabler:file-dollar'
+    icon: 'tabler:file-text',
+    children: [
+      {
+        title: 'Account',
+        path: '/account/visa-account',
+        icon: 'tabler:file-dollar'
+      },
+      {
+        title: 'Supplier Account',
+        path: '/account/supplier-account',
+        icon: 'tabler:file-dollar'
+      },
+    ]
   },
+ 
 
   {
     title: 'Expense',

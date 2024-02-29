@@ -156,26 +156,26 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   };
 
   const onSubmit = async (data) => {
-    updateManyApi({
-      accountIds:ids,
-      completeApi: 'account/update',
-      data,
-      dispatch,
-      fetchList: fetchData,
-      toggle,
-      reset,
-      removeSelection
-    })
-    // updateApi({
-    //   _id: ids[0],
-    //   api: 'account',
+    // updateManyApi({
+    //   accountIds:ids,
+    //   completeApi: 'account/update',
     //   data,
     //   dispatch,
     //   fetchList: fetchData,
     //   toggle,
     //   reset,
     //   removeSelection
-    // });
+    // })
+    updateApi({
+      _id: ids[0],
+      api: 'account',
+      data,
+      dispatch,
+      fetchList: fetchData,
+      toggle,
+      reset,
+      removeSelection
+    });
   };
 
   const renderSelectedValue = (selectedIds) => {

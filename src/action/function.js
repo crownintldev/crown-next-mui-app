@@ -124,7 +124,7 @@ export const updateManyApi = async ({
   optional
 }) => {
   const baseURL = apidomain || AccountApi;
-  let myapi = completeApi ? completeApi : `${api}/data`;
+  let myapi = completeApi ? completeApi : `${api}/update`;
   try {
     const response = await axios.put(`${baseURL}/${myapi}`, data, {
       withCredentials: true,

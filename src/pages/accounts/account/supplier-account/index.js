@@ -34,6 +34,7 @@ const index = ({ apiData }) => {
         childColumns={childColumns}
         fetchData={fetchSupplierAccount}
         stateSelector='supplierAccount'
+        selectedId="supplierId"
         drawerProps={{
           editFormTitle: 'Edit Account',
           editButtonTitle: 'Edit Account',

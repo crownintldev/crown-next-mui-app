@@ -33,7 +33,7 @@ const schema = yup.object().shape({
 });
 
 const defaultValues = {
-  supplier: '',
+  supplierId: '',
   supplierName: '',
   total: 0,
   paid: 0,

@@ -39,14 +39,17 @@ const TableHeader = (props) => {
     buttonTitle,
     fetchData,
     setChildRowSelection,
-    selectionRow,
+    selectedIds,
     api,
     table,
     tableData,
-    childTable
+    childTable,
+    removeSelection,
+    headerMenu,
+    NewHeaderMenu
   } = props;
 
-  // console.log(selectionRow)
+  // console.log(selectedIds)
   const { visaBookingIds, accountId } = childTable;
   const ejectValue = { visaBookingIds, accountId };
   const [anchorEl, setAnchorEl] = useState(null);
@@ -61,7 +64,7 @@ const TableHeader = (props) => {
   };
 
   const handleInvoice = () => {
-    const invoiceValues = selectionRow.map(
+    const invoiceValues = selectedIds.map(
       (id) => accountData?.length > 0 && accountData.find((item) => item._id === id)
     );
     dispatch(setInvoice(invoiceValues));
@@ -103,67 +106,43 @@ const TableHeader = (props) => {
     }
   };
 
-  const handleRemove = async () => {
-    if (!api) {
-      return toast.error('api not found', { position: 'top-center' });
-    }
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/${api}/remove`,
-        {
-          ids: selectionRow
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        }
-      );
-      if (response.data) {
-        dispatch(
-          fetchData({
-            limit: 20,
-            page: 1
-          })
-        );
-        toast.success('Delete Successfully', { position: 'top-center' });
-      }
-    } catch (error) {
-      console.log(axiosErrorMessage(error));
-      toast.error(axiosErrorMessage(error), { position: 'top-center' });
-    }
-  };
-
   return (
-    <Box>
-      <Box sx={{ rowGap: 2, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-        {/* {buttonTitle && (
-          <Button onClick={toggle} variant='contained'  sx={{ '& svg': { mr: 2 } }}>
-            <Icon fontSize='1.125rem' icon='tabler:plus' />
-            {buttonTitle}
-          </Button>
-        )} */}
+    <Box style={{ display: 'flex' }}>
+      <Box
+        sx={{
+          rowGap: 2,
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center'
+        }}
+      >
         <IconButton onClick={handleClick}>
           <Icon fontSize='1.5rem' icon='mdi:call-to-action' color='#2b60fe' />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {buttonTitle && (
-            <MenuItem onClick={handleClose}>
-              <Box
+            <div onClick={handleClose}>
+              <MenuItem
                 onClick={toggle}
                 sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: '#2b60fe'
+                  py: 1,
+                  m: 0
                 }}
               >
-                <Icon fontSize='1.125rem' icon='tabler:plus' />
-                {buttonTitle}
-              </Box>
-            </MenuItem>
+                <Box
+                  sx={{
+                    fontSize: '0.8em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    columnGap: '4px',
+                    color: '#2b60fe'
+                  }}
+                >
+                  <Icon fontSize='0.8rem' icon='tabler:plus' />
+                  <div>{buttonTitle}</div>
+                </Box>
+              </MenuItem>
+            </div>
           )}
           {ejectValue.visaBookingIds.length > 0 && (
             <MenuItem onClick={handleClose}>
@@ -173,25 +152,36 @@ const TableHeader = (props) => {
               </Button>
             </MenuItem>
           )}
-          {selectionRow?.length > 0 && (
-            <MenuItem onClick={handleInvoice}>
-              <Button color='success' size='small'>
-                <Icon fontSize='1.125rem' icon='tabler:plus' />
-                Create Invoice
-              </Button>
-            </MenuItem>
+          {selectedIds?.length > 0 && (
+            <div onClick={handleClose}>
+              <MenuItem
+                onClick={toggle}
+                sx={{
+                  py: 1,
+                  m: 0
+                }}
+              >
+                <Box
+                  sx={{
+                    fontSize: '0.8em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    columnGap: '4px',
+                    color: '#2b60fe'
+                  }}
+                >
+                  <Icon fontSize='0.8rem' icon='tabler:plus' />
+                  Create Invoice
+                </Box>
+              </MenuItem>
+            </div>
           )}
-          {/* {selectionRow?.length > 0 && (
-            <MenuItem onClick={handleRemove}>
-              <Button color='error' size='small'>
-                <Icon fontSize='1.125rem' icon='tabler:plus' />
-                Delete Account
-              </Button>
-            </MenuItem>
-          )} */}
+          {headerMenu &&
+            headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
         {/* ----------Export data--------- */}
         <ExportButton table={table} tableData={tableData} />
+        {NewHeaderMenu && NewHeaderMenu({ selectedIds, toggle, removeSelection })}
       </Box>
     </Box>
   );

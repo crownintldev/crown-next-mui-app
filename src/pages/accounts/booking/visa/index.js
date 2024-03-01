@@ -50,6 +50,7 @@ const index = ({ apiData }) => {
       drawerOpen,
       toggleDrawer,
       Form: Form.Form,
+      FormTitle:Form.title,
       removeSelection: removeSelection.removeSelection
     });
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {

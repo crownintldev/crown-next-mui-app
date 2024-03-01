@@ -14,6 +14,7 @@ export const createApi = async ({
   data,
   dispatch,
   fetchData,
+  fetchList,
   toggle,
   reset,
   message,
@@ -35,11 +36,10 @@ export const createApi = async ({
       removeSelection();
     }
     if (response.data.data) {
-      dispatch(
-        fetchData({
-          newData: response.data.data
-        })
-      );
+      const fetchApi = fetchData
+        ? fetchData({ updateData: response.data.data })
+        : fetchList({});
+      dispatch(fetchApi);
       if (toggle) {
         toggle();
       }
@@ -80,13 +80,13 @@ export const updateApi = async ({
 }) => {
   const baseURL = apidomain || AccountApi;
 
- 
   try {
     const response = await axiosInstance.put(`${baseURL}/${api}/update/${_id}`, data);
-    const fetchApi = fetchData
-    ? fetchData({ updateData: response.data.data })
-    : fetchList({});
+
     if (response.data.data) {
+      const fetchApi = fetchData
+        ? fetchData({ updateData: response.data.data })
+        : fetchList({});
       dispatch(fetchApi);
       if (toggle) {
         toggle();
@@ -124,7 +124,7 @@ export const updateManyApi = async ({
   optional
 }) => {
   const baseURL = apidomain || AccountApi;
-  let myapi = completeApi ? completeApi : `${api}/data`;
+  let myapi = completeApi ? completeApi : `${api}/update`;
   try {
     const response = await axios.put(`${baseURL}/${myapi}`, data, {
       withCredentials: true,

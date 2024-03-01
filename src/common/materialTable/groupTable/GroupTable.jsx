@@ -1,14 +1,14 @@
-import { useMemo, useState, useEffect } from 'react'
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import { Box, LinearProgress, Typography } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { muiLinearProgressProps, tableProps } from '../functions'
-import { Button, Grid } from '@mui/material'
-import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details'
-import FormDrawer from '../../drawer/FormDrawer'
-import TableHeader from './TableHeader'
-import { ChildTable } from './ChildTable'
-import { useTheme } from '@emotion/react'
+import { useMemo, useState, useEffect } from 'react';
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import { Box, LinearProgress, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { muiLinearProgressProps, tableProps } from '../functions';
+import { Button, Grid } from '@mui/material';
+import CardStatsHorizontalWithDetails from 'src/@core/components/card-statistics/card-stats-horizontal-with-details';
+import FormDrawer from '../../drawer/FormDrawer';
+import TableHeader from './TableHeader';
+import { ChildTable } from './ChildTable';
+import { useTheme } from '@emotion/react';
 
 const Example = ({
   columns,
@@ -16,8 +16,11 @@ const Example = ({
   fetchData,
   stateSelector,
   apiData,
+  selectedId,
   drawerProps,
-  api
+  api,
+  headerMenu,
+  NewHeaderMenu
 }) => {
   const {
     formTitle,
@@ -27,41 +30,43 @@ const Example = ({
     EditForm,
     CreateForm,
     multiSelected = false
-  } = drawerProps
-  const theme = useTheme()
-  const dispatch = useDispatch()
-  const accountItems = useSelector(state => state.account.data)
-  const { data, total, isLoading, isError } = useSelector(state => state[stateSelector])
+  } = drawerProps;
+  const theme = useTheme();
+  const dispatch = useDispatch();
+  const accountItems = useSelector((state) => state.account.data);
+  const { data, total, isLoading, isError } = useSelector(
+    (state) => state[stateSelector]
+  );
   // console.log(data)
-  const [isRefetching, setIsRefetching] = useState(false)
+  const [isRefetching, setIsRefetching] = useState(false);
 
   // Table state
 
-  const [columnFilters, setColumnFilters] = useState([])
-  const [globalFilter, setGlobalFilter] = useState('')
-  const [sorting, setSorting] = useState([])
-  const [rowSelection, setRowSelection] = useState({})
-  const [selectionRow, setSelectionRow] = useState([])
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [sorting, setSorting] = useState([]);
+  const [rowSelection, setRowSelection] = useState({});
+  const [selectionRow, setSelectionRow] = useState([]);
 
   // childRow
-  const [childRowSelection, setChildRowSelection] = useState([])
-  const [childSelectionRow, setChildSelectionRow] = useState([])
-  const [parentId, setParentId] = useState('')
+  const [childRowSelection, setChildRowSelection] = useState([]);
+  const [childSelectionRow, setChildSelectionRow] = useState([]);
+  const [parentId, setParentId] = useState('');
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
-  })
+  });
 
   //drawer
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
   useEffect(() => {
-    let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt'
-    let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1
+    let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt';
+    let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1;
 
-    const handleEnterPress = event => {
+    const handleEnterPress = (event) => {
       if (event.key === 'Enter') {
         dispatch(
           fetchData({
@@ -72,11 +77,11 @@ const Example = ({
             sortField,
             sortOrder
           })
-        )
+        );
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleEnterPress)
+    window.addEventListener('keydown', handleEnterPress);
     if (!globalFilter && columnFilters.length === 0) {
       dispatch(
         fetchData({
@@ -85,36 +90,38 @@ const Example = ({
           sortField,
           sortOrder
         })
-      )
+      );
     }
 
     // Cleanup the event listener
     return () => {
-      window.removeEventListener('keydown', handleEnterPress)
-    }
-  }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting])
+      window.removeEventListener('keydown', handleEnterPress);
+    };
+  }, [dispatch, setPagination, pagination, globalFilter, columnFilters, sorting]);
 
   //row selection method start
 
-  const selectedRowIds = Object.keys(rowSelection).filter(key => rowSelection[key])
+  const selectedRowIds = Object.keys(rowSelection).filter((key) => rowSelection[key]);
 
   useEffect(() => {
-    setSelectionRow(selectedRowIds)
-  }, [rowSelection])
+    setSelectionRow(selectedRowIds);
+  }, [rowSelection]);
 
   const handleRemoveSelection = () => {
-    setRowSelection({})
-  }
+    setRowSelection({});
+  };
 
   // child
   useEffect(() => {
-    setChildSelectionRow(Object.keys(childRowSelection).filter(key => childRowSelection[key]))
-  }, [childRowSelection])
+    setChildSelectionRow(
+      Object.keys(childRowSelection).filter((key) => childRowSelection[key])
+    );
+  }, [childRowSelection]);
 
   const handleChildRowSelectionChange = (selection, parentRowId) => {
-    setChildRowSelection(selection)
-    setParentId(parentRowId)
-  }
+    setChildRowSelection(selection);
+    setParentId(parentRowId);
+  };
 
   //row selection method end
 
@@ -140,15 +147,18 @@ const Example = ({
           visaBookingIds: childSelectionRow,
           accountId: parentId
         }}
-        selectionRow={selectionRow}
+        selectedIds={selectionRow}
         setChildRowSelection={setChildRowSelection}
         fetchData={fetchData}
         api={api}
         table={table}
         tableData={data}
+        removeSelection={handleRemoveSelection}
+        headerMenu={headerMenu}
+        NewHeaderMenu={NewHeaderMenu}
       />
-    )
-  }
+    );
+  };
 
   //apidata
   const cards = () => {
@@ -161,20 +171,20 @@ const Example = ({
                 <Grid item xs={12} md={3} sm={6} key={index}>
                   {/* <CardStatsHorizontalWithDetails {...item} /> */}
                 </Grid>
-              )
+              );
             })}
           </Grid>
         )}
       </Grid>
-    )
-  }
+    );
+  };
 
   const table = useMaterialReactTable({
     columns,
     data,
     ...tableProps(theme),
     renderTopToolbarCustomActions: renderCustomActions,
-    getRowId: row => row._id, // Adjust based on your data's unique identifier
+    getRowId: (row) => row[selectedId !== undefined ? selectedId : '_id'], // Adjust based on your data's unique identifier
     manualFiltering: true,
     manualPagination: true,
     manualSorting: true,
@@ -257,7 +267,7 @@ const Example = ({
     //   )
     // },
     enableRowSelection: true
-  })
+  });
 
   return (
     <>
@@ -283,14 +293,22 @@ const Example = ({
         open={drawerOpen}
         toggle={toggleDrawer}
         drawerTitle={
-          multiSelected ? editFormTitle : selectionRow.length === 1 ? editFormTitle : formTitle
+          multiSelected
+            ? editFormTitle
+            : selectionRow.length === 1
+            ? editFormTitle
+            : formTitle
         }
-        Form={multiSelected ? EditForm : selectionRow.length === 1 ? EditForm : CreateForm}
+        Form={
+          multiSelected ? EditForm : selectionRow.length === 1 ? EditForm : CreateForm
+        }
         removeSelection={handleRemoveSelection}
-        _id={multiSelected ? selectionRow : selectionRow.length === 1 ? selectionRow[0] : ''}
+        _id={
+          multiSelected ? selectionRow : selectionRow.length === 1 ? selectionRow[0] : ''
+        }
       />
     </>
-  )
-}
+  );
+};
 
-export default Example
+export default Example;

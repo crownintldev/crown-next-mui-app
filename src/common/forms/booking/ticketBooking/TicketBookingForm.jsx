@@ -254,23 +254,6 @@ const TicketBookingForm = ({
             errors={errors}
           />
         </Box>
-        <CustomOpenDrawer
-          ButtonTitle='Add Type'
-          drawerTitle='Add Type Form'
-          Form={IdNameForm}
-          fetchApi={fetchVisaType}
-          formName='Type'
-          api='payment-head-type'
-        />
-        <SelectHookField
-          control={control}
-          errors={errors}
-          name='type'
-          options={type ?? []}
-          showValue='name'
-          label='Type'
-          placeholder='Choose Type'
-        />
         <CustomHookTextField
           chooseFields={chooseFields}
           control={control}

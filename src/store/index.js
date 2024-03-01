@@ -79,7 +79,7 @@ export const fetchPaymentHeadType = createFetchDataThunk(
   'payment-head-type'
 );
 
-export const fetchBusinesssetting = createFetchDataThunk('businesssetting', 'businesssetting')
+export const fetchBusinesssetting = createFetchDataThunk('business-setting', 'business-setting')
 
 export const fetchHotelBooking = createFetchDataThunk('hotelbooking', 'hotelbooking')
 

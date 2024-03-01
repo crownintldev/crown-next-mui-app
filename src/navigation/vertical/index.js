@@ -3,6 +3,7 @@ import {
   automationArray,
   databaseArray,
   homeArray,
+  hotelArrays,
   settingsArray,
   ticketingArrays
 } from './menu'
@@ -45,9 +46,9 @@ const navigation = () => {
       title: 'Hotel',
       key: 'hotel',
       icon: 'ri:hotel-fill',
-      path: '/tour',
-      activeChildPath: '/coming-soon',
-      children: ticketingArrays()
+      path: '/hotel',
+      activeChildPath: '',
+      children: hotelArrays()
     },
     {
       title: 'Insurance',

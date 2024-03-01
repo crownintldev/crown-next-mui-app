@@ -45,6 +45,7 @@ const MaterialTable = ({
   const dispatch = useDispatch()
   const [showTrash, setShowTrash] = useState("false")
   const { data, total, isLoading, isError } = useSelector((state) => state[stateSelector])
+
   const [activeTab, setActiveTab] = useState('default') // State to track the active tab
 
   // Table state

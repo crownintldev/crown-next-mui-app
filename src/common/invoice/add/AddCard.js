@@ -1,32 +1,32 @@
 // NEXT Imports
-import Link from 'next/link'
+import Link from 'next/link';
 
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import InputLabel from '@mui/material/InputLabel'
-import { useTheme } from '@mui/material/styles'
-import CardContent from '@mui/material/CardContent'
-import Autocomplete from '@mui/material/Autocomplete'
-import Stack from '@mui/material/Stack'
-import { TextField } from '@mui/material'
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import InputLabel from '@mui/material/InputLabel';
+import { useTheme } from '@mui/material/styles';
+import CardContent from '@mui/material/CardContent';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import { TextField } from '@mui/material';
 
 // ** Custom Component Imports
-import CustomTextField from 'src/@core/components/mui/text-field'
+import CustomTextField from 'src/@core/components/mui/text-field';
 
 //AddCardComponent
-import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
-import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
-import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
-import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
+import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader';
+import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo';
+import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect';
+import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal';
 
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 const AddCard = (props) => {
   // ** Props
@@ -38,32 +38,32 @@ const AddCard = (props) => {
     toggleAddCustomerDrawer,
     cardHeader,
     invoiceDataArray
-  } = props
+  } = props;
 
   // ** States
   //AddCardInvoiceTo states
-  const [userCategory, setUserCategory] = useState(null)
-  const [selectUser, setSelectUser] = useState(null)
-  const [invoiceData, setInvoiceData] = useState([])
-  const [selectedOption, setSelectedOption] = useState(null)
+  const [userCategory, setUserCategory] = useState(null);
+  const [selectUser, setSelectUser] = useState(null);
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   //**end AddCardInvoiceTo states
 
   // ** Hook
-  const theme = useTheme()
+  const theme = useTheme();
 
   // ** Deletes form
-  const data = useSelector((state) => state.invoice.data)
+  const data = useSelector((state) => state.invoice.data);
 
   const options = [
     { label: 'Account', link: '/accounts/account/' },
     { label: 'Booking', link: '/accounts/account/' },
     { label: 'Flight', link: '/accounts/account/' }
-  ]
+  ];
 
   const handleOptionSelect = (event, option) => {
-    setSelectedOption(option)
-  }
+    setSelectedOption(option);
+  };
 
   return (
     <Card>
@@ -119,7 +119,7 @@ const AddCard = (props) => {
         ) : (
           // Normal rendering
           invoiceDataArray.map((item) => {
-            const { by: clientData, amount, visaBookingIds } = item
+            const { by: clientData, amount, visaBookingIds } = item;
 
             return (
               <>
@@ -148,7 +148,7 @@ const AddCard = (props) => {
                   visaBookingIds={visaBookingIds}
                 />
               </>
-            )
+            );
           })
         )}
       </CardContent>
@@ -184,7 +184,7 @@ const AddCard = (props) => {
         />
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default AddCard
+export default AddCard;

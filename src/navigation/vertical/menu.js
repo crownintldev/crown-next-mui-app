@@ -820,6 +820,32 @@ export const ticketingArrays = () => [
   }
 ];
 
+export const hotelArrays = () => [
+  {
+    title: 'Hotels',
+    icon: 'tabler:smart-home',
+    badgeContent: 'new',
+    badgeColor: 'error',
+    children: [
+      {
+        title: 'Analytics',
+        path: '/dashboards/analytics',
+        icon: 'tabler:circle-filled'
+      },
+      {
+        title: 'CRM',
+        path: '/dashboards/crm',
+        icon: 'tabler:circle-filled'
+      },
+      {
+        title: 'eCommerce',
+        path: '/dashboards/ecommerce',
+        icon: 'tabler:circle-filled'
+      }
+    ]
+  }
+];
+
 export const automationArray = () => [
   {
     sectionTitle: 'Modules'
@@ -953,7 +979,7 @@ export const settingsArray = () => [
     children: [
       {
         title: 'Company Setting',
-        path: '/emailmodule/emailmanager/list',
+        path: '/business/company',
         icon: 'tabler:circle-filled'
       }
     ]

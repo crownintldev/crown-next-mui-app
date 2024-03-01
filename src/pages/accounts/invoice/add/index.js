@@ -38,10 +38,10 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   }, []);
 
   const cardHeaderDetails = {
-    businessName: companyData.businessName,
-    address: companyData.businessAddress,
-    contacts: `${(companyData.contact, companyData.phone)}`,
-    logo: companyData.files[0]
+    businessName: companyData?.businessName,
+    address: companyData?.businessAddress,
+    contacts: `${companyData?.contact}, ${companyData?.phone}`,
+    logo: companyData?.files[0]
   };
 
   return (

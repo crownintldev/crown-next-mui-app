@@ -1,41 +1,49 @@
 // ** React Imports
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
 // ** MUI Imports
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid';
 
 // ** Third Party Components
-import axios from 'axios'
+import axios from 'axios';
 
 // ** Demo Components Imports
 
-import AddCard from 'src/common/invoice/add/AddCard'
-import AddActions from 'src/common/invoice/add/AddActions'
-import AddNewCustomers from 'src/common/invoice/add/AddNewCustomer'
+import AddCard from 'src/common/invoice/add/AddCard';
+import AddActions from 'src/common/invoice/add/AddActions';
+import AddNewCustomers from 'src/common/invoice/add/AddNewCustomer';
 
 // ** Styled Component
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import { useSelector } from 'react-redux'
-
-
-const cardHeaderDetails = {
-  address: 'Office 149, 450 South Brand Brooklyn, San Diego County, CA 91905, USA',
-  contacts: '+1 (123) 456 7891, +44 (876) 543 2198'
-}
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBusinesssetting } from 'src/store';
 
 const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   // ** State
-  const invoiceData = useSelector((state) => state.myInvoice.data)
-  const [addCustomerOpen, setAddCustomerOpen] = useState(false)
-  const [selectedClient, setSelectedClient] = useState(null)
-  const [clients, setClients] = useState(apiClientData)
-  const toggleAddCustomerDrawer = () => setAddCustomerOpen(!addCustomerOpen)
+  const invoiceData = useSelector((state) => state.myInvoice.data);
+  const [addCustomerOpen, setAddCustomerOpen] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [clients, setClients] = useState(apiClientData);
+  const toggleAddCustomerDrawer = () => setAddCustomerOpen(!addCustomerOpen);
   // card Header State
-  const tomorrowDate = new Date().setDate(new Date().getDate() + 7)
-  const [issueDate, setIssueDate] = useState(new Date())
-  const [dueDate, setDueDate] = useState(new Date(tomorrowDate))
-  const businessData = useSelector(state=>state.businesssetting)
-  
+  const tomorrowDate = new Date().setDate(new Date().getDate() + 7);
+  const [issueDate, setIssueDate] = useState(new Date());
+  const [dueDate, setDueDate] = useState(new Date(tomorrowDate));
+
+  const companyData = useSelector((state) => state.businesssetting.data[0]);
+  console.log('company data', companyData);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBusinesssetting({}));
+  }, []);
+
+  const cardHeaderDetails = {
+    businessName: companyData.businessName,
+    address: companyData.businessAddress,
+    contacts: `${(companyData.contact, companyData.phone)}`,
+    logo: companyData.files[0]
+  };
+
   return (
     <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
       <Grid container spacing={6}>
@@ -77,25 +85,27 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
         setSelectedClient={setSelectedClient}
       />
     </DatePickerWrapper>
-  )
-}
+  );
+};
 
 export const getStaticProps = async () => {
-  const clientResponse = await axios.get('/apps/invoice/clients')
-  const apiClientData = clientResponse.data
+  const clientResponse = await axios.get('/apps/invoice/clients');
+  const apiClientData = clientResponse.data;
 
   const allInvoicesResponse = await axios.get('/apps/invoice/invoices', {
     params: { q: '', status: '' }
-  })
-  const lastInvoiceNumber = Math.max(...allInvoicesResponse.data.allData.map((i) => i.id))
+  });
+  const lastInvoiceNumber = Math.max(
+    ...allInvoicesResponse.data.allData.map((i) => i.id)
+  );
 
   return {
     props: {
       apiClientData,
       invoiceNumber: lastInvoiceNumber + 1
     }
-  }
-}
+  };
+};
 
 //
-export default InvoiceAdd
+export default InvoiceAdd;

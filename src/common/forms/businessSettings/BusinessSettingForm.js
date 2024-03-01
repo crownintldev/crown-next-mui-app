@@ -1,27 +1,29 @@
-import React from 'react'
+import React from 'react';
 
 // ** Third Party Imports
-import * as yup from 'yup'
+import * as yup from 'yup';
 
-import CommonForm1 from '../commonForms/CommonForm1'
+import CommonForm1 from '../commonForms/CommonForm1';
 
 const schema = yup.object().shape({
   businessName: yup.string().required('required'),
   contact: yup.string().required('required'),
   phone: yup.string().required('required'),
-  email: yup.string().required("required"),
-  businessAddress: yup.string().required("required"),
+  email: yup.string().required('required'),
+  businessAddress: yup.string().required('required'),
+  referenceMember: yup.string().required('required'),
   supplier: yup.string().required('required')
-})
+});
 
 const defaultValues = {
-    businessName: '',
-    contact: '',
+  businessName: '',
+  contact: '',
   phone: '',
   email: '',
   businessAddress: '',
-  supplier: '',
-}
+  referenceMember: '',
+  supplier: ''
+};
 
 const BusinessSettingForm = ({
   toggle,
@@ -33,13 +35,13 @@ const BusinessSettingForm = ({
 }) => {
   const chooseFields = [
     {
-        name: 'businessName',
+      name: 'businessName',
       placeholder: `Enter Business Name`,
       label: `Business Name`,
       required: true
     },
     {
-        name: 'contact',
+      name: 'contact',
       placeholder: `Enter contact Number`,
       label: `contact`,
       required: true
@@ -50,22 +52,26 @@ const BusinessSettingForm = ({
       label: `Phone Number`
     },
     {
-        name: "email",
-        placeholder: `Enter Email Number`,
+      name: 'email',
+      placeholder: `Enter Email Number`,
       label: `Email`
     },
     {
       name: 'businessAddress',
       placeholder: `Enter Business Address`,
       label: `Business Address`
-    }
-    ,
+    },
+    {
+      name: 'referenceMember',
+      placeholder: `reference Member`,
+      label: `Reference member id`
+    },
     {
       name: 'supplier',
       placeholder: `Select supplier ID`,
       label: `Supplier ID`
     }
-  ]
+  ];
 
   return (
     <div>
@@ -81,7 +87,7 @@ const BusinessSettingForm = ({
         chooseFields={chooseFields}
       />
     </div>
-  )
-}
+  );
+};
 
-export default BusinessSettingForm
+export default BusinessSettingForm;

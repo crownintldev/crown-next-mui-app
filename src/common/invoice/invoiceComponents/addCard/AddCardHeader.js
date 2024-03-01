@@ -1,24 +1,24 @@
 // ** React Imports
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef } from 'react';
 
 // ** NEXT js imports
-import Image from 'next/image'
+import Image from 'next/image';
 
 // ** MUI Imports
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import InputAdornment from '@mui/material/InputAdornment'
-import { useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import { useTheme } from '@mui/material/styles';
 
 // ** Third Party Imports
-import DatePicker from 'react-datepicker'
-import DatePickerField from 'src/common/dataEntry/DatePicker'
+import DatePicker from 'react-datepicker';
+import DatePickerField from 'src/common/dataEntry/DatePicker';
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig';
 
 // ** Custom Component Imports
-import CustomTextField from 'src/@core/components/mui/text-field'
+import CustomTextField from 'src/@core/components/mui/text-field';
 
 const CustomInput = forwardRef(({ ...props }, ref) => {
   return (
@@ -28,22 +28,26 @@ const CustomInput = forwardRef(({ ...props }, ref) => {
       sx={{ width: { sm: '250px', xs: '170px' } }}
       {...props}
     />
-  )
-})
+  );
+});
 
 const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
-  const { issueDate, setIssueDate, dueDate, setDueDate, detail } = cardHeader
+  const { issueDate, setIssueDate, dueDate, setDueDate, detail } = cardHeader;
   // ** Hook
-  const theme = useTheme()
+  const theme = useTheme();
+  // console.log('header', detail.logo.url);
 
   return (
     <Grid container xl={{ mb: 10 }} xs={{ mb: 10 }} sx={{ mb: 10 }}>
       <Grid item xl={6} xs={12} sx={{ mb: { xl: 0, xs: 4 } }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ mb: 6, display: 'flex', alignItems: 'center' }}>
-            <Image src='/images/favicon.svg' width={70} height={70} />
-            <Typography variant='h4' sx={{ ml: 2.5, fontWeight: 700, lineHeight: '24px' }}>
-              {themeConfig.templateName}
+            <Image src={detail.logo.url} width={70} height={70} />
+            <Typography
+              variant='h4'
+              sx={{ ml: 2.5, fontWeight: 700, lineHeight: '24px' }}
+            >
+              {detail.businessName}
             </Typography>
           </Box>
           <div>
@@ -103,7 +107,7 @@ const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
         </Box>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default AddCardHeader
+export default AddCardHeader;

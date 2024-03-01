@@ -19,7 +19,7 @@ const AddCardItemSelect = ({ visaBookingIds }) => {
             <TableCell align='right'>Status</TableCell>
             <TableCell align='right'>Visa category</TableCell>
             {
-              visaBookingIds.map((invoice, index)=>{
+              visaBookingIds && visaBookingIds.map((invoice, index)=>{
                 (invoice.visaId.confirmed || invoice.visaId.confirmed ) && <TableCell align='right'>Visa confirm/process</TableCell>
               })
             }

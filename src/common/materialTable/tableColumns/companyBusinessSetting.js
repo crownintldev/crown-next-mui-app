@@ -12,6 +12,7 @@ const useBusinessSettingColumns = () =>
       { accessorKey: 'phone', header: 'Phone' },
       { accessorKey: 'email', header: 'Email', Cell: defaultCellRenderer },
       { accessorKey: 'businessAddress', header: 'Business Address', Cell: defaultCellRenderer },
+      { accessorKey: 'referenceMember', header: 'Reference Member', Cell: defaultCellRenderer },
       { accessorKey: 'supplier', header: 'Supplier' },
     //   { accessorKey: 'files', header: 'Logo' },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },

@@ -7,8 +7,7 @@ import {
 } from 'src/common/materialTable/tableColumns/supplierAccountColumns';
 
 //Forms
-import EditAccountForm from 'src/common/forms/account/EditAccountForm';
-
+import SupplierAccountForm from 'src/common/forms/supplierAccount/SupplierAccountForm';
 // redux
 import { fetchSupplierAccount } from 'src/store';
 import MediaDrawer from 'src/common/drawer/MediaDrawer';
@@ -36,12 +35,9 @@ const index = ({ apiData }) => {
         fetchData={fetchSupplierAccount}
         stateSelector='supplierAccount'
         drawerProps={{
-          editFormTitle: 'Edit/Merge Account',
-          //header buttons drawer
-          editButtonTitle: 'Edit/Merge Account',
-          // forms
-          EditForm: EditAccountForm,
-          multiSelected: true
+          editFormTitle: 'Edit Account',
+          editButtonTitle: 'Edit Account',
+          EditForm: SupplierAccountForm,
         }}
       />
       {mediaDrawerOpen && (

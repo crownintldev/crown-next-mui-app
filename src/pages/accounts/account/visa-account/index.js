@@ -36,9 +36,9 @@ const index = ({ apiData }) => {
         fetchData={fetchData}
         stateSelector='account'
         drawerProps={{
-          editFormTitle: 'Edit/Merge Account',
+          editFormTitle: 'Edit Account',
           //header buttons drawer
-          editButtonTitle: 'Edit/Merge Account',
+          editButtonTitle: 'Edit Account',
           // forms
           EditForm: EditAccountForm,
           multiSelected: true

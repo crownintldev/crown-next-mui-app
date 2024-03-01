@@ -80,13 +80,13 @@ export const updateApi = async ({
 }) => {
   const baseURL = apidomain || AccountApi;
 
- 
   try {
     const response = await axiosInstance.put(`${baseURL}/${api}/update/${_id}`, data);
-    const fetchApi = fetchData
-    ? fetchData({ updateData: response.data.data })
-    : fetchList({});
+
     if (response.data.data) {
+      const fetchApi = fetchData
+        ? fetchData({ updateData: response.data.data })
+        : fetchList({});
       dispatch(fetchApi);
       if (toggle) {
         toggle();

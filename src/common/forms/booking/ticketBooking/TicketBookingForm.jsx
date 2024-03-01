@@ -30,6 +30,7 @@ import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader';
 import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
+import IdNameForm from '../../idnameForm/IdNameForm';
 
 const schema = yup.object().shape({
   invoiceDate: yup.string().required('required'),
@@ -253,6 +254,23 @@ const TicketBookingForm = ({
             errors={errors}
           />
         </Box>
+        <CustomOpenDrawer
+          ButtonTitle='Add Type'
+          drawerTitle='Add Type Form'
+          Form={IdNameForm}
+          fetchApi={fetchVisaType}
+          formName='Type'
+          api='payment-head-type'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='type'
+          options={type ?? []}
+          showValue='name'
+          label='Type'
+          placeholder='Choose Type'
+        />
         <CustomHookTextField
           chooseFields={chooseFields}
           control={control}

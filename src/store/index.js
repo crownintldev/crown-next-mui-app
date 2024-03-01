@@ -68,13 +68,15 @@ export const fetchExpenseType = createFetchDataThunk('expenseType', 'expense-typ
 export const fetchExpense = createFetchDataThunk('expense', 'expense');
 
 export const fetchInvoice = createFetchDataThunk('invoice', 'invoice');
-export const fetchTicketBooking = createFetchDataThunk(
-  'ticketBooking',
-  'ticket-booking',
-);
+export const fetchTicketBooking = createFetchDataThunk('ticketBooking', 'ticket-booking');
 export const fetchSupplierAccount = createFetchDataThunk(
   'supplierAccount',
-  'supplier-account',
+  'supplier-account'
+);
+export const fetchPaymentHead = createFetchDataThunk('paymentHead', 'payment-head');
+export const fetchPaymentHeadType = createFetchDataThunk(
+  'paymentHeadType',
+  'payment-head-type'
 );
 
 //Auth App
@@ -93,7 +95,6 @@ export const fetchBranch = createFetchDataThunk(
   'branch',
   process.env.NEXT_PUBLIC_AUTH
 );
-
 
 const persistConfig = {
   key: 'root',
@@ -127,9 +128,11 @@ const rootReducer = combineReducers({
   invoice: generate('invoice', fetchInvoice),
   ticketBooking: generate('ticketBooking', fetchTicketBooking),
   supplierAccount: generate('supplierAccount', fetchSupplierAccount),
+  paymentHead: generate('paymentHead', fetchPaymentHead),
+  paymentHeadType: generate('paymentHeadType', fetchPaymentHeadType),
   myInvoice: generateReducer('myInvoice').reducer,
-  token: generateReducer('token').reducer,
   // auth
+  token: generateReducer('token').reducer,
   user: generate('user', fetchUser),
   loginUser: generateReducer('loginUser').reducer,
   role: generate('role', fetchRole),

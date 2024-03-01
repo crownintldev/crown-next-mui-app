@@ -136,7 +136,7 @@ export const accountArrays = () => [
     icon: 'tabler:file-text',
     children: [
       {
-        title: 'Account',
+        title: 'Visa Account',
         path: '/account/visa-account',
         icon: 'tabler:file-dollar'
       },
@@ -145,15 +145,20 @@ export const accountArrays = () => [
         path: '/account/supplier-account',
         icon: 'tabler:file-dollar'
       },
+      {
+        title: 'Payment Head',
+        path: '/account/payment-head',
+        icon: 'tabler:file-dollar'
+      },
+      {
+        title: 'Expense',
+        path: '/account/expense',
+        icon: 'tabler:wallet'
+      },
     ]
   },
- 
 
-  {
-    title: 'Expense',
-    path: '/expense',
-    icon: 'tabler:wallet'
-  },
+  
   {
     title: 'Invoice',
     icon: 'tabler:file-text',

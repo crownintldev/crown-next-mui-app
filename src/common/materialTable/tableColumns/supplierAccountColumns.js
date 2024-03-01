@@ -18,16 +18,7 @@ import {
 export const useSupplierAccountColumn = (openMediaDrawer) =>
   useMemo(
     () => [
-      {
-        accessorKey: 'media',
-        header: 'Media',
-        size: 100,
-        Cell: ({ row }) => (
-          <IconButton onClick={() => openMediaDrawer(row)}>
-            <PermMediaIcon sx={{ color: '#1EB280' }} />
-          </IconButton>
-        )
-      },
+
       { accessorKey: '_id', header: 'ID', size: 100, Cell: CellRowId },
 
       {

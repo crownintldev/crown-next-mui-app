@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast'
 
+// testOne  == Test One
 export const capitalizeCamelSpace = (name) => {
   const capitalized = name.charAt(0).toUpperCase() + name.slice(1)
 

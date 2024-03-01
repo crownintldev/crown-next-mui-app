@@ -21,10 +21,8 @@ import { fetchSupplierAccount } from 'src/store';
 // action
 import { createApi, updateApi } from 'src/action/function';
 
-
 //dataEntry
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
-
 
 const schema = yup.object().shape({
   // invoiceDate: yup.string().required('required'),
@@ -43,7 +41,7 @@ const defaultValues = {
 
 const SupplierAccountForm = ({
   toggle,
-  fetchApi=fetchSupplierAccount,
+  fetchApi = fetchSupplierAccount,
   setFormSize,
   api = 'supplier-account',
   _id,
@@ -53,11 +51,11 @@ const SupplierAccountForm = ({
   const dispatch = useDispatch();
 
   let editId = useSelector((state) =>
-    state[stateSelector]?.data?.find((item) => item._id === _id)
+    state[stateSelector]?.data?.find((item) => item.supplierId === _id)
   );
 
-  console.log(_id);
-
+  // console.log(_id);
+  // console.log(editId)
   useEffect(() => {
     setFormSize(400);
   }, []);
@@ -91,9 +89,9 @@ const SupplierAccountForm = ({
   const paid = Number(watch('paid'));
 
   useEffect(() => {
-    let remaining = (total ?? 0) - (discount ?? 0) - (paid ?? 0);
+    let remaining = (Number(total) ?? 0) - (Number(discount) ?? 0) - (Number(paid) ?? 0);
     setValue('remaining', remaining);
-  }, [discount, paid]);
+  }, [discount, paid, total]);
 
   const handleClose = () => {
     toggle();
@@ -103,8 +101,9 @@ const SupplierAccountForm = ({
 
   //************************** */ onSubmit
   const onSubmit = async (data) => {
+    data.supplierId = _id;
     // const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/create`, formData)
-    if (editId.notcreated ===false) {
+    if (editId.notcreated === false) {
       updateApi({
         _id,
         api,
@@ -115,7 +114,7 @@ const SupplierAccountForm = ({
         reset,
         removeSelection
       });
-    } else if (editId.notcreated ===true) {
+    } else if (editId.notcreated === true) {
       createApi({
         api,
         data: data,

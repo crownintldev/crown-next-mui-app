@@ -14,6 +14,7 @@ export const createApi = async ({
   data,
   dispatch,
   fetchData,
+  fetchList,
   toggle,
   reset,
   message,
@@ -35,11 +36,10 @@ export const createApi = async ({
       removeSelection();
     }
     if (response.data.data) {
-      dispatch(
-        fetchData({
-          newData: response.data.data
-        })
-      );
+      const fetchApi = fetchData
+        ? fetchData({ updateData: response.data.data })
+        : fetchList({});
+      dispatch(fetchApi);
       if (toggle) {
         toggle();
       }

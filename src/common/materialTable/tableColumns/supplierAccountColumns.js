@@ -20,7 +20,12 @@ export const useSupplierAccountColumn = (openMediaDrawer) =>
     () => [
 
       { accessorKey: '_id', header: 'ID', size: 100, Cell: CellRowId },
-
+      {
+        accessorKey: 'supplierName',
+        header: 'Supplier Name',
+        size: 100,
+        Cell: defaultCellRenderer
+      },
       {
         accessorKey: 'total',
         header: 'Total',

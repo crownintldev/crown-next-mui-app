@@ -18,7 +18,9 @@ const Example = ({
   apiData,
   selectedId,
   drawerProps,
-  api
+  api,
+  headerMenu,
+  NewHeaderMenu
 }) => {
   const {
     formTitle,
@@ -145,12 +147,15 @@ const Example = ({
           visaBookingIds: childSelectionRow,
           accountId: parentId
         }}
-        selectionRow={selectionRow}
+        selectedIds={selectionRow}
         setChildRowSelection={setChildRowSelection}
         fetchData={fetchData}
         api={api}
         table={table}
         tableData={data}
+        removeSelection={handleRemoveSelection}
+        headerMenu={headerMenu}
+        NewHeaderMenu={NewHeaderMenu}
       />
     );
   };

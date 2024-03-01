@@ -36,13 +36,13 @@ const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
   // ** Hook
   const theme = useTheme();
   // console.log('header', detail.logo.url);
-
+console.log(detail)
   return (
     <Grid container xl={{ mb: 10 }} xs={{ mb: 10 }} sx={{ mb: 10 }}>
       <Grid item xl={6} xs={12} sx={{ mb: { xl: 0, xs: 4 } }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ mb: 6, display: 'flex', alignItems: 'center' }}>
-            <Image src={detail.logo.url} width={70} height={70} />
+            <Image src={detail?.logo} width={70} height={70} />
             <Typography
               variant='h4'
               sx={{ ml: 2.5, fontWeight: 700, lineHeight: '24px' }}

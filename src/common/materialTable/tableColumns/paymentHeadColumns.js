@@ -20,6 +20,7 @@ const TableColumn = (accessorKey, header, Cell = defaultCellRenderer) => {
 const usePaymentHeadColumns = (openMediaDrawer) =>
   useMemo(
     () => [
+      TableColumn('_id',"ID",CellRowId),
       {
         accessorKey: 'media',
         header: 'Media',

@@ -1,93 +1,169 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // ** Third Party Imports
 import * as yup from 'yup';
 
-import CommonForm1 from '../commonForms/CommonForm1';
+// ** MUI Imports
+import Button from '@mui/material/Button';
+
+import Box from '@mui/material/Box';
+
+// yup
+import { yupResolver } from '@hookform/resolvers/yup';
+
+// hookform
+import { Controller, useForm } from 'react-hook-form';
+
+//redux
+import { useDispatch, useSelector } from 'react-redux';
+
+// action
+import { createApi, updateApi } from 'src/action/function';
+
+//dataEntry
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
+import SingleFileUploader from 'src/common/fileUpload/SingleFileUploader';
 
 const schema = yup.object().shape({
   businessName: yup.string().required('required'),
-  contact: yup.string().required('required'),
-  phone: yup.string().required('required'),
+  phone1: yup.string().required('required'),
+  phone2: yup.string().required('required'),
   email: yup.string().required('required'),
-  businessAddress: yup.string().required('required'),
-  referenceMember: yup.string().required('required'),
-  supplier: yup.string().required('required')
+  businessAddress: yup.string().required('required')
 });
 
 const defaultValues = {
   businessName: '',
-  contact: '',
-  phone: '',
+  phone2: '',
+  phone1: '',
   email: '',
-  businessAddress: '',
-  referenceMember: '',
-  supplier: ''
+  businessAddress: ''
 };
 
-const BusinessSettingForm = ({
+const PaymentHeadForm = ({
   toggle,
   fetchApi,
-  api = 'businesssetting',
+  setFormSize,
+  api = 'business-setting',
   _id,
-  stateSelector,
+  stateSelector = 'paymentHead',
   removeSelection
 }) => {
+  const dispatch = useDispatch();
+  const type = useSelector((state) => state?.paymentHeadType?.data);
+  let editId = useSelector((state) =>
+    state[stateSelector]?.data?.find((item) => item._id === _id)
+  );
+
+  // states
+  const [file, setFile] = useState(null);
+
+  useEffect(() => {
+    setFormSize(400);
+  }, []);
+
+  const {
+    reset,
+    control,
+    setError,
+    handleSubmit,
+    getValues,
+    watch,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    defaultValues,
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  });
+  useEffect(() => {
+    setValue('logo', file);
+  }, [file]);
+  useEffect(() => {
+    if (editId) {
+      Object.keys(editId).forEach((key) => {
+        setValue(key, editId[key]);
+      });
+      setFile(editId.logo);
+    } else {
+      reset();
+    }
+  }, [setValue, editId]);
+
+  const handleClose = () => {
+    toggle();
+    reset();
+    removeSelection();
+  };
+
+  //************************** */ onSubmit
+  const onSubmit = async (data) => {
+    let formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
+    if (editId) {
+      updateApi({
+        _id,
+        api,
+        data: formData,
+        dispatch,
+        fetchData: fetchApi,
+        toggle,
+        reset,
+        removeSelection
+      });
+    } else {
+      createApi({
+        api,
+        data: formData,
+        dispatch,
+        fetchData: fetchApi,
+        toggle,
+        reset,
+        removeSelection
+      });
+    }
+  };
+
   const chooseFields = [
     {
-      name: 'businessName',
-      placeholder: `Enter Business Name`,
-      label: `Business Name`,
-      required: true
+      name: 'businessName'
     },
     {
-      name: 'contact',
-      placeholder: `Enter contact Number`,
-      label: `contact`,
-      required: true
+      name: 'phone1'
     },
     {
-      name: 'phone',
-      placeholder: `Enter Phone Number`,
-      label: `Phone Number`
+      name: 'phone2'
     },
     {
-      name: 'email',
-      placeholder: `Enter Email Number`,
-      label: `Email`
+      name: 'email'
     },
     {
-      name: 'businessAddress',
-      placeholder: `Enter Business Address`,
-      label: `Business Address`
-    },
-    {
-      name: 'referenceMember',
-      placeholder: `reference Member`,
-      label: `Reference member id`
-    },
-    {
-      name: 'supplier',
-      placeholder: `Select supplier ID`,
-      label: `Supplier ID`
+      name: 'businessAddress'
     }
   ];
-
   return (
     <div>
-      <CommonForm1
-        toggle={toggle}
-        fetchApi={fetchApi}
-        api={api}
-        _id={_id}
-        stateSelector={stateSelector}
-        removeSelection={removeSelection}
-        schema={schema}
-        defaultValues={defaultValues}
-        chooseFields={chooseFields}
-      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <CustomHookTextField
+          chooseFields={chooseFields}
+          control={control}
+          errors={errors}
+        />
+        <SingleFileUploader file={file} setFile={setFile} />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button type='submit' variant='contained' sx={{ mr: 3 }}>
+            Submit
+          </Button>
+          <Button variant='tonal' color='secondary' onClick={handleClose}>
+            Cancel
+          </Button>
+        </Box>
+      </form>
     </div>
   );
 };
 
-export default BusinessSettingForm;
+export default PaymentHeadForm;

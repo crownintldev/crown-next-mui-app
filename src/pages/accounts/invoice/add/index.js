@@ -30,18 +30,17 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   const [issueDate, setIssueDate] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date(tomorrowDate));
 
-  const companyData = useSelector((state) => state.businesssetting.data[0]);
-  console.log('company data', companyData);
+  const companyData = useSelector((state) => state.businessSetting.data[0]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchBusinesssetting({}));
   }, []);
 
   const cardHeaderDetails = {
-    businessName: companyData.businessName,
-    address: companyData.businessAddress,
-    contacts: `${(companyData.contact, companyData.phone)}`,
-    logo: companyData.files[0]
+    businessName: companyData?.businessName,
+    address: companyData?.businessAddress,
+    contacts: `${companyData?.phone1} ${companyData?.phone2}`,
+    logo: companyData?.logo?.url
   };
 
   return (

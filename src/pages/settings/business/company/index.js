@@ -16,17 +16,16 @@ import { fetchAgent } from 'src/store'
 import { fetchBusinesssetting } from 'src/store'
 import { useSelector } from 'react-redux'
 
-console.log(reduxToken())
 const index = ({ apiData }) => {
   const columns = useBusinessSettingColumns()
 
   return (
     <div>
       <MaterialTable
-        api={'businesssetting'}
+        api={'business-setting'}
         apiData={apiData}
         fetchData={fetchBusinesssetting}
-        stateSelector='businesssetting'
+        stateSelector='businessSetting'
         columns={columns}
         drawerProps={{
           formTitle: 'Add Business',

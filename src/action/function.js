@@ -37,7 +37,7 @@ export const createApi = async ({
     }
     if (response.data.data) {
       const fetchApi = fetchData
-        ? fetchData({ updateData: response.data.data })
+        ? fetchData({ newData: response.data.data })
         : fetchList({});
       dispatch(fetchApi);
       if (toggle) {

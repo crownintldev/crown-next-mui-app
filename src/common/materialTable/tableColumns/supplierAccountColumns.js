@@ -89,28 +89,28 @@ export const useChildSupplierAccountColumn = () =>
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'supfee.totalFee',
+      accessorKey: 'supplierdetail.paymentway.totalFee',
       header: 'Sup - Confirmed',
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'supfee.processingFee',
+      accessorKey: 'supplierdetail.paymentway.processingFee',
       header: 'Sup - Processing Fee',
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'supfee.visaFee',
+      accessorKey: 'supplierdetail.total',
       header: 'Sup - Visa Fee',
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'visaId.destination',
+      accessorKey: 'visaDetail.destination',
       header: 'Destination',
       Cell: defaultCellRenderer
     },
-    { accessorKey: 'visaId.category', header: 'Category', Cell: defaultCellRenderer },
-    { accessorKey: 'visaId.type', header: 'Type', Cell: defaultCellRenderer },
-    { accessorKey: 'visaId.duration', header: 'Duration', Cell: defaultCellRenderer }
+    { accessorKey: 'visaDetail.category', header: 'Category', Cell: defaultCellRenderer },
+    { accessorKey: 'visaDetail.type', header: 'Type', Cell: defaultCellRenderer },
+    { accessorKey: 'visaDetail.duration', header: 'Duration', Cell: defaultCellRenderer }
   ]);
 
 // export default useTableColumns

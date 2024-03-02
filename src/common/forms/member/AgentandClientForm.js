@@ -20,7 +20,7 @@ const defaultValues = {
 const AgentandClientForm = ({
   toggle,
   fetchApi,
-  api = 'agent',
+  api,
   _id,
   stateSelector,
   removeSelection

@@ -81,7 +81,7 @@ const VisaServiceForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
-  console.log(editId);
+  // console.log(editId);
   // ** State
   const [payMethod, setPayMethod] = useState('confirmed');
   const [supplierVisa, setSupplierVisa] = useState(null);

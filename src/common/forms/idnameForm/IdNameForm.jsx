@@ -33,7 +33,7 @@ const defaultValues = {
   name: ''
 }
 
-const IdNameForm = ({ toggle, fetchApi, api = 'expense', _id, stateSelector, removeSelection }) => {
+const IdNameForm = ({ toggle, fetchApi, api, _id, stateSelector, removeSelection }) => {
   const dispatch = useDispatch()
   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
 

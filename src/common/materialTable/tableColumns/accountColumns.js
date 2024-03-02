@@ -34,31 +34,31 @@ export const useTableColumns = (openMediaDrawer) =>
       { accessorKey: 'by.phone', header: 'Refer Phone #' },
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
       {
-        accessorKey: 'amount.paid',
+        accessorKey: 'paid',
         header: 'Paid Amount',
         size: 100,
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'amount.remaining',
+        accessorKey: 'remaining',
         header: 'Remaining Amount',
         size: 100,
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'amount.total',
+        accessorKey: 'total',
         header: 'Total Amount',
         size: 100,
         Cell: defaultCellRenderer
       },
       {
         accessorKey: 'supTotal',
-        header: 'Sup Charges',
+        header: 'Suppliers Charges',
         size: 100,
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'amount.discount',
+        accessorKey: 'discount',
         header: 'Discount',
         size: 100,
         Cell: defaultCellRenderer
@@ -101,17 +101,17 @@ export const useChildTableColumns = () =>
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'supfee.totalFee',
+      accessorKey: 'supplierdetail.paymentway.totalFee',
       header: 'Sup - Confirmed',
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'supfee.processingFee',
+      accessorKey: 'supplierdetail.paymentway.processingFee',
       header: 'Sup - Processing Fee',
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'supfee.visaFee',
+      accessorKey: 'supplierdetail.total',
       header: 'Sup - Visa Fee',
       Cell: defaultCellRenderer
     },

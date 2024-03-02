@@ -117,6 +117,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const company = useSelector((state) => state.company?.data)
   const agents = useSelector((state) => state.agent?.data)
 
+  
   useEffect(() => {
     setFormSize(1200)
     dispatch(fetchAgent({limit:100}))

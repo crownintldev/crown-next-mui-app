@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Icon from 'src/@core/components/icon';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-
+import UploadFile from 'src/common/forms/uploadFile/UploadFile';
 //redux
 import { useDispatch } from 'react-redux';
 import { fetchVisaBooking } from 'src/store';
@@ -23,8 +23,14 @@ const statusList = [
   'trash'
 ];
 
-const NewHeaderMenuVisaBooking = ({ selectedIds, toggle, removeSelection }) => {
-    const dispatch = useDispatch();
+const NewHeaderMenuVisaBooking = ({
+  SetForm,
+  toggleDrawer,
+  selectedIds,
+  toggle,
+  removeSelection
+}) => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -34,13 +40,17 @@ const NewHeaderMenuVisaBooking = ({ selectedIds, toggle, removeSelection }) => {
     setAnchorEl(null);
   };
   const handleStatus = (status) => {
-   let data={status,visaBookingIds:selectedIds}
+    let data = { status, visaBookingIds: selectedIds };
     updateManyApi({
       data,
       dispatch,
       fetchData: fetchVisaBooking,
       completeApi: 'visa-booking/update'
     });
+  };
+  const handleSingleDrawerForm = (Form,title) => {
+    SetForm({ Form,title });
+    toggleDrawer();
   };
   return (
     <>
@@ -89,6 +99,22 @@ const NewHeaderMenuVisaBooking = ({ selectedIds, toggle, removeSelection }) => {
             </div>
           )}
         </Menu>
+      </Box>
+      <Box
+        sx={{
+          rowGap: 2,
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center'
+        }}
+      >
+        <IconButton onClick={handleClick}>
+          <Icon
+            fontSize='1.5rem'
+            icon='material-symbols:upload'
+            onClick={()=>handleSingleDrawerForm(UploadFile,"Export Csv Upload Passport")}
+          />
+        </IconButton>
       </Box>
     </>
   );

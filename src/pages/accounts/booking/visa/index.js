@@ -41,7 +41,8 @@ const index = ({ apiData }) => {
   const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [Form, SetForm] = useState({
-    Form: null
+    Form: null,
+    title:"",
   });
 
   const formDrawer = () =>
@@ -50,9 +51,18 @@ const index = ({ apiData }) => {
       drawerOpen,
       toggleDrawer,
       Form: Form.Form,
-      FormTitle:Form.title,
+      FormTitle: Form.title,
       removeSelection: removeSelection.removeSelection
     });
+  const newHeaderMenu = ({ selectedIds, toggle, removeSelection }) => {
+    return NewHeaderMenuVisaBooking({
+      SetForm,
+      toggleDrawer,
+      selectedIds,
+      toggle,
+      removeSelection
+    });
+  };
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
     return HeaderMenuVisaBooking({
       setSelectedIds,
@@ -76,7 +86,7 @@ const index = ({ apiData }) => {
         columns={columns}
         // headerMenu={HeaderMenuVisaBooking}
         headerMenu={headerMenu}
-        NewHeaderMenu={NewHeaderMenuVisaBooking}
+        NewHeaderMenu={newHeaderMenu}
         drawerProps={{
           formTitle: 'Add Passport',
           buttonTitle: 'Add Passport',

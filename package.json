@@ -12,7 +12,7 @@
     "build:icons": "node src/iconify-bundle/bundle-icons-react.js",
     "gitpush": "git add . && git commit -m \"$(date +'%d-%m-%y %I:%M %p')\" && git push origin hamail",
     "gitmerge": "git checkout main && git pull origin main && git merge hamail && git commit -m 'main' && git push && git checkout hamail",
-    "salikpush": "git add . && git commit -m \"salik-committed $(date +'%d-%m-%y %I:%M %p')\" && git push"
+    "salikpush": "git add . && git commit -m 'added' && git push"
   },
   "dependencies": {
     "@babel/core": "7.21.5",

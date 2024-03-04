@@ -34,6 +34,7 @@ const index = ({ apiData }) => {
   };
 
   const columns = useTableColumns(openMediaDrawer);
+  
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const [selectedIds, setSelectedIds] = useState('');

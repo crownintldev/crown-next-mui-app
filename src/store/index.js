@@ -106,7 +106,7 @@ export const fetchBranch = createFetchDataThunk(
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['token', 'loginUser']
+  whitelist: ['token', 'loginUser','myInvoice']
 };
 const rootReducer = combineReducers({
   user,

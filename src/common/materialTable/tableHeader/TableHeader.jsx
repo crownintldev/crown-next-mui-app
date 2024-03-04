@@ -100,7 +100,7 @@ const TableHeader = (props) => {
     setIsHovered(false)
   }
   return (
-    <Box>
+    <Box style={{display:"flex"}}>
       <Box
         sx={{
           rowGap: 2,

@@ -23,44 +23,41 @@ import { createApi, updateApi } from 'src/action/function';
 
 //dataEntry
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
-import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
-import SelectHookField from 'src/common/dataEntry/SelectHookField';
-import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField';
-import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader';
 import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
-import IdNameForm from '../../idnameForm/IdNameForm';
+import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
 
 const schema = yup.object().shape({
-  invoiceDate: yup.string().required('required'),
-  ticketNumber: yup.string().typeError('Ticket Number is required').required('required'),
-  customer: yup.string().required('required')
+    name: yup.string().required('required'),
+    remarks: yup.string().typeError('remarks is required').required('required'),
+    insuranceCost: yup.string().required('required')
 });
 
 const defaultValues = {
+  name: '',
   by: '',
   onModel: '',
-  invoiceNumber: '',
-  ticketNumber: '',
-  invoiceDate: '',
-  customer: '',
-  airline: '',
-  sellingPrice: '',
+  remarks: '',
+  insuranceCost: '',
+  sellingCost: '',
   profit: '',
   discount: '',
   total: '',
-  sector: '',
-  profit: '',
+  insuranceCompany: '',
+  insuranceType: '',
+  insuranceCategory: '',
+  insuranceDuration: '',
   paymentMethod: '',
   files: []
 };
 
-const TicketBookingForm = ({
+const InsuranceForm = ({
   toggle,
   fetchApi,
   setFormSize,
-  api = 'ticket-booking',
+  api = 'insurance',
   _id,
   stateSelector,
   removeSelection
@@ -107,15 +104,13 @@ const TicketBookingForm = ({
         setValue(key, editId[key]);
       });
       setPreviousFiles(editId.files)
-      setValue('invoiceDate', dayjs(editId.invoiceDate))
-      setValue('by', editId.by._id)
     } else {
       reset();
     }
   }, [setValue, editId]);
 
-  const ticketCost = watch('ticketCost');
-  let sellingPrice = watch('sellingPrice');
+  const ticketCost = watch('insuranceCost');
+  let sellingPrice = watch('sellingCost');
   let discount = watch('discount');
 
   useEffect(() => {
@@ -140,6 +135,7 @@ const TicketBookingForm = ({
   } else if (watchedOnModel === 'Company') {
     byItems = company;
   }
+
   const byItem = byItems.map((item) => ({
     name: `${item.fullName || item.companyName} ${item.phone}`,
     _id: item._id
@@ -161,7 +157,7 @@ const TicketBookingForm = ({
     if (editId) {
       updateApi({
         _id,
-        api:"ticket-booking",
+        api:"insurance",
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -171,7 +167,7 @@ const TicketBookingForm = ({
       });
     } else {
       createApi({
-        api:"ticket-booking",
+        api:"insurance",
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -184,37 +180,37 @@ const TicketBookingForm = ({
 
   const chooseFields = [
     {
-      name: 'invoiceNumber',
-      placeholder: `Enter Invoice Number`,
-      label: `Invoice Number`,
+      name: 'name',
+      placeholder: `Enter Name`,
+      label: `Name`
+    },
+    {
+      name: 'insuranceCompany',
+      placeholder: `Enter Insurance Company`,
+      label: ` Insurance Company`,
+    },
+    {
+      name: 'insuranceType',
+      placeholder: `Insurance Type`,
+      label: `Insurance Type`
+    },
+    {
+      name: 'insuranceCategory',
+      placeholder: `Insurance Category`,
+      label: `Insurance Category`
+    },
+    {
+      name: 'insuranceDuration',
+      placeholder: `Insurance Duration`,
+      label: `Insurance Duration`
+    },
+    {
+      name: 'insuranceCost',
+      placeholder: `Insurance Cost`,
       type: 'number'
     },
     {
-      name: 'ticketNumber',
-      placeholder: `Enter Ticket Number`,
-      label: `Ticket Number`,
-      type: 'number'
-    },
-    {
-      name: 'customer',
-      placeholder: `Customer Name`,
-      label: `Customer Name`
-    },
-    {
-      name: 'sector',
-      placeholder: `Sector`
-    },
-    {
-      name: 'airline',
-      placeholder: `Airline`,
-    },
-    {
-      name: 'ticketCost',
-      placeholder: `Ticket Cost`,
-      type: 'number'
-    },
-    {
-      name: 'sellingPrice',
+      name: 'sellingCost',
       placeholder: `Selling Cost`,
       type: 'number'
     },
@@ -223,7 +219,6 @@ const TicketBookingForm = ({
       placeholder: `0`,
       type: 'number'
     },
- 
     {
       name: 'profit',
       placeholder: `ticket cost - selling cost`,
@@ -239,21 +234,20 @@ const TicketBookingForm = ({
     {
       name: 'paymentMethod',
       placeholder: `Payment Method`
+    },
+    {
+        name: 'remarks',
+        placeholder: 'Remarks'
+    },
+    {
+        name: 'supplier',
+        placeholder: 'Supplier ID'
     }
   ];
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box sx={{ pb: 2 }}>
-          <DatePickerHookField
-            name='invoiceDate'
-            placeholder='Invoice Date'
-            required={true}
-            control={control}
-            errors={errors}
-          />
-        </Box>
         <CustomHookTextField
           chooseFields={chooseFields}
           control={control}
@@ -331,4 +325,4 @@ const TicketBookingForm = ({
   );
 };
 
-export default TicketBookingForm;
+export default InsuranceForm;

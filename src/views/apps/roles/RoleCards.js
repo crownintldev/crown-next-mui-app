@@ -58,7 +58,9 @@ const rolesArr = [
   'Member',
   'Supplier',
   'Expense',
-  'Invoice'
+  'Invoice',
+  'Ticket',
+  'Payment Head'
 ]
 
 const RolesCards = () => {

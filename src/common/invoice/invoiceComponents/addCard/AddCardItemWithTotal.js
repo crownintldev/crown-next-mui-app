@@ -29,11 +29,11 @@ const AddCardItemWithTotal = ({ data, invoiceDataArray }) => {
   // ** Hook
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : [];
-
+console.log(invoiceDataArray)
   // calculating total Invoices
   invoiceDataArray &&
     invoiceDataArray.map((feeItem) => {
-      total += feeItem?.subTotal || 'Not Found';
+      total += feeItem?.subTotal;
       paid += feeItem?.paid;
       remaining += feeItem?.remaining;
       discount += feeItem?.discount;

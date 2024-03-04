@@ -64,7 +64,6 @@ const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }
       acc.discount += feeItem?.discount ?? 0
       return acc
     }, initialTotals)
-
     const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
     const axiosBody={
       invoiceDataArray,
@@ -74,6 +73,7 @@ const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }
       issueDate,
       dueDate
     }
+    // console.log("axiosBody",axiosBody)
     const apiRequest = invoiceEditId ? 
     await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/invoice/update/${invoiceEditId}`, axiosBody)
     :

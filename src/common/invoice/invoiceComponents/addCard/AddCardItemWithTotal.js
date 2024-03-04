@@ -29,7 +29,6 @@ const AddCardItemWithTotal = ({ data, invoiceDataArray }) => {
   // ** Hook
   const visaBookingIds =
     data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : [];
-console.log(invoiceDataArray)
   // calculating total Invoices
   invoiceDataArray &&
     invoiceDataArray.map((feeItem) => {

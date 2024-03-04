@@ -16,7 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAgent, fetchClient, fetchCompany } from 'src/store';
+import { fetchAgent, fetchClient, fetchCompany, fetchVisaType } from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';

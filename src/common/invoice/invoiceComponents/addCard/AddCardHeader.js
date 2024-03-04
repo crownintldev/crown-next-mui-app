@@ -47,7 +47,7 @@ const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
               variant='h4'
               sx={{ ml: 2.5, fontWeight: 700, lineHeight: '24px' }}
             >
-              {detail.businessName}
+              {detail?.businessName}
             </Typography>
           </Box>
           <div>

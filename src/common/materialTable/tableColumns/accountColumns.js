@@ -35,19 +35,19 @@ export const useTableColumns = (openMediaDrawer) =>
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
       {
         accessorKey: 'paid',
-        header: 'Paid Amount',
+        header: 'Paid',
         size: 100,
         Cell: defaultCellRenderer
       },
       {
         accessorKey: 'remaining',
-        header: 'Remaining Amount',
+        header: 'Remaining',
         size: 100,
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'total',
-        header: 'Total Amount',
+        accessorKey: 'subTotal',
+        header: 'SubTotal',
         size: 100,
         Cell: defaultCellRenderer
       },

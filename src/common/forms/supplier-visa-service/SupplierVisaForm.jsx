@@ -129,9 +129,9 @@ const SupplierVisaForm = ({
       setValue('duration', editId?.duration?._id);
       setValue('destination', editId?.destination?._id);
       setValue('supplier', editId?.supplierVisaService?.supplier?._id);
-      setValue('totalFee', editId?.supplierVisaService?.confirmed.totalFee);
-      setValue('processingFee', editId?.supplierVisaService?.processing.processingFee);
-      setValue('visaFee', editId?.supplierVisaService?.processing.visaFee);
+      setValue('totalFee', editId?.supplierVisaService?.confirmed?.totalFee);
+      setValue('processingFee', editId?.supplierVisaService?.processing?.processingFee);
+      setValue('visaFee', editId?.supplierVisaService?.processing?.visaFee);
     } else {
       reset();
     }

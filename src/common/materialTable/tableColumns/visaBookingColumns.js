@@ -108,6 +108,11 @@ const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       {
+        accessorKey: 'decrease',
+        header: 'Decrement',
+        Cell: defaultCellRenderer
+      },
+      {
         accessorKey: 'discount',
         header: 'Discount',
         Cell: defaultCellRenderer

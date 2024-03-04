@@ -1,31 +1,27 @@
-import React, { useState } from 'react'
-import { handleExportRows, handleExportData } from '../functions'
-import FileDownloadIcon from '@mui/icons-material/FileDownload'
-import { Box, Button, IconButton, Menu, MenuItem } from '@mui/material'
-import Icon from 'src/@core/components/icon'
+import React, { useState } from 'react';
+import { handleExportRows, handleExportData } from '../functions';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { Box, Button, IconButton, Menu, MenuItem } from '@mui/material';
+import Icon from 'src/@core/components/icon';
 
 const ExportButton = ({ tableData, table }) => {
-  const [exportToggle, setExportToggle] = useState(null)
-  const toggleExport = Boolean(exportToggle)
+  const [exportToggle, setExportToggle] = useState(null);
+  const toggleExport = Boolean(exportToggle);
 
-  const handleExport = event => {
-    setExportToggle(event.currentTarget)
-  }
+  const handleExport = (event) => {
+    setExportToggle(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setExportToggle(null)
-  }
+    setExportToggle(null);
+  };
 
   return (
     <div>
       {tableData.length > 0 ? (
         <>
           <IconButton onClick={handleExport}>
-            <Icon
-              fontSize='1.5rem'
-              icon='ph:export-bold'
-              // color='#2b60fe'
-            />
+            <Icon fontSize='1.5rem' icon='lets-icons:import-duotone-line' />
           </IconButton>
           <Menu anchorEl={exportToggle} open={toggleExport} onClose={handleClose}>
             <div onClick={handleClose}>
@@ -75,7 +71,7 @@ const ExportButton = ({ tableData, table }) => {
         <p>Add data first for exports ...</p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ExportButton
+export default ExportButton;

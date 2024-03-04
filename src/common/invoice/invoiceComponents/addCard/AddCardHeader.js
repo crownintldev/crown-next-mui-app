@@ -36,7 +36,7 @@ const AddCardHeader = ({ invoiceNumber, cardHeader }) => {
   // ** Hook
   const theme = useTheme();
   // console.log('header', detail.logo.url);
-console.log(detail)
+// console.log(detail)
   return (
     <Grid container xl={{ mb: 10 }} xs={{ mb: 10 }} sx={{ mb: 10 }}>
       <Grid item xl={6} xs={12} sx={{ mb: { xl: 0, xs: 4 } }}>

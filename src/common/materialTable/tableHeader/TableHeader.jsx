@@ -16,6 +16,7 @@ import { capitalizeSplitDash } from 'src/utils/helperfunction'
 import axiosInstance from 'src/utils/axiosInstance'
 import { TryOutlined } from '@mui/icons-material'
 import { AccountApi } from 'config'
+import ExportButton from './ExportButton'
 const TableHeader = (props) => {
   const dispatch = useDispatch()
 
@@ -202,6 +203,7 @@ const TableHeader = (props) => {
             headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
       </Box>
+      <ExportButton table={table} tableData={tableData} />
       {NewHeaderMenu && NewHeaderMenu({ selectedIds, toggle, removeSelection })}
     </Box>
   )

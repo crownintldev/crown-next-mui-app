@@ -118,7 +118,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     (state) =>
       ids &&
       ids.length > 0 &&
-      ids?.map((id) => state?.visaBooking?.data.find((item) => item?._id === id))
+      ids
+        ?.map((id) => state?.visaBooking?.data.find((item) => item?._id === id))
         .map((item) => {
           return {
             passportNumber: item?.passport?.passportNumber,
@@ -299,7 +300,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     //     await createManyApi({ api: 'visa-booking', ...apiConfig });
     //   }
     // } else {
-      await updateManyApi({ completeApi: 'visa-booking/update', ...apiConfig });
+    await updateManyApi({ completeApi: 'visa-booking/update', ...apiConfig });
     // }
   };
 
@@ -423,6 +424,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         toggle={toggleDrawer}
         drawerTitle={'Add Visa Service'}
         Form={VisaServiceForm}
+        api={'visa-service'}
         anchor='left'
         fetchApi={fetchVisaService}
       />
@@ -577,7 +579,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           >
             Submit
           </Button>
-       
+
           <Button variant='tonal' color='secondary' onClick={handleClose} sx={{ mr: 3 }}>
             Cancel
           </Button>

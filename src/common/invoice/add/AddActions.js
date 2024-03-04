@@ -56,13 +56,15 @@ const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }
     setIsSubmitting(true)
     const initialTotals = { total: 0, paid: 0, remaining: 0, discount: 0 }
 
+    
     const billing = invoiceDataArray.reduce((acc, feeItem) => {
-      acc.total += feeItem.amount.total
-      acc.paid += feeItem.amount.paid
-      acc.remaining += feeItem.amount.remaining
-      acc.discount += feeItem.amount.discount ?? 0
+      acc.total += feeItem?.subTotal
+      acc.paid += feeItem?.paid
+      acc.remaining += feeItem?.remaining
+      acc.discount += feeItem?.discount ?? 0
       return acc
     }, initialTotals)
+
     const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
     const axiosBody={
       invoiceDataArray,

@@ -1,7 +1,8 @@
 // ** React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 //redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchBusinesssetting } from 'src/store'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
 
@@ -19,10 +20,18 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 const InvoiceAdd = ({ apiClientData }) => {
   const invoiceData = useSelector((state) => state.myInvoice.data)
+  const companyData = useSelector((state) => state.businessSetting.data[0]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBusinesssetting({}));
+  }, []);
   const cardHeaderDetails = {
-    address: invoiceData?.detail?.address,
-    contacts: invoiceData?.detail?.contacts
-  }
+    businessName: companyData?.businessName,
+    address: companyData?.businessAddress,
+    contacts: `${companyData?.phone1} ${companyData?.phone2}`,
+    logo: companyData?.logo?.url
+  };
+
   // ** State
   const [addCustomerOpen, setAddCustomerOpen] = useState(false)
   const [selectedClient, setSelectedClient] = useState(null)

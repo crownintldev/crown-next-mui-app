@@ -29,15 +29,7 @@ import toast from 'react-hot-toast';
 import { Typography } from '@mui/material';
 import { updateApi, updateManyApi } from 'src/action/function';
 
-const showErrors = (field, valueLen, min) => {
-  if (valueLen === 0) {
-    return `${field} field is required`;
-  } else if (valueLen > 0 && valueLen < min) {
-    return `${field} must be at least ${min} characters`;
-  } else {
-    return '';
-  }
-};
+
 
 //custom vuexy select style
 const ITEM_HEIGHT = 48;
@@ -63,6 +55,7 @@ const schema = yup.object().shape({
 const defaultValues = {
   accountIds: [],
   paid: 0,
+  increment:0,
   total: 0,
   discount: 0
 };
@@ -86,7 +79,13 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
             passportNumber: visaBooking.passport?.passportNumber,
             givenName: visaBooking.passport?.givenName
           })),
-          amount: item?.amount,
+          total: item?.total,
+          discount: item?.discount,
+          decrease:item?.decrease,
+          subTotal: item?.subTotal,
+          paid: item?.paid,
+          remaining: item?.remaining,
+
           _id: item?._id,
           ReferName: item?.by?.fullName ? item?.by?.fullName : item?.by?.companyName,
           onModel: item?.onModel
@@ -133,8 +132,8 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
 
       const data = accountItems.reduce(
         (acc, item) => {
-          const { total = 0, paid = 0, discount = 0 } = item.amount;
-          acc.totalAmount += total;
+          const { total = 0,subTotal=0, paid = 0, discount = 0 } = item;
+          acc.totalAmount += subTotal;
           acc.paidAmount += paid;
           acc.discount += discount;
 
@@ -143,7 +142,6 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
         { totalAmount: 0, paidAmount: 0, remainingAmount: 0, discount: 0 }
       );
 
-      // console.log('data', data)
       setValue('paid', data.paidAmount);
       setValue('total', data.totalAmount);
       setValue('discount', data.discount);
@@ -156,16 +154,6 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   };
 
   const onSubmit = async (data) => {
-    // updateManyApi({
-    //   accountIds:ids,
-    //   completeApi: 'account/update',
-    //   data,
-    //   dispatch,
-    //   fetchList: fetchData,
-    //   toggle,
-    //   reset,
-    //   removeSelection
-    // })
     updateApi({
       _id: ids[0],
       api: 'account',
@@ -289,7 +277,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
               />
             )}
           />
-          <Controller
+          {/* <Controller
             name={'discount'}
             control={control}
             rules={{ required: true }}
@@ -307,7 +295,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
                 placeholder={'Enter Discount Amount'}
               />
             )}
-          />
+          /> */}
           <Controller
             name={'remaining'}
             control={control}

@@ -174,9 +174,9 @@ const VisaServiceForm = ({
 
   const onSubmit = async (data) => {
     // console.log(data)
-    if (editId) {
+    if (data.supplierVisaService) {
       updateApi({
-        _id,
+        _id: data.supplierVisaService,
         api,
         data,
         dispatch,

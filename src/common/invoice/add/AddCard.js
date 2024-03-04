@@ -56,9 +56,9 @@ const AddCard = (props) => {
   const data = useSelector((state) => state.invoice.data);
 
   const options = [
-    { label: 'Account', link: '/accounts/account/' },
-    { label: 'Booking', link: '/accounts/account/' },
-    { label: 'Flight', link: '/accounts/account/' }
+    { label: 'Account', link: '/accounts/account/visa-account' },
+    // { label: 'Booking', link: '/accounts/account/' },
+    // { label: 'Flight', link: '/accounts/account/' }
   ];
 
   const handleOptionSelect = (event, option) => {

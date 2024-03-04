@@ -144,18 +144,18 @@ const TableHeader = (props) => {
               </MenuItem>
             </div>
           )}
-          {ejectValue.visaBookingIds.length > 0 && (
+          {/* {ejectValue.visaBookingIds.length > 0 && (
             <MenuItem onClick={handleClose}>
               <Button onClick={handleEject} color='error' size='small'>
                 <Icon fontSize='1.125rem' icon='tabler:minus' />
                 Eject Passport
               </Button>
             </MenuItem>
-          )}
+          )} */}
           {selectedIds?.length > 0 && (
-            <div onClick={handleClose}>
+            <div onClick={handleInvoice}>
               <MenuItem
-                onClick={toggle}
+                onClose={handleClose}
                 sx={{
                   py: 1,
                   m: 0

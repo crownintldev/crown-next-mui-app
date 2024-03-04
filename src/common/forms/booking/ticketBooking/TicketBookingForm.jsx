@@ -71,9 +71,9 @@ const TicketBookingForm = ({
   );
 
   // states
-  const [files, setFiles] = useState([])
-  const [previousFiles, setPreviousFiles] = useState([])
-  const [removeFiles, setRemoveFiles] = useState([])
+  const [files, setFiles] = useState([]);
+  const [previousFiles, setPreviousFiles] = useState([]);
+  const [removeFiles, setRemoveFiles] = useState([]);
   // onModel
   const clients = useSelector((state) => state.client?.data);
   const company = useSelector((state) => state.company?.data);
@@ -106,9 +106,9 @@ const TicketBookingForm = ({
       Object.keys(editId).forEach((key) => {
         setValue(key, editId[key]);
       });
-      setPreviousFiles(editId.files)
-      setValue('invoiceDate', dayjs(editId.invoiceDate))
-      setValue('by', editId.by._id)
+      setPreviousFiles(editId.files);
+      setValue('invoiceDate', dayjs(editId.invoiceDate));
+      setValue('by', editId.by._id);
     } else {
       reset();
     }
@@ -119,10 +119,8 @@ const TicketBookingForm = ({
   let discount = watch('discount');
 
   useEffect(() => {
-    let profit = ticketCost - sellingPrice;
-    let total = profit - discount;
+    let total = ticketCost - sellingPrice - discount;
     setValue('total', total);
-    setValue('profit', profit);
   }, [sellingPrice, ticketCost, discount]);
 
   const handleClose = () => {
@@ -161,7 +159,7 @@ const TicketBookingForm = ({
     if (editId) {
       updateApi({
         _id,
-        api:"ticket-booking",
+        api: 'ticket-booking',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -171,7 +169,7 @@ const TicketBookingForm = ({
       });
     } else {
       createApi({
-        api:"ticket-booking",
+        api: 'ticket-booking',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -206,7 +204,7 @@ const TicketBookingForm = ({
     },
     {
       name: 'airline',
-      placeholder: `Airline`,
+      placeholder: `Airline`
     },
     {
       name: 'ticketCost',
@@ -223,16 +221,10 @@ const TicketBookingForm = ({
       placeholder: `0`,
       type: 'number'
     },
- 
-    {
-      name: 'profit',
-      placeholder: `ticket cost - selling cost`,
-      disabled: true,
-      type: 'number'
-    },
+
     {
       name: 'total',
-      placeholder: `profit - discount`,
+      placeholder: 'Ticket Cost - selling Price  -  discount',
       disabled: true,
       type: 'number'
     },
@@ -276,48 +268,44 @@ const TicketBookingForm = ({
           label='Refer'
           placeholder='Choose Refer'
         />
-           {!editId ? (
-              <Box sx={{ width: '200px' }}>
-                <Controller
-                  name='files'
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                      <label htmlFor='files'>Upload Files</label>
-                      <FilesUploader
-                        setFiles={setFiles}
-                        files={files}
-                        onChange={onChange}
-                      />
-                    </>
-                  )}
-                />
-              </Box>
-          ) : (
-              <Box sx={{ width: '200px' }}>
-                <Controller
-                  name='files'
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                      <label htmlFor='files'>Upload Files</label>
-                      <EditFilesUploader
-                        setFiles={setFiles}
-                        previousFiles={previousFiles}
-                        setPreviousFiles={setPreviousFiles}
-                        removeFiles={removeFiles}
-                        setRemoveFiles={setRemoveFiles}
-                        files={files}
-                        prevFiles={editId?.files}
-                        onChange={onChange}
-                      />
-                    </>
-                  )}
-                />
-              </Box>
-          )}
+        {!editId ? (
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
+                </>
+              )}
+            />
+          </Box>
+        ) : (
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <EditFilesUploader
+                    setFiles={setFiles}
+                    previousFiles={previousFiles}
+                    setPreviousFiles={setPreviousFiles}
+                    removeFiles={removeFiles}
+                    setRemoveFiles={setRemoveFiles}
+                    files={files}
+                    prevFiles={editId?.files}
+                    onChange={onChange}
+                  />
+                </>
+              )}
+            />
+          </Box>
+        )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit

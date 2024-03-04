@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 // ** React Imports
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getReducer } from 'src/store/apps/sliceActionReducer';
 
 // ** MUI Imports
 import Card from '@mui/material/Card';
@@ -46,8 +48,10 @@ const AddCard = (props) => {
   const [selectUser, setSelectUser] = useState(null);
   const [invoiceData, setInvoiceData] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-// console.log(invoiceDataArray)
+  // console.log(invoiceDataArray)
   //**end AddCardInvoiceTo states
+  const dispatch = useDispatch();
+  const setInvoice = getReducer('myInvoice');
 
   // ** Hook
   const theme = useTheme();
@@ -57,6 +61,7 @@ const AddCard = (props) => {
 
   const options = [
     { label: 'Account', link: '/accounts/account/visa-account' },
+    { label: 'Ticket', link: '/accounts/booking/ticket' }
     // { label: 'Booking', link: '/accounts/account/' },
     // { label: 'Flight', link: '/accounts/account/' }
   ];
@@ -64,13 +69,19 @@ const AddCard = (props) => {
   const handleOptionSelect = (event, option) => {
     setSelectedOption(option);
   };
-
+  // clear invoice
+  const handleClearInvoice = () => {
+    dispatch(setInvoice());
+  };
   return (
     <Card>
       {/* Header ---------------------------------------------------------------*/}
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
+        <div className='flex justify-end pb-2'>
+          <Button onClick={handleClearInvoice}>Clear Invoice</Button>
+        </div>
         <AddCardHeader invoiceNumber={invoiceNumber} cardHeader={cardHeader} />
       </CardContent>
 

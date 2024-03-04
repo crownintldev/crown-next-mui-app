@@ -7,6 +7,7 @@ module.exports = {
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}'
   ],
+  corePlugins: { preflight: false },
   prefix: '',
   theme: {
     container: {
@@ -74,4 +75,4 @@ module.exports = {
     }
   }
   // plugins: [require('tailwindcss-animate')]
-}
+};

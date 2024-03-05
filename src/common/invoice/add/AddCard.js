@@ -129,7 +129,7 @@ const AddCard = (props) => {
           </Box>
         ) : (
           // Normal rendering
-          invoiceDataArray.map((item) => {
+          invoiceDataArray.map((item, index) => {
             const { by: clientData, amount, visaBookingIds } = item;
 
             return (
@@ -158,6 +158,26 @@ const AddCard = (props) => {
                   selectUser={selectUser}
                   visaBookingIds={visaBookingIds}
                 />
+               {/* {invoiceDataArray.length == index+1} && */}
+                <Stack spacing={1} sx={{ width: 250 }}>
+
+                  <Autocomplete
+                    // id='custom-autocomplete'
+                    options={options}
+                    getOptionLabel={(option) => option.label}
+                    onChange={handleOptionSelect}
+                    renderInput={(params) => (
+                      <TextField {...params} label='Select your creation' />
+                    )}
+                    renderOption={(props, option) => (
+                      <Link href={option.link}>
+                        <li {...props}>
+                          <span>{option.label}</span>
+                        </li>
+                      </Link>
+                    )}
+                  />
+                </Stack>
               </>
             );
           })

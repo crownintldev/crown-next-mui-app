@@ -28,55 +28,36 @@ import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import SelectHookField from 'src/common/dataEntry/SelectHookField';
+
 const schema = yup.object().shape({
-  hotelName: yup.string().required('Hotel is required'),
-  // remarks: yup.string().required('Remarks is required'),
-  // referenceMember: yup.string().required("Reference Member is required"),
-  // hotelCost: yup.number().required("Hotel Cost is required"),
-  // sellingCost: yup.number().required("sellingCost is required"),
-  // supplier: yup.string(),
-  // profit: yup.number().required("profit is required"),
-  // discount: yup.number().required("discount is required"),
-  // total: yup.number().required("total is required"),
-  // destination: yup.string().required("destination is required"),
-  // noOfDays: yup.number().required("noOfDays is required"),
-  // noOfNights: yup.number().required("noOfNights is required"),
-  // noOfBeds: yup.number().required("noOfBeds is required"),
-  // roomType: yup.string().required("roomType is required"),
-  // hotelCategory: yup.string().required("hotelCategory is required"),
-  // hotelArea: yup.string().required("hotelArea is required"),
-  // paymentMethod: yup.string().required("paymentMethod is required"),
-  // files: yup.array().required('Files Are Missing')
-})
+    name: yup.string().required('required'),
+    remarks: yup.string().typeError('remarks is required').required('required'),
+    insuranceCost: yup.string().required('required')
+});
 
 const defaultValues = {
-  hotelName: '',
-  remarks: '',
+  name: '',
   by: '',
   onModel: '',
-  hotelCost: '',
-  sellingPrice: '',
+  remarks: '',
+  insuranceCost: '',
+  sellingCost: '',
   profit: '',
   discount: '',
   total: '',
-  supplier: '',
-  destination: '',
-  noOfDays: '',
-  noOfNights: '',
-  noOfBeds: '',
-  roomType: '',
-  hotelCategory: '',
-  hotelArea: '',
+  insuranceCompany: '',
+  insuranceType: '',
+  insuranceCategory: '',
+  insuranceDuration: '',
   paymentMethod: '',
-  files: [],
-  deletedFiles: [],
-}
+  files: []
+};
 
-const HotelBookingForm = ({
+const InsuranceForm = ({
   toggle,
   fetchApi,
   setFormSize,
-  api = 'hotel-booking',
+  api = 'insurance',
   _id,
   stateSelector,
   removeSelection
@@ -128,16 +109,16 @@ const HotelBookingForm = ({
     }
   }, [setValue, editId]);
 
-  const hotelCost = watch('hotelCost');
-  let sellingPrice = watch('sellingPrice');
+  const insuranceCost = watch('insuranceCost');
+  let sellingPrice = watch('sellingCost');
   let discount = watch('discount');
 
   useEffect(() => {
-    let profit = sellingPrice - hotelCost;
+    let profit = sellingPrice - insuranceCost;
     let total = profit - discount;
     setValue('total', total);
     setValue('profit', profit);
-  }, [sellingPrice, hotelCost, discount]);
+  }, [sellingPrice, insuranceCost, discount]);
 
   const handleClose = () => {
     toggle();
@@ -162,8 +143,6 @@ const HotelBookingForm = ({
 
   //************************** */ onSubmit
   const onSubmit = async (data) => {
-
-    console.log('sbmt')
     let formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (key !== 'files') {
@@ -178,7 +157,7 @@ const HotelBookingForm = ({
     if (editId) {
       updateApi({
         _id,
-        api:"hotel-booking",
+        api:"insurance",
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -188,7 +167,7 @@ const HotelBookingForm = ({
       });
     } else {
       createApi({
-        api:"hotel-booking",
+        api:"insurance",
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -201,32 +180,40 @@ const HotelBookingForm = ({
 
   const chooseFields = [
     {
-        name: 'hotelName',
-      placeholder: `Enter Hotel Name`,
-      label: `Hotel Name`,
-      required: true
+      name: 'name',
+      placeholder: `Enter Name`,
+      label: `Name`
     },
     {
-        name: 'remarks',
-      placeholder: `Enter remarks`,
-      label: `Remarks`,
-      required: true
+      name: 'insuranceCompany',
+      placeholder: `Enter Insurance Company`,
+      label: ` Insurance Company`,
     },
     {
-        name: 'supplier',
-        placeholder: `Enter supplier`,
-        label: `Supplier`,
-        required: true
+      name: 'insuranceType',
+      placeholder: `Insurance Type`,
+      label: `Insurance Type`
     },
     {
-        name: "hotelCost",
-        placeholder: `Enter Hotel Cost`,
-      label: `Hotel Cost`
+      name: 'insuranceCategory',
+      placeholder: `Insurance Category`,
+      label: `Insurance Category`
     },
     {
-      name: 'sellingPrice',
-      placeholder: `Enter Selling Price`,
-      label: `Sellling Price`
+      name: 'insuranceDuration',
+      placeholder: `Insurance Duration`,
+      label: `Insurance Duration`
+    },
+    {
+      name: 'insuranceCost',
+      placeholder: `Insurance Cost`,
+      type: 'number'
+    },
+    {
+      name: 'sellingCost',
+      placeholder: `Selling Price`,
+      label: `Selling Price`,
+      type: 'number'
     },
     {
       name: 'discount',
@@ -246,50 +233,22 @@ const HotelBookingForm = ({
       type: 'number'
     },
     {
-      name: 'destination',
-      placeholder: `Enter destination`,
-      label: `Destination`
+      name: 'paymentMethod',
+      placeholder: `Payment Method`
     },
     {
-      name: 'noOfDays',
-      placeholder: `Enter noOfDays`,
-      label: `Number Of Days`
+        name: 'remarks',
+        placeholder: 'Remarks'
     },
     {
-      name: 'noOfNights',
-      placeholder: `Enter noOfNights`,
-      label: `Number Of Night`
-    },
-    {
-      name: 'noOfBeds',
-      placeholder: `Enter noOfBeds`,
-      label: `Number Of Beds`
-    },
-    {
-        name: 'roomType',
-        placeholder: `Enter roomType`,
-        label: `Room Type`
-      },
-      {
-        name: 'hotelCategory',
-        placeholder: `Enter hotelCategory`,
-        label: `Hotel Category`
-      },
-      {
-        name: 'hotelArea',
-        placeholder: `Enter hotelArea`,
-        label: `Hotel Area`
-      },
-      {
-        name: 'paymentMethod',
-        placeholder: 'Enter Payment Method',
-        label: "Payment Method"
-      }
-    ]
+        name: 'supplier',
+        placeholder: 'Supplier ID'
+    }
+  ];
 
   return (
     <div>
-      <form >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <CustomHookTextField
           chooseFields={chooseFields}
           control={control}
@@ -355,7 +314,7 @@ const HotelBookingForm = ({
               </Box>
           )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button type='submit' variant='contained' sx={{ mr: 3 }} onClick={handleSubmit(onSubmit)}>
+          <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit
           </Button>
           <Button variant='tonal' color='secondary' onClick={handleClose}>
@@ -367,4 +326,4 @@ const HotelBookingForm = ({
   );
 };
 
-export default HotelBookingForm;
+export default InsuranceForm;

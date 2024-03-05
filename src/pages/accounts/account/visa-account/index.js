@@ -21,12 +21,14 @@ const index = ({ apiData }) => {
   const [mediaDrawerOpen, setMediaDrawerOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
-  const [selectedIds, setSelectedIds] = useState('');
+  const [selectedIds, setSelectedIds] = useState();
   const [removeSelection, setRemoveSelection] = useState({});
   const [Form, SetForm] = useState({
     Form: null
   });
 
+  
+  console.log('clg', selectedRowData)
   // open media drawer handler
   const openMediaDrawer = (row) => {
     setSelectedRowData(row.original);

@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import MaterialTable from 'src/common/materialTable/MaterialTable'
-import useBusinessSettingColumns from 'src/common/materialTable/tableColumns/companyBusinessSetting'
+import useHotelBookingColumns from 'src/common/materialTable/tableColumns/hotelBookingColumns'
+
 //Forms
 // import AgentandClientForm from 'src/common/forms/member/AgentandClientForm'
 import HotelBookingForm from 'src/common/forms/hotel/HotelForm'
@@ -13,23 +14,23 @@ import { fetchHotelBooking } from 'src/store'
 
 console.log(reduxToken())
 const index = ({ apiData }) => {
-  const columns = useBusinessSettingColumns()
+  const columns = useHotelBookingColumns()
 
   return (
     <div>
       <MaterialTable
-        api={'hotelbooking'}
+        api={'hotel-booking'}
         apiData={apiData}
         fetchData={fetchHotelBooking}
-        stateSelector='hotelbooking'
+        stateSelector='hotelBooking'
         columns={columns}
         drawerProps={{
-          formTitle: 'Add Business',
-          editFormTitle: 'Edit Business',
+          formTitle: 'Add Hotel',
+          editFormTitle: 'Edit Hotel',
 
           //header buttons drawer
-          buttonTitle: 'Add Business',
-          editButtonTitle: 'Edit Business',
+          buttonTitle: 'Add Hotel',
+          editButtonTitle: 'Edit Hotel',
           CreateForm: HotelBookingForm,
           EditForm: HotelBookingForm
         }}

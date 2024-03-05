@@ -1,5 +1,6 @@
 // ** Next Import
 import Link from 'next/link'
+import Image from 'next/image'
 
 // ** MUI Imports
 import IconButton from '@mui/material/IconButton'
@@ -12,6 +13,9 @@ import Icon from 'src/@core/components/icon'
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchBusinesssetting } from 'src/store'
+import { useEffect } from 'react'
 
 // ** Styled Components
 const MenuHeaderWrapper = styled(Box)(({ theme }) => ({
@@ -50,6 +54,12 @@ const VerticalNavHeader = props => {
     menuUnlockedIcon: userMenuUnlockedIcon
   } = props
 
+  const companyData = useSelector((state) => state.businessSetting.data[0]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchBusinesssetting({}));
+  }, []);
+
   // ** Hooks & Vars
   const theme = useTheme()
   const { navCollapsed } = settings
@@ -81,7 +91,9 @@ const VerticalNavHeader = props => {
             <MySvgIcon width={34} />
           </div> */}
           <LinkStyled href='/'>
-            <img src='/images/favicon.svg' alt='Logo' width={48} style={{marginLeft: '-6px'}}/>
+            {/* <img src={'/images/favicon.svg'} alt='Logo' width={48} style={{marginLeft: '-6px'}}/> */}
+            <Image src={companyData?.logo?.url} alt='business logo' width={70} height={70} className='mt-1' />
+
             {/* <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path
               fillRule='evenodd'

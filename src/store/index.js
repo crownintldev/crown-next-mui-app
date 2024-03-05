@@ -79,7 +79,8 @@ export const fetchBusinesssetting = createFetchDataThunk(
   'business-setting'
 );
 
-export const fetchHotelBooking = createFetchDataThunk('hotelbooking', 'hotelbooking');
+export const fetchHotelBooking = createFetchDataThunk('hotelBooking', 'hotel-booking');
+export const fetchInsurance = createFetchDataThunk('insurance', 'insurance');
 export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-method');
 export const fetchSubsidiary = createFetchDataThunk('subsidiary', 'subsidiary');
 export const fetchSubsidiaryType = createFetchDataThunk(
@@ -152,7 +153,8 @@ const rootReducer = combineReducers({
   role: generate('role', fetchRole),
   branch: generate('branch', fetchBranch),
   businessSetting: generate('businessSetting', fetchBusinesssetting),
-  hotelbooking: generate('hotelbooking', fetchHotelBooking)
+  hotelBooking: generate('hotelBooking', fetchHotelBooking),
+  insurance: generate('insurance', fetchInsurance)
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

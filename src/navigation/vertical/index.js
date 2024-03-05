@@ -54,8 +54,8 @@ const navigation = () => {
       title: 'Insurance',
       key: 'insurance',
       icon: 'healthicons:health-data-security',
-      path: '/tour',
-      activeChildPath: '/coming-soon',
+      path: '/insurance',
+      activeChildPath: '',
       children: ticketingArrays()
     },
     {

@@ -223,8 +223,8 @@ const TicketBookingForm = ({
     },
     {
       name: 'sellingPrice',
-      placeholder: `Ticket Selling Price`,
-      label: 'Ticket Selling Price',
+      placeholder: `Selling Price`,
+      label: `Selling Price`,
       type: 'number'
     },
     {

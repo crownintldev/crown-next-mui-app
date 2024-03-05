@@ -58,7 +58,17 @@ const useTableColumns = () =>
         accessorKey: 'supplierVisaService.confirmed.totalFee',
         header: 'Sup - Conf Fee',
         Cell: defaultCellRenderer
-      }
+      },
+      {
+        accessorKey: 'supplierVisaService.additionSupplierName',
+        header: 'Addition Supplier Name',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'supplierVisaService.additionSupplierFee',
+        header: 'Addition Supplier Fee',
+        Cell: defaultCellRenderer
+      },
     ],
     []
   )

@@ -55,11 +55,8 @@ const useTicketBookingColumns = (openMediaDrawer) =>
       { accessorKey: 'discount', header: 'Discount', Cell: defaultCellRenderer },
       { accessorKey: 'total', header: 'Total', Cell: defaultCellRenderer },
       { accessorKey: 'profit', header: 'Profit', Cell: defaultCellRenderer },
-      {
-        accessorKey: 'paymentMethod',
-        header: 'Payment Method',
-        Cell: defaultCellUpperCase
-      },
+      { accessorKey: 'paymentMethod.name', header: 'Payment Method', Cell: defaultCellRenderer },
+      { accessorKey: 'paymentDescription', header: 'Payment Description', Cell: defaultCellRenderer },
 
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
       { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }

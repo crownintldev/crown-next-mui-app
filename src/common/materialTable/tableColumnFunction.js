@@ -94,7 +94,7 @@ export const modelCondition = ({ cell }) => {
 }
 
 export const dateFormat = ({ cell }) => {
-  return dayjs(cell.getValue()).format('YYYY-MM-DD')
+  return dayjs(cell.getValue()).format('DD-MM-YYYY')
 }
 
 export const ArrayCellRenderer = ({ cell }) => {

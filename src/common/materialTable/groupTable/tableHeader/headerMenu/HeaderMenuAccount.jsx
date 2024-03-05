@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MenuItem } from '@mui/material';
 import { Box } from '@mui/system';
 import Icon from 'src/@core/components/icon';
-import PaymentHeadForm from 'src/common/forms/paymentHead/PaymentHeadForm';
+import PaymentHeadForm from 'src/common/forms/subsidiary/subsidiaryForm';
 
 const HeaderMenuAccount = ({
   SetForm,

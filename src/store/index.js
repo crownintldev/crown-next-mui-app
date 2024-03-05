@@ -73,11 +73,6 @@ export const fetchSupplierAccount = createFetchDataThunk(
   'supplierAccount',
   'supplier-account'
 );
-export const fetchPaymentHead = createFetchDataThunk('paymentHead', 'payment-head');
-export const fetchPaymentHeadType = createFetchDataThunk(
-  'paymentHeadType',
-  'payment-head-type'
-);
 
 export const fetchBusinesssetting = createFetchDataThunk(
   'businessSetting',
@@ -85,8 +80,16 @@ export const fetchBusinesssetting = createFetchDataThunk(
 );
 
 export const fetchHotelBooking = createFetchDataThunk('hotelbooking', 'hotelbooking');
-export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-Method');
-export const fetchAccoutPaymentHistory = createFetchDataThunk('accoutPaymentHistory', 'account-payment-history');
+export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-method');
+export const fetchSubsidiary = createFetchDataThunk('subsidiary', 'subsidiary');
+export const fetchSubsidiaryType = createFetchDataThunk(
+  'subsidiaryType',
+  'subsidiary-type'
+);
+export const fetchAccoutPaymentHistory = createFetchDataThunk(
+  'accoutPaymentHistory',
+  'account-payment-history'
+);
 
 //Auth App
 export const fetchUser = createFetchDataThunk(
@@ -108,7 +111,7 @@ export const fetchBranch = createFetchDataThunk(
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['token', 'loginUser','myInvoice']
+  whitelist: ['token', 'loginUser', 'myInvoice']
 };
 const rootReducer = combineReducers({
   user,
@@ -137,10 +140,10 @@ const rootReducer = combineReducers({
   invoice: generate('invoice', fetchInvoice),
   ticketBooking: generate('ticketBooking', fetchTicketBooking),
   supplierAccount: generate('supplierAccount', fetchSupplierAccount),
-  paymentHead: generate('paymentHead', fetchPaymentHead),
-  paymentHeadType: generate('paymentHeadType', fetchPaymentHeadType),
+  subsidiary: generate('subsidiary', fetchSubsidiary),
+  subsidiaryType: generate('subsidiaryType', fetchSubsidiaryType),
   paymentMethod: generate('paymentMethod', fetchPaymentMethod),
-  accoutPaymentHistory: generate('paymentMethod', fetchAccoutPaymentHistory),
+  accoutPaymentHistory: generate('accoutPaymentHistory', fetchAccoutPaymentHistory),
   myInvoice: generateReducer('myInvoice').reducer,
   // auth
   token: generateReducer('token').reducer,

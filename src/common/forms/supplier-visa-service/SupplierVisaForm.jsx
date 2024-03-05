@@ -66,7 +66,9 @@ const defaultValues = {
   supplier: '',
   totalFee: 0,
   visaFee: 0,
-  processingFee: 0
+  processingFee: 0,
+  additionSupplierName:"",
+  additionSupplierFee:""
 };
 
 const SupplierVisaForm = ({
@@ -132,6 +134,8 @@ const SupplierVisaForm = ({
       setValue('totalFee', editId?.supplierVisaService?.confirmed?.totalFee);
       setValue('processingFee', editId?.supplierVisaService?.processing?.processingFee);
       setValue('visaFee', editId?.supplierVisaService?.processing?.visaFee);
+      setValue('additionSupplierName', editId?.supplierVisaService?.additionSupplierName);
+      setValue('additionSupplierFee', editId?.supplierVisaService?.additionSupplierFee);
     } else {
       reset();
     }
@@ -195,6 +199,13 @@ const SupplierVisaForm = ({
       label: 'Processing - Visa Fee',
       value: watch('visaFee'),
       myvalue: true
+    },
+    {
+      name: 'additionSupplierName'
+    },
+    {
+      name: 'additionSupplierFee',
+      type: 'number'
     }
   ];
   // ]

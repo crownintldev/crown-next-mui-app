@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { Box, LinearProgress, Typography } from '@mui/material';
+import { Box, LinearProgress, Typography, Tab, Tabs } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { muiLinearProgressProps, tableProps } from '../functions';
 import { Button, Grid } from '@mui/material';
@@ -9,6 +9,9 @@ import FormDrawer from '../../drawer/FormDrawer';
 import TableHeader from './TableHeader';
 import { ChildTable } from './ChildTable';
 import { useTheme } from '@emotion/react';
+import InboxIcon from '@mui/icons-material/Inbox'; // Import appropriate icons
+import PaymentsIcon from '@mui/icons-material/Payments';
+import { useRouter } from 'next/router';
 
 const Example = ({
   columns,
@@ -23,12 +26,12 @@ const Example = ({
   NewHeaderMenu
 }) => {
   const {
-    formTitle,
-    editFormTitle,
-    buttonTitle,
-    editButtonTitle,
-    EditForm,
-    CreateForm,
+    formTitle="",
+    editFormTitle="",
+    buttonTitle="",
+    editButtonTitle="",
+    EditForm="",
+    CreateForm="",
     multiSelected = false
   } = drawerProps;
   const theme = useTheme();
@@ -41,6 +44,8 @@ const Example = ({
   const [isRefetching, setIsRefetching] = useState(false);
 
   // Table state
+  // Table Tab
+  const [activeTab, setActiveTab] = useState('default'); // State to track the active tab
 
   const [columnFilters, setColumnFilters] = useState([]);
   const [globalFilter, setGlobalFilter] = useState('');
@@ -53,6 +58,8 @@ const Example = ({
   const [childSelectionRow, setChildSelectionRow] = useState([]);
   const [parentId, setParentId] = useState('');
 
+  //router
+  const router = useRouter();
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
@@ -225,53 +232,69 @@ const Example = ({
         visaBookingIds={accountItems[0]?.visaBookingIds}
       />
     ),
-
-    //  ({ row }) => {
-    //   const parentRowId = row.original._id
-    //   const handleChildRowSelectionChangeParentId = selection => {
-    //     handleChildRowSelectionChange(selection, parentRowId)
-    //   }
-
-    //   const childTable = useMaterialReactTable({
-    //     columns: childColumns,
-    //     data: row.original.visaBookingIds || [],
-    //     getRowId: childRow => childRow._id,
-    //     enablePagination: false,
-    //     enableFilters: false, // Disable header filters
-    //     enableRowSelection: true,
-    //     onRowSelectionChange: handleChildRowSelectionChangeParentId,
-    //     onRowExpandedChange: handleToggleRowExpanded, // Handle row expansion changes
-    //     expanded: expandedRow ? [expandedRow] : [], // Control which row is expanded
-    //     state: {
-    //       rowSelection: childRowSelection
-    //     },
-    //     defaultColumn: {
-    //       maxSize: 400,
-    //       minSize: 80,
-    //       size: 160, //default size is usually 180
-    //     },
-    //     enableColumnResizing: true,
-    //     layoutMode:'semantic',
-    //     enableColumnFilterModes:false,
-    //     enableColumnFilters:false,
-    //     enableFilters:false
-    //   })
-
-    //   return (
-    //     <Box
-    //       sx={{ padding:"0 0 0 50px" }}
-    //       className='custom-child-table'
-    //     >
-    //       <MaterialReactTable table={childTable} />
-    //     </Box>
-    //   )
-    // },
     enableRowSelection: true
   });
 
+  // Function to handle tab changes
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+    if (newValue === 'account') {
+      router.push('/accounts/account/visa-account');
+    } else {
+      router.push('/accounts/account/visa-account-log');
+    }
+  };
+  // Conditionally render the table component based on the active tab
+  // const renderTableComponent = () => {
+  //   if (activeTab === 'account') {
+  //     return <MaterialReactTable table={table} className='custom-table-styles' />;
+  //   } else if (activeTab === 'trash') {
+  //     // Pass the trashed rows to the table in the "Trash" tab
+  //     return (
+  //       <MaterialReactTable
+  //         table={table}
+  //         data={trashedRows}
+  //         className='custom-table-styles'
+  //       />
+  //     );
+  //   }
+  // };
   return (
     <>
       {cards()}
+      <Tabs
+        value={activeTab}
+        onChange={handleTabChange}
+        indicatorColor='primary'
+        textColor='primary'
+        variant='fullWidth'
+        aria-label='table sections tabs'
+        sx={{
+          backgroundColor: theme.palette.background.paper,
+          marginBottom: '3px',
+          borderRadius: '7px'
+        }}
+      >
+        <Tab
+          // onClick={() => setShowTrash("false")}
+          label={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <InboxIcon style={{ marginRight: '4px' }} /> Account
+            </div>
+          }
+          value='account'
+        />
+        <Tab
+          // onClick={() => setShowTrash("true")}
+          label={
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <PaymentsIcon style={{ marginRight: '4px' }} /> Payment Log
+            </div>
+          }
+          value='paymentLog'
+        />
+      </Tabs>
+     
       <div className='custom-scrollbar'>
         {isLoading && (
           <LinearProgress
@@ -280,6 +303,7 @@ const Example = ({
             }}
           />
         )}
+    
         <MaterialReactTable table={table} />
         {isLoading && (
           <LinearProgress

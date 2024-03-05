@@ -86,6 +86,7 @@ export const fetchBusinesssetting = createFetchDataThunk(
 
 export const fetchHotelBooking = createFetchDataThunk('hotelbooking', 'hotelbooking');
 export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-Method');
+export const fetchAccoutPaymentHistory = createFetchDataThunk('accoutPaymentHistory', 'account-payment-history');
 
 //Auth App
 export const fetchUser = createFetchDataThunk(
@@ -139,6 +140,7 @@ const rootReducer = combineReducers({
   paymentHead: generate('paymentHead', fetchPaymentHead),
   paymentHeadType: generate('paymentHeadType', fetchPaymentHeadType),
   paymentMethod: generate('paymentMethod', fetchPaymentMethod),
+  accoutPaymentHistory: generate('paymentMethod', fetchAccoutPaymentHistory),
   myInvoice: generateReducer('myInvoice').reducer,
   // auth
   token: generateReducer('token').reducer,

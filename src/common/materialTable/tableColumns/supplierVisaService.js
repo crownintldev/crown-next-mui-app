@@ -34,6 +34,16 @@ const useSupplierVisaService = () =>
         header: 'Confirmed - Total Fee',
         Cell: defaultCellRenderer
       },
+      {
+        accessorKey: 'additionSupplierName',
+        header: 'Addition Supplier Name',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'additionSupplierFee',
+        header: 'Addition Supplier Fee',
+        Cell: defaultCellRenderer
+      },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
       { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }
     ],

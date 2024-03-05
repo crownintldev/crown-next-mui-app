@@ -267,6 +267,9 @@ const MaterialTable = ({
           value='trash'
         />
       </Tabs>
+
+
+      
       <div style={{ backgroundColor: '#FFF', borderRadius: '10px' }} className='custom-scrollbar'>
         {/* Conditionally render the table component */}
         {renderTableComponent()}

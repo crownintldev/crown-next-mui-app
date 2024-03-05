@@ -65,14 +65,14 @@ const HeaderMenuVisaBooking = ({
                     }}
                   >
                     <Icon fontSize='0.8rem' icon='tabler:plus' />
-                    Add New Visa
+                    Duplicate Visa Booking
                   </Box>
                 </MenuItem>
               </div>
             </div>
           </>
         )}
-        <div onClick={handleClose}>
+        {/* <div onClick={handleClose}>
           <div>
             <MenuItem
               onClick={() => handleSingleDrawerForm(PaymentHeadForm,"Add Payment Head")}
@@ -92,7 +92,7 @@ const HeaderMenuVisaBooking = ({
               </Box>
             </MenuItem>
           </div>
-        </div>
+        </div> */}
       </>
     );
   };

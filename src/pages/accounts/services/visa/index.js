@@ -62,7 +62,7 @@ const index = ({ apiData }) => {
                   }}
                 >
                   <Icon fontSize='0.8rem' icon='tabler:plus' />
-                  Edit Sup Visa Service
+                  Edit Supplier Rate
                 </Box>
               </MenuItem>
             </div>
@@ -82,12 +82,12 @@ const index = ({ apiData }) => {
         columns={columns}
         headerMenu={headerMenu}
         drawerProps={{
-          formTitle: 'Visa Service',
-          editFormTitle: 'Edit Visa Service',
+          formTitle: 'Visa Supplier Rate',
+          editFormTitle: 'Visa Sale Rate',
 
           //header buttons drawer
-          buttonTitle: 'Add Service',
-          editButtonTitle: 'Edit Visa Service',
+          buttonTitle: 'Add Supplier Rate',
+          editButtonTitle: 'Add Sale Rate',
           CreateForm: SupplierVisaForm,
           EditForm: VisaServiceForm
         }}

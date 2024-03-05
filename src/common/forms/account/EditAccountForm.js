@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // ** Actions Imports
 import { fetchData } from 'src/store/apps/account';
-
+import { fetchPaymentMethod } from 'src/store';
 //helper function
 import { axiosErrorMessage, isAllSameinArray } from 'src/utils/helperfunction';
 
@@ -28,8 +28,10 @@ import { useForm, Controller } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Typography } from '@mui/material';
 import { updateApi, updateManyApi } from 'src/action/function';
-
-
+import IdNameForm from '../idnameForm/IdNameForm';
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
 
 //custom vuexy select style
 const ITEM_HEIGHT = 48;
@@ -55,7 +57,10 @@ const schema = yup.object().shape({
 const defaultValues = {
   accountIds: [],
   paid: 0,
-  increment:0,
+  pay: '',
+  paymentMethod:"",
+  paymentDescription: '',
+  increment: 0,
   total: 0,
   discount: 0
 };
@@ -81,7 +86,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
           })),
           total: item?.total,
           discount: item?.discount,
-          decrease:item?.decrease,
+          decrease: item?.decrease,
           subTotal: item?.subTotal,
           paid: item?.paid,
           remaining: item?.remaining,
@@ -92,10 +97,12 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
         };
       })
   );
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
   const testValidityRefer = isAllSameinArray(accountItems, 'ReferName');
 
-  // console.log('account item', accountItems)
-
+  useEffect(() => {
+    dispatch(fetchPaymentMethod({}));
+  }, [dispatch]);
   const {
     reset,
     control,
@@ -121,9 +128,10 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   };
   const totalAmount = Number(watch('total'));
   const paidAmount = Number(watch('paid'));
+  const pay = Number(watch('pay'));
   const discountAmount = watch('discount') ? Number(watch('discount')) : 0;
 
-  const amountRemaining = totalAmount - (paidAmount + discountAmount);
+  const amountRemaining = totalAmount - (paidAmount + discountAmount + pay);
 
   // console.log('reming data', paidAmount, discountAmount, typeof paidAmount, typeof discountAmount)
   useEffect(() => {
@@ -132,7 +140,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
 
       const data = accountItems.reduce(
         (acc, item) => {
-          const { total = 0,subTotal=0, paid = 0, discount = 0 } = item;
+          const { total = 0, subTotal = 0, paid = 0, discount = 0 } = item;
           acc.totalAmount += subTotal;
           acc.paidAmount += paid;
           acc.discount += discount;
@@ -154,6 +162,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data)
     updateApi({
       _id: ids[0],
       api: 'account',
@@ -178,7 +187,27 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
       .filter(Boolean) // Removes any undefined or empty values
       .join(', ');
   };
-
+  const chooseFields = [
+    {
+      name: 'total',
+      type: 'number',
+      disabled:true
+    },
+    {
+      name: 'paid',
+      type: 'number',
+      disabled:true
+    },
+    {
+      name: 'pay',
+      type: 'number'
+    }
+  ];
+  const paymentDescriptionField = [
+    {
+      name: 'paymentDescription'
+    }
+  ];
   return (
     <div>
       {!testValidityRefer ? (
@@ -237,65 +266,11 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
             label={'Refer Name'}
             disabled
           />
-
-          <Controller
-            name='total'
+          <CustomHookTextField
+            chooseFields={chooseFields}
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <CustomTextField
-                disabled
-                fullWidth
-                type='number'
-                value={field.value} // Use field.value from 'react-hook-form'
-                sx={{ mb: 4 }}
-                label='Total Amount'
-                onChange={(e) => {
-                  field.onChange(e);
-                  handleAmountChange(e); // Call your custom handler
-                }}
-                placeholder='Enter Total Amount'
-              />
-            )}
+            errors={errors}
           />
-          <Controller
-            name='paid'
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <CustomTextField
-                fullWidth
-                type='number'
-                value={field.value} // Use field.value from 'react-hook-form'
-                sx={{ mb: 4 }}
-                label='Paid Amount'
-                onChange={(e) => {
-                  field.onChange(e);
-                  handleAmountChange(e); // Call your custom handler
-                }}
-                placeholder='Enter Paid Amount'
-              />
-            )}
-          />
-          {/* <Controller
-            name={'discount'}
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <CustomTextField
-                fullWidth
-                type={'number'}
-                value={field.value}
-                sx={{ mb: 4 }}
-                label={'Discount Amount'}
-                onChange={(e) => {
-                  field.onChange(e);
-                  handleAmountChange(e); // Call your custom handler
-                }}
-                placeholder={'Enter Discount Amount'}
-              />
-            )}
-          /> */}
           <Controller
             name={'remaining'}
             control={control}
@@ -312,32 +287,27 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
               />
             )}
           />
-
-          {/* {accountField.map((item: any) => {
-          const { name, label, placeholder, type } = item
-          return (
-            <Controller
-              key={name}
-              name={name}
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <CustomTextField
-                  fullWidth
-                  type={type ? type : 'text'}
-                  value={value}
-                  sx={{ mb: 4 }}
-                  label={label ? label : capitalizeCamelSpace(name)}
-                  onChange={onChange}
-                  placeholder={placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`}
-                  error={Boolean(errors[name as keyof typeof defaultValues])}
-                  helperText={(errors[name as keyof typeof defaultValues]?.message as string) || ''}
-                />
-              )}
-            />
-          )
-        })} */}
-
+          <CustomOpenDrawer
+            ButtonTitle='Add Payment Method'
+            drawerTitle='Add Payment Method'
+            Form={IdNameForm}
+            fetchApi={fetchPaymentMethod}
+            formName='Payment Method'
+            api='payment-method'
+          />
+          <SelectHookField
+            control={control}
+            name='paymentMethod'
+            showValue='name'
+            options={paymentMethod ?? []}
+            label='Payment Method'
+            placeholder='Payment Method'
+          />
+          <CustomHookTextField
+            chooseFields={paymentDescriptionField}
+            control={control}
+            errors={errors}
+          />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button type='submit' color='primary' variant='contained' sx={{ mr: 3 }}>
               Submit

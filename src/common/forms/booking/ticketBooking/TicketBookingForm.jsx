@@ -16,7 +16,13 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAgent, fetchClient, fetchCompany, fetchVisaType } from 'src/store';
+import {
+  fetchAgent,
+  fetchClient,
+  fetchCompany,
+  fetchPaymentMethod,
+  fetchVisaType
+} from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';
@@ -53,6 +59,7 @@ const defaultValues = {
   sector: '',
   profit: '',
   paymentMethod: '',
+  paymentDescription: '',
   files: []
 };
 
@@ -69,6 +76,8 @@ const TicketBookingForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
+  // payment Method
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // states
   const [files, setFiles] = useState([]);
@@ -84,6 +93,7 @@ const TicketBookingForm = ({
     dispatch(fetchAgent({ limit: 100 }));
     dispatch(fetchClient({ limit: 100 }));
     dispatch(fetchCompany({ limit: 100 }));
+    dispatch(fetchPaymentMethod({}));
   }, []);
 
   const {
@@ -119,7 +129,7 @@ const TicketBookingForm = ({
   let discount = watch('discount');
 
   useEffect(() => {
-    let total = ticketCost - sellingPrice - discount;
+    let total = sellingPrice - ticketCost - discount;
     setValue('total', total);
   }, [sellingPrice, ticketCost, discount]);
 
@@ -213,7 +223,8 @@ const TicketBookingForm = ({
     },
     {
       name: 'sellingPrice',
-      placeholder: `Selling Cost`,
+      placeholder: `Ticket Selling Price`,
+      label: 'Ticket Selling Price',
       type: 'number'
     },
     {
@@ -227,27 +238,40 @@ const TicketBookingForm = ({
       placeholder: 'Ticket Cost - selling Price  -  discount',
       disabled: true,
       type: 'number'
-    },
-    {
-      name: 'paymentMethod',
-      placeholder: `Payment Method`
     }
   ];
-
+  const paymentDescriptionField = [
+    {
+      name: 'paymentDescription'
+    }
+  ];
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box sx={{ pb: 2 }}>
-          <DatePickerHookField
-            name='invoiceDate'
-            placeholder='Invoice Date'
-            required={true}
-            control={control}
-            errors={errors}
-          />
-        </Box>
+        <Box sx={{ pb: 2 }}></Box>
         <CustomHookTextField
           chooseFields={chooseFields}
+          control={control}
+          errors={errors}
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
+        />
+        <CustomHookTextField
+          chooseFields={paymentDescriptionField}
           control={control}
           errors={errors}
         />

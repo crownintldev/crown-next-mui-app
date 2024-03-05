@@ -24,7 +24,7 @@ const HeaderMenuAccount = ({
     };
     return (
       <>
-        <div onClick={handleClose}>
+        {/* <div onClick={handleClose}>
           <div>
             <MenuItem
               onClick={() => handleSingleDrawerForm(PaymentHeadForm,"Add Payment Head")}
@@ -44,7 +44,7 @@ const HeaderMenuAccount = ({
               </Box>
             </MenuItem>
           </div>
-        </div>
+        </div> */}
       </>
     );
   };

@@ -54,12 +54,12 @@ const index = ({ apiData }) => {
         stateSelector='ticketBooking'
         columns={columns}
         drawerProps={{
-          formTitle: 'Create Ticket',
-          editFormTitle: 'Edit Ticket',
+          formTitle: 'Ticket Booking',
+          editFormTitle: 'Edit Ticket Booking',
 
           //header buttons drawer
-          buttonTitle: 'Create Ticket',
-          editButtonTitle: 'Edit Ticket',
+          buttonTitle: 'Ticket Booking',
+          editButtonTitle: 'Edit Ticket Booking',
           CreateForm: TicketBookingForm,
           EditForm: TicketBookingForm
         }}

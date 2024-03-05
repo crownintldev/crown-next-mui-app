@@ -1,49 +1,50 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 // ** Third Party Imports
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 // ** MUI Imports
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
 // yup
-import { yupResolver } from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup';
 
 // hookform
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
 //redux
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchExpense } from 'src/store'
-import { fetchExpenseCategory, fetchExpenseType } from 'src/store'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchExpense, fetchPaymentMethod } from 'src/store';
+import { fetchExpenseCategory, fetchExpenseType } from 'src/store';
 
 // action
-import { createApi, updateApi } from 'src/action/function'
+import { createApi, updateApi } from 'src/action/function';
 
 //dataEntry
-import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField'
-import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer'
-import SelectHookField from 'src/common/dataEntry/SelectHookField'
+import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
 
 //form
-import ExpenseidForm from './ids/expenseidForm'
+import ExpenseidForm from './ids/expenseidForm';
+import IdNameForm from '../idnameForm/IdNameForm';
 
 const schema = yup.object().shape({
   title: yup.string().required('required'),
-  title: yup.string().typeError('Title is required').required('required'),
   category: yup.string().typeError('Category is required').required('required')
-})
+});
 
 const defaultValues = {
   title: '',
   type: '',
   category: '',
   price: '',
-  description: '',
+  paymentMethod: '',
+  paymentDescription: '',
   files: []
-}
+};
 
 const ExpenseForm = ({
   toggle,
@@ -53,17 +54,21 @@ const ExpenseForm = ({
   stateSelector,
   removeSelection
 }) => {
-  const dispatch = useDispatch()
-  let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
+  const dispatch = useDispatch();
+  let editId = useSelector((state) =>
+    state[stateSelector]?.data?.find((item) => item._id === _id)
+  );
 
-  const category = useSelector(state => state?.expenseCategory?.data)
-  const type = useSelector(state => state?.expenseType?.data)
+  const category = useSelector((state) => state?.expenseCategory?.data);
+  const type = useSelector((state) => state?.expenseType?.data);
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // console.log(type)
   useEffect(() => {
-    dispatch(fetchExpenseCategory({}))
-    dispatch(fetchExpenseType({}))
-  }, [dispatch])
+    dispatch(fetchExpenseCategory({}));
+    dispatch(fetchExpenseType({}));
+    dispatch(fetchPaymentMethod({}));
+  }, [dispatch]);
 
   const {
     reset,
@@ -78,35 +83,35 @@ const ExpenseForm = ({
     defaultValues,
     mode: 'onChange',
     resolver: yupResolver(schema)
-  })
+  });
 
   useEffect(() => {
     if (editId) {
-      Object.keys(editId).forEach(key => {
-        setValue(key, editId[key])
-      })
+      Object.keys(editId).forEach((key) => {
+        setValue(key, editId[key]);
+      });
     } else {
-      reset()
+      reset();
     }
-  }, [setValue, editId])
+  }, [setValue, editId]);
 
   const handleClose = () => {
-    toggle()
-    reset()
-    removeSelection()
-  }
+    toggle();
+    reset();
+    removeSelection();
+  };
 
- //************************** */ onSubmit
-  const onSubmit = async data => {
-    let formData = new FormData()
-    Object.keys(data).forEach(key => {
+  //************************** */ onSubmit
+  const onSubmit = async (data) => {
+    let formData = new FormData();
+    Object.keys(data).forEach((key) => {
       if (key !== 'files') {
-        formData.append(key, data[key])
+        formData.append(key, data[key]);
       }
-    })
-    data?.files?.forEach(file => {
-      formData.append('files', file)
-    })
+    });
+    data?.files?.forEach((file) => {
+      formData.append('files', file);
+    });
 
     // const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/create`, formData)
     if (editId) {
@@ -119,7 +124,7 @@ const ExpenseForm = ({
         toggle,
         reset,
         removeSelection
-      })
+      });
     } else {
       createApi({
         api,
@@ -129,9 +134,9 @@ const ExpenseForm = ({
         toggle,
         reset,
         removeSelection
-      })
+      });
     }
-  }
+  };
 
   const chooseFields = [
     {
@@ -145,13 +150,13 @@ const ExpenseForm = ({
       label: `Price`,
       type: 'number'
     },
+   
+  ];
+  const paymentDescriptionField = [
     {
-      name: 'description',
-      placeholder: `Enter Description`,
-      label: `Description`
+      name: 'paymentDescription'
     }
-  ]
-
+  ];
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -187,8 +192,32 @@ const ExpenseForm = ({
           label='Type'
           placeholder='Enter Type'
         />
-        <CustomHookTextField chooseFields={chooseFields} control={control} errors={errors} />
-
+        <CustomHookTextField
+          chooseFields={chooseFields}
+          control={control}
+          errors={errors}
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
+        />
+        <CustomHookTextField
+          chooseFields={paymentDescriptionField}
+          control={control}
+          errors={errors}
+        />
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit
@@ -199,7 +228,7 @@ const ExpenseForm = ({
         </Box>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default ExpenseForm
+export default ExpenseForm;

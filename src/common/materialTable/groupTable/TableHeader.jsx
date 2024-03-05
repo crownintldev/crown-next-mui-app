@@ -52,6 +52,7 @@ const TableHeader = (props) => {
   // console.log(selectedIds)
   const { visaBookingIds, accountId } = childTable;
   const ejectValue = { visaBookingIds, accountId };
+  const invoiceData = useSelector((state) => state.myInvoice.data);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -67,7 +68,15 @@ const TableHeader = (props) => {
     const invoiceValues = selectedIds.map(
       (id) => accountData?.length > 0 && accountData.find((item) => item._id === id)
     );
-    dispatch(setInvoice(invoiceValues));
+    if(invoiceData != null){
+      dispatch(setInvoice([...invoiceData, ...invoiceValues]));
+    }
+    else{
+      dispatch(setInvoice(invoiceValues));
+    }
+    
+    // console.log('kdkd', invoiceData, invoiceValues)
+    // dispatch(setInvoice(invoiceValues));
     router.push('/accounts/invoice/add/');
     handleClose();
   };

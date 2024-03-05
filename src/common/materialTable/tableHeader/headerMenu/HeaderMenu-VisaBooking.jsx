@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import Icon from 'src/@core/components/icon';
 import PassportForm from 'src/common/forms/booking/passport/PassportForm';
 import CreateVisaBookingForm from 'src/common/forms/booking/visaBooking/CreateVisaBookingForm';
-import PaymentHeadForm from 'src/common/forms/paymentHead/PaymentHeadForm';
+import PaymentHeadForm from 'src/common/forms/subsidiary/subsidiaryForm';
 
 const HeaderMenuVisaBooking = ({
   SetForm,

@@ -16,7 +16,6 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-
 // action
 import { createApi, updateApi } from 'src/action/function';
 
@@ -24,13 +23,11 @@ import { createApi, updateApi } from 'src/action/function';
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
 import SelectHookField from 'src/common/dataEntry/SelectHookField';
-import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField';
-import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader';
 import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
 import IdNameForm from '../idnameForm/IdNameForm';
-import { fetchPaymentHeadType, fetchPaymentHead } from 'src/store';
+import { fetchSubsidiaryType, fetchSubsidiary, fetchPaymentMethod } from 'src/store';
 
 const schema = yup.object().shape({
   // invoiceDate: yup.string().required('required'),
@@ -42,13 +39,12 @@ const defaultValues = {
   title: '',
   type: '',
   amount: '',
-  description: '',
-  onModel: '',
   paymentMethod: '',
+  paymentDescription: '',
   files: []
 };
 
-const PaymentHeadForm = ({
+const SubsidiaryForm = ({
   toggle,
   fetchApi,
   setFormSize,
@@ -58,10 +54,11 @@ const PaymentHeadForm = ({
   removeSelection
 }) => {
   const dispatch = useDispatch();
-  const type = useSelector((state) => state?.paymentHeadType?.data);
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
+  const type = useSelector((state) => state?.subsidiaryType?.data);
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // states
   const [files, setFiles] = useState([]);
@@ -70,7 +67,8 @@ const PaymentHeadForm = ({
 
   useEffect(() => {
     setFormSize(400);
-    dispatch(fetchPaymentHeadType({}));
+    dispatch(fetchSubsidiaryType({}));
+    dispatch(fetchPaymentMethod({}));
   }, []);
 
   const {
@@ -93,9 +91,7 @@ const PaymentHeadForm = ({
       Object.keys(editId).forEach((key) => {
         setValue(key, editId[key]);
       });
-      setPreviousFiles(editId.files);
-      setValue('invoiceDate', dayjs(editId.invoiceDate));
-      setValue('by', editId.by._id);
+      setPreviousFiles(editId?.files);
     } else {
       reset();
     }
@@ -137,7 +133,7 @@ const PaymentHeadForm = ({
         api,
         data: formData,
         dispatch,
-        fetchData: fetchPaymentHead,
+        fetchData: fetchSubsidiary,
         toggle,
         reset,
         removeSelection
@@ -147,7 +143,7 @@ const PaymentHeadForm = ({
         api,
         data: formData,
         dispatch,
-        fetchData: fetchPaymentHead,
+        fetchData: fetchSubsidiary,
         toggle,
         reset,
         removeSelection
@@ -166,34 +162,23 @@ const PaymentHeadForm = ({
       placeholder: `Enter Amount`,
       type: 'number'
     },
+   
+  ];
+  const paymentDescriptionField = [
     {
-      name: 'description',
-      placeholder: `Enter Description`
-    },
-    {
-      name: 'paymentMethod',
-      placeholder: `Payment Method`
+      name: 'paymentDescription'
     }
   ];
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box sx={{ pb: 2 }}>
-          <DatePickerHookField
-            name='paymentData'
-            placeholder='Payment Date'
-            control={control}
-            errors={errors}
-          />
-        </Box>
         <CustomOpenDrawer
           ButtonTitle='Add Type'
           drawerTitle='Add Type Form'
           Form={IdNameForm}
-          fetchApi={fetchPaymentHeadType}
+          fetchApi={fetchSubsidiaryType}
           formName='Type'
-          api='payment-head-type'
+          api='subsidiary-type'
         />
         <SelectHookField
           control={control}
@@ -209,14 +194,35 @@ const PaymentHeadForm = ({
           control={control}
           errors={errors}
         />
-        <SimpleSelectHookField
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
+        />
+        <CustomHookTextField
+          chooseFields={paymentDescriptionField}
+          control={control}
+          errors={errors}
+        />
+        {/* <SimpleSelectHookField
           control={control}
           errors={errors}
           name={'onModel'}
-          options={['Account', 'SupplierAccount', 'Expense']}
+          options={['Account', 'SupplierAccount', 'Expense',"None"]}
           label={'Choose Category'}
           placeholder='Select Refer'
-        />
+        /> */}
         {!editId ? (
           <Box sx={{ width: '200px' }}>
             <Controller
@@ -268,4 +274,4 @@ const PaymentHeadForm = ({
   );
 };
 
-export default PaymentHeadForm;
+export default SubsidiaryForm;

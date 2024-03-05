@@ -146,8 +146,8 @@ export const accountArrays = () => [
         icon: 'tabler:file-dollar'
       },
       {
-        title: 'Payment Head',
-        path: '/account/payment-head',
+        title: 'Subsidiary',
+        path: '/account/subsidiary',
         icon: 'tabler:file-dollar'
       },
       {

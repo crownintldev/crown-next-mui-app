@@ -17,31 +17,29 @@ const TableColumn = (accessorKey, header, Cell = defaultCellRenderer) => {
   return { accessorKey, header: header || capitalizeCamelSpace(accessorKey), Cell };
 };
 
-const usePaymentHeadColumns = (openMediaDrawer) =>
+const useSubsidiaryColumns = (openMediaDrawer) =>
   useMemo(
     () => [
-      TableColumn('_id',"ID",CellRowId),
-      {
-        accessorKey: 'media',
-        header: 'Media',
-        size: 100,
-        Cell: ({ row }) => (
-          <IconButton onClick={() => openMediaDrawer(row)}>
-            <PermMediaIcon sx={{ color: '#1EB280' }} />
-          </IconButton>
-        )
-      },
+      TableColumn('_id', 'ID', CellRowId),
+      // {
+      //   accessorKey: 'media',
+      //   header: 'Media',
+      //   size: 100,
+      //   Cell: ({ row }) => (
+      //     <IconButton onClick={() => openMediaDrawer(row)}>
+      //       <PermMediaIcon sx={{ color: '#1EB280' }} />
+      //     </IconButton>
+      //   )
+      // },
       TableColumn('title'),
-      TableColumn('onModel',"Category"),
-      TableColumn('paymentData', 'Payment Date', dateFormat),
-      TableColumn('type.name',"Type Name"),
-      TableColumn('amount'),
-      TableColumn('description'),
-      TableColumn('paymentMethod'),
+      TableColumn('type.name', 'Type Name'),
+      TableColumn('amount', 'Amount'),
+      TableColumn('paymentMethod.name', 'Payment Method'),
+      TableColumn('paymentDescription'),
       TableColumn('createdAt', 'Created At', dateFormat),
       TableColumn('updatedAt', 'Updated At', dateFormat)
     ],
     []
   );
 
-export default usePaymentHeadColumns;
+export default useSubsidiaryColumns;

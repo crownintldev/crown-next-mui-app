@@ -84,7 +84,7 @@ export const fetchBusinesssetting = createFetchDataThunk(
   'business-setting'
 );
 
-export const fetchHotelBooking = createFetchDataThunk('hotelbooking', 'hotelbooking');
+export const fetchHotelBooking = createFetchDataThunk('hotelBooking', 'hotel-booking');
 export const fetchInsurance = createFetchDataThunk('insurance', 'insurance');
 
 //Auth App
@@ -146,7 +146,7 @@ const rootReducer = combineReducers({
   role: generate('role', fetchRole),
   branch: generate('branch', fetchBranch),
   businessSetting: generate('businessSetting', fetchBusinesssetting),
-  hotelbooking: generate('hotelbooking', fetchHotelBooking),
+  hotelBooking: generate('hotelBooking', fetchHotelBooking),
   insurance: generate('insurance', fetchInsurance)
 });
 

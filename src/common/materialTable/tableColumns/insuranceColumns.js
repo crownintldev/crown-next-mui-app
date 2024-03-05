@@ -36,7 +36,7 @@ const useInsuranceColumns = (openMediaDrawer) =>
       //   { accessorKey: 'supplier', header: 'Supplier ID', Cell: defaultCellUpperCase },
       
       { accessorKey: 'insuranceCost', header: 'Insurance Cost', Cell: defaultCellRenderer },
-      { accessorKey: 'sellingCost', header: 'Selling Cost', Cell: defaultCellRenderer },
+      { accessorKey: 'sellingCost', header: 'Selling Price', Cell: defaultCellRenderer },
       { accessorKey: 'discount', header: 'Discount', Cell: defaultCellRenderer },
       { accessorKey: 'profit', header: 'Profit', Cell: defaultCellRenderer },
       { accessorKey: 'total', header: 'Total', Cell: defaultCellRenderer },

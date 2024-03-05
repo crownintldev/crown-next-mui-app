@@ -109,16 +109,16 @@ const InsuranceForm = ({
     }
   }, [setValue, editId]);
 
-  const ticketCost = watch('insuranceCost');
+  const insuranceCost = watch('insuranceCost');
   let sellingPrice = watch('sellingCost');
   let discount = watch('discount');
 
   useEffect(() => {
-    let profit = ticketCost - sellingPrice;
+    let profit = sellingPrice - insuranceCost;
     let total = profit - discount;
     setValue('total', total);
     setValue('profit', profit);
-  }, [sellingPrice, ticketCost, discount]);
+  }, [sellingPrice, insuranceCost, discount]);
 
   const handleClose = () => {
     toggle();
@@ -211,7 +211,8 @@ const InsuranceForm = ({
     },
     {
       name: 'sellingCost',
-      placeholder: `Selling Cost`,
+      placeholder: `Selling Price`,
+      label: `Selling Price`,
       type: 'number'
     },
     {

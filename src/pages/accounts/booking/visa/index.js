@@ -34,7 +34,7 @@ const index = ({ apiData }) => {
   };
 
   const columns = useTableColumns(openMediaDrawer);
-  
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const [selectedIds, setSelectedIds] = useState('');
@@ -43,7 +43,7 @@ const index = ({ apiData }) => {
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [Form, SetForm] = useState({
     Form: null,
-    title:"",
+    title: ''
   });
 
   const formDrawer = () =>
@@ -52,8 +52,10 @@ const index = ({ apiData }) => {
       drawerOpen,
       toggleDrawer,
       Form: Form.Form,
+      fetchData:fetchVisaBooking,
       FormTitle: Form.title,
-      removeSelection: removeSelection.removeSelection
+      removeSelection: removeSelection.removeSelection,
+      api: 'passport'
     });
   const newHeaderMenu = ({ selectedIds, toggle, removeSelection }) => {
     return NewHeaderMenuVisaBooking({

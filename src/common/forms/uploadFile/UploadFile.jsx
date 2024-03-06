@@ -59,7 +59,6 @@ const UploadFile = ({ toggle, fetchApi, setFormSize, api, _id, removeSelection }
     reset();
     removeSelection();
   };
-
   //************************** */ onSubmit
   const onSubmit = async (data) => {
     let formData = new FormData();
@@ -67,10 +66,10 @@ const UploadFile = ({ toggle, fetchApi, setFormSize, api, _id, removeSelection }
       formData.append(key, data[key]);
     });
     createApi({
-        completeApi: 'passport/insertMany',
+      completeApi: `${api}/insertDataCsv`,
       data: formData,
       dispatch,
-      fetchData: fetchVisaBooking,
+      fetchData: fetchApi,
       toggle,
       reset,
       removeSelection

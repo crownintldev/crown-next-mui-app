@@ -118,6 +118,7 @@ const TicketBookingForm = ({
       setPreviousFiles(editId.files);
       setValue('invoiceDate', dayjs(editId.invoiceDate));
       setValue('by', editId.by._id);
+      setValue('paymentMethod', editId.paymentMethod._id);
     } else {
       reset();
     }

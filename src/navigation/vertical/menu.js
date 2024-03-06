@@ -71,6 +71,11 @@ export const accountArrays = () => [
         title: 'Ticket Booking',
         path: '/booking/ticket',
         icon: 'tabler:circle-filled'
+      },
+      {
+        title: 'Hotel Booking',
+        path: '/booking/hotel',
+        icon: 'tabler:circle-filled'
       }
     ]
   },
@@ -154,11 +159,10 @@ export const accountArrays = () => [
         title: 'Expense',
         path: '/account/expense',
         icon: 'tabler:wallet'
-      },
+      }
     ]
   },
 
-  
   {
     title: 'Invoice',
     icon: 'tabler:file-text',
@@ -184,6 +188,11 @@ export const accountArrays = () => [
         icon: 'tabler:circle-filled'
       }
     ]
+  },
+  {
+    title: 'Insurance',
+    path: '/insurance',
+    icon: 'tabler:packages'
   }
 
   // {

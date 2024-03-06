@@ -90,9 +90,9 @@ const VerticalNavHeader = props => {
             Use the SVG component
             <MySvgIcon width={34} />
           </div> */}
-          <LinkStyled href='/'>
+          <LinkStyled href='/' className='flex items-center justify-center'>
             {/* <img src={'/images/favicon.svg'} alt='Logo' width={48} style={{marginLeft: '-6px'}}/> */}
-            <Image src={companyData?.logo?.url} alt='business logo' width={70} height={70} className='mt-1' />
+            <Image src={companyData?.logo?.url || '/images/favicon.svg'} alt='business logo' width={55} height={55} style={{marginLeft: '-10px'}} />
 
             {/* <svg width={34} viewBox='0 0 32 22' fill='none' xmlns='http://www.w3.org/2000/svg'>
             <path

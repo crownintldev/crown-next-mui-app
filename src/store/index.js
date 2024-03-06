@@ -91,6 +91,10 @@ export const fetchAccoutPaymentHistory = createFetchDataThunk(
   'accoutPaymentHistory',
   'account-payment-history'
 );
+export const fetchSupplierAccoutPaymentHistory = createFetchDataThunk(
+  'supplierAccoutPaymentHistory',
+  'supplier-account-payment-history'
+);
 
 //Auth App
 export const fetchUser = createFetchDataThunk(
@@ -145,6 +149,10 @@ const rootReducer = combineReducers({
   subsidiaryType: generate('subsidiaryType', fetchSubsidiaryType),
   paymentMethod: generate('paymentMethod', fetchPaymentMethod),
   accoutPaymentHistory: generate('accoutPaymentHistory', fetchAccoutPaymentHistory),
+  supplierAccoutPaymentHistory: generate(
+    'supplierAccoutPaymentHistory',
+    fetchSupplierAccoutPaymentHistory
+  ),
   myInvoice: generateReducer('myInvoice').reducer,
   // auth
   token: generateReducer('token').reducer,

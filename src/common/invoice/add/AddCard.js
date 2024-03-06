@@ -48,7 +48,7 @@ const AddCard = (props) => {
   const [selectUser, setSelectUser] = useState(null);
   const [invoiceData, setInvoiceData] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  // console.log(invoiceDataArray)
+  console.log(invoiceDataArray)
   //**end AddCardInvoiceTo states
   const dispatch = useDispatch();
   const setInvoice = getReducer('myInvoice');
@@ -129,7 +129,7 @@ const AddCard = (props) => {
           </Box>
         ) : (
           // Normal rendering
-          invoiceDataArray.map((item, index) => {
+          invoiceDataArray && invoiceDataArray.length>0 && invoiceDataArray?.map((item, index) => {
             const { by: clientData, amount, visaBookingIds } = item;
 
             return (

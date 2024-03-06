@@ -57,7 +57,7 @@ const schema = yup.object().shape({
 const defaultValues = {
   accountIds: [],
   paid: 0,
-  pay: '',
+  pay: 0,
   paymentMethod:"",
   paymentDescription: '',
   increment: 0,

@@ -35,6 +35,7 @@ const index = ({ apiData }) => {
         fetchData={fetchSupplierAccount}
         stateSelector='supplierAccount'
         selectedId="supplierId"
+        logTabLink='/accounts/account/supplier-account-log'
         drawerProps={{
           editFormTitle: 'Edit Account',
           editButtonTitle: 'Edit Account',

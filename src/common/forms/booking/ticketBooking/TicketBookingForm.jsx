@@ -39,9 +39,8 @@ import dayjs from 'dayjs';
 import IdNameForm from '../../idnameForm/IdNameForm';
 
 const schema = yup.object().shape({
-  invoiceDate: yup.string().required('required'),
-  ticketNumber: yup.string().typeError('Ticket Number is required').required('required'),
-  customer: yup.string().required('required')
+  // invoiceDate: yup.string().required('required'),
+  // customer: yup.string().required('required')
 });
 
 const defaultValues = {
@@ -155,6 +154,7 @@ const TicketBookingForm = ({
 
   //************************** */ onSubmit
   const onSubmit = async (data) => {
+    console.log(data)
     let formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (key !== 'files') {

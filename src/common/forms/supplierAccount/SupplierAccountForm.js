@@ -16,13 +16,16 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSupplierAccount } from 'src/store';
+import { fetchPaymentMethod, fetchSupplierAccount } from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';
 
 //dataEntry
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
+import IdNameForm from '../idnameForm/IdNameForm';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
 
 const schema = yup.object().shape({
   // invoiceDate: yup.string().required('required'),
@@ -35,6 +38,9 @@ const defaultValues = {
   supplierName: '',
   total: 0,
   paid: 0,
+  pay: 0,
+  paymentMethod: '',
+  paymentDescription: '',
   discount: 0,
   remaining: 0
 };
@@ -53,11 +59,13 @@ const SupplierAccountForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item.supplierId === _id)
   );
+  console.log(editId)
+  // payment method
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
-  // console.log(_id);
-  // console.log(editId)
   useEffect(() => {
     setFormSize(400);
+    dispatch(fetchPaymentMethod({}));
   }, []);
 
   const {
@@ -84,14 +92,17 @@ const SupplierAccountForm = ({
       reset();
     }
   }, [setValue, editId]);
+
+  // calculation getting values
   const total = Number(watch('total'));
   const discount = Number(watch('discount'));
   const paid = Number(watch('paid'));
+  const pay = Number(watch('pay'));
 
   useEffect(() => {
-    let remaining = (Number(total) ?? 0) - (Number(discount) ?? 0) - (Number(paid) ?? 0);
+    let remaining = (Number(total) ?? 0) - ((Number(discount) ?? 0) + (Number(paid) ?? 0) + (Number(pay) ?? 0));
     setValue('remaining', remaining);
-  }, [discount, paid, total]);
+  }, [discount, paid, total,pay]);
 
   const handleClose = () => {
     toggle();
@@ -133,12 +144,17 @@ const SupplierAccountForm = ({
     },
     {
       name: 'total',
-      disable: true
+      disabled: true
     },
 
     {
       name: 'paid',
       placeholder: `0`,
+      type: 'number',
+      disabled: true
+    },
+    {
+      name: 'pay',
       type: 'number'
     },
     {
@@ -148,10 +164,14 @@ const SupplierAccountForm = ({
     },
     {
       name: 'remaining',
-      disable: true
+      disabled: true
     }
   ];
-
+  const paymentDescriptionField = [
+    {
+      name: 'paymentDescription'
+    }
+  ];
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -160,7 +180,27 @@ const SupplierAccountForm = ({
           control={control}
           errors={errors}
         />
-
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
+        />
+        <CustomHookTextField
+          chooseFields={paymentDescriptionField}
+          control={control}
+          errors={errors}
+        />
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit

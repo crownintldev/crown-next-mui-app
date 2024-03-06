@@ -17,13 +17,13 @@ const TableColumn = (accessorKey, header, Cell = defaultCellRenderer) => {
   return { accessorKey, header: header || capitalizeCamelSpace(accessorKey), Cell };
 };
 
-const useAccountPaymentHistory = () =>
+const useSupplierAccountPaymentHistory = () =>
   useMemo(
     () => [
       TableColumn('_id', 'ID', CellRowId),
 
       TableColumn('paymentMethod.name', 'Payment Method'),
-      TableColumn('by', 'Refer Name',conditionValue),
+      TableColumn('supplierId.name', 'Supplier Name'),
       TableColumn('paymentDescription'),
       TableColumn('paid'),
       TableColumn('createdAt', 'Created At', dateFormat),
@@ -32,4 +32,4 @@ const useAccountPaymentHistory = () =>
     []
   );
 
-export default useAccountPaymentHistory;
+export default useSupplierAccountPaymentHistory;

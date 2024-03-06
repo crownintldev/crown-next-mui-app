@@ -23,7 +23,8 @@ const Example = ({
   drawerProps,
   api,
   headerMenu,
-  NewHeaderMenu
+  NewHeaderMenu,
+  logTabLink
 }) => {
   const {
     formTitle="",
@@ -241,7 +242,7 @@ const Example = ({
     if (newValue === 'account') {
       router.push('/accounts/account/visa-account');
     } else {
-      router.push('/accounts/account/visa-account-log');
+      router.push(logTabLink || '/accounts/account/visa-account-log');
     }
   };
   // Conditionally render the table component based on the active tab

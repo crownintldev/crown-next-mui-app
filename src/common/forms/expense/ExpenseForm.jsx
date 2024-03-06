@@ -90,6 +90,7 @@ const ExpenseForm = ({
       Object.keys(editId).forEach((key) => {
         setValue(key, editId[key]);
       });
+      setValue('paymentMethod', editId.paymentMethod._id);
     } else {
       reset();
     }
@@ -149,8 +150,7 @@ const ExpenseForm = ({
       placeholder: `Enter Price`,
       label: `Price`,
       type: 'number'
-    },
-   
+    }
   ];
   const paymentDescriptionField = [
     {

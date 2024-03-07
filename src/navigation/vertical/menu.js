@@ -118,6 +118,11 @@ export const accountArrays = () => [
         path: '/services/visa',
         icon: 'tabler:circle-filled'
       },
+      {
+        title: 'Insurance',
+        path: '/insurance',
+        icon: 'tabler:packages'
+      },
 
       {
         title: 'Supplier Category',
@@ -189,11 +194,7 @@ export const accountArrays = () => [
       }
     ]
   },
-  {
-    title: 'Insurance',
-    path: '/insurance',
-    icon: 'tabler:packages'
-  }
+  
 
   // {
   //   sectionTitle: 'Apps & Pages'

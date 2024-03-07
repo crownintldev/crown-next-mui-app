@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Icon from 'src/@core/components/icon';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import UploadFile from 'src/common/forms/uploadFile/UploadFile';
+import PassportUploadFile from 'src/common/forms/uploadFile/PassportUploadFile';
 //redux
 import { useDispatch } from 'react-redux';
 import { fetchVisaBooking } from 'src/store';
@@ -112,7 +112,7 @@ const NewHeaderMenuVisaBooking = ({
           <Icon
             fontSize='1.5rem'
             icon='material-symbols:upload'
-            onClick={()=>handleSingleDrawerForm(UploadFile,"Export Csv Upload Passport")}
+            onClick={()=>handleSingleDrawerForm(PassportUploadFile,"Export Csv Upload Passport")}
           />
         </IconButton>
       </Box>

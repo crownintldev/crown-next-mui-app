@@ -116,13 +116,13 @@ export const useChildTableColumns = () =>
       Cell: defaultCellRenderer
     },
     {
-      accessorKey: 'visaId.destination',
+      accessorKey: 'visaId.destination.name',
       header: 'Destination',
       Cell: defaultCellRenderer
     },
-    { accessorKey: 'visaId.category', header: 'Category', Cell: defaultCellRenderer },
-    { accessorKey: 'visaId.type', header: 'Type', Cell: defaultCellRenderer },
-    { accessorKey: 'visaId.duration', header: 'Duration', Cell: defaultCellRenderer }
+    { accessorKey: 'visaId.category.name', header: 'Category', Cell: defaultCellRenderer },
+    { accessorKey: 'visaId.type.name', header: 'Type', Cell: defaultCellRenderer },
+    { accessorKey: 'visaId.duration.name', header: 'Duration', Cell: defaultCellRenderer }
   ]);
 
 // export default useTableColumns

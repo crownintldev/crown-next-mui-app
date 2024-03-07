@@ -27,6 +27,7 @@ import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader';
 import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo';
 import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect';
 import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal';
+import AddTicketCardItemSelect from '../invoiceComponents/addCard/AddTicketCardItemSelect';
 
 import { useSelector } from 'react-redux';
 
@@ -39,25 +40,24 @@ const AddCard = (props) => {
     setSelectedClient,
     toggleAddCustomerDrawer,
     cardHeader,
-    invoiceDataArray
+    invoiceData
   } = props;
 
   // ** States
   //AddCardInvoiceTo states
   const [userCategory, setUserCategory] = useState(null);
   const [selectUser, setSelectUser] = useState(null);
-  const [invoiceData, setInvoiceData] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  console.log(invoiceDataArray)
+  // console.log(invoiceDataArray);
   //**end AddCardInvoiceTo states
   const dispatch = useDispatch();
   const setInvoice = getReducer('myInvoice');
+  const accountInvoice = invoiceData.account;
 
   // ** Hook
   const theme = useTheme();
 
   // ** Deletes form
-  const data = useSelector((state) => state.invoice.data);
 
   const options = [
     { label: 'Account', link: '/accounts/account/visa-account' },
@@ -73,6 +73,7 @@ const AddCard = (props) => {
   const handleClearInvoice = () => {
     dispatch(setInvoice());
   };
+  console.log(invoiceData);
   return (
     <Card>
       {/* Header ---------------------------------------------------------------*/}
@@ -90,7 +91,7 @@ const AddCard = (props) => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        {!invoiceDataArray || invoiceDataArray.length === 0 ? (
+        {/* {!invoiceData || !accountInvoice ? (
           // Error message
           <Box
             sx={{
@@ -127,69 +128,70 @@ const AddCard = (props) => {
               </div>
             </Stack>
           </Box>
-        ) : (
-          // Normal rendering
-          invoiceDataArray && invoiceDataArray.length>0 && invoiceDataArray?.map((item, index) => {
-            const { by: clientData, amount, visaBookingIds } = item;
-
-            return (
-              <>
-                <AddCardInvoiceTo
-                  data={data}
-                  selectedClient={selectedClient}
-                  setSelectedClient={setSelectedClient}
-                  toggleAddCustomerDrawer={toggleAddCustomerDrawer}
-                  clients={clients}
-                  setInvoiceData={setInvoiceData}
-                  invoiceData={invoiceData}
-                  setUserCategory={setUserCategory}
-                  selectUser={selectUser}
-                  setSelectUser={setSelectUser}
-                  clientData={clientData}
-                  amount={amount}
-                />
-                <Divider />
-                <AddCardItemSelect
-                  data={data}
-                  clients={clients}
-                  invoiceData={invoiceData}
-                  setInvoiceData={setInvoiceData}
-                  userCategory={userCategory}
-                  selectUser={selectUser}
-                  visaBookingIds={visaBookingIds}
-                />
-               {/* {invoiceDataArray.length == index+1} && */}
-                <Stack spacing={1} sx={{ width: 250 }}>
-
-                  <Autocomplete
-                    // id='custom-autocomplete'
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    onChange={handleOptionSelect}
-                    renderInput={(params) => (
-                      <TextField {...params} label='Select your creation' />
-                    )}
-                    renderOption={(props, option) => (
-                      <Link href={option.link}>
-                        <li {...props}>
-                          <span>{option.label}</span>
-                        </li>
-                      </Link>
-                    )}
-                  />
-                </Stack>
-              </>
-            );
-          })
+        ) : // for account app */}
+        {invoiceData.account && invoiceData.account.length > 0 && (
+          <div>
+            <h2 className='flex justify-center mb-10'>Account Invoice</h2>
+            {invoiceData.account?.map((item, index) => {
+              const { billingDetail, invoiceTo, visaBooking } = item;
+              {
+                /* console.log(visaBooking) */
+              }
+              return (
+                <>
+                  <AddCardInvoiceTo billingDetail={billingDetail} invoiceTo={invoiceTo} />
+                  <Divider />
+                  <AddCardItemSelect body={visaBooking} />
+                </>
+              );
+            })}
+          </div>
+        )}
+        {invoiceData.ticket && invoiceData.ticket.length > 0 && (
+          <div>
+            <h2 className='flex justify-center mb-10'>Ticket Invoice</h2>
+            {invoiceData.ticket?.map((item) => {
+              const { billingDetail, invoiceTo, moreDetail } = item;
+              return (
+                <>
+                  <AddCardInvoiceTo billingDetail={billingDetail} invoiceTo={invoiceTo} />
+                  <Divider />
+                  <AddTicketCardItemSelect body={moreDetail} />
+                </>
+              );
+            })}
+          </div>
         )}
       </CardContent>
-
+      <div className='flex justify-center items-center flex-col'>
+        <h3>Select App</h3>
+        <Stack spacing={1} sx={{ width: 250 }}>
+          <div>
+            <Autocomplete
+              id='custom-autocomplete'
+              options={options}
+              getOptionLabel={(option) => option.label}
+              onChange={handleOptionSelect}
+              renderInput={(params) => (
+                <TextField {...params} label='Select your creation' />
+              )}
+              renderOption={(props, option) => (
+                <Link href={option.link}>
+                  <li {...props}>
+                    <span>{option.label}</span>
+                  </li>
+                </Link>
+              )}
+            />
+          </div>
+        </Stack>
+      </div>
       <Divider />
       {/* ItemWithTotal ------------------------------------------------------- */}
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        <AddCardItemWithTotal data={data} invoiceDataArray={invoiceDataArray} />
+        <AddCardItemWithTotal invoiceData={invoiceData} />
       </CardContent>
 
       <Divider />

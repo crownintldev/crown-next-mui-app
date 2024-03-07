@@ -35,7 +35,6 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   useEffect(() => {
     dispatch(fetchBusinesssetting({}));
   }, []);
-
   const cardHeaderDetails = {
     businessName: companyData?.businessName,
     address: companyData?.businessAddress,
@@ -60,7 +59,7 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
               issueDate,
               dueDate
             }}
-            invoiceDataArray={invoiceData}
+            invoiceData={invoiceData}
           />
         </Grid>
         <Grid item xl={3} md={4} xs={12}>
@@ -72,7 +71,7 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
               issueDate,
               dueDate
             }}
-            invoiceDataArray={invoiceData}
+            invoiceData={invoiceData}
           />
         </Grid>
       </Grid>

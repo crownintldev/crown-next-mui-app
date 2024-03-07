@@ -50,7 +50,7 @@ const HeaderMenuTicketBooking = ({
     }));
     // console.log(ticketInvoice)
     dispatch(setInvoice({...invoiceData, ticket: ticketInvoice }));
-    // router.push('/accounts/invoice/add/');
+    router.push('/accounts/invoice/add/');
     handleClose();
   };
 

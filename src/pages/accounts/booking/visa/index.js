@@ -52,7 +52,7 @@ const index = ({ apiData }) => {
       drawerOpen,
       toggleDrawer,
       Form: Form.Form,
-      fetchData:fetchVisaBooking,
+      fetchData: fetchVisaBooking,
       FormTitle: Form.title,
       removeSelection: removeSelection.removeSelection,
       api: 'passport'

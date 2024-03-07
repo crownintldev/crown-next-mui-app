@@ -9,7 +9,7 @@ import TicketBookingForm from 'src/common/forms/booking/ticketBooking/TicketBook
 import { fetchTicketBooking } from 'src/store';
 import HeaderMenuDrawer from 'src/common/materialTable/tableHeader/headerMenu/HeaderMenuDrawer';
 //header menu
-import NewHeaderMenuTicketBooking from 'src/common/materialTable/tableHeader/headerMenu/NewMenu-TicketBooking';
+import HeaderMenuTicketBooking from 'src/common/materialTable/tableHeader/headerMenu/HeaderMenu-TicketBooking';
 
 const index = ({ apiData }) => {
   const columns = useTicketBookingColumns();
@@ -33,7 +33,7 @@ const index = ({ apiData }) => {
       removeSelection: removeSelection.removeSelection
     });
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
-    return NewHeaderMenuTicketBooking({
+    return HeaderMenuTicketBooking({
       setSelectedIds,
       setRemoveSelection,
       SetForm,
@@ -48,7 +48,7 @@ const index = ({ apiData }) => {
       {formDrawer()}
       <MaterialTable
         api={'ticket-booking'}
-        // headerMenu={headerMenu}
+        headerMenu={headerMenu}
         apiData={apiData}
         fetchData={fetchTicketBooking}
         stateSelector='ticketBooking'

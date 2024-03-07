@@ -57,22 +57,22 @@ const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }
     const initialTotals = { total: 0, paid: 0, remaining: 0, discount: 0 }
 
     
-    const billing = invoiceDataArray.reduce((acc, feeItem) => {
-      acc.total += feeItem?.subTotal
-      acc.paid += feeItem?.paid
-      acc.remaining += feeItem?.remaining
-      acc.discount += feeItem?.discount ?? 0
-      return acc
-    }, initialTotals)
-    const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
-    const axiosBody={
-      invoiceDataArray,
-      members,
-      billing,
-      detail,
-      issueDate,
-      dueDate
-    }
+    // const billing = invoiceDataArray.reduce((acc, feeItem) => {
+    //   acc.total += feeItem?.subTotal
+    //   acc.paid += feeItem?.paid
+    //   acc.remaining += feeItem?.remaining
+    //   acc.discount += feeItem?.discount ?? 0
+    //   return acc
+    // }, initialTotals)
+    // const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
+    // const axiosBody={
+    //   invoiceDataArray,
+    //   members,
+    //   billing,
+    //   detail,
+    //   issueDate,
+    //   dueDate
+    // }
     // console.log("axiosBody",axiosBody)
     const apiRequest = invoiceEditId ? 
     await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/invoice/update/${invoiceEditId}`, axiosBody)
@@ -126,13 +126,13 @@ const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }
             </Button>
 
             {/* Render the preview modal */}
-            <ActionsHandlers
+            {/* <ActionsHandlers
               open={isPreviewModalOpen}
               onClose={handleClosePreviewModal}
               invoiceDataArray={invoiceDataArray}
               cardHeader={cardHeader}
               invoiceNumber={invoiceNumber}
-            />
+            /> */}
           </CardContent>
         </Card>
       </Grid>

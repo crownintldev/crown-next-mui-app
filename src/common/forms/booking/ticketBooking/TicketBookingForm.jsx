@@ -51,12 +51,10 @@ const defaultValues = {
   invoiceDate: '',
   customer: '',
   airline: '',
-  sellingPrice: '',
-  profit: '',
-  discount: '',
-  total: '',
+  sellingPrice: 0,
+  profit: 0,
+  discount: 0,
   sector: '',
-  profit: '',
   paymentMethod: '',
   paymentDescription: '',
   files: []
@@ -129,8 +127,8 @@ const TicketBookingForm = ({
   let discount = watch('discount');
 
   useEffect(() => {
-    let total = sellingPrice - ticketCost - discount;
-    setValue('total', total);
+    let profit = sellingPrice - ticketCost - discount;
+    setValue('profit', profit);
   }, [sellingPrice, ticketCost, discount]);
 
   const handleClose = () => {
@@ -235,7 +233,7 @@ const TicketBookingForm = ({
     },
 
     {
-      name: 'total',
+      name: 'profit',
       placeholder: 'Ticket Cost - selling Price  -  discount',
       disabled: true,
       type: 'number'

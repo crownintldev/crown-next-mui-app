@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Icon from 'src/@core/components/icon';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import UploadFile from 'src/common/forms/uploadFile/UploadFile';
+import { useRouter } from 'next/router';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { getReducer } from 'src/store/apps/sliceActionReducer';
@@ -19,6 +20,8 @@ const HeaderMenuTicketBooking = ({
   removeSelection
 }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const invoiceData = useSelector((state) => state.myInvoice.data);
   const setInvoice = getReducer('myInvoice');
   // useSelector
   const ticket = useSelector((state) => state.ticketBooking.data);
@@ -27,8 +30,27 @@ const HeaderMenuTicketBooking = ({
     const invoiceValues = selectedIds.map(
       (id) => ticket?.length > 0 && ticket.find((item) => item._id === id)
     );
-    dispatch(setInvoice({ ticket: invoiceValues }));
-    router.push('/accounts/invoice/add/');
+    const ticketInvoice = invoiceValues.map((item) => ({
+      invoiceTo: {
+        name: item?.by?.fullName || item?.by?.companyName,
+        phone: item?.by?.phone,
+        customer: item.customer
+      },
+      billingDetail: {
+        profit: item?.profit,
+        ticketCost: item?.ticketCost,
+        discount: item?.discount
+      },
+      moreDetail: {
+        ticketNumber: item?.ticketNumber,
+        invoiceNumber: item?.invoiceNumber,
+        sector: item?.sector,
+        paymentMethod: item?.paymentMethod?.name
+      }
+    }));
+    // console.log(ticketInvoice)
+    dispatch(setInvoice({...invoiceData, ticket: ticketInvoice }));
+    // router.push('/accounts/invoice/add/');
     handleClose();
   };
 

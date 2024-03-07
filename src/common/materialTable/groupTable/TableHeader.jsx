@@ -68,13 +68,37 @@ const TableHeader = (props) => {
     const invoiceValues = selectedIds.map(
       (id) => accountData?.length > 0 && accountData.find((item) => item._id === id)
     );
-    if(invoiceData != null){
-      dispatch(setInvoice([...invoiceData, ...invoiceValues]));
-    }
-    else{
-      dispatch(setInvoice(invoiceValues));
-    }
-    
+
+    const accountInvoiceData = invoiceValues?.map((item) => ({
+      invoiceTo: {
+        name: item?.by?.fullName || item?.by?.companyName,
+        phone: item?.by?.phone
+      },
+      billingDetail: {
+        total: item?.subTotal,
+        remaining: item?.remaining,
+        paid: item?.paid
+      },
+      visaBooking: item.visaBookingIds?.map((booking) => ({
+        passportNumber: booking.passport.passportNumber,
+        givenName: booking.passport.givenName,
+        status: booking.status,
+        total: booking.total,
+        destination: booking?.visaId?.destination?.name,
+        duration: booking?.visaId?.duration?.name,
+        category: booking?.visaId?.category?.name,
+        type: booking?.visaId?.type?.name
+      }))
+    }));
+    // console.log(accountInvoiceData);
+    dispatch(setInvoice({...invoiceData, account: accountInvoiceData }));
+    // if(invoiceData != null){
+    //   dispatch(setInvoice([...invoiceData, ...invoiceValues]));
+    // }
+    // else{
+    //   dispatch(setInvoice({account:accountInvoiceData}));
+    // }
+
     // console.log('kdkd', invoiceData, invoiceValues)
     // dispatch(setInvoice(invoiceValues));
     router.push('/accounts/invoice/add/');

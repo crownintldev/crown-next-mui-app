@@ -3,6 +3,7 @@ import axios from 'axios';
 import MaterialTable from 'src/common/materialTable/MaterialTable';
 import useSubsidiaryColumns from 'src/common/materialTable/tableColumns/subsidiaryColumns';
 import NewMenuCsvUploader from 'src/common/materialTable/tableHeader/newHeaderMenu/NewMenu-CsvUploader';
+import UploadFilePaymentId from 'src/common/forms/uploadFile/UploadFilePaymentId';
 //Forms
 import SubsidiaryForm from 'src/common/forms/subsidiary/subsidiaryForm';
 // redux
@@ -28,6 +29,7 @@ const index = ({ apiData }) => {
     });
   const newHeaderMenu = ({ selectedIds, toggle, removeSelection }) => {
     return NewMenuCsvUploader({
+      UploadForm:UploadFilePaymentId,
       SetForm,
       toggleDrawer,
       selectedIds,

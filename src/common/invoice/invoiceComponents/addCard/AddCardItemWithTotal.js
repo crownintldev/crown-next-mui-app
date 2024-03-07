@@ -39,7 +39,7 @@ const AddCardItemWithTotal = ({ invoiceData }) => {
       remaining += billingDetail?.remaining;
       // discount += feeItem?.discount;
     });
-    ticket &&
+  ticket &&
     ticket.map(({ billingDetail }) => {
       ticketProfit += billingDetail?.profit;
       ticketCost += billingDetail?.ticketCost;
@@ -48,55 +48,61 @@ const AddCardItemWithTotal = ({ invoiceData }) => {
     });
 
   return (
-    <div className='flex justify-between px-20'>
-      <Grid>
-        <h3>Total Ticket Cost</h3>
-        <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
-          <CalcWrapper>
-            <Typography sx={{ color: 'text.secondary' }}>Ticket Profit: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              {currencyFormatter(ticketProfit, 'PKR')}
-            </Typography>
-          </CalcWrapper>
-          <CalcWrapper>
-            <Typography sx={{ color: 'text.secondary' }}>Ticket Discount: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              {currencyFormatter(ticketDiscount, 'PKR')}
-            </Typography>
-          </CalcWrapper>
-          <CalcWrapper sx={{ mb: '0 !important' }}>
-            <Typography sx={{ color: 'text.secondary' }}>Ticket Cost: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              {currencyFormatter(ticketCost, 'PKR')}
-            </Typography>
-          </CalcWrapper>
-    
-        </Box>
-      </Grid>
-
-      <Grid>
-        <h3>Total Account Cost</h3>
-        <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
-          <CalcWrapper>
-            <Typography sx={{ color: 'text.secondary' }}>Total: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              {currencyFormatter(total, 'PKR')}
-            </Typography>
-          </CalcWrapper>
-          <CalcWrapper>
-            <Typography sx={{ color: 'text.secondary' }}>Paid: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              {currencyFormatter(paid, 'PKR')}
-            </Typography>
-          </CalcWrapper>
-          <CalcWrapper sx={{ mb: '0 !important' }}>
-            <Typography sx={{ color: 'text.secondary' }}>Remaining: </Typography>
-            <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              {currencyFormatter(remaining, 'PKR')}
-            </Typography>
-          </CalcWrapper>
-        </Box>
-      </Grid>
+    <div
+      className={`flex ${
+        !(invoiceData.ticket && invoiceData.account) ? 'justify-end' : 'justify-between'
+      } px-20`}
+    >
+      {invoiceData.ticket && (
+        <Grid>
+          <h3>Total Ticket Cost</h3>
+          <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
+            <CalcWrapper>
+              <Typography sx={{ color: 'text.secondary' }}>Ticket Profit: </Typography>
+              <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                {currencyFormatter(ticketProfit, 'PKR')}
+              </Typography>
+            </CalcWrapper>
+            <CalcWrapper>
+              <Typography sx={{ color: 'text.secondary' }}>Ticket Discount: </Typography>
+              <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                {currencyFormatter(ticketDiscount, 'PKR')}
+              </Typography>
+            </CalcWrapper>
+            <CalcWrapper sx={{ mb: '0 !important' }}>
+              <Typography sx={{ color: 'text.secondary' }}>Ticket Cost: </Typography>
+              <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                {currencyFormatter(ticketCost, 'PKR')}
+              </Typography>
+            </CalcWrapper>
+          </Box>
+        </Grid>
+      )}
+      {invoiceData.account && (
+        <Grid>
+          <h3>Total Account Cost</h3>
+          <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
+            <CalcWrapper>
+              <Typography sx={{ color: 'text.secondary' }}>Total: </Typography>
+              <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                {currencyFormatter(total, 'PKR')}
+              </Typography>
+            </CalcWrapper>
+            <CalcWrapper>
+              <Typography sx={{ color: 'text.secondary' }}>Paid: </Typography>
+              <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                {currencyFormatter(paid, 'PKR')}
+              </Typography>
+            </CalcWrapper>
+            <CalcWrapper sx={{ mb: '0 !important' }}>
+              <Typography sx={{ color: 'text.secondary' }}>Remaining: </Typography>
+              <Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>
+                {currencyFormatter(remaining, 'PKR')}
+              </Typography>
+            </CalcWrapper>
+          </Box>
+        </Grid>
+      )}
     </div>
   );
 };

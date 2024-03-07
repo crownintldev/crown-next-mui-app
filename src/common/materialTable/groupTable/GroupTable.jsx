@@ -289,10 +289,10 @@ const Example = ({
           // onClick={() => setShowTrash("true")}
           label={
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <PaymentsIcon style={{ marginRight: '4px' }} /> Payment Log
+              <PaymentsIcon style={{ marginRight: '4px' }} /> Report
             </div>
           }
-          value='paymentLog'
+          value='report'
         />
       </Tabs>
      

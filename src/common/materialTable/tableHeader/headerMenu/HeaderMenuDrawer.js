@@ -7,16 +7,20 @@ const HeaderMenuDrawer = ({
   Form,
   FormTitle,
   selectedIds,
-  removeSelection
+  removeSelection,
+  fetchData,
+  api
 }) => {
   const formDrawer = () => (
     <FormDrawer
       open={drawerOpen}
       toggle={toggleDrawer}
       drawerTitle={FormTitle ?? 'Form'}
+      fetchApi={fetchData}
       Form={Form}
       anchor={'right'}
       _id={selectedIds || ''}
+      api={api}
       removeSelection={removeSelection || ''}
     />
   );

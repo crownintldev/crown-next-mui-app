@@ -52,7 +52,7 @@ export const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supTotal',
+        accessorKey: 'supplierTotal',
         header: 'Suppliers Charges',
         size: 100,
         Cell: defaultCellRenderer

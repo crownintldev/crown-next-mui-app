@@ -5,7 +5,7 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import UploadFile from 'src/common/forms/uploadFile/UploadFile';
 import { useDispatch } from 'react-redux';
 
-const NewMenuCsvUploader = ({ SetForm, toggleDrawer }) => {
+const NewMenuCsvUploader = ({ SetForm, toggleDrawer ,UploadForm}) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -31,7 +31,7 @@ const NewMenuCsvUploader = ({ SetForm, toggleDrawer }) => {
             fontSize='1.5rem'
             icon='material-symbols:upload'
             onClick={() =>
-              handleSingleDrawerForm(UploadFile, 'Export Csv Upload Passport')
+              handleSingleDrawerForm( UploadForm ?? UploadFile, 'Export Csv Upload ')
             }
           />
         </IconButton>

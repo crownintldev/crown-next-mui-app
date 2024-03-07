@@ -81,6 +81,7 @@ const defaultValues = {
   confirmed: '',
   processing: '',
   increment: 0,
+  decrease: 0,
   discount: 0,
   status: 'booked'
 };
@@ -131,6 +132,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             confirmed: item.confirmed,
             total: item.total,
             increment: item.increment,
+            decrease:item.decrease,
             discount: item.discount
           };
         })
@@ -198,6 +200,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       setValue('status', visaBookingItems[0].status);
       setValue('total', visaBookingItems[0].total);
       setValue('increment', visaBookingItems[0].increment);
+      setValue('decrease', visaBookingItems[0].decrease);
       setValue('discount', visaBookingItems[0].discount);
       if (visaBookingItems[0]?.visa) {
         let { destination, duration, category, type } = visaBookingItems[0].visa;
@@ -229,6 +232,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   const paymentType = watch('paymentType');
   let increment = watch('increment');
   let discount = watch('discount');
+  let decrease = watch('decrease');
   useEffect(() => {
     setValue('visaId', visa?._id);
     if (paymentType === 'confirmed') {
@@ -237,6 +241,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       let total =
         (totalFee ?? 0) +
         (increment ? Number(increment) : 0) -
+        (decrease ? Number(decrease) : 0) -
         (discount ? Number(discount) : 0);
       setValue('total', total);
       setValue('processing', undefined);
@@ -248,6 +253,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         (processingFee ?? 0) +
         (visaFee ?? 0) +
         (increment ? Number(increment) : 0) -
+        (decrease ? Number(decrease) : 0) -
         (discount ? Number(discount) : 0);
       // console.log(increment)
       setValue('total', total);
@@ -323,6 +329,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       placeholder: '0',
       label: 'Increment *optional'
     },
+
     {
       name: 'discount',
       type: 'number',
@@ -335,6 +342,12 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       placeholder: '0',
       label: 'Total Amount',
       disabled: true
+    },
+    {
+      name: 'decrease',
+      type: 'number',
+      placeholder: '0',
+      label: 'decrease *optional'
     }
   ];
 

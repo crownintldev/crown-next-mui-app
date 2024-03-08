@@ -60,7 +60,7 @@ const useTableColumns = () =>
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.additionSupplierName',
+        accessorKey: 'supplierVisaService.additionSupplierId.name',
         header: 'Addition Supplier Name',
         Cell: defaultCellRenderer
       },
@@ -69,6 +69,7 @@ const useTableColumns = () =>
         header: 'Addition Supplier Fee',
         Cell: defaultCellRenderer
       },
+      
     ],
     []
   )

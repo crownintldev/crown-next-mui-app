@@ -1,4 +1,5 @@
 // ** MUI Imports
+import { useTheme } from '@mui/material/styles'
 import MuiChip from '@mui/material/Chip'
 
 // ** Third Party Imports
@@ -10,7 +11,7 @@ import useBgColor from 'src/@core/hooks/useBgColor'
 const Chip = props => {
   // ** Props
   const { sx, skin, color, rounded } = props
-
+  const theme = useTheme()
   // ** Hook
   const bgColors = useBgColor()
 
@@ -24,7 +25,7 @@ const Chip = props => {
   }
   const propsToPass = { ...props }
   propsToPass.rounded = undefined
-
+  
   return (
     <MuiChip
       {...propsToPass}

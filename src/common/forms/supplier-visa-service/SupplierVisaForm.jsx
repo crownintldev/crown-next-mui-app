@@ -67,8 +67,8 @@ const defaultValues = {
   totalFee: 0,
   visaFee: 0,
   processingFee: 0,
-  additionSupplierName:"",
-  additionSupplierFee:""
+  additionSupplierId: '',
+  additionSupplierFee: ''
 };
 
 const SupplierVisaForm = ({
@@ -99,6 +99,7 @@ const SupplierVisaForm = ({
       _id: item._id
     }))
   );
+
   // console.log(supplier)
 
   useEffect(() => {
@@ -134,7 +135,10 @@ const SupplierVisaForm = ({
       setValue('totalFee', editId?.supplierVisaService?.confirmed?.totalFee);
       setValue('processingFee', editId?.supplierVisaService?.processing?.processingFee);
       setValue('visaFee', editId?.supplierVisaService?.processing?.visaFee);
-      setValue('additionSupplierName', editId?.supplierVisaService?.additionSupplierName);
+      setValue(
+        'additionSupplierId',
+        editId?.supplierVisaService?.additionSupplierId?._id
+      );
       setValue('additionSupplierFee', editId?.supplierVisaService?.additionSupplierFee);
     } else {
       reset();
@@ -199,16 +203,14 @@ const SupplierVisaForm = ({
       label: 'Processing - Visa Fee',
       value: watch('visaFee'),
       myvalue: true
-    },
-    {
-      name: 'additionSupplierName'
-    },
+    }
+  ];
+  const additionSupplierFee = [
     {
       name: 'additionSupplierFee',
       type: 'number'
     }
   ];
-  // ]
 
   return (
     <div>
@@ -315,6 +317,22 @@ const SupplierVisaForm = ({
 
         <CustomHookTextField
           chooseFields={choosePaymentMethod}
+          control={control}
+          errors={errors}
+          required={true}
+        />
+        {/* additionSupplierId */}
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='additionSupplierId'
+          options={supplier ?? []}
+          showValue='name'
+          label='Additional Supplier'
+          placeholder='Choose Additional Supplier'
+        />
+        <CustomHookTextField
+          chooseFields={additionSupplierFee}
           control={control}
           errors={errors}
           required={true}

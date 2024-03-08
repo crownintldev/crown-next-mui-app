@@ -21,11 +21,11 @@ const useSupplierAccountPaymentHistory = () =>
   useMemo(
     () => [
       TableColumn('_id', 'ID', CellRowId),
-
       TableColumn('paymentMethod.name', 'Payment Method'),
-      TableColumn('supplierId.name', 'Supplier Name'),
-      TableColumn('paymentDescription'),
       TableColumn('paid'),
+      TableColumn('paymentDescription'),
+      TableColumn('supplier.name', 'Supplier Name'),
+      TableColumn('supplier.phone', 'Supplier Phone'),
       TableColumn('createdAt', 'Created At', dateFormat),
       TableColumn('updatedAt', 'Updated At', dateFormat)
     ],

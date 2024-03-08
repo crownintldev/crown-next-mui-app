@@ -37,7 +37,6 @@ import IdNameForm from '../idnameForm/IdNameForm';
 const schema = yup.object().shape({});
 
 const defaultValues = {
-  file: '',
   paymentMethod: ''
 };
 
@@ -79,6 +78,9 @@ const UploadFilePaymentId = ({
     reset();
     removeSelection();
   };
+  useEffect(() => {
+    setValue('file', file);
+  }, [file]);
   //************************** */ onSubmit
   const onSubmit = async (data) => {
     let formData = new FormData();

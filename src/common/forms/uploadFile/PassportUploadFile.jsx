@@ -142,13 +142,13 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
 
 
   useEffect(() => {
-    dispatch(fetchVisaCategory({}));
-    dispatch(fetchVisaDestination({}));
-    dispatch(fetchVisaDuration({}));
-    dispatch(fetchVisaType({}));
-    dispatch(fetchAgent({ limit: 100 }));
-    dispatch(fetchClient({ limit: 100 }));
-    dispatch(fetchCompany({ limit: 100 }));
+    dispatch(fetchVisaCategory({ limit: 1000 }));
+    dispatch(fetchVisaDestination({ limit: 1000 }));
+    dispatch(fetchVisaDuration({ limit: 1000 }));
+    dispatch(fetchVisaType({ limit: 1000 }));
+    dispatch(fetchAgent({ limit: 1000 }));
+    dispatch(fetchClient({ limit: 1000 }));
+    dispatch(fetchCompany({ limit: 1000 }));
   }, []);
   useEffect(() => {
     const { destination, category, duration, type } = findVisa;

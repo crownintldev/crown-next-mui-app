@@ -120,7 +120,7 @@ export const accountArrays = () => [
       },
       {
         title: 'Insurance',
-        path: '/insurance',
+        path: '/services/insurance',
         icon: 'tabler:packages'
       },
 

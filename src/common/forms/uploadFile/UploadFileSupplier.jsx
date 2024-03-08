@@ -56,7 +56,7 @@ const UploadFileSupplier = ({
 
   useEffect(() => {
     setFormSize(400);
-    dispatch(fetchSupplierCategory({}))
+    dispatch(fetchSupplierCategory({ limit: 1000 }))
   }, []);
 
   const {

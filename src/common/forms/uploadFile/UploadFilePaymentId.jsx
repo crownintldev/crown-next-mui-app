@@ -55,7 +55,7 @@ const UploadFilePaymentId = ({
 
   useEffect(() => {
     setFormSize(400);
-    dispatch(fetchPaymentMethod({}));
+    dispatch(fetchPaymentMethod({ limit: 1000 }));
   }, []);
 
   const {

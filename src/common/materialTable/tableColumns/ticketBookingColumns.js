@@ -38,6 +38,7 @@ const useTicketBookingColumns = (openMediaDrawer) =>
         header: 'Ticket #',
         Cell: defaultCellRenderer
       },
+      { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       { accessorKey: 'invoiceDate', header: 'Invoice Date', Cell: dateFormat },
    
       { accessorKey: 'customer', header: 'Customer', Cell: defaultCellUpperCase },
@@ -55,6 +56,8 @@ const useTicketBookingColumns = (openMediaDrawer) =>
       { accessorKey: 'discount', header: 'Discount', Cell: defaultCellRenderer },
       { accessorKey: 'total', header: 'Total', Cell: defaultCellRenderer },
       { accessorKey: 'profit', header: 'Profit', Cell: defaultCellRenderer },
+      { accessorKey: 'paidByCustomer', header: 'Paid By Customer', Cell: defaultCellRenderer },
+      { accessorKey: 'balance', header: 'Balance', Cell: defaultCellRenderer },
       { accessorKey: 'paymentMethod.name', header: 'Payment Method', Cell: defaultCellRenderer },
       { accessorKey: 'paymentDescription', header: 'Payment Description', Cell: defaultCellRenderer },
 

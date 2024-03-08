@@ -73,6 +73,10 @@ export const fetchSupplierAccount = createFetchDataThunk(
   'supplierAccount',
   'supplier-account'
 );
+export const fetchAdditionalSupplierAccount = createFetchDataThunk(
+  'additionalSupplierAccount',
+  'additional-supplier-account'
+);
 
 export const fetchBusinesssetting = createFetchDataThunk(
   'businessSetting',
@@ -145,6 +149,10 @@ const rootReducer = combineReducers({
   invoice: generate('invoice', fetchInvoice),
   ticketBooking: generate('ticketBooking', fetchTicketBooking),
   supplierAccount: generate('supplierAccount', fetchSupplierAccount),
+  additionalSupplierAccount: generate(
+    'additionalSupplierAccount',
+    fetchAdditionalSupplierAccount
+  ),
   subsidiary: generate('subsidiary', fetchSubsidiary),
   subsidiaryType: generate('subsidiaryType', fetchSubsidiaryType),
   paymentMethod: generate('paymentMethod', fetchPaymentMethod),

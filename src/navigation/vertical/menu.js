@@ -156,6 +156,11 @@ export const accountArrays = () => [
         icon: 'tabler:file-dollar'
       },
       {
+        title: 'Additional Supplier Account',
+        path: '/account/additional-supplier-account',
+        icon: 'tabler:file-dollar'
+      },
+      {
         title: 'Subsidiary',
         path: '/account/subsidiary',
         icon: 'tabler:file-dollar'

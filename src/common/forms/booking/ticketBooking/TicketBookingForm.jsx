@@ -54,11 +54,16 @@ const defaultValues = {
   sellingPrice: 0,
   profit: 0,
   discount: 0,
+  paidByCustomer: 0,
+  balance: 0,
   sector: '',
+  status: '',
   paymentMethod: '',
   paymentDescription: '',
   files: []
 };
+
+const statusList = ['unpaid', 'partial pay', 'paid'];
 
 const TicketBookingForm = ({
   toggle,
@@ -114,9 +119,9 @@ const TicketBookingForm = ({
         setValue(key, editId[key]);
       });
       setPreviousFiles(editId.files);
-      setValue('invoiceDate', dayjs(editId.invoiceDate));
-      setValue('by', editId.by._id);
-      setValue('paymentMethod', editId.paymentMethod._id);
+      setValue('invoiceDate', dayjs(editId?.invoiceDate));
+      setValue('by', editId?.by?._id);
+      setValue('paymentMethod', editId?.paymentMethod?._id);
     } else {
       reset();
     }
@@ -125,11 +130,15 @@ const TicketBookingForm = ({
   const ticketCost = watch('ticketCost');
   let sellingPrice = watch('sellingPrice');
   let discount = watch('discount');
+  let paidByCustomer = watch('paidByCustomer');
 
   useEffect(() => {
-    let profit = sellingPrice - ticketCost - discount;
+    let profit =
+      Number(sellingPrice ?? 0) - Number(ticketCost ?? 0) - Number(discount ?? 0);
     setValue('profit', profit);
-  }, [sellingPrice, ticketCost, discount]);
+    let balance = Number(profit ?? 0) - Number(paidByCustomer ?? 0);
+    setValue('balance', balance);
+  }, [sellingPrice, ticketCost, discount, paidByCustomer]);
 
   const handleClose = () => {
     toggle();
@@ -153,7 +162,7 @@ const TicketBookingForm = ({
 
   //************************** */ onSubmit
   const onSubmit = async (data) => {
-    console.log(data)
+    // console.log(data);
     let formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (key !== 'files') {
@@ -234,7 +243,17 @@ const TicketBookingForm = ({
 
     {
       name: 'profit',
-      placeholder: 'Ticket Cost - selling Price  -  discount',
+      placeholder: '(Ticket Cost - selling Price - discount)',
+      disabled: true,
+      type: 'number'
+    },
+    {
+      name: 'paidByCustomer',
+      type: 'number'
+    },
+    {
+      name: 'balance',
+      placeholder: '(total - Paid By Customer)',
       disabled: true,
       type: 'number'
     }
@@ -260,6 +279,14 @@ const TicketBookingForm = ({
           fetchApi={fetchPaymentMethod}
           formName='Payment Method'
           api='payment-method'
+        />
+        <SimpleSelectHookField
+          control={control}
+          errors={errors}
+          name={'status'}
+          options={statusList}
+          label={'Status'}
+          placeholder='Select a Status'
         />
         <SelectHookField
           control={control}

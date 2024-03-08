@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles'
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 const UseBgColor = () => {
+
   // ** Hooks
   const theme = useTheme()
 

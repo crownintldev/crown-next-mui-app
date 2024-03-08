@@ -30,9 +30,9 @@ const useInsuranceColumns = (openMediaDrawer) =>
       { accessorKey: 'onModel', header: 'Refer Name' },
       
       { accessorKey: 'insuranceCompany', header: 'Insurance company', Cell: defaultCellUpperCase },
-      { accessorKey: 'insuranceType', header: 'Insurance Type', Cell: defaultCellUpperCase },
-      { accessorKey: 'insuranceCategory', header: 'Insurance Category', Cell: defaultCellUpperCase },
-      { accessorKey: 'insuranceDuration', header: 'Insurance Type', Cell: defaultCellUpperCase },
+      // { accessorKey: 'type', header: 'Insurance Type', Cell: defaultCellUpperCase },
+      // { accessorKey: 'category', header: 'Insurance Category', Cell: defaultCellUpperCase },
+      // { accessorKey: 'duration', header: 'Insurance Type', Cell: defaultCellUpperCase },
       //   { accessorKey: 'supplier', header: 'Supplier ID', Cell: defaultCellUpperCase },
       
       { accessorKey: 'insuranceCost', header: 'Insurance Cost', Cell: defaultCellRenderer },

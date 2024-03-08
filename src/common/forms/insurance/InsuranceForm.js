@@ -16,23 +16,31 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAgent, fetchClient, fetchCompany } from 'src/store';
+import {
+  fetchAgent,
+  fetchClient,
+  fetchCompany,
+  fetchPaymentMethod,
+  fetchVisaType
+} from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';
 
 //dataEntry
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
+import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField';
+import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import EditFilesUploader from 'src/common/fileUpload/EditFileUploader';
 import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
-import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
-import SelectHookField from 'src/common/dataEntry/SelectHookField';
+import IdNameForm from '../idnameForm/IdNameForm';
 
 const schema = yup.object().shape({
-    name: yup.string().required('required'),
-    remarks: yup.string().typeError('remarks is required').required('required'),
-    insuranceCost: yup.string().required('required')
+  // invoiceDate: yup.string().required('required'),
+  // customer: yup.string().required('required')
 });
 
 const defaultValues = {
@@ -46,9 +54,9 @@ const defaultValues = {
   discount: '',
   total: '',
   insuranceCompany: '',
-  insuranceType: '',
-  insuranceCategory: '',
-  insuranceDuration: '',
+  type: '',
+  category: '',
+  duration: '',
   paymentMethod: '',
   files: []
 };
@@ -57,7 +65,7 @@ const InsuranceForm = ({
   toggle,
   fetchApi,
   setFormSize,
-  api = 'insurance',
+  api = 'ticket-booking',
   _id,
   stateSelector,
   removeSelection
@@ -66,11 +74,13 @@ const InsuranceForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
+  // payment Method
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // states
-  const [files, setFiles] = useState([])
-  const [previousFiles, setPreviousFiles] = useState([])
-  const [removeFiles, setRemoveFiles] = useState([])
+  const [files, setFiles] = useState([]);
+  const [previousFiles, setPreviousFiles] = useState([]);
+  const [removeFiles, setRemoveFiles] = useState([]);
   // onModel
   const clients = useSelector((state) => state.client?.data);
   const company = useSelector((state) => state.company?.data);
@@ -81,6 +91,7 @@ const InsuranceForm = ({
     dispatch(fetchAgent({ limit: 100 }));
     dispatch(fetchClient({ limit: 100 }));
     dispatch(fetchCompany({ limit: 100 }));
+    dispatch(fetchPaymentMethod({}));
   }, []);
 
   const {
@@ -103,22 +114,23 @@ const InsuranceForm = ({
       Object.keys(editId).forEach((key) => {
         setValue(key, editId[key]);
       });
-      setPreviousFiles(editId.files)
+      setPreviousFiles(editId.files);
+      setValue('invoiceDate', dayjs(editId.invoiceDate));
+      setValue('by', editId.by._id);
+      setValue('paymentMethod', editId.paymentMethod._id);
     } else {
       reset();
     }
   }, [setValue, editId]);
 
-  const insuranceCost = watch('insuranceCost');
-  let sellingPrice = watch('sellingCost');
+  const ticketCost = watch('ticketCost');
+  let sellingPrice = watch('sellingPrice');
   let discount = watch('discount');
 
   useEffect(() => {
-    let profit = sellingPrice - insuranceCost;
-    let total = profit - discount;
-    setValue('total', total);
+    let profit = sellingPrice - ticketCost - discount;
     setValue('profit', profit);
-  }, [sellingPrice, insuranceCost, discount]);
+  }, [sellingPrice, ticketCost, discount]);
 
   const handleClose = () => {
     toggle();
@@ -135,7 +147,6 @@ const InsuranceForm = ({
   } else if (watchedOnModel === 'Company') {
     byItems = company;
   }
-
   const byItem = byItems.map((item) => ({
     name: `${item.fullName || item.companyName} ${item.phone}`,
     _id: item._id
@@ -143,6 +154,7 @@ const InsuranceForm = ({
 
   //************************** */ onSubmit
   const onSubmit = async (data) => {
+    console.log(data)
     let formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (key !== 'files') {
@@ -157,7 +169,7 @@ const InsuranceForm = ({
     if (editId) {
       updateApi({
         _id,
-        api:"insurance",
+        api: 'ticket-booking',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -167,7 +179,7 @@ const InsuranceForm = ({
       });
     } else {
       createApi({
-        api:"insurance",
+        api: 'ticket-booking',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -178,7 +190,8 @@ const InsuranceForm = ({
     }
   };
 
-  const chooseFields = [
+
+  const chooseFields1 = [
     {
       name: 'name',
       placeholder: `Enter Name`,
@@ -189,21 +202,23 @@ const InsuranceForm = ({
       placeholder: `Enter Insurance Company`,
       label: ` Insurance Company`,
     },
-    {
-      name: 'insuranceType',
-      placeholder: `Insurance Type`,
-      label: `Insurance Type`
-    },
-    {
-      name: 'insuranceCategory',
-      placeholder: `Insurance Category`,
-      label: `Insurance Category`
-    },
-    {
-      name: 'insuranceDuration',
-      placeholder: `Insurance Duration`,
-      label: `Insurance Duration`
-    },
+  ];
+  const chooseFields2 = [
+    // {
+    //   name: 'type',
+    //   placeholder: `Insurance Type`,
+    //   label: `Insurance Type`
+    // },
+    // {
+    //   name: 'category',
+    //   placeholder: `Insurance Category`,
+    //   label: `Insurance Category`
+    // },
+    // {
+    //   name: 'duration',
+    //   placeholder: `Insurance Duration`,
+    //   label: `Insurance Duration`
+    // },
     {
       name: 'insuranceCost',
       placeholder: `Insurance Cost`,
@@ -232,10 +247,10 @@ const InsuranceForm = ({
       disabled: true,
       type: 'number'
     },
-    {
-      name: 'paymentMethod',
-      placeholder: `Payment Method`
-    },
+    // {
+    //   name: 'paymentMethod',
+    //   placeholder: `Payment Method`
+    // },
     {
         name: 'remarks',
         placeholder: 'Remarks'
@@ -245,15 +260,98 @@ const InsuranceForm = ({
         placeholder: 'Supplier ID'
     }
   ];
-
+  // const paymentDescriptionField = [
+  //   {
+  //     name: 'paymentDescription'
+  //   }
+  // ];
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={{ pb: 2 }}></Box>
         <CustomHookTextField
-          chooseFields={chooseFields}
+          chooseFields={chooseFields1}
           control={control}
           errors={errors}
         />
+
+        <CustomOpenDrawer
+          ButtonTitle='Add Insurance Type'
+          drawerTitle='Add Insurance Type'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Insurance Type'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='type'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Insurance Type'
+          placeholder='Insurance Type'
+        />
+
+        <CustomOpenDrawer
+          ButtonTitle='Add Insurance Category'
+          drawerTitle='Add Insurance Category'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Insurance Category'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='type'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Insurance Category'
+          placeholder='Insurance Category'
+        />
+
+        <CustomOpenDrawer
+          ButtonTitle='Add Insurance Duration'
+          drawerTitle='Add Insurance Duration'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Insurance Duration'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='type'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Insurance Duration'
+          placeholder='Insurance Duration'
+        />
+
+        <CustomHookTextField
+        chooseFields={chooseFields2}
+        control={control}
+        errors={errors}
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
+        />
+        {/* <CustomHookTextField
+          chooseFields={paymentDescriptionField}
+          control={control}
+          errors={errors}
+        /> */}
         <SimpleSelectHookField
           control={control}
           errors={errors}
@@ -271,48 +369,44 @@ const InsuranceForm = ({
           label='Refer'
           placeholder='Choose Refer'
         />
-           {!editId ? (
-              <Box sx={{ width: '200px' }}>
-                <Controller
-                  name='files'
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                      <label htmlFor='files'>Upload Files</label>
-                      <FilesUploader
-                        setFiles={setFiles}
-                        files={files}
-                        onChange={onChange}
-                      />
-                    </>
-                  )}
-                />
-              </Box>
-          ) : (
-              <Box sx={{ width: '200px' }}>
-                <Controller
-                  name='files'
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                      <label htmlFor='files'>Upload Files</label>
-                      <EditFilesUploader
-                        setFiles={setFiles}
-                        previousFiles={previousFiles}
-                        setPreviousFiles={setPreviousFiles}
-                        removeFiles={removeFiles}
-                        setRemoveFiles={setRemoveFiles}
-                        files={files}
-                        prevFiles={editId?.files}
-                        onChange={onChange}
-                      />
-                    </>
-                  )}
-                />
-              </Box>
-          )}
+        {!editId ? (
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
+                </>
+              )}
+            />
+          </Box>
+        ) : (
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <EditFilesUploader
+                    setFiles={setFiles}
+                    previousFiles={previousFiles}
+                    setPreviousFiles={setPreviousFiles}
+                    removeFiles={removeFiles}
+                    setRemoveFiles={setRemoveFiles}
+                    files={files}
+                    prevFiles={editId?.files}
+                    onChange={onChange}
+                  />
+                </>
+              )}
+            />
+          </Box>
+        )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit

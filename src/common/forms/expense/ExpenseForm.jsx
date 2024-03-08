@@ -65,9 +65,9 @@ const ExpenseForm = ({
 
   // console.log(type)
   useEffect(() => {
-    dispatch(fetchExpenseCategory({}));
-    dispatch(fetchExpenseType({}));
-    dispatch(fetchPaymentMethod({}));
+    dispatch(fetchExpenseCategory({limit:1000}));
+    dispatch(fetchExpenseType({limit:1000}));
+    dispatch(fetchPaymentMethod({limit:1000}));
   }, [dispatch]);
 
   const {

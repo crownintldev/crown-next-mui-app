@@ -61,7 +61,7 @@ const SupplierForm = ({
   let editId = useSelector(state => state[stateSelector]?.data?.find(item => item._id === _id))
   const category = useSelector(state => state?.supplierCategory?.data)
   useEffect(() => {
-    dispatch(fetchSupplierCategory({}))
+    dispatch(fetchSupplierCategory({limit:1000}))
   }, [])
 
   const {

@@ -103,11 +103,11 @@ const SupplierVisaForm = ({
   // console.log(supplier)
 
   useEffect(() => {
-    dispatch(fetchVisaCategory({}));
-    dispatch(fetchVisaDestination({}));
-    dispatch(fetchVisaType({}));
-    dispatch(fetchVisaDuration({}));
-    dispatch(fetchSupplier({}));
+    dispatch(fetchVisaCategory({limit:1000}));
+    dispatch(fetchVisaDestination({limit:1000}));
+    dispatch(fetchVisaType({limit:1000}));
+    dispatch(fetchVisaDuration({limit:1000}));
+    dispatch(fetchSupplier({limit:1000}));
   }, []);
 
   const {

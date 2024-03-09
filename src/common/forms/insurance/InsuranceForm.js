@@ -21,6 +21,9 @@ import {
   fetchClient,
   fetchCompany,
   fetchPaymentMethod,
+  fetchInsuranceType,
+  fetchInsuranceCategory,
+  fetchInsuranceDuration,
   fetchVisaType
 } from 'src/store';
 
@@ -49,7 +52,7 @@ const defaultValues = {
   onModel: '',
   remarks: '',
   insuranceCost: '',
-  sellingCost: '',
+  sellingPrice: '',
   profit: '',
   discount: '',
   total: '',
@@ -65,7 +68,7 @@ const InsuranceForm = ({
   toggle,
   fetchApi,
   setFormSize,
-  api = 'ticket-booking',
+  api = 'insurance',
   _id,
   stateSelector,
   removeSelection
@@ -75,7 +78,14 @@ const InsuranceForm = ({
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
   // payment Method
-  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
+  const paymentMethod = useSelector((state)=>state?.paymentMethod?.data);
+
+  console.log('pay me',  paymentMethod)
+
+  // insurance Items
+  const insuranceType = useSelector((state) => state?.insuranceType?.data);
+  const insuranceCategory = useSelector((state)=>state?.insuranceCategory?.data);
+  const insuranceDuration = useSelector((state)=>state?.insuranceDuration?.data);
 
   // states
   const [files, setFiles] = useState([]);
@@ -117,20 +127,26 @@ const InsuranceForm = ({
       setPreviousFiles(editId.files);
       setValue('invoiceDate', dayjs(editId.invoiceDate));
       setValue('by', editId.by._id);
-      setValue('paymentMethod', editId.paymentMethod._id);
+      setValue('insuranceType', editId.insuranceType._id);
     } else {
       reset();
     }
   }, [setValue, editId]);
 
-  const ticketCost = watch('ticketCost');
+  const insuranceCost = watch('insuranceCost');
   let sellingPrice = watch('sellingPrice');
   let discount = watch('discount');
 
+  
   useEffect(() => {
-    let profit = sellingPrice - ticketCost - discount;
+
+    // let profit = sellingPrice - ticketCost - discount;
+
+    let profit = sellingPrice - insuranceCost;
+    let total = profit - discount;
+    setValue('total', total);
     setValue('profit', profit);
-  }, [sellingPrice, ticketCost, discount]);
+  }, [sellingPrice, insuranceCost, discount]);
 
   const handleClose = () => {
     toggle();
@@ -169,7 +185,7 @@ const InsuranceForm = ({
     if (editId) {
       updateApi({
         _id,
-        api: 'ticket-booking',
+        api: 'insurance',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -179,7 +195,7 @@ const InsuranceForm = ({
       });
     } else {
       createApi({
-        api: 'ticket-booking',
+        api: 'insurance',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -204,28 +220,13 @@ const InsuranceForm = ({
     },
   ];
   const chooseFields2 = [
-    // {
-    //   name: 'type',
-    //   placeholder: `Insurance Type`,
-    //   label: `Insurance Type`
-    // },
-    // {
-    //   name: 'category',
-    //   placeholder: `Insurance Category`,
-    //   label: `Insurance Category`
-    // },
-    // {
-    //   name: 'duration',
-    //   placeholder: `Insurance Duration`,
-    //   label: `Insurance Duration`
-    // },
     {
       name: 'insuranceCost',
       placeholder: `Insurance Cost`,
       type: 'number'
     },
     {
-      name: 'sellingCost',
+      name: 'sellingPrice',
       placeholder: `Selling Price`,
       label: `Selling Price`,
       type: 'number'
@@ -247,10 +248,6 @@ const InsuranceForm = ({
       disabled: true,
       type: 'number'
     },
-    // {
-    //   name: 'paymentMethod',
-    //   placeholder: `Payment Method`
-    // },
     {
         name: 'remarks',
         placeholder: 'Remarks'
@@ -279,15 +276,15 @@ const InsuranceForm = ({
           ButtonTitle='Add Insurance Type'
           drawerTitle='Add Insurance Type'
           Form={IdNameForm}
-          fetchApi={fetchPaymentMethod}
+          fetchApi={fetchInsuranceType}
           formName='Insurance Type'
-          api='payment-method'
+          api='insurance-type'
         />
         <SelectHookField
           control={control}
           name='type'
           showValue='name'
-          options={paymentMethod ?? []}
+          options={insuranceType ?? []}
           label='Insurance Type'
           placeholder='Insurance Type'
         />
@@ -296,15 +293,15 @@ const InsuranceForm = ({
           ButtonTitle='Add Insurance Category'
           drawerTitle='Add Insurance Category'
           Form={IdNameForm}
-          fetchApi={fetchPaymentMethod}
+          fetchApi={fetchInsuranceCategory}
           formName='Insurance Category'
-          api='payment-method'
+          api='insurance-category'
         />
         <SelectHookField
           control={control}
-          name='type'
+          name='category'
           showValue='name'
-          options={paymentMethod ?? []}
+          options={insuranceCategory ?? []}
           label='Insurance Category'
           placeholder='Insurance Category'
         />
@@ -313,15 +310,15 @@ const InsuranceForm = ({
           ButtonTitle='Add Insurance Duration'
           drawerTitle='Add Insurance Duration'
           Form={IdNameForm}
-          fetchApi={fetchPaymentMethod}
+          fetchApi={fetchInsuranceDuration}
           formName='Insurance Duration'
-          api='payment-method'
+          api='insurance-duration'
         />
         <SelectHookField
           control={control}
-          name='type'
+          name='duration'
           showValue='name'
-          options={paymentMethod ?? []}
+          options={insuranceDuration ?? []}
           label='Insurance Duration'
           placeholder='Insurance Duration'
         />
@@ -347,11 +344,7 @@ const InsuranceForm = ({
           label='Payment Method'
           placeholder='Payment Method'
         />
-        {/* <CustomHookTextField
-          chooseFields={paymentDescriptionField}
-          control={control}
-          errors={errors}
-        /> */}
+ 
         <SimpleSelectHookField
           control={control}
           errors={errors}

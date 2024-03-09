@@ -80,7 +80,11 @@ export const fetchBusinesssetting = createFetchDataThunk(
 );
 
 export const fetchHotelBooking = createFetchDataThunk('hotelBooking', 'hotel-booking');
+export const fetchInsuranceType = createFetchDataThunk('insuranceType', 'insurance-type');
+export const fetchInsuranceCategory = createFetchDataThunk('insuranceCategory', 'insurance-category');
+export const fetchInsuranceDuration = createFetchDataThunk('insuranceDuration', 'insurance-duration');
 export const fetchInsurance = createFetchDataThunk('insurance', 'insurance');
+
 export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-method');
 export const fetchSubsidiary = createFetchDataThunk('subsidiary', 'subsidiary');
 export const fetchSubsidiaryType = createFetchDataThunk(
@@ -162,6 +166,10 @@ const rootReducer = combineReducers({
   branch: generate('branch', fetchBranch),
   businessSetting: generate('businessSetting', fetchBusinesssetting),
   hotelBooking: generate('hotelBooking', fetchHotelBooking),
+
+  insuranceType: generate('insuranceType', fetchInsuranceType),
+  insuranceCategory: generate('insuranceCategory', fetchInsuranceCategory),
+  insuranceDuration: generate('insuranceDuration', fetchInsuranceDuration),
   insurance: generate('insurance', fetchInsurance)
 });
 

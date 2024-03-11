@@ -18,9 +18,37 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBusinesssetting } from 'src/store';
 
+const mergeData = (data) => {
+  if (data && data.length > 0) {
+    const merged = new Map();
+    data.forEach((item) => {
+      const key = `${
+        item && item.by && item.by.fullName ? item.by.fullName : "N/A"
+      }|${item && item.by && item.by.refer ? item.by.refer : "N/A"}`;
+      if (!merged.has(key)) {
+        merged.set(key, {
+          by: item.by,
+          visaBookingIds: item.visaBookingIds ? [...item.visaBookingIds] : [],
+          visaTicketBookingIds: item.visaTicketBookingIds
+            ? [...item.visaTicketBookingIds]
+            : [],
+        });
+      } else {
+        const currentItem = merged.get(key);
+        if (item.visaBookingIds) {
+          currentItem.visaBookingIds.push(...item.visaBookingIds);
+        }
+        if (item.visaTicketBookingIds) {
+          currentItem.visaTicketBookingIds.push(...item.visaTicketBookingIds);
+        }
+      }
+    });
+    return Array.from(merged.values());
+  }
+};
+
 const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   // ** State
-  const invoiceData = useSelector((state) => state.myInvoice.data);
   const [addCustomerOpen, setAddCustomerOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [clients, setClients] = useState(apiClientData);
@@ -29,7 +57,9 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   const tomorrowDate = new Date().setDate(new Date().getDate() + 7);
   const [issueDate, setIssueDate] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date(tomorrowDate));
-
+  
+  const invoiceData = useSelector((state) => state.myInvoice.data);
+  let mergeInvoiceData = mergeData(invoiceData)
   const companyData = useSelector((state) => state.businessSetting.data[0]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -59,7 +89,7 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
               issueDate,
               dueDate
             }}
-            invoiceData={invoiceData}
+            invoiceData={mergeInvoiceData}
           />
         </Grid>
         <Grid item xl={3} md={4} xs={12}>

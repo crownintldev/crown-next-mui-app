@@ -42,7 +42,7 @@ const AddCard = (props) => {
     cardHeader,
     invoiceData
   } = props;
-
+  console.log(invoiceData);
   // ** States
   //AddCardInvoiceTo states
   const [userCategory, setUserCategory] = useState(null);
@@ -92,45 +92,46 @@ const AddCard = (props) => {
             p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`]
           }}
         >
-          {invoiceData && invoiceData.account && invoiceData.account.length > 0 && (
-            <div>
-              <h2 className='flex justify-center mb-10'>Account Invoice</h2>
-              {invoiceData.account?.map((item, index) => {
-                const { billingDetail, invoiceTo, visaBooking } = item;
-                {
-                  /* console.log(visaBooking) */
-                }
-                return (
+          {invoiceData &&
+            invoiceData.length > 0 &&
+            invoiceData.map((item) => {
+              const {by,visaBookingIds} = item.by;
+              {
+                /* const { billingDetail, invoiceTo, visaBooking } = item; */
+              }
+              return (
+                <div>
                   <>
                     <AddCardInvoiceTo
-                      billingDetail={billingDetail}
-                      invoiceTo={invoiceTo}
+                      // billingDetail={billingDetail}
+                      invoiceTo={by}
                     />
                     <Divider />
-                    <AddCardItemSelect body={visaBooking} />
+                    <AddCardItemSelect body={visaBookingIds} />
                   </>
-                );
-              })}
-            </div>
-          )}
-          {invoiceData && invoiceData.ticket && invoiceData.ticket.length > 0 && (
-            <div>
-              <h2 className='flex justify-center mb-10'>Ticket Invoice</h2>
-              {invoiceData.ticket?.map((item) => {
-                const { billingDetail, invoiceTo, moreDetail } = item;
-                return (
-                  <>
+                  {/* <>
                     <AddCardInvoiceTo
                       billingDetail={billingDetail}
                       invoiceTo={invoiceTo}
                     />
                     <Divider />
                     <AddTicketCardItemSelect body={moreDetail} />
-                  </>
+                  </> */}
+                </div>
+              );
+            })}
+
+          {/* {invoiceData && invoiceData.ticket && invoiceData.ticket.length > 0 && (
+            <div>
+              <h2 className='flex justify-center mb-10'>Ticket Invoice</h2>
+              {invoiceData.ticket?.map((item) => {
+                const { billingDetail, invoiceTo, moreDetail } = item;
+                return (
+                  
                 );
               })}
             </div>
-          )}
+          )} */}
         </CardContent>
       )}
       <div className='flex justify-center items-center flex-col'>
@@ -161,9 +162,7 @@ const AddCard = (props) => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-      {invoiceData &&
-        <AddCardItemWithTotal invoiceData={invoiceData} />
-      }
+        {invoiceData && <AddCardItemWithTotal invoiceData={invoiceData} />}
       </CardContent>
 
       <Divider />

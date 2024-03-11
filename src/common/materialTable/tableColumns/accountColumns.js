@@ -106,15 +106,20 @@ export const useChildTableColumns = () =>
       Cell: defaultCellRenderer
     },
     {
+      accessorKey: 'supplierdetail.paymentway.visaFee',
+      header: 'Sup - Visa Fee',
+      Cell: defaultCellRenderer
+    },
+    {
       accessorKey: 'supplierdetail.paymentway.processingFee',
       header: 'Sup - Processing Fee',
       Cell: defaultCellRenderer
     },
-    {
-      accessorKey: 'supplierdetail.total',
-      header: 'Sup - Visa Fee',
-      Cell: defaultCellRenderer
-    },
+    // {
+    //   accessorKey: 'supplierdetail.total',
+    //   header: 'Sup - Visa Fee',
+    //   Cell: defaultCellRenderer
+    // },
     {
       accessorKey: 'visaId.destination.name',
       header: 'Destination',

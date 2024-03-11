@@ -54,13 +54,18 @@ const rolesArr = [
   'Account',
   'Passport',
   'Visa Booking',
+  'Hotel Booking',
+  'Ticket Booking',
   'Visa Service',
-  'Member',
+  "Supplier Visa Service",
   'Supplier',
+  'Member',
   'Expense',
   'Invoice',
-  'Ticket',
-  'Payment Head'
+  'Subsidiary',
+  
+  'Insurance',
+
 ]
 
 const RolesCards = () => {

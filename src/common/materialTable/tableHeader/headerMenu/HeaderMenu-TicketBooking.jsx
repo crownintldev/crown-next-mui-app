@@ -30,26 +30,51 @@ const HeaderMenuTicketBooking = ({
     const invoiceValues = selectedIds.map(
       (id) => ticket?.length > 0 && ticket.find((item) => item._id === id)
     );
-    const ticketInvoice = invoiceValues.map((item) => ({
-      invoiceTo: {
-        name: item?.by?.fullName || item?.by?.companyName,
-        phone: item?.by?.phone,
-        customer: item.customer
-      },
-      billingDetail: {
-        profit: item?.profit,
-        ticketCost: item?.ticketCost,
-        discount: item?.discount
-      },
-      moreDetail: {
-        ticketNumber: item?.ticketNumber,
-        invoiceNumber: item?.invoiceNumber,
-        sector: item?.sector,
-        paymentMethod: item?.paymentMethod?.name
+    if (invoiceValues && invoiceValues.length > 0) {
+      let ticketData = [];
+
+      if (invoiceValues && invoiceValues.length > 0) {
+        invoiceValues.map((item) => {
+          ticketData.push({
+            by: item.by,
+            visaTicketBookingIds: [
+              {
+                invoiceNumber: item.invoiceNumber,
+                ticketNumber: item.ticketNumber,
+                sector: item.sector,
+                paymentMethod: item && item.paymentMethod && item.paymentMethod.name
+              }
+            ]
+          });
+        });
       }
-    }));
+      if (invoiceData && invoiceData.length > 0) {
+        dispatch(setInvoice([...invoiceData, ...ticketData]));
+      } else {
+        dispatch(setInvoice(ticketData));
+      }
+    }
+
+    // const ticketInvoice = invoiceValues.map((item) => ({
+    //   invoiceTo: {
+    //     name: item?.by?.fullName || item?.by?.companyName,
+    //     phone: item?.by?.phone,
+    //     customer: item.customer
+    //   },
+    //   billingDetail: {
+    //     profit: item?.profit,
+    //     ticketCost: item?.ticketCost,
+    //     discount: item?.discount
+    //   },
+    //   moreDetail: {
+    //     ticketNumber: item?.ticketNumber,
+    //     invoiceNumber: item?.invoiceNumber,
+    //     sector: item?.sector,
+    //     paymentMethod: item?.paymentMethod?.name
+    //   }
+    // }));
     // console.log(ticketInvoice)
-    dispatch(setInvoice({...invoiceData, ticket: ticketInvoice }));
+    // dispatch(setInvoice({...invoiceData, ticket: ticketInvoice }));
     router.push('/accounts/invoice/add/');
     handleClose();
   };

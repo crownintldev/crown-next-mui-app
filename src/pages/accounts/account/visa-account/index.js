@@ -28,7 +28,7 @@ const index = ({ apiData }) => {
   });
 
   
-  console.log('clg', selectedRowData)
+  // console.log('clg', selectedRowData)
   // open media drawer handler
   const openMediaDrawer = (row) => {
     setSelectedRowData(row.original);

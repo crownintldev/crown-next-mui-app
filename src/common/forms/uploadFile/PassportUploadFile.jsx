@@ -49,11 +49,11 @@ import {
 } from 'src/store';
 
 const schema = yup.object().shape({
-  visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
-  status: yup.string().required('Status is required.'),
-  total: yup.number().typeError('Increment must be a number'),
-  increment: yup.number().typeError('Increment must be a number'),
-  discount: yup.number().typeError('Discount must be a number')
+  // visaBookingIds: yup.array().of(yup.string()).required('Visa booking IDs are required.'),
+  // status: yup.string().required('Status is required.'),
+  // total: yup.number().typeError('Increment must be a number'),
+  // increment: yup.number().typeError('Increment must be a number'),
+  // discount: yup.number().typeError('Discount must be a number')
 });
 
 //custom vuexy select style
@@ -85,8 +85,8 @@ const defaultValues = {
   increment: 0,
   decrease: 0,
   discount: 0,
-  by:"",
-  onModel:"",
+  by: '',
+  onModel: '',
   status: 'booked'
 };
 
@@ -105,7 +105,14 @@ const statusList = [
 ];
 
 // ------------------visaBooking Form-----------------------
-const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, setFormSize }) => {
+const passportUploadFile = ({
+  api,
+  fetchApi,
+  toggle,
+  _id: ids,
+  removeSelection,
+  setFormSize
+}) => {
   useEffect(() => {
     setFormSize(400);
   }, []);
@@ -140,7 +147,6 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
     duration: ''
   });
 
-
   useEffect(() => {
     dispatch(fetchVisaCategory({ limit: 1000 }));
     dispatch(fetchVisaDestination({ limit: 1000 }));
@@ -169,7 +175,6 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
   }, [findVisa]);
   // console.log(visaBookingItems)
 
-  
   const {
     reset,
     control,
@@ -198,7 +203,6 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
     }
     setByItems(newByItems); // Update state
   }, [watchedOnModel, clients, agents, company]); // Depend on watchedOnModel and data sources
-
 
   //******************* */  Payment Handle ************************************
   const paymentType = watch('paymentType');
@@ -248,9 +252,6 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
   };
   //************************** */ onSubmit For Create and Update ***********************
   const handleOnSubmit = async (data) => {
-    if (!visa._id) {
-      return toast.error('add Visa Must', { position: 'top-center' });
-    }
     removeUndefined(data);
     // const data = getValues()
     const optional = () => {
@@ -276,7 +277,6 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
     });
     // }
   };
-
 
   // ************Input Field****
   const amountHandleFields = [
@@ -393,8 +393,9 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
 
   return (
     <div>
-      <SingleFileUploader file={file} setFile={setFile} />
-      <SimpleSelectHookField
+      <form>
+        <SingleFileUploader file={file} setFile={setFile} />
+        {/* <SimpleSelectHookField
               control={control}
               errors={errors}
               name={'onModel'}
@@ -420,8 +421,6 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
         anchor='left'
         fetchApi={fetchVisaService}
       />
-      <form>
-        
         <SimpleSelectHookField
           control={control}
           errors={errors}
@@ -525,7 +524,7 @@ const passportUploadFile = ({api,fetchApi, toggle, _id: ids, removeSelection, se
           control={control}
           errors={errors}
           required={true}
-        />
+        /> */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button
             variant='contained'

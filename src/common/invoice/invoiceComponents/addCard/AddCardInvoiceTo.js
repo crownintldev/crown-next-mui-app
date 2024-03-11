@@ -24,7 +24,7 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
 const AddCardInvoiceTo = ({ billingDetail, invoiceTo }) => {
   const theme = useTheme();
   // console.log('amount', amount)
-  const { name, phone, customer } = invoiceTo;
+  const { fullName,companyName, phone, customer } = invoiceTo;
   const { total, remaining, paid, discount, profit,ticketCost } = billingDetail;
   return (
     <Grid container xl={{ mt: 5 }} xs={{ mt: 5 }} sx={{ mt: 5 }}>
@@ -38,7 +38,7 @@ const AddCardInvoiceTo = ({ billingDetail, invoiceTo }) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Typography sx={{ mb: 1.5, color: 'text.secondary' }}>
-                  Name: {name}
+                  Name: {fullName || companyName}
                 </Typography>
               </Grid>
             </Grid>

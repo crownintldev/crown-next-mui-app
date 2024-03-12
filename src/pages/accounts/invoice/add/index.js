@@ -17,7 +17,7 @@ import AddNewCustomers from 'src/common/invoice/add/AddNewCustomer';
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBusinesssetting } from 'src/store';
-import { accumulateBillingDetails, mergeData } from '../invoiceFunction';
+import { accumulateBillingDetails, mergeData } from '../../../../common/invoice/invoiceFunction';
 
 const InvoiceAdd = ({ apiClientData }) => {
   // ** State

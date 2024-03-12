@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchBusinesssetting } from 'src/store'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-
+import { accumulateBillingDetails,mergeData } from '../invoiceFunction';
 // ** Third Party Components
 import axios from 'axios'
 
@@ -19,12 +19,17 @@ import AddNewCustomers from 'src/common/invoice/add/AddNewCustomer'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 const InvoiceAdd = ({ apiClientData }) => {
-  const invoiceData = useSelector((state) => state.myInvoice.data)
+  const invoice = useSelector((state) => state.myInvoice.data);
+  const {invoiceData,billingDetail } =invoice
+  let mergeInvoiceData = mergeData(invoiceData);
+
   const companyData = useSelector((state) => state.businessSetting.data[0]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchBusinesssetting({}));
   }, []);
+
   const cardHeaderDetails = {
     businessName: companyData?.businessName,
     address: companyData?.businessAddress,
@@ -39,8 +44,8 @@ const InvoiceAdd = ({ apiClientData }) => {
   const toggleAddCustomerDrawer = () => setAddCustomerOpen(!addCustomerOpen)
   // card Header State
   const tomorrowDate = new Date().setDate(new Date().getDate() + 7)
-  const [issueDate, setIssueDate] = useState(invoiceData?.issueDate)
-  const [dueDate, setDueDate] = useState(invoiceData?.dueDate)
+  const [issueDate, setIssueDate] = useState(invoice?.issueDate)
+  const [dueDate, setDueDate] = useState(invoice?.dueDate)
 
   return (
     <DatePickerWrapper sx={{ '& .react-datepicker-wrapper': { width: 'auto' } }}>
@@ -48,20 +53,23 @@ const InvoiceAdd = ({ apiClientData }) => {
         <Grid item xl={9} md={8} xs={12}>
           <AddCard
             clients={clients}
-            invoiceNumber={invoiceData?.invoiceNumber || ""}
+            invoiceNumber={invoice?.invoiceNumber || ""}
             selectedClient={selectedClient}
             setSelectedClient={setSelectedClient}
             toggleAddCustomerDrawer={toggleAddCustomerDrawer}
             cardHeader={{ detail: cardHeaderDetails, setIssueDate, setDueDate, issueDate, dueDate }}
-            invoiceDataArray={invoiceData?.invoiceDataArray}
+            invoiceData={mergeInvoiceData}
+            billingDetail={billingDetail}
           />
         </Grid>
         <Grid item xl={3} md={4} xs={12}>
           <AddActions
             cardHeader={{ detail: cardHeaderDetails, setIssueDate, setDueDate, issueDate, dueDate }}
-            invoiceDataArray={invoiceData?.invoiceDataArray}
-            invoiceEditId={invoiceData?._id}
-            invoiceNumber={invoiceData?.invoiceNumber || ""}
+            
+            invoiceEditId={invoice?._id}
+            invoiceNumber={invoice?.invoiceNumber || ""}
+            invoiceData={mergeInvoiceData}
+            billingDetail={billingDetail}
           />
         </Grid>
       </Grid>

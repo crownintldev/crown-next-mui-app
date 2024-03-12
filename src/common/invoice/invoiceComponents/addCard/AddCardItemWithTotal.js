@@ -18,8 +18,7 @@ const CalcWrapper = styled(Box)(({ theme }) => ({
   }
 }));
 
-const AddCardItemWithTotal = ({ invoiceData }) => {
-  const { account, ticket } = invoiceData;
+const AddCardItemWithTotal = ({ billingDetail }) => {
   let total = 0,
     paid = 0,
     remaining = 0,
@@ -32,28 +31,25 @@ const AddCardItemWithTotal = ({ invoiceData }) => {
   // const visaBookingIds =
   //   data?.length > 0 ? data.flatMap(({ visaBookingIds }) => visaBookingIds) : [];
   // // calculating total Invoices
-  account &&
-    account.map(({ billingDetail }) => {
+
       total += billingDetail?.total;
       paid += billingDetail?.paid;
       remaining += billingDetail?.remaining;
       // discount += feeItem?.discount;
-    });
-  ticket &&
-    ticket.map(({ billingDetail }) => {
-      ticketProfit += billingDetail?.profit;
-      ticketCost += billingDetail?.ticketCost;
-      ticketDiscount += billingDetail?.discount;
-      // discount += feeItem?.discount;
-    });
+
+  // ticket &&
+  //   ticket.map(({ billingDetail }) => {
+  //     ticketProfit += billingDetail?.profit;
+  //     ticketCost += billingDetail?.ticketCost;
+  //     ticketDiscount += billingDetail?.discount;
+  //     // discount += feeItem?.discount;
+  //   });
 
   return (
     <div
-      className={`flex ${
-        !(invoiceData.ticket && invoiceData.account) ? 'justify-end' : 'justify-between'
-      } px-20`}
+      className={`flex justify-end px-20`}
     >
-      {invoiceData.ticket && (
+      {/* {invoiceData.ticket && (
         <Grid>
           <h3>Total Ticket Cost</h3>
           <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>
@@ -77,8 +73,8 @@ const AddCardItemWithTotal = ({ invoiceData }) => {
             </CalcWrapper>
           </Box>
         </Grid>
-      )}
-      {invoiceData.account && (
+      )} */}
+      {billingDetail && (
         <Grid>
           <h3>Total Account Cost</h3>
           <Box sx={{ minWidth: 150, '& > *': { width: '100%' } }}>

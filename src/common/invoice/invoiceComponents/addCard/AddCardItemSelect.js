@@ -33,13 +33,13 @@ const AddCardItemSelect = ({ body }) => {
           {body && (
             body.map((item, index) => (
               <TableRow key={index}>
-                <TableCell align='right'>{item.passportNumber}</TableCell>
-                <TableCell align='right'>{item.givenName}</TableCell>
-                <TableCell align='right'>{item.status}</TableCell>
-                <TableCell align='right'>{item.total}</TableCell>
-                <TableCell align='right'>{item.category}</TableCell>
-                <TableCell align='right'>{item.duration}</TableCell>
-                <TableCell align='right'>{item.destination}</TableCell>
+                <TableCell align='right'>{item?.passport?.passportNumber}</TableCell>
+                <TableCell align='right'>{item?.passport?.givenName}</TableCell>
+                <TableCell align='right'>{item?.status}</TableCell>
+                <TableCell align='right'>{item?.total}</TableCell>
+                <TableCell align='right'>{item?.visaId?.category?.name}</TableCell>
+                <TableCell align='right'>{item?.visaId?.duration?.name}</TableCell>
+                <TableCell align='right'>{item?.visaId?.destination?.name}</TableCell>
                 {/* <TableCell align='right'>{item.type}</TableCell> */}
                
              

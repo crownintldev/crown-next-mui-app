@@ -42,7 +42,7 @@ const AddCard = (props) => {
     cardHeader,
     invoiceData
   } = props;
-  console.log(invoiceData);
+  // console.log(invoiceData);
   // ** States
   //AddCardInvoiceTo states
   const [userCategory, setUserCategory] = useState(null);
@@ -95,17 +95,15 @@ const AddCard = (props) => {
           {invoiceData &&
             invoiceData.length > 0 &&
             invoiceData.map((item) => {
-              const {by,visaBookingIds} = item.by;
+              const { by, visaBookingIds, billingDetail } = item;
+              console.log(item);
               {
                 /* const { billingDetail, invoiceTo, visaBooking } = item; */
               }
               return (
                 <div>
                   <>
-                    <AddCardInvoiceTo
-                      // billingDetail={billingDetail}
-                      invoiceTo={by}
-                    />
+                    <AddCardInvoiceTo billingDetail={billingDetail} invoiceTo={by} />
                     <Divider />
                     <AddCardItemSelect body={visaBookingIds} />
                   </>
@@ -162,7 +160,11 @@ const AddCard = (props) => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        {invoiceData && <AddCardItemWithTotal invoiceData={invoiceData} />}
+        {invoiceData &&
+          invoiceData.length > 0 &&
+          invoiceData.map((item) => (
+            <AddCardItemWithTotal billingDetail={item?.billingDetail} />
+          ))}
       </CardContent>
 
       <Divider />

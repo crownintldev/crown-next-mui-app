@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchBusinesssetting } from 'src/store'
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
-import { accumulateBillingDetails,mergeData } from '../invoiceFunction';
+import { accumulateBillingDetails,mergeData } from '../../../../common/invoice/invoiceFunction';
 // ** Third Party Components
 import axios from 'axios'
 

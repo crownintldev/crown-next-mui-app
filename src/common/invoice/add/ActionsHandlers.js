@@ -33,10 +33,10 @@ const ActionsHandlers = ({
   open,
   onClose,
   invoiceData,
+  billingDetail,
   cardHeader,
   invoiceNumber
 }) => {
-  console.log(invoiceData)
   // const itemTotalData = useSelector((state) => state.myInvoice.data);
   const [hasRenderedTotal, setHasRenderedTotal] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -132,7 +132,7 @@ const ActionsHandlers = ({
         {index < invoiceData.length - 1 && <hr />}
         {index + 1 === invoiceData.length && !hasRenderedTotal && (
           <>
-            <AddCardItemWithTotal invoiceData={item.billingDetail} />
+            <AddCardItemWithTotal invoiceData={billingDetail} />
             {setHasRenderedTotal(true)}{' '}
           </>
         )}
@@ -207,12 +207,10 @@ const ActionsHandlers = ({
             />
           </div>
           {invoiceData && invoiceData.length > 0 ? (
-            invoiceData.map((item) => (
-              <>
-                {multiRender}
-                <AddCardItemWithTotal billingDetail={item.billingDetail} />
-              </>
-            ))
+            <>
+              {multiRender}
+              <AddCardItemWithTotal billingDetail={billingDetail} />
+            </>
           ) : (
             <Box
               sx={{

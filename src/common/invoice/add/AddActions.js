@@ -1,105 +1,88 @@
 // *** React Import
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import Switch from '@mui/material/Switch'
-import MenuItem from '@mui/material/MenuItem'
-import { styled } from '@mui/material/styles'
-import InputLabel from '@mui/material/InputLabel'
-import Box from '@mui/material/Box'
-import CardContent from '@mui/material/CardContent'
-import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
-import Stack from '@mui/material/Stack'
-import axiosInstance from 'src/utils/axiosInstance'
-import toast from 'react-hot-toast'
+import Card from '@mui/material/Card';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import Box from '@mui/material/Box';
+import CardContent from '@mui/material/CardContent';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import axiosInstance from 'src/utils/axiosInstance';
+import toast from 'react-hot-toast';
 
 // Other Imports
-import ActionsHandlers from './ActionsHandlers'
+import ActionsHandlers from './ActionsHandlers';
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
-import { axiosErrorMessage } from 'src/utils/helperfunction'
+import Icon from 'src/@core/components/icon';
+import { axiosErrorMessage } from 'src/utils/helperfunction';
 
 const OptionsWrapper = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between'
-}))
+}));
 
-const AddActions = ({ cardHeader, invoiceData,invoiceNumber,invoiceEditId }) => {
-  const router = useRouter()
-  const { detail, issueDate, dueDate, setIssueDate, setDueDate } = cardHeader
-  const [paymentMethod, setPaymentMethod] = useState(null)
-  const [isPreviewModalOpen, setPreviewModalOpen] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  // console.log(invoiceDataArray)
+const AddActions = ({ cardHeader, billingDetail, invoiceData, invoiceNumber, invoiceEditId }) => {
+  const router = useRouter();
+  const [buttonDisable,setButtonDisable]=useState(false)
+  const { detail, issueDate, dueDate, setIssueDate, setDueDate } = cardHeader;
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const paymentMethods = [
     { name: 'Bank Transfer' },
     { name: 'Debit Card' },
     { name: 'Credit Card' },
     { name: 'Cash' }
-  ]
-
+  ];
   const defaultProps = {
     options: paymentMethods,
     getOptionLabel: (option) => option.name
-  }
+  };
 
   const handleInvoiceStore = async () => {
-    if (isSubmitting) return
-    setIsSubmitting(true)
-    const initialTotals = { total: 0, paid: 0, remaining: 0, discount: 0 }
-
-    
-    // const billing = invoiceDataArray.reduce((acc, feeItem) => {
-    //   acc.total += feeItem?.subTotal
-    //   acc.paid += feeItem?.paid
-    //   acc.remaining += feeItem?.remaining
-    //   acc.discount += feeItem?.discount ?? 0
-    //   return acc
-    // }, initialTotals)
-    // const members = invoiceDataArray.map((item) => item.by?.fullName ?? item.by?.companyName)
-    // const axiosBody={
-    //   invoiceDataArray,
-    //   members,
-    //   billing,
-    //   detail,
-    //   issueDate,
-    //   dueDate
-    // }
-    // console.log("axiosBody",axiosBody)
-    const apiRequest = invoiceEditId ? 
-    await axiosInstance.put(`${process.env.NEXT_PUBLIC_API}/invoice/update/${invoiceEditId}`, axiosBody)
-    :
-    await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/invoice/create`, axiosBody)
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    const data = { detail, issueDate, dueDate, invoiceData,billingDetail };
     try {
-      const response = apiRequest
-      toast.success(`Invoice ${invoiceEditId?"Update":"Create"} Successfully`, {
+      setButtonDisable(true)
+      const response = invoiceEditId
+        ? await axiosInstance.put(
+            `${process.env.NEXT_PUBLIC_API}/invoice/update/${invoiceEditId}`,
+            data
+          )
+        : await axiosInstance.post(`${process.env.NEXT_PUBLIC_API}/invoice/create`, data);
+      toast.success(`Invoice ${invoiceEditId ? 'Update' : 'Create'} Successfully`, {
         position: 'top-center'
-      })
-      invoiceEditId && router.push("/accounts/invoice/list")
+      });
+      response && router.push('/accounts/invoice/list');
     } catch (err) {
-      toast.error(axiosErrorMessage(err), { position: 'top-center' })
+      setButtonDisable(false)
+      toast.error(axiosErrorMessage(err), { position: 'top-center' });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleOpenPreviewModal = () => {
     // Set the state to close the modal
-    setPreviewModalOpen(true)
-  }
+    setPreviewModalOpen(true);
+  };
 
   const handleClosePreviewModal = () => {
     // Set the state to close the modal
-    setPreviewModalOpen(false)
-  }
+    setPreviewModalOpen(false);
+  };
 
   return (
     <Grid container spacing={6}>
@@ -107,13 +90,14 @@ const AddActions = ({ cardHeader, invoiceData,invoiceNumber,invoiceEditId }) => 
         <Card>
           <CardContent>
             <Button
+            disabled={buttonDisable}
               fullWidth
               variant='contained'
               sx={{ mb: 2, '& svg': { mr: 2 } }}
               onClick={handleInvoiceStore}
             >
               <Icon fontSize='1.125rem' icon='tabler:send' />
-              {invoiceEditId?"Update Invoice" : "Store Invoice"} 
+              {invoiceEditId ? 'Update Invoice' : 'Store Invoice'}
             </Button>
             <Button
               fullWidth
@@ -130,6 +114,7 @@ const AddActions = ({ cardHeader, invoiceData,invoiceNumber,invoiceEditId }) => 
               open={isPreviewModalOpen}
               onClose={handleClosePreviewModal}
               invoiceData={invoiceData}
+              billingDetail={billingDetail}
               cardHeader={cardHeader}
               invoiceNumber={invoiceNumber}
             />
@@ -188,7 +173,7 @@ const AddActions = ({ cardHeader, invoiceData,invoiceNumber,invoiceEditId }) => 
         </OptionsWrapper>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default AddActions
+export default AddActions;

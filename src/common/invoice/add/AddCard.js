@@ -40,7 +40,8 @@ const AddCard = (props) => {
     setSelectedClient,
     toggleAddCustomerDrawer,
     cardHeader,
-    invoiceData
+    invoiceData,
+    billingDetail
   } = props;
   // console.log(invoiceData);
   // ** States
@@ -95,15 +96,14 @@ const AddCard = (props) => {
           {invoiceData &&
             invoiceData.length > 0 &&
             invoiceData.map((item) => {
-              const { by, visaBookingIds, billingDetail } = item;
-              console.log(item);
+              const { by, visaBookingIds } = item;
               {
                 /* const { billingDetail, invoiceTo, visaBooking } = item; */
               }
               return (
                 <div>
                   <>
-                    <AddCardInvoiceTo billingDetail={billingDetail} invoiceTo={by} />
+                    <AddCardInvoiceTo billingDetail={item.billingDetail} invoiceTo={by} />
                     <Divider />
                     <AddCardItemSelect body={visaBookingIds} />
                   </>
@@ -160,11 +160,7 @@ const AddCard = (props) => {
       <CardContent
         sx={{ p: [`${theme.spacing(6)} !important`, `${theme.spacing(10)} !important`] }}
       >
-        {invoiceData &&
-          invoiceData.length > 0 &&
-          invoiceData.map((item) => (
-            <AddCardItemWithTotal billingDetail={item?.billingDetail} />
-          ))}
+        <AddCardItemWithTotal billingDetail={billingDetail} />
       </CardContent>
 
       <Divider />

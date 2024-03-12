@@ -1,6 +1,6 @@
 // ** React Imports
 import { useEffect, useState } from 'react';
-
+import { getInvoiceNumber } from 'src/action/invoice';
 // ** MUI Imports
 import Grid from '@mui/material/Grid';
 
@@ -17,44 +17,12 @@ import AddNewCustomers from 'src/common/invoice/add/AddNewCustomer';
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBusinesssetting } from 'src/store';
+import { accumulateBillingDetails, mergeData } from '../invoiceFunction';
 
-const mergeData = (data) => {
-  if (data && data.length > 0) {
-    const merged = new Map();
-    data.forEach((item) => {
-      const key = `${item && item.by && item.by.fullName ? item.by.fullName : 'N/A'}|${
-        item && item.by && item.by.refer ? item.by.refer : 'N/A'
-      }`;
-      if (!merged.has(key)) {
-        merged.set(key, {
-          by: item.by,
-          visaBookingIds: item.visaBookingIds ? [...item.visaBookingIds] : [],
-          billingDetail: {
-            total: item?.subTotal,
-            remaining: item?.remaining,
-            paid: item?.paid
-          },
-          visaTicketBookingIds: item.visaTicketBookingIds
-            ? [...item.visaTicketBookingIds]
-            : []
-        });
-      } else {
-        const currentItem = merged.get(key);
-        if (item.visaBookingIds) {
-          currentItem.visaBookingIds.push(...item.visaBookingIds);
-        }
-        if (item.visaTicketBookingIds) {
-          currentItem.visaTicketBookingIds.push(...item.visaTicketBookingIds);
-        }
-      }
-    });
-    return Array.from(merged.values());
-  }
-};
-
-const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
+const InvoiceAdd = ({ apiClientData }) => {
   // ** State
   const [addCustomerOpen, setAddCustomerOpen] = useState(false);
+  const [invoiceNumber, setInvoiceNumber] = useState(0);
   const [selectedClient, setSelectedClient] = useState(null);
   const [clients, setClients] = useState(apiClientData);
   const toggleAddCustomerDrawer = () => setAddCustomerOpen(!addCustomerOpen);
@@ -65,11 +33,23 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
 
   const invoiceData = useSelector((state) => state.myInvoice.data);
   let mergeInvoiceData = mergeData(invoiceData);
+  let billingDetail = accumulateBillingDetails(invoiceData);
   const companyData = useSelector((state) => state.businessSetting.data[0]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchBusinesssetting({}));
+    getInvoiceNumber()
+    .then(res => {
+      // console.log(res)
+      setInvoiceNumber(res.data);
+    })
+    .catch(err => {
+      console.error("Failed to fetch invoice number:", err);
+      // Handle error case here (e.g., setting a default state or displaying an error message)
+    });
   }, []);
+  // console.log(invoiceNumber);
   const cardHeaderDetails = {
     businessName: companyData?.businessName,
     address: companyData?.businessAddress,
@@ -95,6 +75,7 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
               dueDate
             }}
             invoiceData={mergeInvoiceData}
+            billingDetail={billingDetail}
           />
         </Grid>
         <Grid item xl={3} md={4} xs={12}>
@@ -107,6 +88,7 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
               dueDate
             }}
             invoiceData={mergeInvoiceData}
+            billingDetail={billingDetail}
           />
         </Grid>
       </Grid>

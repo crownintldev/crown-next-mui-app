@@ -22,16 +22,21 @@ const mergeData = (data) => {
   if (data && data.length > 0) {
     const merged = new Map();
     data.forEach((item) => {
-      const key = `${
-        item && item.by && item.by.fullName ? item.by.fullName : "N/A"
-      }|${item && item.by && item.by.refer ? item.by.refer : "N/A"}`;
+      const key = `${item && item.by && item.by.fullName ? item.by.fullName : 'N/A'}|${
+        item && item.by && item.by.refer ? item.by.refer : 'N/A'
+      }`;
       if (!merged.has(key)) {
         merged.set(key, {
           by: item.by,
           visaBookingIds: item.visaBookingIds ? [...item.visaBookingIds] : [],
+          billingDetail: {
+            total: item?.subTotal,
+            remaining: item?.remaining,
+            paid: item?.paid
+          },
           visaTicketBookingIds: item.visaTicketBookingIds
             ? [...item.visaTicketBookingIds]
-            : [],
+            : []
         });
       } else {
         const currentItem = merged.get(key);
@@ -57,9 +62,9 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
   const tomorrowDate = new Date().setDate(new Date().getDate() + 7);
   const [issueDate, setIssueDate] = useState(new Date());
   const [dueDate, setDueDate] = useState(new Date(tomorrowDate));
-  
+
   const invoiceData = useSelector((state) => state.myInvoice.data);
-  let mergeInvoiceData = mergeData(invoiceData)
+  let mergeInvoiceData = mergeData(invoiceData);
   const companyData = useSelector((state) => state.businessSetting.data[0]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -101,7 +106,7 @@ const InvoiceAdd = ({ apiClientData, invoiceNumber }) => {
               issueDate,
               dueDate
             }}
-            invoiceData={invoiceData}
+            invoiceData={mergeInvoiceData}
           />
         </Grid>
       </Grid>

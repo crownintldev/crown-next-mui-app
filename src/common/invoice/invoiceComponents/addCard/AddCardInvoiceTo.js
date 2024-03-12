@@ -23,7 +23,6 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
 
 const AddCardInvoiceTo = ({ billingDetail, invoiceTo }) => {
   const theme = useTheme();
-  // console.log('amount', amount)
   const { fullName,companyName, phone, customer } = invoiceTo;
   const { total, remaining, paid, discount, profit,ticketCost } = billingDetail;
   return (

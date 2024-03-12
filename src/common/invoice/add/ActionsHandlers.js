@@ -1,73 +1,74 @@
 // Next import
-import Link from 'next/link'
+import Link from 'next/link';
 
 // React import
-import React, { useState, useRef } from 'react'
-import QRCode from 'qrcode.react'
-import { useReactToPrint } from 'react-to-print'
+import React, { useState, useRef } from 'react';
+import QRCode from 'qrcode.react';
+import { useReactToPrint } from 'react-to-print';
 
 // Material Imports
-import Modal from '@mui/material/Modal'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
-import { useSelector } from 'react-redux'
-import Typography from '@mui/material/Typography'
-import Autocomplete from '@mui/material/Autocomplete'
-import Stack from '@mui/material/Stack'
-import { TextField } from '@mui/material'
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { useSelector } from 'react-redux';
+import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
+import Stack from '@mui/material/Stack';
+import { TextField } from '@mui/material';
 
 // html2canvas, jspdf
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 // Normal Imports
-import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo'
-import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect'
-import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal'
-import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader'
-import { useTheme } from '@emotion/react'
+import AddCardInvoiceTo from '../invoiceComponents/addCard/AddCardInvoiceTo';
+import AddCardItemSelect from '../invoiceComponents/addCard/AddCardItemSelect';
+import AddCardItemWithTotal from '../invoiceComponents/addCard/AddCardItemWithTotal';
+import AddCardHeader from '../invoiceComponents/addCard/AddCardHeader';
+import { useTheme } from '@emotion/react';
 
 const ActionsHandlers = ({
   open,
   onClose,
-  invoiceDataArray,
+  invoiceData,
   cardHeader,
   invoiceNumber
 }) => {
-  const itemTotalData = useSelector((state) => state.myInvoice.data)
-  const [hasRenderedTotal, setHasRenderedTotal] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(null)
+  console.log(invoiceData)
+  // const itemTotalData = useSelector((state) => state.myInvoice.data);
+  const [hasRenderedTotal, setHasRenderedTotal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  const componentPDF = useRef()
-  const theme = useTheme()
+  const componentPDF = useRef();
+  const theme = useTheme();
 
   // Print generator handler
   const printGenerator = useReactToPrint({
     content: () => componentPDF.current,
     documentTitle: 'Invoice Data'
-  })
+  });
 
   const pdfDownloader = () => {
-    const modalContent = componentPDF.current
-    const actionButtons = modalContent.querySelector('#action-buttons')
+    const modalContent = componentPDF.current;
+    const actionButtons = modalContent.querySelector('#action-buttons');
     if (actionButtons) {
-      actionButtons.style.display = 'none'
+      actionButtons.style.display = 'none';
     }
 
-    const tempContainer = modalContent.cloneNode(true)
-    tempContainer.style.height = 'auto'
+    const tempContainer = modalContent.cloneNode(true);
+    tempContainer.style.height = 'auto';
 
     // Append the temporary container to the body
-    document.body.appendChild(tempContainer)
+    document.body.appendChild(tempContainer);
 
     // Capture the screenshot of the temporary container using html2canvas
     html2canvas(tempContainer, { scale: 2, allowTaint: true }).then((canvas) => {
       // Convert the canvas to a data URL
-      const screenshotUrl = canvas.toDataURL('image/png')
+      const screenshotUrl = canvas.toDataURL('image/png');
 
-      const pdf = new jsPDF('p', 'mm', 'a4')
+      const pdf = new jsPDF('p', 'mm', 'a4');
 
       // Add the captured image to the PDF
       pdf.addImage(
@@ -77,76 +78,76 @@ const ActionsHandlers = ({
         0,
         pdf.internal.pageSize.width,
         pdf.internal.pageSize.height
-      )
+      );
 
       // Save the PDF
-      pdf.save('invoice_screenshot.pdf')
+      pdf.save('invoice_screenshot.pdf');
 
-      document.body.removeChild(tempContainer)
+      document.body.removeChild(tempContainer);
       if (actionButtons) {
-        actionButtons.style.display = 'block'
+        actionButtons.style.display = 'block';
       }
-    })
-  }
+    });
+  };
 
   // Taking screenshot handler
   const screenShotHandler = () => {
-    const modalContent = componentPDF.current
+    const modalContent = componentPDF.current;
 
-    const actionButtons = modalContent.querySelector('#action-buttons')
+    const actionButtons = modalContent.querySelector('#action-buttons');
     if (actionButtons) {
-      actionButtons.style.display = 'none'
+      actionButtons.style.display = 'none';
     }
 
-    const tempContainer = modalContent.cloneNode(true)
-    tempContainer.style.height = 'auto'
-    document.body.appendChild(tempContainer)
+    const tempContainer = modalContent.cloneNode(true);
+    tempContainer.style.height = 'auto';
+    document.body.appendChild(tempContainer);
 
     // Capture the screenshot of the temporary container using html2canvas
     html2canvas(tempContainer).then((canvas) => {
       // Convert the canvas to a data URL
-      const screenshotUrl = canvas.toDataURL('image/png')
-      const link = document.createElement('a')
-      link.href = screenshotUrl
-      link.download = 'invoice screenshot.png'
-      link.click()
+      const screenshotUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = screenshotUrl;
+      link.download = 'invoice screenshot.png';
+      link.click();
 
-      document.body.removeChild(tempContainer)
+      document.body.removeChild(tempContainer);
 
       if (actionButtons) {
-        actionButtons.style.display = 'block'
+        actionButtons.style.display = 'block';
       }
-    })
-  }
+    });
+  };
 
   const multiRender =
-    invoiceDataArray &&
-    invoiceDataArray.map((invoiceData, index) => (
+    invoiceData &&
+    invoiceData.map((item, index) => (
       <React.Fragment key={index}>
         {index === 0 && (
           <AddCardHeader cardHeader={cardHeader} invoiceNumber={invoiceNumber} />
         )}
-        <AddCardInvoiceTo clientData={invoiceData.by} amount={invoiceData.amount} />
-        <AddCardItemSelect visaBookingIds={invoiceData.visaBookingIds} />
-        {index < invoiceDataArray.length - 1 && <hr />}
-        {index + 1 === invoiceDataArray.length && !hasRenderedTotal && (
+        <AddCardInvoiceTo invoiceTo={item.by} billingDetail={item.billingDetail} />
+        <AddCardItemSelect body={item.visaBookingIds} />
+        {index < invoiceData.length - 1 && <hr />}
+        {index + 1 === invoiceData.length && !hasRenderedTotal && (
           <>
-            <AddCardItemWithTotal invoiceDataArray={invoiceDataArray} />
+            <AddCardItemWithTotal invoiceData={item.billingDetail} />
             {setHasRenderedTotal(true)}{' '}
           </>
         )}
       </React.Fragment>
-    ))
+    ));
 
   const options = [
     { label: 'Account', link: '/accounts/account/' },
     { label: 'Booking', link: '/accounts/account/' },
     { label: 'Flight', link: '/accounts/account/' }
-  ]
+  ];
 
   const handleOptionSelect = (event, option) => {
-    setSelectedOption(option)
-  }
+    setSelectedOption(option);
+  };
 
   return (
     <div
@@ -205,11 +206,13 @@ const ActionsHandlers = ({
               level='L'
             />
           </div>
-          {invoiceDataArray && invoiceDataArray.length > 0 ? (
-            <>
-              {multiRender}
-              <AddCardItemWithTotal invoiceDataArray={invoiceDataArray} />
-            </>
+          {invoiceData && invoiceData.length > 0 ? (
+            invoiceData.map((item) => (
+              <>
+                {multiRender}
+                <AddCardItemWithTotal billingDetail={item.billingDetail} />
+              </>
+            ))
           ) : (
             <Box
               sx={{
@@ -268,7 +271,7 @@ const ActionsHandlers = ({
         </Box>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default ActionsHandlers
+export default ActionsHandlers;

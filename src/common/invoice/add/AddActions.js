@@ -32,7 +32,7 @@ const OptionsWrapper = styled(Box)(() => ({
   justifyContent: 'space-between'
 }))
 
-const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }) => {
+const AddActions = ({ cardHeader, invoiceData,invoiceNumber,invoiceEditId }) => {
   const router = useRouter()
   const { detail, issueDate, dueDate, setIssueDate, setDueDate } = cardHeader
   const [paymentMethod, setPaymentMethod] = useState(null)
@@ -126,13 +126,13 @@ const AddActions = ({ cardHeader, invoiceDataArray,invoiceNumber,invoiceEditId }
             </Button>
 
             {/* Render the preview modal */}
-            {/* <ActionsHandlers
+            <ActionsHandlers
               open={isPreviewModalOpen}
               onClose={handleClosePreviewModal}
-              invoiceDataArray={invoiceDataArray}
+              invoiceData={invoiceData}
               cardHeader={cardHeader}
               invoiceNumber={invoiceNumber}
-            /> */}
+            />
           </CardContent>
         </Card>
       </Grid>

@@ -149,8 +149,9 @@ const SupplierVisaForm = ({
     toggle();
     reset();
   };
-
+  // console.log(watch())
   const onSubmit = async (data) => {
+    console.log(data)
     if (editId) {
       updateApi({
         _id: editId.supplierVisaService._id,

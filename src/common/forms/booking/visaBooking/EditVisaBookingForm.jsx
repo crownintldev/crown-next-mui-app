@@ -168,6 +168,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
         try {
           setLoading(true);
           const res = await findVisaId({ destination, category, type, duration });
+          console.log(res.data)
           setVisa(res.data.data);
           setLoading(false);
         } catch (err) {

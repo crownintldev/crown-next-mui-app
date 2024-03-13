@@ -32,6 +32,7 @@ import IdNameForm from '../idnameForm/IdNameForm';
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
 import SelectHookField from 'src/common/dataEntry/SelectHookField';
+import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField';
 
 //custom vuexy select style
 const ITEM_HEIGHT = 48;
@@ -62,7 +63,8 @@ const defaultValues = {
   paymentDescription: '',
   increment: 0,
   total: 0,
-  discount: 0
+  discount: 0,
+  date:""
 };
 
 // ------------------visaBooking Form-----------------------
@@ -295,7 +297,7 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
             formName='Payment Method'
             api='payment-method'
           />
-          <SelectHookField
+           <SelectHookField
             control={control}
             name='paymentMethod'
             showValue='name'
@@ -303,6 +305,17 @@ const EditAccountForm = ({ toggle, _id: ids, removeSelection }) => {
             label='Payment Method'
             placeholder='Payment Method'
           />
+           <div className='mt-2 mb-2'>
+          <DatePickerHookField
+              name='date'
+              placeholder='Payment Method Date'
+              required={true}
+              control={control}
+              errors={errors}
+            />
+           
+         
+          </div>
           <CustomHookTextField
             chooseFields={paymentDescriptionField}
             control={control}

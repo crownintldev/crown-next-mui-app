@@ -21,8 +21,8 @@ const useAccountPaymentHistory = () =>
   useMemo(
     () => [
       TableColumn('_id', 'ID', CellRowId),
-
       TableColumn('paymentMethod.name', 'Payment Method'),
+      TableColumn('date', 'Date',dateFormat),
       TableColumn('by', 'Refer Name',conditionValue),
       TableColumn('paymentDescription'),
       TableColumn('paid'),

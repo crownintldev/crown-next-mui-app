@@ -60,7 +60,8 @@ const defaultValues = {
   supplier: '',
   totalFee: '',
   visaFee: '',
-  processingFee: ''
+  processingFee: '',
+  supplier:""
 };
 
 export const findSupplierVisa = (data) => {
@@ -180,7 +181,7 @@ const VisaServiceForm = ({
       reset();
     }
   }, [setValue, editId]);
-
+console.log(editId)
   const handleClose = () => {
     toggle();
     reset();

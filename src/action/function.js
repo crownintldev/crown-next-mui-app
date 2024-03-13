@@ -19,11 +19,15 @@ export const createApi = async ({
   reset,
   message,
   removeSelection,
+  setLoading,
   optional
 }) => {
   const baseURL = apidomain || AccountApi;
   let myapi = completeApi ? completeApi : `${api}/create`;
   try {
+    if(setLoading){
+      setLoading(true)
+    }
     const response = await axios.post(`${baseURL}/${myapi}`, data, {
       withCredentials: true,
       headers: {
@@ -36,6 +40,9 @@ export const createApi = async ({
       removeSelection();
     }
     if (response.data.data) {
+      if(setLoading){
+        setLoading(false)
+      }
       const fetchApi = fetchData
         ? fetchData({ newData: response.data.data })
         : fetchList({});
@@ -60,7 +67,11 @@ export const createApi = async ({
         }
       );
     }
+
   } catch (err) {
+    if(setLoading){
+      setLoading(false)
+    }
     toast.error(axiosErrorMessage(err), { position: 'top-center' });
   }
 };

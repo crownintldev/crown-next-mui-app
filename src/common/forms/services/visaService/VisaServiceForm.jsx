@@ -57,6 +57,7 @@ const defaultValues = {
   duration: '',
   type: '',
   supplierVisaService: '',
+  supplier: '',
   totalFee: '',
   visaFee: '',
   processingFee: ''
@@ -90,6 +91,11 @@ const VisaServiceForm = ({
   const type = useSelector((state) => state?.visaType?.data);
   const duration = useSelector((state) => state?.visaDuration?.data);
 
+  const supplier = useSelector((state) =>
+    state?.supplier?.data?.find(
+      (item) => item._id === editId?.supplierVisaService?.supplier?._id
+    )
+  );
   useEffect(() => {
     dispatch(fetchVisaCategory({}));
     dispatch(fetchVisaDestination({}));
@@ -118,18 +124,26 @@ const VisaServiceForm = ({
   const selectCategory = watch('category');
   const selectDuration = watch('duration');
   const selectType = watch('type');
+  const selectSupplier = watch('supplier');
   // console.log(getValues('destination'))
   // console.log(selectDestination, selectCategory, selectDuration, selectType)
 
   useEffect(() => {
-    if (selectDestination && selectCategory && selectDuration && selectType) {
+    if (
+      selectDestination &&
+      selectCategory &&
+      selectDuration &&
+      selectType &&
+      selectSupplier
+    ) {
       fetchActionData(
         () =>
           findSupplierVisa({
             destination: selectDestination,
             category: selectCategory,
             type: selectType,
-            duration: selectDuration
+            duration: selectDuration,
+            supplier: selectSupplier
           }),
         setSupplierVisa
       );
@@ -161,7 +175,7 @@ const VisaServiceForm = ({
       setValue('type', editId?.type?._id);
       setValue('duration', editId?.duration?._id);
       setValue('destination', editId?.destination?._id);
-      setValue('supplier', editId?.supplier?._id);
+      setValue('supplier', editId?.supplierVisaService?.supplier?._id);
     } else {
       reset();
     }
@@ -197,10 +211,15 @@ const VisaServiceForm = ({
       });
     }
   };
-
   const choosePaymentMethod = [
     // payMethod === 'confirmed'
     //   ? [
+    {
+      name: 'supplier',
+      disabled: true,
+      value: supplier?.name,
+      myvalue: true
+    },
     {
       name: 'totalFee',
       type: 'number',

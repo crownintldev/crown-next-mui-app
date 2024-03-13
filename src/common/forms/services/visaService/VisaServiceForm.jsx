@@ -187,10 +187,9 @@ const VisaServiceForm = ({
   };
 
   const onSubmit = async (data) => {
-    // console.log(data)
     if (data.supplierVisaService) {
       updateApi({
-        _id: data.supplierVisaService,
+        _id: data.supplierVisaService._id,
         api,
         data,
         dispatch,

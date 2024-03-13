@@ -13,7 +13,7 @@ import CustomTextField from 'src/@core/components/mui/text-field';
 import { useDispatch, useSelector } from 'react-redux';
 
 // ** Actions Imports
-import { fetchVisaBooking } from 'src/store';
+import { fetchSupplier, fetchVisaBooking } from 'src/store';
 
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
@@ -65,6 +65,7 @@ import { removeUndefined } from 'src/utils/helperfunction';
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
 import { createApi, createManyApi, updateManyApi } from 'src/action/function';
+import SelectHookField from 'src/common/dataEntry/SelectHookField';
 
 const MenuProps = {
   PaperProps: {
@@ -83,7 +84,8 @@ const defaultValues = {
   processing: '',
   increment: 0,
   discount: 0,
-  status: 'booked'
+  status: 'booked',
+  supplier:""
 };
 
 const statusList = [
@@ -126,6 +128,12 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
   const category = useSelector((state) => state.visaCategory.data);
   const duration = useSelector((state) => state.visaDuration.data);
   const type = useSelector((state) => state.visaType.data);
+  const supplier = useSelector((state) =>
+    state?.supplier?.data?.map((item) => ({
+      name: `${item.name} ${item.phone}`,
+      _id: item._id
+    }))
+  );
 
   const [findVisa, setFindVisa] = useState({
     destination: '',
@@ -139,14 +147,21 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
     dispatch(fetchVisaDestination({}));
     dispatch(fetchVisaDuration({}));
     dispatch(fetchVisaType({}));
+    dispatch(fetchSupplier({ limit: 1000 }));
   }, []);
   useEffect(() => {
-    const { destination, category, duration, type } = findVisa;
-    if (destination && category && type && duration) {
+    const { destination, category, duration, type, supplier } = findVisa;
+    if (destination && category && type && duration && supplier) {
       const getVisa = async () => {
         try {
           setLoading(true);
-          const res = await findVisaId({ destination, category, type, duration });
+          const res = await findVisaId({
+            destination,
+            category,
+            type,
+            duration,
+            supplier
+          });
           setVisa(res.data.data);
           setLoading(false);
         } catch (err) {
@@ -172,6 +187,9 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
+  useEffect(() => {
+    setFindVisa({...findVisa,supplier:watch('supplier')});
+  }, [watch('supplier')]);
   //************************ edit ids ****************************
   useEffect(() => {
     setValue('visaBookingId', _id);
@@ -183,12 +201,13 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
       setValue('increment', visaBookingItem.increment);
       setValue('discount', visaBookingItem.discount);
       if (visaBookingItem?.visa) {
-        let { destination, duration, category, type } = visaBookingItem.visa;
+        let { destination, duration, category, type,supplierVisaService } = visaBookingItem.visa;
         setFindVisa({
           destination: destination?._id,
           duration: duration?._id,
           category: category?._id,
-          type: type?._id
+          type: type?._id,
+          supplier: supplierVisaService?.supplier?._id
         });
         if (visaBookingItem?.processing) {
           setValue('confirmed', undefined);
@@ -252,9 +271,9 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
     reset();
   };
   //************************** */ onSubmit For Create and Update ***********************
-  const handleOnSubmit =  async(e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    const data = getValues()
+    const data = getValues();
     if (!visa._id) {
       return toast.error('add Visa Must', { position: 'top-center' });
     }
@@ -507,7 +526,15 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
               </MenuItem>
             ))}
         </CustomTextField>
-
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='supplier'
+          options={supplier ?? []}
+          showValue='name'
+          label='Supplier'
+          placeholder='Select Supplier'
+        />
         {loading ? 'loading ...' : selectVisaId()}
         <CustomHookTextField
           chooseFields={amountHandleFields}
@@ -520,7 +547,7 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
             variant='contained'
             color='primary'
             sx={{ mr: 3 }}
-            type="submit"
+            type='submit'
             onClick={handleOnSubmit}
           >
             Submit

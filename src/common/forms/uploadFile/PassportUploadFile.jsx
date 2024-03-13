@@ -5,7 +5,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-import { Box, Radio, Grid, Typography } from '@mui/material';
+import { Box, Radio, Grid, Typography, CircularProgress } from '@mui/material';
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field';
@@ -273,7 +273,8 @@ const passportUploadFile = ({
       fetchData: fetchApi,
       toggle,
       reset,
-      removeSelection
+      removeSelection,
+      setLoading
     });
     // }
   };
@@ -334,6 +335,11 @@ const passportUploadFile = ({
     }
     return (
       <Box sx={{ mb: 2 }}>
+        {loading && (
+          <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+          </Box>
+        )}
         <Grid container spacing={2}>
           {['confirmed', 'processing'].map(
             (type) =>
@@ -525,20 +531,26 @@ const passportUploadFile = ({
           errors={errors}
           required={true}
         /> */}
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button
-            variant='contained'
-            color='primary'
-            sx={{ mr: 3 }}
-            onClick={handleSubmit(handleOnSubmit)}
-          >
-            Submit
-          </Button>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+              variant='contained'
+              color='primary'
+              sx={{ mr: 3 }}
+              disabled={loading ? true :false}
+              onClick={handleSubmit(handleOnSubmit)}
+            >
+              Submit
+            </Button>
 
-          <Button variant='tonal' color='secondary' onClick={handleClose} sx={{ mr: 3 }}>
-            Cancel
-          </Button>
-        </Box>
+            <Button
+              variant='tonal'
+              color='secondary'
+              onClick={handleClose}
+              sx={{ mr: 3 }}
+            >
+              Cancel
+            </Button>
+          </Box>
       </form>
     </div>
   );

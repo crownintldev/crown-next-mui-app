@@ -85,33 +85,32 @@ export const accountArrays = () => [
     title: 'Services',
     icon: 'tabler:packages',
     children: [
-      // {
-      //   title: 'Visa Service Relation',
-      //   children: [
-      //     {
-      //       title: 'Visa Destination',
-      //       path: '/services/visaId/destination',
-      //       icon: 'tabler:circle-filled'
-      //     },
-      //     {
-      //       title: 'Visa Type',
-      //       path: '/services/visaId/type',
-      //       icon: 'tabler:circle-filled'
-      //     },
-      //     {
-      //       title: 'Visa Category',
-      //       path: '/services/visaId/category',
-      //       icon: 'tabler:circle-filled'
-      //     },
+      {
+        title: 'Visa Service Relation',
+        children: [
+          {
+            title: 'Visa Destination',
+            path: '/services/visaId/destination',
+            icon: 'tabler:circle-filled'
+          },
+          {
+            title: 'Visa Type',
+            path: '/services/visaId/type',
+            icon: 'tabler:circle-filled'
+          },
+          {
+            title: 'Visa Category',
+            path: '/services/visaId/category',
+            icon: 'tabler:circle-filled'
+          },
 
-      //     {
-      //       title: 'Visa Duration',
-      //       path: '/services/visaId/duration',
-      //       icon: 'tabler:circle-filled'
-      //     },
-
-      //   ]
-      // },
+          {
+            title: 'Visa Duration',
+            path: '/services/visaId/duration',
+            icon: 'tabler:circle-filled'
+          }
+        ]
+      },
 
       {
         title: 'Visa Service Rate',
@@ -198,8 +197,7 @@ export const accountArrays = () => [
         icon: 'tabler:circle-filled'
       }
     ]
-  },
-  
+  }
 
   // {
   //   sectionTitle: 'Apps & Pages'

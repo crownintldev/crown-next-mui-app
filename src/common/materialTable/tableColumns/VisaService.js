@@ -27,7 +27,7 @@ const useTableColumns = () =>
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.supplier.name',
+        accessorKey: 'supplier.name',
         header: 'Supplier Name',
         Cell: defaultCellRenderer
       },
@@ -40,32 +40,32 @@ const useTableColumns = () =>
       { accessorKey: 'category.name', header: 'Category', Cell: defaultCellRenderer },
       { accessorKey: 'duration.name', header: 'Duration', Cell: defaultCellRenderer },
       {
-        accessorKey: 'supplierVisaService.supplier.phone',
+        accessorKey: 'supplier.phone',
         header: 'Supplier Phone',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.processing.processingFee',
+        accessorKey: 'processing.supplierProcessingFee',
         header: 'Sup - proc Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.processing.visaFee',
+        accessorKey: 'processing.supplierVisaFee',
         header: 'Sup - proc V Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.confirmed.totalFee',
+        accessorKey: 'confirmed.supplierTotalFee',
         header: 'Sup - Conf Fee',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.additionSupplierId.name',
+        accessorKey: 'additionSupplierId.name',
         header: 'Addition Supplier Name',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'supplierVisaService.additionSupplierFee',
+        accessorKey: 'additionSupplierFee',
         header: 'Addition Supplier Fee',
         Cell: defaultCellRenderer
       },

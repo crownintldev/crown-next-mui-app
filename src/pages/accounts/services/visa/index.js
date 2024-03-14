@@ -1,51 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import MaterialTable from 'src/common/materialTable/MaterialTable'
-import useTableColumns from 'src/common/materialTable/tableColumns/VisaService'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import MaterialTable from 'src/common/materialTable/MaterialTable';
+import useTableColumns from 'src/common/materialTable/tableColumns/VisaService';
 
 //Forms
-import VisaServiceForm from 'src/common/forms/services/visaService/VisaServiceForm'
-import SupplierVisaForm from 'src/common/forms/supplier-visa-service/SupplierVisaForm'
+import VisaServiceForm from 'src/common/forms/services/visaService/VisaServiceForm';
+import SupplierVisaForm from 'src/common/forms/supplier-visa-service/SupplierVisaForm';
 
 // redux
-import { fetchVisaService } from 'src/store'
+import { fetchVisaService } from 'src/store';
 //headerMenu
-import { MenuItem } from '@mui/material'
-import { Box } from '@mui/system'
-import Icon from 'src/@core/components/icon'
-import FormDrawer from 'src/common/drawer/FormDrawer'
+import { MenuItem } from '@mui/material';
+import { Box } from '@mui/system';
+import Icon from 'src/@core/components/icon';
+import FormDrawer from 'src/common/drawer/FormDrawer';
 
 const index = ({ apiData }) => {
-  const columns = useTableColumns()
+  const columns = useTableColumns();
   //drawer
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
-  const [selectedIds, setSelectedIds] = useState('')
-  const [removeSelection, setRemoveSelection] = useState({})
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  const [selectedIds, setSelectedIds] = useState('');
+  const [removeSelection, setRemoveSelection] = useState({});
   const [Form, SetForm] = useState({
     Form: null
-  })
+  });
 
   // let Form = null
   const formDrawer = () => {
-   return <FormDrawer
-      open={drawerOpen}
-      toggle={toggleDrawer}
-      drawerTitle={'Edit Supplier Service'}
-      Form={Form.Form}
-      stateSelector="visaService"
-      anchor={'right'}
-      _id={selectedIds[0] || ''}
-      removeSelection={removeSelection.removeSelection || ''}
-    />
-  }
+    return (
+      <FormDrawer
+        open={drawerOpen}
+        toggle={toggleDrawer}
+        drawerTitle={'Edit Supplier Service'}
+        Form={Form.Form}
+        stateSelector='visaService'
+        anchor={'right'}
+        _id={selectedIds[0] || ''}
+        removeSelection={removeSelection.removeSelection || ''}
+      />
+    );
+  };
   const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
-    setSelectedIds(selectedIds)
+    setSelectedIds(selectedIds);
     const handleDrawer = () => {
-      SetForm({ Form: SupplierVisaForm })
-      setRemoveSelection({removeSelection})
-      toggleDrawer()
-    }
+      SetForm({ Form: SupplierVisaForm });
+      setRemoveSelection({ removeSelection });
+      toggleDrawer();
+    };
     return (
       <div>
         {selectedIds && selectedIds.length === 1 && (
@@ -69,8 +71,8 @@ const index = ({ apiData }) => {
           </div>
         )}
       </div>
-    )
-  }
+    );
+  };
   return (
     <div>
       {formDrawer()}
@@ -80,31 +82,31 @@ const index = ({ apiData }) => {
         fetchData={fetchVisaService}
         stateSelector='visaService'
         columns={columns}
-        headerMenu={headerMenu}
+        // headerMenu={headerMenu}
         drawerProps={{
-          formTitle: 'Visa Supplier Rate',
-          editFormTitle: 'Visa Sale Rate',
+          formTitle: 'Add Supplier / Sale Rate',
+          editFormTitle: 'Edit Supplier / Sale Rate',
 
           //header buttons drawer
-          buttonTitle: 'Add Supplier Rate',
-          editButtonTitle: 'Add Sale Rate',
-          CreateForm: SupplierVisaForm,
+          buttonTitle: 'Add Sup/Sale Rate',
+          editButtonTitle: 'Edit Sup/Sale Rate',
+          CreateForm: VisaServiceForm,
           EditForm: VisaServiceForm
         }}
       />
     </div>
-  )
-}
+  );
+};
 
 export const getStaticProps = async () => {
-  const res = await axios.get('/cards/statistics')
-  const apiData = res.data
+  const res = await axios.get('/cards/statistics');
+  const apiData = res.data;
 
   return {
     props: {
       apiData
     }
-  }
-}
+  };
+};
 
-export default index
+export default index;

@@ -37,6 +37,7 @@ import SupplierVisaForm from '../../supplier-visa-service/SupplierVisaForm';
 import { fetchSupplierVisaService } from 'src/store';
 import axiosInstance from 'src/utils/axiosInstance';
 import { fetchActionData } from 'src/action/fetchData';
+import SupplierForm from '../../supplier/SupplierForm';
 
 const requiredError = ['category', 'destination', 'duration', 'type'];
 
@@ -59,9 +60,14 @@ const defaultValues = {
   supplierVisaService: '',
   supplier: '',
   totalFee: '',
+  supplierTotalFee: '',
   visaFee: '',
+  supplierVisaFee: '',
   processingFee: '',
-  supplier:""
+  supplierProcessingFee: '',
+  supplier: '',
+  additionSupplierId: '',
+  additionSupplierFee: ''
 };
 
 export const findSupplierVisa = (data) => {
@@ -85,24 +91,23 @@ const VisaServiceForm = ({
   );
   // console.log(editId);
   // ** State
-  const [payMethod, setPayMethod] = useState('confirmed');
-  const [supplierVisa, setSupplierVisa] = useState(null);
   const category = useSelector((state) => state?.visaCategory?.data);
   const destination = useSelector((state) => state?.visaDestination?.data);
   const type = useSelector((state) => state?.visaType?.data);
   const duration = useSelector((state) => state?.visaDuration?.data);
 
   const supplier = useSelector((state) =>
-    state?.supplier?.data?.find(
-      (item) => item._id === editId?.supplierVisaService?.supplier?._id
-    )
+    state?.supplier?.data?.map((item) => ({
+      name: `${item.name} ${item.phone}`,
+      _id: item._id
+    }))
   );
   useEffect(() => {
-    dispatch(fetchVisaCategory({}));
-    dispatch(fetchVisaDestination({}));
-    dispatch(fetchVisaType({}));
-    dispatch(fetchVisaDuration({}));
-    dispatch(fetchSupplier({}));
+    dispatch(fetchVisaCategory({limit:1000}));
+    dispatch(fetchVisaDestination({limit:1000}));
+    dispatch(fetchVisaType({limit:1000}));
+    dispatch(fetchVisaDuration({limit:1000}));
+    dispatch(fetchSupplier({limit:1000}));
   }, []);
 
   const {
@@ -120,48 +125,7 @@ const VisaServiceForm = ({
     resolver: yupResolver(schema)
   });
 
-  // find supplier visa service
-  const selectDestination = watch('destination');
-  const selectCategory = watch('category');
-  const selectDuration = watch('duration');
-  const selectType = watch('type');
-  const selectSupplier = watch('supplier');
-  // console.log(getValues('destination'))
-  // console.log(selectDestination, selectCategory, selectDuration, selectType)
 
-  useEffect(() => {
-    if (
-      selectDestination &&
-      selectCategory &&
-      selectDuration &&
-      selectType &&
-      selectSupplier
-    ) {
-      fetchActionData(
-        () =>
-          findSupplierVisa({
-            destination: selectDestination,
-            category: selectCategory,
-            type: selectType,
-            duration: selectDuration,
-            supplier: selectSupplier
-          }),
-        setSupplierVisa
-      );
-    }
-  }, [selectDestination, selectCategory, selectDuration, selectType]);
-
-  useEffect(() => {
-    if ((editId && editId?.processing) || editId?.confirmed) {
-    } else {
-      setValue('totalFee', supplierVisa?.confirmed?.totalFee);
-      setValue('visaFee', supplierVisa?.processing?.visaFee);
-      setValue('processingFee', supplierVisa?.processing?.processingFee);
-      setValue('supplierVisaService', supplierVisa?._id);
-    }
-  }, [supplierVisa]);
-
-  // -- end find supplier visa service
 
   // editId handle
   useEffect(() => {
@@ -170,13 +134,17 @@ const VisaServiceForm = ({
         setValue(key, editId[key]);
       });
       setValue('totalFee', editId?.confirmed?.totalFee);
+      setValue('supplierTotalFee', editId?.confirmed?.supplierTotalFee);
       setValue('processingFee', editId?.processing?.processingFee);
+      setValue('supplierProcessingFee', editId?.processing?.supplierProcessingFee);
       setValue('visaFee', editId?.processing?.visaFee);
+      setValue('supplierVisaFee', editId?.processing?.supplierVisaFee);
       setValue('category', editId?.category?._id);
       setValue('type', editId?.type?._id);
       setValue('duration', editId?.duration?._id);
       setValue('destination', editId?.destination?._id);
-      setValue('supplier', editId?.supplierVisaService?.supplier?._id);
+      setValue('supplier', editId?.supplier?._id);
+      setValue('additionSupplierId', editId?.additionSupplierId?._id);
     } else {
       reset();
     }
@@ -188,9 +156,9 @@ const VisaServiceForm = ({
   };
 
   const onSubmit = async (data) => {
-    if (data.supplierVisaService) {
+    if (editId) {
       updateApi({
-        _id: data.supplierVisaService._id,
+        _id,
         api,
         data,
         dispatch,
@@ -212,43 +180,49 @@ const VisaServiceForm = ({
     }
   };
   const choosePaymentMethod = [
-    // payMethod === 'confirmed'
-    //   ? [
     {
-      name: 'supplier',
-      disabled: true,
-      value: supplier?.name,
-      myvalue: true
+      name: 'supplierTotalFee',
+      type: 'number',
+      placeholder: 'Enter Supplier Total Fee',
+      label: 'Confirmed - Supplier Total Fee'
     },
     {
       name: 'totalFee',
       type: 'number',
-      placeholder: 'Enter Total Fee',
-      label: 'Confirmed - Total Fee',
-      value: watch('totalFee'),
-      myvalue: true
+      placeholder: 'Sale Rate - Total Fee',
+      label: 'Sale Rate - Confirmed Total Fee'
     },
-    //   ]
-    // : [
+    {
+      name: 'supplierProcessingFee',
+      type: 'number',
+      placeholder: 'Enter Supplier Processing Fee',
+      label: 'Supplier Processing Fee'
+    },
     {
       name: 'processingFee',
       type: 'number',
       placeholder: 'Enter Processing Fee',
-      label: 'Processing - Processing Fee',
-      value: watch('processingFee'),
-      myvalue: true
+      label: 'Sale Rate - Processing Fee'
+    },
+    {
+      name: 'supplierVisaFee',
+      placeholder: 'Enter Supplier Visa Fee',
+      type: 'number',
+      label: 'Supplier Visa Fee'
     },
     {
       name: 'visaFee',
       placeholder: 'Enter Visa Fee',
       type: 'number',
-      label: 'Processing - Visa Fee',
-      value: watch('visaFee'),
-      myvalue: true
+      label: 'Sale Rate - Visa Fee'
     }
   ];
-  // ]
-
+  const additionSupplierFee = [
+    {
+      name: 'additionSupplierFee',
+      type: 'number'
+    }
+  ];
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -292,32 +266,44 @@ const VisaServiceForm = ({
           label='Destination'
           placeholder='Choose Destination'
         />
-        {/* choose Payment Field */}
-        {/* <SelectField
-          options={['Confirmed', 'Processing']}
-          label='Select Payment Method'
-          placeholder={'Select Payment Method'}
-          value={payMethod}
-          setPayMethod={setPayMethod}
-          disableClearable={true}
-        /> */}
-
+        <CustomOpenDrawer
+          ButtonTitle='Add Supplier'
+          drawerTitle='Add Supplier Form'
+          Form={SupplierForm}
+          fetchApi={fetchSupplier}
+          formName='Supplier'
+          api='supplier'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='supplier'
+          options={supplier ?? []}
+          showValue='name'
+          label='Supplier'
+          placeholder='Choose Supplier'
+        />
         <CustomHookTextField
           chooseFields={choosePaymentMethod}
           control={control}
           errors={errors}
           required={true}
         />
-        {!supplierVisa && (
-          <CustomOpenDrawer
-            ButtonTitle='Supplier Visa Service'
-            drawerTitle='Add Supplier Visa Service'
-            Form={SupplierVisaForm}
-            fetchApi={fetchSupplierVisaService}
-            api='supplier-visa-service'
-            anchor='right'
-          />
-        )}
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='additionSupplierId'
+          options={supplier ?? []}
+          showValue='name'
+          label='Additional Supplier'
+          placeholder='Choose Additional Supplier'
+        />
+        <CustomHookTextField
+          chooseFields={additionSupplierFee}
+          control={control}
+          errors={errors}
+          required={true}
+        />
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button type='submit' variant='contained' sx={{ mr: 3 }}>
             Submit

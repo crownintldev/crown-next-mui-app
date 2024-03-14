@@ -60,13 +60,13 @@ const useTableColumns = () =>
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'additionSupplierId.name',
-        header: 'Addition Supplier Name',
+        accessorKey: 'additionalSupplierId.name',
+        header: 'Additional Supplier Name',
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'additionSupplierFee',
-        header: 'Addition Supplier Fee',
+        accessorKey: 'additionalSupplierFee',
+        header: 'Additional Supplier Fee',
         Cell: defaultCellRenderer
       },
       

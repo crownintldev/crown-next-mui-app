@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import AdditionalSupplierAccountForm from 'src/common/forms/additionalSupplierAccount/AdditionalSupplierAccountForm';
 import GroupTable from 'src/common/materialTable/groupTable/GroupTable';
-import { useAdditionalSupplierAccountColumn,useChildAdditionalSupplierAccountColumn } from 'src/common/materialTable/tableColumns/additionalSupplierAccountColumns';
+import {
+  useAdditionalSupplierAccountColumn,
+  useChildAdditionalSupplierAccountColumn
+} from 'src/common/materialTable/tableColumns/additionalSupplierAccountColumns';
 
 // redux
 import { fetchAdditionalSupplierAccount } from 'src/store';
@@ -9,7 +13,6 @@ import { fetchAdditionalSupplierAccount } from 'src/store';
 const index = ({ apiData }) => {
   const columns = useAdditionalSupplierAccountColumn();
   const childColumns = useChildAdditionalSupplierAccountColumn();
-
 
   return (
     <div>
@@ -20,15 +23,14 @@ const index = ({ apiData }) => {
         childColumns={childColumns}
         fetchData={fetchAdditionalSupplierAccount}
         stateSelector='additionalSupplierAccount'
-        selectedId=""
-        logTabLink='#'
+        selectedId='additionalSupplierId' //this id we are sending in backend
+        logTabLink='/accounts/account/additional-supplier-account-log'
         drawerProps={{
-          editFormTitle: '',
-          editButtonTitle: '',
-          EditForm: "",
+          editFormTitle: 'Edit Account',
+          editButtonTitle: 'Edit Account',
+          EditForm: AdditionalSupplierAccountForm
         }}
       />
- 
     </div>
   );
 };

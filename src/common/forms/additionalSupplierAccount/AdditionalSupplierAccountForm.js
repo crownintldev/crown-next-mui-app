@@ -26,6 +26,7 @@ import CustomHookTextField from 'src/common/dataEntry/CustomHookTextField';
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
 import IdNameForm from '../idnameForm/IdNameForm';
 import SelectHookField from 'src/common/dataEntry/SelectHookField';
+import DatePickerHookField from 'src/common/dataEntry/DatePickerHookField';
 
 const schema = yup.object().shape({
   // invoiceDate: yup.string().required('required'),
@@ -34,37 +35,40 @@ const schema = yup.object().shape({
 });
 
 const defaultValues = {
-  supplierId: '',
-  supplierName: '',
+  additionalSupplierId: '',
+  additionalSupplierName: '',
   total: 0,
   paid: 0,
-  pay: 0,
-  paymentMethod: '',
-  paymentDescription: '',
   discount: 0,
-  remaining: 0
+  remaining: 0,
+  date: '',
+  pay: 0,
+  notcreated: '',
+  paymentMethod: '',
+  paymentDescription: ''
 };
 
-const SupplierAccountForm = ({
+const AdditionalSupplierAccountForm = ({
   toggle,
   fetchApi = fetchSupplierAccount,
   setFormSize,
-  api = 'supplier-account',
+  api = 'additional-supplier-account',
   _id,
-  stateSelector = 'supplierAccount',
+  stateSelector = 'additionalSupplierAccount',
   removeSelection
 }) => {
   const dispatch = useDispatch();
 
   let editId = useSelector((state) =>
-    state[stateSelector]?.data?.find((item) => item.supplierId === _id)
+    state[stateSelector]?.data?.find((item) => item.additionalSupplierId === _id)
   );
+  // console.log(editId)
   // payment method
   const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   useEffect(() => {
     setFormSize(400);
-    dispatch(fetchPaymentMethod({}));
+    dispatch(fetchPaymentMethod({ limit: 2000 }));
   }, []);
 
   const {
@@ -99,9 +103,11 @@ const SupplierAccountForm = ({
   const pay = Number(watch('pay'));
 
   useEffect(() => {
-    let remaining = (Number(total) ?? 0) - ((Number(discount) ?? 0) + (Number(paid) ?? 0) + (Number(pay) ?? 0));
+    let remaining =
+      (Number(total) ?? 0) -
+      ((Number(discount) ?? 0) + (Number(paid) ?? 0) + (Number(pay) ?? 0));
     setValue('remaining', remaining);
-  }, [discount, paid, total,pay]);
+  }, [discount, paid, total, pay]);
 
   const handleClose = () => {
     toggle();
@@ -113,7 +119,7 @@ const SupplierAccountForm = ({
   const onSubmit = async (data) => {
     data.supplierId = _id;
     // const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/${api}/create`, formData)
-    if (editId.notcreated === false) {
+    if (editId?.notcreated === false) {
       updateApi({
         _id,
         api,
@@ -124,7 +130,7 @@ const SupplierAccountForm = ({
         reset,
         removeSelection
       });
-    } else if (editId.notcreated === true) {
+    } else if (editId?.notcreated === true) {
       createApi({
         api,
         data: data,
@@ -139,7 +145,8 @@ const SupplierAccountForm = ({
 
   const chooseFields = [
     {
-      name: 'supplierName'
+      name: 'additionalSupplierName',
+      disabled: true
     },
     {
       name: 'total',
@@ -179,6 +186,16 @@ const SupplierAccountForm = ({
           control={control}
           errors={errors}
         />
+      
+        <div className='mt-2 mb-2'>
+          <DatePickerHookField
+            name='date'
+            placeholder='Payment Method Date'
+            required={true}
+            control={control}
+            errors={errors}
+          />
+        </div>
         <CustomOpenDrawer
           ButtonTitle='Add Payment Method'
           drawerTitle='Add Payment Method'
@@ -213,4 +230,4 @@ const SupplierAccountForm = ({
   );
 };
 
-export default SupplierAccountForm;
+export default AdditionalSupplierAccountForm;

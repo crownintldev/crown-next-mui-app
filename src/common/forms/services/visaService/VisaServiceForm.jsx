@@ -66,8 +66,8 @@ const defaultValues = {
   processingFee: '',
   supplierProcessingFee: '',
   supplier: '',
-  additionSupplierId: '',
-  additionSupplierFee: ''
+  additionalSupplierId: '',
+  additionalSupplierFee: ''
 };
 
 export const findSupplierVisa = (data) => {
@@ -144,7 +144,7 @@ const VisaServiceForm = ({
       setValue('duration', editId?.duration?._id);
       setValue('destination', editId?.destination?._id);
       setValue('supplier', editId?.supplier?._id);
-      setValue('additionSupplierId', editId?.additionSupplierId?._id);
+      setValue('additionalSupplierId', editId?.additionalSupplierId?._id);
     } else {
       reset();
     }
@@ -217,9 +217,9 @@ const VisaServiceForm = ({
       label: 'Sale Rate - Visa Fee'
     }
   ];
-  const additionSupplierFee = [
+  const additionalSupplierFee = [
     {
-      name: 'additionSupplierFee',
+      name: 'additionalSupplierFee',
       type: 'number'
     }
   ];
@@ -292,14 +292,14 @@ const VisaServiceForm = ({
         <SelectHookField
           control={control}
           errors={errors}
-          name='additionSupplierId'
+          name='additionalSupplierId'
           options={supplier ?? []}
           showValue='name'
           label='Additional Supplier'
           placeholder='Choose Additional Supplier'
         />
         <CustomHookTextField
-          chooseFields={additionSupplierFee}
+          chooseFields={additionalSupplierFee}
           control={control}
           errors={errors}
           required={true}

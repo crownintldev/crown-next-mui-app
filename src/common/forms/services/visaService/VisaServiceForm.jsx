@@ -38,6 +38,7 @@ import { fetchSupplierVisaService } from 'src/store';
 import axiosInstance from 'src/utils/axiosInstance';
 import { fetchActionData } from 'src/action/fetchData';
 import SupplierForm from '../../supplier/SupplierForm';
+import IdNameForm from '../../idnameForm/IdNameForm';
 
 const requiredError = ['category', 'destination', 'duration', 'type'];
 
@@ -227,6 +228,14 @@ const VisaServiceForm = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* category */}
+           <CustomOpenDrawer
+          ButtonTitle='Add Visa Category'
+          drawerTitle='Add Visa Category Form'
+          Form={IdNameForm}
+          fetchApi={fetchVisaCategory}
+          formName='Category'
+          api='visa-category'
+        />
         <SelectHookField
           control={control}
           errors={errors}
@@ -237,6 +246,14 @@ const VisaServiceForm = ({
           placeholder='Choose Category'
         />
         {/* type */}
+        <CustomOpenDrawer
+          ButtonTitle='Add Visa Type'
+          drawerTitle='Add Visa Type Form'
+          Form={IdNameForm}
+          fetchApi={fetchVisaType}
+          formName='Type'
+          api='visa-type'
+        />
         <SelectHookField
           control={control}
           errors={errors}
@@ -247,6 +264,14 @@ const VisaServiceForm = ({
           placeholder='Choose Type'
         />
         {/* duration */}
+        <CustomOpenDrawer
+          ButtonTitle='Add Visa Duration'
+          drawerTitle='Add Visa Duration Form'
+          Form={IdNameForm}
+          fetchApi={fetchVisaDuration}
+          formName='Type'
+          api='visa-duration'
+        />
         <SelectHookField
           control={control}
           errors={errors}
@@ -257,6 +282,14 @@ const VisaServiceForm = ({
           placeholder='Choose Duration'
         />
         {/* destination */}
+        <CustomOpenDrawer
+          ButtonTitle='Add Visa Destination'
+          drawerTitle='Add Visa Destination Form'
+          Form={IdNameForm}
+          fetchApi={fetchVisaDestination}
+          formName='Destination'
+          api='visa-destination'
+        />
         <SelectHookField
           control={control}
           errors={errors}

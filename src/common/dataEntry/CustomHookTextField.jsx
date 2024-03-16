@@ -19,7 +19,6 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
       myvalue,
       disabled
     } = item
-
     return (
       <>
         {/* {textarea ? (
@@ -47,7 +46,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
                     ? ''
                     : myValue
                   : value !== undefined
-                  ? typeof value === "number"
+                  ? typeof value === "number" || name ==="password"
                     ? value
                     : value?.toUpperCase()
                   : ''

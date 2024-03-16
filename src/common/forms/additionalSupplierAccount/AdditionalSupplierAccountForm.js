@@ -16,7 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPaymentMethod, fetchSupplierAccount } from 'src/store';
+import { fetchPaymentMethod, fetchAdditionalSupplierAccount } from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';
@@ -40,6 +40,7 @@ const defaultValues = {
   total: 0,
   paid: 0,
   discount: 0,
+  tdiscount: 0,
   remaining: 0,
   date: '',
   pay: 0,
@@ -50,7 +51,7 @@ const defaultValues = {
 
 const AdditionalSupplierAccountForm = ({
   toggle,
-  fetchApi = fetchSupplierAccount,
+  fetchApi = fetchAdditionalSupplierAccount,
   setFormSize,
   api = 'additional-supplier-account',
   _id,
@@ -97,17 +98,19 @@ const AdditionalSupplierAccountForm = ({
   }, [setValue, editId]);
 
   // calculation getting values
-  const total = Number(watch('total'));
   const discount = Number(watch('discount'));
   const paid = Number(watch('paid'));
   const pay = Number(watch('pay'));
 
   useEffect(() => {
     let remaining =
-      (Number(total) ?? 0) -
-      ((Number(discount) ?? 0) + (Number(paid) ?? 0) + (Number(pay) ?? 0));
+      (Number(editId.total) ?? 0) -
+      (Number(editId.tdiscount) ?? 0) -
+      (Number(discount) ?? 0) -
+      (Number(editId.paid) ?? 0) -
+      (Number(pay) ?? 0);
     setValue('remaining', remaining);
-  }, [discount, paid, total, pay]);
+  }, [editId, pay, discount]);
 
   const handleClose = () => {
     toggle();
@@ -164,6 +167,13 @@ const AdditionalSupplierAccountForm = ({
       type: 'number'
     },
     {
+      name: 'tdiscount',
+      placeholder: `0`,
+      label: 'Total Discount',
+      type: 'number',
+      disabled: true
+    },
+    {
       name: 'discount',
       placeholder: `0`,
       type: 'number'
@@ -186,7 +196,7 @@ const AdditionalSupplierAccountForm = ({
           control={control}
           errors={errors}
         />
-      
+
         <div className='mt-2 mb-2'>
           <DatePickerHookField
             name='date'

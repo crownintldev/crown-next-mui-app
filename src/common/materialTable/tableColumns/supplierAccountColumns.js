@@ -39,7 +39,7 @@ export const useSupplierAccountColumn = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'discount',
+        accessorKey: 'tdiscount',
         header: 'Discount',
         size: 100,
         Cell: defaultCellRenderer

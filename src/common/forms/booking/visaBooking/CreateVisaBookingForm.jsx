@@ -85,7 +85,7 @@ const defaultValues = {
   increment: 0,
   discount: 0,
   status: 'booked',
-  supplier:""
+  supplier: ''
 };
 
 const statusList = [
@@ -141,17 +141,17 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
     type: '',
     duration: ''
   });
-
   useEffect(() => {
-    dispatch(fetchVisaCategory({}));
-    dispatch(fetchVisaDestination({}));
-    dispatch(fetchVisaDuration({}));
-    dispatch(fetchVisaType({}));
+    dispatch(fetchVisaCategory({limit: 1000}));
+    dispatch(fetchVisaDestination({limit: 1000}));
+    dispatch(fetchVisaDuration({limit: 1000}));
+    dispatch(fetchVisaType({limit: 1000}));
     dispatch(fetchSupplier({ limit: 1000 }));
   }, []);
+  let supplierId = '';
   useEffect(() => {
-    const { destination, category, duration, type, supplier } = findVisa;
-    if (destination && category && type && duration && supplier) {
+    const { destination, category, duration, type } = findVisa;
+    if (destination && category && type && duration && supplierId) {
       const getVisa = async () => {
         try {
           setLoading(true);
@@ -160,7 +160,7 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
             category,
             type,
             duration,
-            supplier
+            supplier:supplierId
           });
           setVisa(res.data.data);
           setLoading(false);
@@ -187,27 +187,26 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
-  useEffect(() => {
-    setFindVisa({...findVisa,supplier:watch('supplier')});
-  }, [watch('supplier')]);
+
+  supplierId = watch('supplier');
   //************************ edit ids ****************************
   useEffect(() => {
     setValue('visaBookingId', _id);
     setValue('passportId', visaBookingItem.passport.passportId);
     setValue('passportNumber', visaBookingItem.passport.passportNumber);
     if (_id) {
-      setValue('status', visaBookingItem.status);
-      setValue('total', visaBookingItem.total);
-      setValue('increment', visaBookingItem.increment);
-      setValue('discount', visaBookingItem.discount);
+      setValue('status', visaBookingItem?.status);
+      setValue('total', visaBookingItem?.total);
+      setValue('increment', visaBookingItem?.increment);
+      setValue('discount', visaBookingItem?.discount);
+      setValue('supplier', visaBookingItem?.visa?.supplier);
       if (visaBookingItem?.visa) {
-        let { destination, duration, category, type,supplierVisaService } = visaBookingItem.visa;
+        let { destination, duration, category, type } = visaBookingItem.visa;
         setFindVisa({
           destination: destination?._id,
           duration: duration?._id,
           category: category?._id,
-          type: type?._id,
-          supplier: supplierVisaService?.supplier?._id
+          type: type?._id
         });
         if (visaBookingItem?.processing) {
           setValue('confirmed', undefined);

@@ -24,7 +24,8 @@ const index = ({ apiData }) => {
         fetchData={fetchAdditionalSupplierAccount}
         stateSelector='additionalSupplierAccount'
         selectedId='additionalSupplierId' //this id we are sending in backend
-        logTabLink='/accounts/account/additional-supplier-account-log'
+        tab1='/accounts/account/additional-supplier-account'
+        tab2='/accounts/account/additional-supplier-account-log'
         drawerProps={{
           editFormTitle: 'Edit Account',
           editButtonTitle: 'Edit Account',

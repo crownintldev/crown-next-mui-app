@@ -103,7 +103,7 @@ const AddCard = (props) => {
               return (
                 <div>
                   <>
-                    <AddCardInvoiceTo billingDetail={item.billingDetail} invoiceTo={by} />
+                    <AddCardInvoiceTo billingDetail={item?.billingDetail} invoiceTo={by} />
                     <Divider />
                     <AddCardItemSelect body={visaBookingIds} />
                   </>

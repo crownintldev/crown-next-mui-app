@@ -22,7 +22,7 @@ export const useAdditionalSupplierAccountColumn = (openMediaDrawer) =>
       { accessorKey: '_id', header: 'ID', size: 100, Cell: CellRowId },
       {
         accessorKey: 'additionalSupplierName',
-        header: 'Additional Supplier Name',
+        header: 'Ad Supplier Name',
         size: 100,
         Cell: defaultCellRenderer
       },
@@ -39,7 +39,7 @@ export const useAdditionalSupplierAccountColumn = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       {
-        accessorKey: 'discount',
+        accessorKey: 'tdiscount',
         header: 'Discount',
         size: 100,
         Cell: defaultCellRenderer

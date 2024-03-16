@@ -23,6 +23,7 @@ const useSupplierAccountPaymentHistory = () =>
       TableColumn('_id', 'ID', CellRowId),
       TableColumn('paymentMethod.name', 'Payment Method'),
       TableColumn('paid'),
+      TableColumn('discount'),
       TableColumn('paymentDescription'),
       TableColumn('supplier.name', 'Supplier Name'),
       TableColumn('supplier.phone', 'Supplier Phone'),

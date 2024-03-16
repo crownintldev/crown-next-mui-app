@@ -22,6 +22,8 @@ const index = ({ apiData }) => {
         columns={columns}
         fetchData={fetchAccoutPaymentHistory}
         stateSelector='accoutPaymentHistory'
+        tab1='/accounts/account/visa-account'
+        tab2='/accounts/account/visa-account-log'
         drawerProps={{
           editFormTitle: '',
           //header buttons drawer

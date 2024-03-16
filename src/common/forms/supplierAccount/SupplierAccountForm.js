@@ -42,6 +42,7 @@ const defaultValues = {
   paymentMethod: '',
   paymentDescription: '',
   discount: 0,
+  tdiscount: 0,
   remaining: 0
 };
 
@@ -93,15 +94,18 @@ const SupplierAccountForm = ({
   }, [setValue, editId]);
 
   // calculation getting values
-  const total = Number(watch('total'));
   const discount = Number(watch('discount'));
-  const paid = Number(watch('paid'));
   const pay = Number(watch('pay'));
 
   useEffect(() => {
-    let remaining = (Number(total) ?? 0) - ((Number(discount) ?? 0) + (Number(paid) ?? 0) + (Number(pay) ?? 0));
+    let remaining =
+      (Number(editId.total) ?? 0) -
+      (Number(editId.tdiscount) ?? 0) -
+      (Number(discount) ?? 0) -
+      (Number(editId.paid) ?? 0) -
+      (Number(pay) ?? 0);
     setValue('remaining', remaining);
-  }, [discount, paid, total,pay]);
+  }, [editId, pay, discount]);
 
   const handleClose = () => {
     toggle();
@@ -155,6 +159,13 @@ const SupplierAccountForm = ({
     {
       name: 'pay',
       type: 'number'
+    },
+    {
+      name: 'tdiscount',
+      placeholder: `0`,
+      label: 'Total Discount',
+      type: 'number',
+      disabled: true
     },
     {
       name: 'discount',

@@ -99,6 +99,10 @@ export const fetchSupplierAccoutPaymentHistory = createFetchDataThunk(
   'supplierAccoutPaymentHistory',
   'supplier-account-payment-history'
 );
+export const fetchAdditionalSupplierAccoutPaymentHistory = createFetchDataThunk(
+  'additionalSupplierAccoutPaymentHistory',
+  'additional-supplier-account-payment-history'
+);
 
 //Auth App
 export const fetchUser = createFetchDataThunk(
@@ -160,6 +164,10 @@ const rootReducer = combineReducers({
   supplierAccoutPaymentHistory: generate(
     'supplierAccoutPaymentHistory',
     fetchSupplierAccoutPaymentHistory
+  ),
+  additionalSupplierAccoutPaymentHistory: generate(
+    'additionalSupplierAccoutPaymentHistory',
+    fetchAdditionalSupplierAccoutPaymentHistory
   ),
   myInvoice: generateReducer('myInvoice').reducer,
   // auth

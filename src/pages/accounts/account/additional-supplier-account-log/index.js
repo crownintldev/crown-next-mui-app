@@ -3,7 +3,7 @@ import axios from 'axios';
 import GroupTable from 'src/common/materialTable/groupTable/GroupTable';
 
 import useSupplierAccountPaymentHistory from 'src/common/materialTable/tableColumns/supplierAccountPaymentHistory';
-import { fetchSupplierAccoutPaymentHistory } from 'src/store';
+import { fetchAdditionalSupplierAccoutPaymentHistory } from 'src/store';
 
 //
 const index = ({ apiData }) => {
@@ -14,12 +14,14 @@ const index = ({ apiData }) => {
   return (
     <div>
       <GroupTable
-        api={'supplier-account-payment-history'}
+        api={'additional-supplier-account-payment-history'}
         //  apiData={apiData}
         childColumns={[]}
         columns={columns}
-        fetchData={fetchSupplierAccoutPaymentHistory}
-        stateSelector='supplierAccoutPaymentHistory'
+        fetchData={fetchAdditionalSupplierAccoutPaymentHistory}
+        stateSelector='additionalSupplierAccoutPaymentHistory'
+        tab1='/accounts/account/additional-supplier-account'
+        tab2='/accounts/account/additional-supplier-account-log'
         drawerProps={{
           editFormTitle: '',
           //header buttons drawer

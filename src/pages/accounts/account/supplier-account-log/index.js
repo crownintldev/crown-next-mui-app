@@ -20,6 +20,8 @@ const index = ({ apiData }) => {
         columns={columns}
         fetchData={fetchSupplierAccoutPaymentHistory}
         stateSelector='supplierAccoutPaymentHistory'
+        tab1='/accounts/account/supplier-account'
+        tab2='/accounts/account/supplier-account-log'
         drawerProps={{
           editFormTitle: '',
           //header buttons drawer

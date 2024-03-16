@@ -66,11 +66,13 @@ const index = ({ apiData }) => {
       <GroupTable
         api={'accounts'}
         //  apiData={apiData}
-        headerMenu={headerMenu}
+        // headerMenu={headerMenu}
         columns={columns}
         childColumns={childColumns}
         fetchData={fetchData}
         stateSelector='account'
+        tab1='/accounts/account/visa-account'
+        tab2='/accounts/account/visa-account-log'
         drawerProps={{
           editFormTitle: 'Edit Account',
           //header buttons drawer

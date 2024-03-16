@@ -25,23 +25,23 @@ export const accumulateBillingDetails = (data) => {
         }`;
         if (!merged.has(key)) {
           merged.set(key, {
-            by: item.by,
-            visaBookingIds: item.visaBookingIds ? [...item.visaBookingIds] : [],
+            by: item?.by,
+            visaBookingIds: item?.visaBookingIds ? [...item?.visaBookingIds] : [],
             billingDetail: {
               total: item?.subTotal,
               remaining: item?.remaining,
               paid: item?.paid
             },
-            visaTicketBookingIds: item.visaTicketBookingIds
-              ? [...item.visaTicketBookingIds]
+            visaTicketBookingIds: item?.visaTicketBookingIds
+              ? [...item?.visaTicketBookingIds]
               : []
           });
         } else {
           const currentItem = merged.get(key);
-          if (item.visaBookingIds) {
+          if (item?.visaBookingIds) {
             currentItem.visaBookingIds.push(...item.visaBookingIds);
           }
-          if (item.visaTicketBookingIds) {
+          if (item?.visaTicketBookingIds) {
             currentItem.visaTicketBookingIds.push(...item.visaTicketBookingIds);
           }
         }

@@ -179,7 +179,8 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
 
   const passportField1 = [
     {
-      name: 'passportNumber'
+      name: 'passportNumber',
+      required: true
     },
     {
       name: 'bookletNumber'
@@ -190,7 +191,6 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
     },
     {
       name: 'surname',
-      required: true
     },
     {
       name: 'givenName',

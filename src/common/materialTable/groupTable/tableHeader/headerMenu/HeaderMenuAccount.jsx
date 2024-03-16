@@ -23,28 +23,32 @@ const HeaderMenuAccount = ({
       toggleDrawer();
     };
     return (
+      
       <>
-        {/* <div onClick={handleClose}>
-          <div>
-            <MenuItem
-              onClick={() => handleSingleDrawerForm(PaymentHeadForm,"Add Payment Head")}
-              sx={{ py: 1, m: 0 }}
-            >
-              <Box
+        {selectedIds?.length > 0 && (
+            <div onClick={handleInvoice}>
+              <MenuItem
+                onClose={handleClose}
                 sx={{
-                  fontSize: '0.8em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  columnGap: '4px',
-                  color: '#2b60fe'
+                  py: 1,
+                  m: 0
                 }}
               >
-                <Icon fontSize='0.8rem' icon='tabler:plus' />
-                Add Payment Head
-              </Box>
-            </MenuItem>
-          </div>
-        </div> */}
+                <Box
+                  sx={{
+                    fontSize: '0.8em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    columnGap: '4px',
+                    color: '#2b60fe'
+                  }}
+                >
+                  <Icon fontSize='0.8rem' icon='tabler:plus' />
+                  Create Invoice
+                </Box>
+              </MenuItem>
+            </div>
+          )}
       </>
     );
   };

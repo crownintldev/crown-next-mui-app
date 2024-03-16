@@ -24,7 +24,7 @@ const Example = ({
   api,
   headerMenu,
   NewHeaderMenu,
-  logTabLink
+  tab1,tab2
 }) => {
   const {
     formTitle="",
@@ -240,9 +240,9 @@ const Example = ({
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
     if (newValue === 'account') {
-      router.push('/accounts/account/visa-account');
+      router.push(tab1 || '/accounts/account/visa-account');
     } else {
-      router.push(logTabLink || '/accounts/account/visa-account-log');
+      router.push(tab2 || '/accounts/account/visa-account-log');
     }
   };
   // Conditionally render the table component based on the active tab

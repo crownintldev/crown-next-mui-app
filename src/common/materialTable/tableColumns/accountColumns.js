@@ -81,6 +81,11 @@ export const useChildTableColumns = () =>
       Cell: defaultCellRenderer
     },
     {
+      accessorKey: 'passport.remarks',
+      header: 'Remarks',
+      Cell: defaultCellRenderer
+    },
+    {
       accessorKey: 'processing.processingFee',
       header: 'Processing Fee',
       Cell: defaultCellRenderer
@@ -125,7 +130,11 @@ export const useChildTableColumns = () =>
       header: 'Destination',
       Cell: defaultCellRenderer
     },
-    { accessorKey: 'visaId.category.name', header: 'Category', Cell: defaultCellRenderer },
+    {
+      accessorKey: 'visaId.category.name',
+      header: 'Category',
+      Cell: defaultCellRenderer
+    },
     { accessorKey: 'visaId.type.name', header: 'Type', Cell: defaultCellRenderer },
     { accessorKey: 'visaId.duration.name', header: 'Duration', Cell: defaultCellRenderer }
   ]);

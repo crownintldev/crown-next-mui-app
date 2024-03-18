@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useMemo } from 'react'
+import React, { useState } from 'react';
+import { useMemo } from 'react';
 import {
   renderStatusCell,
   defaultCellRenderer,
@@ -8,9 +8,9 @@ import {
   defaultCellUpperCase,
   CellRowId,
   modelCondition
-} from 'src/common/materialTable/tableColumnFunction'
-import PermMediaIcon from '@mui/icons-material/PermMedia'
-import { IconButton } from '@mui/material'
+} from 'src/common/materialTable/tableColumnFunction';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import { IconButton } from '@mui/material';
 
 const useTableColumns = (openMediaDrawer) =>
   useMemo(
@@ -71,7 +71,6 @@ const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       { accessorKey: 'passport.religion', header: 'Religion', Cell: defaultCellRenderer },
-      { accessorKey: 'passport.remarks', header: 'Remarks', Cell: defaultCellRenderer },
       {
         accessorKey: 'passport.bookletNumber',
         header: 'Booklet Number',
@@ -138,6 +137,6 @@ const useTableColumns = (openMediaDrawer) =>
       { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }
     ],
     []
-  )
+  );
 
-export default useTableColumns
+export default useTableColumns;

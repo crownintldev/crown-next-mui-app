@@ -37,6 +37,7 @@ const useTableColumns = (openMediaDrawer) =>
         header: 'Given Name',
         Cell: defaultCellRenderer
       },
+      { accessorKey: 'passport.remarks', header: 'Remarks', Cell: defaultCellRenderer },
       // Member
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Phone', Cell: defaultCellRenderer },

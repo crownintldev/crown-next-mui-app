@@ -8,7 +8,7 @@ const statusObj = {
   editing: 'primary',
   pending: 'warning',
   inprocess: 'info',
-  'in Embassy': 'primary',
+  'in embassy': 'primary',
   verification: 'info',
   approved: 'success',
   returned: 'error',

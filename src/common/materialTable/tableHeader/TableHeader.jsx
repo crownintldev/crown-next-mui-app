@@ -1,24 +1,24 @@
 // ** MUI Imports
-import React, { useState } from 'react'
-import axios from 'axios'
-import Box from '@mui/material/Box'
-import { useTheme } from '@mui/material/styles'
-import toast from 'react-hot-toast'
-import { IconButton, Menu, MenuItem } from '@mui/material'
+import React, { useState } from 'react';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
+import toast from 'react-hot-toast';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 
 // import { mdiCallToAction } from '@mdi/js';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 
-import Icon from 'src/@core/components/icon'
-import { useDispatch } from 'react-redux'
-import { axiosErrorMessage } from 'src/utils/helperfunction'
-import { capitalizeSplitDash } from 'src/utils/helperfunction'
-import axiosInstance from 'src/utils/axiosInstance'
-import { TryOutlined } from '@mui/icons-material'
-import { AccountApi } from 'config'
-import ExportButton from './ExportButton'
+import Icon from 'src/@core/components/icon';
+import { useDispatch } from 'react-redux';
+import { axiosErrorMessage } from 'src/utils/helperfunction';
+import { capitalizeSplitDash } from 'src/utils/helperfunction';
+import axiosInstance from 'src/utils/axiosInstance';
+import { TryOutlined } from '@mui/icons-material';
+import { AccountApi } from 'config';
+import ExportButton from './ExportButton';
 const TableHeader = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // ** Props
   const {
@@ -34,73 +34,76 @@ const TableHeader = (props) => {
     headerMenu,
     NewHeaderMenu,
     setActiveTab,
-    apidomain,
-  } = props
-  const baseURL = apidomain ?? AccountApi
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
-// console.log(baseURL)
+    apidomain
+  } = props;
+  const baseURL = apidomain ?? AccountApi;
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  // console.log(baseURL)
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
   const handleRemove = async (cond) => {
     if (!api) {
-      return toast.error('api not found', { position: 'top-center' })
+      return toast.error('api not found', { position: 'top-center' });
     }
-    const apiEndpoint =
-      cond === 'undo' && showTrash === 'true'
-        ? `${baseURL}/${api}/remove`
-        : showTrash === 'true'
-        ? `${baseURL}/${api}/permanentRemove`
-        : `${baseURL}/${api}/remove`
-    let requestBody =
-      cond === 'undo' && showTrash === 'true'
-        ? {
-            ids: selectedIds,
-            deleted: 'false'
-          }
-        : showTrash === 'true'
-        ? {
-            ids: selectedIds,
-            deleted: 'permanent'
-          }
-        : {
-            ids: selectedIds,
-            deleted: 'true'
-          }
-    try {
-      const response = await axiosInstance.post(apiEndpoint, requestBody)
-      if (response.data) {
-        dispatch(
-          fetchData({
-            limit: 20,
-            page: 1
-          })
-        )
-        setActiveTab('default')
-        removeSelection()
-        toast.success('Delete Successfully', { position: 'top-center' })
+    const confirmationMessage = 'Are You sure';
+    if (window.confirm(confirmationMessage)) {
+      const apiEndpoint =
+        cond === 'undo' && showTrash === 'true'
+          ? `${baseURL}/${api}/remove`
+          : showTrash === 'true'
+          ? `${baseURL}/${api}/permanentRemove`
+          : `${baseURL}/${api}/remove`;
+      let requestBody =
+        cond === 'undo' && showTrash === 'true'
+          ? {
+              ids: selectedIds,
+              deleted: 'false'
+            }
+          : showTrash === 'true'
+          ? {
+              ids: selectedIds,
+              deleted: 'permanent'
+            }
+          : {
+              ids: selectedIds,
+              deleted: 'true'
+            };
+      try {
+        const response = await axiosInstance.post(apiEndpoint, requestBody);
+        if (response.data) {
+          dispatch(
+            fetchData({
+              limit: 20,
+              page: 1
+            })
+          );
+          setActiveTab('default');
+          removeSelection();
+          toast.success('Delete Successfully', { position: 'top-center' });
+        }
+      } catch (error) {
+        console.log(axiosErrorMessage(error));
+        toast.error(axiosErrorMessage(error), { position: 'top-center' });
       }
-    } catch (error) {
-      console.log(axiosErrorMessage(error))
-      toast.error(axiosErrorMessage(error), { position: 'top-center' })
     }
-  }
-  const [isHovered, setIsHovered] = useState(false)
+  };
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
+    setIsHovered(true);
+  };
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
+    setIsHovered(false);
+  };
   return (
-    <Box style={{display:"flex"}}>
+    <Box style={{ display: 'flex' }}>
       <Box
         sx={{
           rowGap: 2,
@@ -206,7 +209,7 @@ const TableHeader = (props) => {
       <ExportButton table={table} tableData={tableData} />
       {NewHeaderMenu && NewHeaderMenu({ selectedIds, toggle, removeSelection })}
     </Box>
-  )
-}
+  );
+};
 
-export default TableHeader
+export default TableHeader;

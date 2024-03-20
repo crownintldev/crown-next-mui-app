@@ -84,8 +84,8 @@ const defaultValues = {
   increment: 0,
   decrease: 0,
   discount: 0,
-  status: 'booked',
-  supplier: ''
+  status: 'booked'
+  // supplier: ''
 };
 
 const statusList = [
@@ -145,18 +145,20 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
   const category = useSelector((state) => state.visaCategory.data);
   const duration = useSelector((state) => state.visaDuration.data);
   const type = useSelector((state) => state.visaType.data);
-  const supplier = useSelector((state) =>
-    state?.supplier?.data?.map((item) => ({
-      name: `${item.name} ${item.phone}`,
-      _id: item._id
-    }))
-  );
+  const supplier = useSelector((state) => state.supplier.data);
+  // const supplier = useSelector((state) =>
+  //   state?.supplier?.data?.map((item) => ({
+  //     name: `${item.name} ${item.phone}`,
+  //     _id: item._id
+  //   }))
+  // );
 
   const [findVisa, setFindVisa] = useState({
     destination: '',
     category: '',
     type: '',
-    duration: ''
+    duration: '',
+    supplier: ''
   });
   // const handleChange = (event) => {
   //   setSelectedValue(event.target.value)
@@ -169,10 +171,9 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     dispatch(fetchVisaType({ limit: 1000 }));
     dispatch(fetchSupplier({ limit: 1000 }));
   }, []);
-  let supplierId = '';
   useEffect(() => {
-    const { destination, category, duration, type } = findVisa;
-    if (destination && category && type && duration && supplierId) {
+    const { destination, category, duration, type, supplier } = findVisa;
+    if (destination && category && type && duration && supplier) {
       const getVisa = async () => {
         try {
           setLoading(true);
@@ -181,7 +182,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             category,
             type,
             duration,
-            supplier: supplierId
+            supplier
           });
           setVisa(res.data.data);
           setLoading(false);
@@ -208,7 +209,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
-  supplierId = watch('supplier');
+
   //************************ edit ids ****************************
   useEffect(() => {
     setValue('visaBookingIds', ids);
@@ -218,14 +219,15 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       setValue('increment', visaBookingItems[0].increment);
       setValue('decrease', visaBookingItems[0].decrease);
       setValue('discount', visaBookingItems[0].discount);
-      setValue('supplier', visaBookingItems[0].visa.supplier);
       if (visaBookingItems[0]?.visa) {
-        let { destination, duration, category, type } = visaBookingItems[0].visa;
+        let { destination, duration, category, type, supplier } =
+          visaBookingItems[0].visa;
         setFindVisa({
           destination: destination?._id,
           duration: duration?._id,
           category: category?._id,
-          type: type?._id
+          type: type?._id,
+          supplier: supplier
         });
         if (visaBookingItems[0]?.processing) {
           setValue('confirmed', undefined);
@@ -287,7 +289,8 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       destination: '',
       category: '',
       type: '',
-      duration: ''
+      duration: '',
+      supplier: ''
     });
     toggle();
     reset();
@@ -594,6 +597,29 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             ))}
         </CustomTextField>
 
+        <CustomTextField
+          select
+          fullWidth
+          sx={{ mb: 6 }}
+          label='Supplier'
+          SelectProps={{
+            value: findVisa.supplier ?? '',
+            displayEmpty: true,
+            onChange: (e) => setFindVisa({ ...findVisa, supplier: e.target.value })
+          }}
+        >
+          <MenuItem value='' disabled>
+            Select Supplier
+          </MenuItem>
+          {supplier?.length > 0 &&
+            supplier.map((item) => (
+              <MenuItem key={item._id} value={item._id}>
+                {item?.name.toUpperCase()}
+              </MenuItem>
+            ))}
+        </CustomTextField>
+
+        {/* 
         <SelectHookField
           control={control}
           errors={errors}
@@ -602,7 +628,7 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           showValue='name'
           label='Supplier'
           placeholder='Select Supplier'
-        />
+        /> */}
         {loading ? 'loading ...' : selectVisaId()}
         <CustomHookTextField
           chooseFields={amountHandleFields}

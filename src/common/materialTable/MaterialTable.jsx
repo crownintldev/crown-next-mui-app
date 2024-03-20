@@ -56,7 +56,7 @@ const MaterialTable = ({
   const [rowSelection, setRowSelection] = useState({})
   const [selectionRow, setSelectionRow] = useState([])
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 20
   })
   const [trashedRows, setTrashedRows] = useState([]) // State to track trashed rows

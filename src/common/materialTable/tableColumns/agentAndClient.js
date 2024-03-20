@@ -5,8 +5,7 @@ import { defaultCellRenderer,CellRowId,dateFormat } from 'src/common/materialTab
 const useAgentAndClientColumns = () =>
   useMemo(
     () => [
-
-      { accessorKey: '_id', header: 'ID', Cell: (CellRowId) },
+      { accessorKey: 'rowNum', header: 'ID'},
       { accessorKey: 'fullName', header: 'Full Name', Cell: defaultCellRenderer },
       { accessorKey: 'phone', header: 'Phone', Cell: defaultCellRenderer },
       { accessorKey: 'passportCount', header: 'passportCount' },

@@ -2,7 +2,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import { capitalizeCamelSpace, capitalizeValue } from 'src/utils/helperfunction'
-import { MuiTextAreaHookField } from './MuiTextAreaHookField'
+import MuiTextAreaHookField from './MuiTextAreaHookField'
 
 const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
   // function textfield
@@ -21,7 +21,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
     } = item
     return (
       <>
-        {/* {textarea ? (
+        {textarea ? (
           <MuiTextAreaHookField
             control={control}
             errors={errors}
@@ -29,7 +29,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
             placeholder={placeholder}
             rows={rows}
           />
-        ) : ( */}
+        ) : (
         <Controller
           // key={name}
           name={name}
@@ -63,7 +63,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
             />
           }}
         />
-        {/* )} */}
+        )}
       </>
     )
   }

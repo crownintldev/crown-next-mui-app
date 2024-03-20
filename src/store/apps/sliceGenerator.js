@@ -1,41 +1,57 @@
 // sliceGenerator.js
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { getCookie } from 'src/action/auth-action'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { getCookie } from 'src/action/auth-action';
 
-const toQueryString = params => {
+const toQueryString = (params) => {
   const query = Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-    .join('&')
+    .join('&');
 
-  return query
-}
+  return query;
+};
 
 // ** Fetch Users
 export const createFetchDataThunk = (name, api, apidomain) => {
   return createAsyncThunk(`${name}/fetchData`, async (params, thunkAPI) => {
-    const currentState = thunkAPI.getState()
+    const currentState = thunkAPI.getState();
     // console.log(currentState.token.data)
     // update and merge with new create data
+
     if (params.newData && params.newData.length !== 0) {
+      let existData = currentState[name].data.map((item) => ({
+        ...item,
+        rowNum: item?.rowNum + params.newData.length
+      }));
+      let newData = params.newData.map((item, index) => ({ ...item, rowNum: index + 1 }));
       return {
-        data: [...params.newData, ...currentState[name].data],
+        data: [...newData, ...existData],
         total: currentState[name].total + params.newData.length
-      }
+      };
     }
 
     // update and merge updating data
     if (params.updateData) {
-      const updatedData = currentState[name].data.map(item => {
-        const updateItem = params.updateData.find(updateItem => updateItem._id === item._id)
+      const updatedData = currentState[name].data.map((item) => {
+        const updateItem = params.updateData.find(
+          (updateItem) => updateItem._id === item._id
+        );
 
-        // If updateItem exists, merge it with the existing item
-        return updateItem ? updateItem : item
-      })
+        // Merge and preserve or update rowNum
+        if (updateItem) {
+          return {
+            ...item,
+            ...updateItem,
+            rowNum: item.rowNum // preserve the existing rowNum
+          };
+        } else {
+          return item;
+        }
+      });
 
-      return { data: updatedData }
+      return { data: updatedData };
     }
-    const queryString = toQueryString(params)
+    const queryString = toQueryString(params);
     const response = await axios.get(
       `${apidomain ? apidomain : process.env.NEXT_PUBLIC_API}/${api}?${queryString}`,
       {
@@ -44,10 +60,10 @@ export const createFetchDataThunk = (name, api, apidomain) => {
           Authorization: `Bearer ${currentState.token.data}`
         }
       }
-    )
-    return response.data
-  })
-}
+    );
+    return response.data;
+  });
+};
 
 // const generateReducers = (customReducers = {}) => {
 //   const defaultReducers = {
@@ -74,27 +90,27 @@ const generateSlice = ({ name, fetchData }) => {
     },
 
     // reducers,
-    extraReducers: builder => {
-      builder.addCase(fetchData.pending, state => {
-        state.isLoading = true
-        state.isError = false
-      })
+    extraReducers: (builder) => {
+      builder.addCase(fetchData.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      });
       builder.addCase(fetchData.fulfilled, (state, action) => {
-        state.data = action.payload.data
-        state.total = action.payload.total
-        state.isLoading = false
-        state.isError = false
-      })
-      builder.addCase(fetchData.rejected, state => {
-        state.isLoading = false
-        state.isError = true
-      })
+        state.data = action.payload.data;
+        state.total = action.payload.total;
+        state.isLoading = false;
+        state.isError = false;
+      });
+      builder.addCase(fetchData.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
     }
-  })
+  });
 
-  return slice.reducer //// Return only the reducer part of the slice
+  return slice.reducer; //// Return only the reducer part of the slice
   // return slice; //// Return the entire slice object, if reducers defined
-}
+};
 
 // export const  {setInitialData}  = generateSlice.actions;
-export default generateSlice
+export default generateSlice;

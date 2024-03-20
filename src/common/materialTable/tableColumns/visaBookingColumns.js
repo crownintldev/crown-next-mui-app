@@ -38,6 +38,11 @@ const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       { accessorKey: 'passport.remarks', header: 'Remarks', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.eVisaReferenceNo', header: 'EVisa Reference No', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.email', header: 'Email', Cell: defaultCellRenderer },
+      { accessorKey: 'passport.noOfPassport', header: 'No Of Passport', Cell: defaultCellUpperCase },
+      { accessorKey: 'passport.passportDetail', header: 'Passport Detail', Cell: defaultCellRenderer },
+
       // Member
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
       { accessorKey: 'by.phone', header: 'Phone', Cell: defaultCellRenderer },

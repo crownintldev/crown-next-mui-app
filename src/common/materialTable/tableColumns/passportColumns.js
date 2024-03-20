@@ -41,6 +41,7 @@ const useTableColumns = () =>
       { accessorKey: 'remarks', header: 'Remarks', Cell: defaultCellRenderer },
       { accessorKey: 'bookletNumber', header: 'Booklet Number', Cell: defaultCellRenderer },
       { accessorKey: 'trackingNumber', header: 'Tracking Number', Cell: defaultCellRenderer },
+      
       { accessorKey: 'updatedAt', header: 'Updated', Cell: dateFormat }
     ],
     []

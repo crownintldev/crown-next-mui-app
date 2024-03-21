@@ -148,13 +148,10 @@ const Example = ({
             : ''
         }
         childTable={{
-          visaBookingIds: childSelectionRow,
+          selectedChildIds: childSelectionRow,
           accountId: parentId
         }}
-        ejectValue={{
-          visaBookingIds: childSelectionRow,
-          accountId: parentId
-        }}
+      
         selectedIds={selectionRow}
         setChildRowSelection={setChildRowSelection}
         fetchData={fetchData}

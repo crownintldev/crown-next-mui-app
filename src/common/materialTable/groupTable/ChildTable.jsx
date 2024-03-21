@@ -11,7 +11,7 @@ export const ChildTable = ({
   handleChildRowSelectionChange,
   visaBookingIds
 }) => {
-  console.log('++++++++++++++', visaBookingIds)
+  // console.log('++++++++++++++', visaBookingIds)
   const [globalFilter, setGlobalFilter] = useState('')
   const [showSearchBar, setShowSearchBar] = useState(false)
   const parentRowId = row.original._id

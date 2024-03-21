@@ -31,7 +31,7 @@ const TableHeader = (props) => {
   // useSelector
   const accountData = useSelector((state) => state.account.data);
 
-  const data = useSelector((state) => state?.myInvoice?.data);
+  // const data = useSelector((state) => state?.myInvoice?.data);
 
   // ** Props
   const {
@@ -50,8 +50,8 @@ const TableHeader = (props) => {
   } = props;
 
   // console.log(selectedIds)
-  const { visaBookingIds, accountId } = childTable;
-  const ejectValue = { visaBookingIds, accountId };
+  const { selectedChildIds, accountId } = childTable;
+  // console.log(childTable)
   const invoiceData = useSelector((state) => state.myInvoice.data);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -191,7 +191,7 @@ const TableHeader = (props) => {
               </Button>
             </MenuItem>
           )} */}
-          {selectedIds?.length > 0 && (
+          {/* {selectedIds?.length > 0 && (
             <div onClick={handleInvoice}>
               <MenuItem
                 onClose={handleClose}
@@ -210,17 +210,17 @@ const TableHeader = (props) => {
                   }}
                 >
                   <Icon fontSize='0.8rem' icon='tabler:plus' />
-                  Create Invoice
+                  Create Invoicess
                 </Box>
               </MenuItem>
             </div>
-          )}
+          )} */}
           {headerMenu &&
             headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
         </Menu>
         {/* ----------Export data--------- */}
         <ExportButton table={table} tableData={tableData} />
-        {NewHeaderMenu && NewHeaderMenu({ selectedIds, toggle, removeSelection })}
+        {NewHeaderMenu && NewHeaderMenu({ selectedIds, toggle, removeSelection,childTable })}
       </Box>
     </Box>
   );

@@ -38,10 +38,29 @@ const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       { accessorKey: 'passport.remarks', header: 'Remarks', Cell: defaultCellRenderer },
-      { accessorKey: 'passport.eVisaReferenceNo', header: 'EVisa Reference No', Cell: defaultCellRenderer },
+      { accessorKey: 'visa.type.name', header: 'Type', Cell: defaultCellRenderer },
+      {
+        accessorKey: 'visa.category.name',
+        header: 'Category',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'passport.eVisaReferenceNo',
+        header: 'EVisa Reference No',
+        Cell: defaultCellRenderer
+      },
       { accessorKey: 'passport.email', header: 'Email', Cell: defaultCellRenderer },
-      { accessorKey: 'passport.noOfPassport', header: 'No Of Passport', Cell: defaultCellUpperCase },
-      { accessorKey: 'passport.passportDetail', header: 'Passport Detail', Cell: defaultCellRenderer },
+
+      {
+        accessorKey: 'passport.noOfPassport',
+        header: 'No Of Passport',
+        Cell: defaultCellUpperCase
+      },
+      {
+        accessorKey: 'passport.passportDetail',
+        header: 'Passport Detail',
+        Cell: defaultCellRenderer
+      },
 
       // Member
       { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
@@ -122,17 +141,13 @@ const useTableColumns = (openMediaDrawer) =>
         header: 'Discount',
         Cell: defaultCellRenderer
       },
-      {
-        accessorKey: 'visa.category.name',
-        header: 'Category',
-        Cell: defaultCellRenderer
-      },
+
       {
         accessorKey: 'visa.destination.name',
         header: 'Destination',
         Cell: defaultCellRenderer
       },
-      { accessorKey: 'visa.type.name', header: 'Type', Cell: defaultCellRenderer },
+
       {
         accessorKey: 'visa.duration.name',
         header: 'Duration',

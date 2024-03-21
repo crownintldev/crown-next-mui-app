@@ -16,7 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAgent, fetchClient, fetchCompany } from 'src/store';
+import { fetchAgent, fetchClient, fetchCompany, fetchPaymentMethod } from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';
@@ -28,26 +28,11 @@ import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
 import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import SelectHookField from 'src/common/dataEntry/SelectHookField';
+import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
+import IdNameForm from '../idnameForm/IdNameForm';
 const schema = yup.object().shape({
-  hotelName: yup.string().required('Hotel is required'),
-  // remarks: yup.string().required('Remarks is required'),
-  // referenceMember: yup.string().required("Reference Member is required"),
-  // hotelCost: yup.number().required("Hotel Cost is required"),
-  // sellingCost: yup.number().required("sellingCost is required"),
-  // supplier: yup.string(),
-  // profit: yup.number().required("profit is required"),
-  // discount: yup.number().required("discount is required"),
-  // total: yup.number().required("total is required"),
-  // destination: yup.string().required("destination is required"),
-  // noOfDays: yup.number().required("noOfDays is required"),
-  // noOfNights: yup.number().required("noOfNights is required"),
-  // noOfBeds: yup.number().required("noOfBeds is required"),
-  // roomType: yup.string().required("roomType is required"),
-  // hotelCategory: yup.string().required("hotelCategory is required"),
-  // hotelArea: yup.string().required("hotelArea is required"),
-  // paymentMethod: yup.string().required("paymentMethod is required"),
-  // files: yup.array().required('Files Are Missing')
-})
+  hotelName: yup.string().required('Hotel is required')
+});
 
 const defaultValues = {
   hotelName: '',
@@ -69,8 +54,8 @@ const defaultValues = {
   hotelArea: '',
   paymentMethod: '',
   files: [],
-  deletedFiles: [],
-}
+  deletedFiles: []
+};
 
 const HotelBookingForm = ({
   toggle,
@@ -85,11 +70,12 @@ const HotelBookingForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // states
-  const [files, setFiles] = useState([])
-  const [previousFiles, setPreviousFiles] = useState([])
-  const [removeFiles, setRemoveFiles] = useState([])
+  const [files, setFiles] = useState([]);
+  const [previousFiles, setPreviousFiles] = useState([]);
+  const [removeFiles, setRemoveFiles] = useState([]);
   // onModel
   const clients = useSelector((state) => state.client?.data);
   const company = useSelector((state) => state.company?.data);
@@ -97,9 +83,10 @@ const HotelBookingForm = ({
 
   useEffect(() => {
     setFormSize(400);
-    dispatch(fetchAgent({ limit: 100 }));
-    dispatch(fetchClient({ limit: 100 }));
-    dispatch(fetchCompany({ limit: 100 }));
+    dispatch(fetchAgent({ limit: 1000 }));
+    dispatch(fetchClient({ limit: 1000 }));
+    dispatch(fetchCompany({ limit: 1000 }));
+    dispatch(fetchPaymentMethod({ limit: 1000 }));
   }, []);
 
   const {
@@ -122,7 +109,8 @@ const HotelBookingForm = ({
       Object.keys(editId).forEach((key) => {
         setValue(key, editId[key]);
       });
-      setPreviousFiles(editId.files)
+      setValue('paymentMethod', editId.paymentMethod._id);
+      setPreviousFiles(editId.files);
     } else {
       reset();
     }
@@ -162,8 +150,6 @@ const HotelBookingForm = ({
 
   //************************** */ onSubmit
   const onSubmit = async (data) => {
-
-    console.log('sbmt')
     let formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (key !== 'files') {
@@ -178,7 +164,7 @@ const HotelBookingForm = ({
     if (editId) {
       updateApi({
         _id,
-        api:"hotel-booking",
+        api: 'hotel-booking',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -188,7 +174,7 @@ const HotelBookingForm = ({
       });
     } else {
       createApi({
-        api:"hotel-booking",
+        api: 'hotel-booking',
         data: formData,
         dispatch,
         fetchData: fetchApi,
@@ -201,26 +187,26 @@ const HotelBookingForm = ({
 
   const chooseFields = [
     {
-        name: 'hotelName',
+      name: 'hotelName',
       placeholder: `Enter Hotel Name`,
       label: `Hotel Name`,
       required: true
     },
     {
-        name: 'remarks',
+      name: 'remarks',
       placeholder: `Enter remarks`,
       label: `Remarks`,
       required: true
     },
     {
-        name: 'supplier',
-        placeholder: `Enter supplier`,
-        label: `Supplier`,
-        required: true
+      name: 'supplier',
+      placeholder: `Enter supplier`,
+      label: `Supplier`,
+      required: true
     },
     {
-        name: "hotelCost",
-        placeholder: `Enter Hotel Cost`,
+      name: 'hotelCost',
+      placeholder: `Enter Hotel Cost`,
       label: `Hotel Cost`
     },
     {
@@ -266,30 +252,25 @@ const HotelBookingForm = ({
       label: `Number Of Beds`
     },
     {
-        name: 'roomType',
-        placeholder: `Enter roomType`,
-        label: `Room Type`
-      },
-      {
-        name: 'hotelCategory',
-        placeholder: `Enter hotelCategory`,
-        label: `Hotel Category`
-      },
-      {
-        name: 'hotelArea',
-        placeholder: `Enter hotelArea`,
-        label: `Hotel Area`
-      },
-      {
-        name: 'paymentMethod',
-        placeholder: 'Enter Payment Method',
-        label: "Payment Method"
-      }
-    ]
+      name: 'roomType',
+      placeholder: `Enter roomType`,
+      label: `Room Type`
+    },
+    {
+      name: 'hotelCategory',
+      placeholder: `Enter hotelCategory`,
+      label: `Hotel Category`
+    },
+    {
+      name: 'hotelArea',
+      placeholder: `Enter hotelArea`,
+      label: `Hotel Area`
+    }
+  ];
 
   return (
     <div>
-      <form >
+      <form>
         <CustomHookTextField
           chooseFields={chooseFields}
           control={control}
@@ -312,50 +293,67 @@ const HotelBookingForm = ({
           label='Refer'
           placeholder='Choose Refer'
         />
-           {!editId ? (
-              <Box sx={{ width: '200px' }}>
-                <Controller
-                  name='files'
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                      <label htmlFor='files'>Upload Files</label>
-                      <FilesUploader
-                        setFiles={setFiles}
-                        files={files}
-                        onChange={onChange}
-                      />
-                    </>
-                  )}
-                />
-              </Box>
-          ) : (
-              <Box sx={{ width: '200px' }}>
-                <Controller
-                  name='files'
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <>
-                      <label htmlFor='files'>Upload Files</label>
-                      <EditFilesUploader
-                        setFiles={setFiles}
-                        previousFiles={previousFiles}
-                        setPreviousFiles={setPreviousFiles}
-                        removeFiles={removeFiles}
-                        setRemoveFiles={setRemoveFiles}
-                        files={files}
-                        prevFiles={editId?.files}
-                        onChange={onChange}
-                      />
-                    </>
-                  )}
-                />
-              </Box>
-          )}
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
+        />
+        {!editId ? (
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <FilesUploader setFiles={setFiles} files={files} onChange={onChange} />
+                </>
+              )}
+            />
+          </Box>
+        ) : (
+          <Box sx={{ width: '200px' }}>
+            <Controller
+              name='files'
+              control={control}
+              defaultValue={[]}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <label htmlFor='files'>Upload Files</label>
+                  <EditFilesUploader
+                    setFiles={setFiles}
+                    previousFiles={previousFiles}
+                    setPreviousFiles={setPreviousFiles}
+                    removeFiles={removeFiles}
+                    setRemoveFiles={setRemoveFiles}
+                    files={files}
+                    prevFiles={editId?.files}
+                    onChange={onChange}
+                  />
+                </>
+              )}
+            />
+          </Box>
+        )}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Button type='submit' variant='contained' sx={{ mr: 3 }} onClick={handleSubmit(onSubmit)}>
+          <Button
+            type='submit'
+            variant='contained'
+            sx={{ mr: 3 }}
+            onClick={handleSubmit(onSubmit)}
+          >
             Submit
           </Button>
           <Button variant='tonal' color='secondary' onClick={handleClose}>

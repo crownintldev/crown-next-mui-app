@@ -10,7 +10,6 @@ import { fetchVisaBooking } from 'src/store';
 import { updateManyApi } from 'src/action/function';
 const statusList = [
   'pending',
-  'editing',
   'booked',
   'inprocess',
   'verification',
@@ -48,8 +47,8 @@ const NewHeaderMenuVisaBooking = ({
       completeApi: 'visa-booking/update'
     });
   };
-  const handleSingleDrawerForm = (Form,title) => {
-    SetForm({ Form,title });
+  const handleSingleDrawerForm = (Form, title) => {
+    SetForm({ Form, title });
     toggleDrawer();
   };
   return (
@@ -112,7 +111,9 @@ const NewHeaderMenuVisaBooking = ({
           <Icon
             fontSize='1.5rem'
             icon='material-symbols:upload'
-            onClick={()=>handleSingleDrawerForm(PassportUploadFile,"Export Csv Upload Passport")}
+            onClick={() =>
+              handleSingleDrawerForm(PassportUploadFile, 'Export Csv Upload Passport')
+            }
           />
         </IconButton>
       </Box>

@@ -84,13 +84,11 @@ const defaultValues = {
   processing: '',
   increment: 0,
   discount: 0,
-  status: 'booked',
-  supplier: ''
+  status: 'booked'
 };
 
 const statusList = [
   'pending',
-  'editing',
   'booked',
   'inprocess',
   'verification',
@@ -128,30 +126,26 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
   const category = useSelector((state) => state.visaCategory.data);
   const duration = useSelector((state) => state.visaDuration.data);
   const type = useSelector((state) => state.visaType.data);
-  const supplier = useSelector((state) =>
-    state?.supplier?.data?.map((item) => ({
-      name: `${item.name} ${item.phone}`,
-      _id: item._id
-    }))
-  );
+  const supplier = useSelector((state) => state.supplier.data);
 
   const [findVisa, setFindVisa] = useState({
     destination: '',
     category: '',
     type: '',
-    duration: ''
+    duration: '',
+    supplier: ''
   });
   useEffect(() => {
-    dispatch(fetchVisaCategory({limit: 1000}));
-    dispatch(fetchVisaDestination({limit: 1000}));
-    dispatch(fetchVisaDuration({limit: 1000}));
-    dispatch(fetchVisaType({limit: 1000}));
+    dispatch(fetchVisaCategory({ limit: 1000 }));
+    dispatch(fetchVisaDestination({ limit: 1000 }));
+    dispatch(fetchVisaDuration({ limit: 1000 }));
+    dispatch(fetchVisaType({ limit: 1000 }));
     dispatch(fetchSupplier({ limit: 1000 }));
   }, []);
   let supplierId = '';
   useEffect(() => {
-    const { destination, category, duration, type } = findVisa;
-    if (destination && category && type && duration && supplierId) {
+    const { destination, category, duration, type, supplier } = findVisa;
+    if (destination && category && type && duration && supplier) {
       const getVisa = async () => {
         try {
           setLoading(true);
@@ -160,7 +154,7 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
             category,
             type,
             duration,
-            supplier:supplierId
+            supplier
           });
           setVisa(res.data.data);
           setLoading(false);
@@ -525,15 +519,27 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
               </MenuItem>
             ))}
         </CustomTextField>
-        <SelectHookField
-          control={control}
-          errors={errors}
-          name='supplier'
-          options={supplier ?? []}
-          showValue='name'
+        <CustomTextField
+          select
+          fullWidth
+          sx={{ mb: 6 }}
           label='Supplier'
-          placeholder='Select Supplier'
-        />
+          SelectProps={{
+            value: findVisa.supplier ?? '',
+            displayEmpty: true,
+            onChange: (e) => setFindVisa({ ...findVisa, supplier: e.target.value })
+          }}
+        >
+          <MenuItem value='' disabled>
+            Select Supplier
+          </MenuItem>
+          {supplier?.length > 0 &&
+            supplier.map((item) => (
+              <MenuItem key={item._id} value={item._id}>
+                {item?.name.toUpperCase()}
+              </MenuItem>
+            ))}
+        </CustomTextField>
         {loading ? 'loading ...' : selectVisaId()}
         <CustomHookTextField
           chooseFields={amountHandleFields}

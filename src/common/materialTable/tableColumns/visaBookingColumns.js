@@ -10,9 +10,23 @@ import {
   modelCondition
 } from 'src/common/materialTable/tableColumnFunction';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
-import { IconButton } from '@mui/material';
+import {  IconButton } from '@mui/material';
 
-const useTableColumns = (openMediaDrawer) =>
+
+
+export const statusRemarks = ({ cell, openDialog }) => {
+  const data = cell.getValue();
+  return (
+    <span
+      onClick={() => openDialog(data)}
+      className='text-blue-500 underline cursor-pointer'
+    >
+      {data[data.length - 1]?.statusRemarks}
+    </span>
+  );
+};
+
+const useTableColumns = (openMediaDrawer, openDialog) =>
   useMemo(
     () => [
       {
@@ -28,6 +42,11 @@ const useTableColumns = (openMediaDrawer) =>
       { accessorKey: '_id', header: 'ID', Cell: CellRowId },
       { accessorKey: 'status', header: 'Status', Cell: renderStatusCell },
       {
+        accessorKey: 'statusRemarks',
+        header: 'Status Remarks',
+        Cell: ({ cell }) => statusRemarks({ cell, openDialog })
+      },
+      {
         accessorKey: 'passport.passportNumber',
         header: 'Passport #',
         Cell: defaultCellRenderer
@@ -42,6 +61,17 @@ const useTableColumns = (openMediaDrawer) =>
       {
         accessorKey: 'visa.category.name',
         header: 'Category',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'visa.destination.name',
+        header: 'Destination',
+        Cell: defaultCellRenderer
+      },
+
+      {
+        accessorKey: 'visa.duration.name',
+        header: 'Duration',
         Cell: defaultCellRenderer
       },
       {
@@ -142,17 +172,6 @@ const useTableColumns = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
 
-      {
-        accessorKey: 'visa.destination.name',
-        header: 'Destination',
-        Cell: defaultCellRenderer
-      },
-
-      {
-        accessorKey: 'visa.duration.name',
-        header: 'Duration',
-        Cell: defaultCellRenderer
-      },
       { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat },
       { accessorKey: 'updatedAt', header: 'Updated At', Cell: dateFormat }
     ],

@@ -24,6 +24,9 @@ import { Box } from '@mui/system';
 import Icon from 'src/@core/components/icon';
 import FormDrawer from 'src/common/drawer/FormDrawer';
 import MediaDrawer from 'src/common/drawer/MediaDrawer';
+import { Dialog, DialogTitle } from '@mui/material';
+import CustomDialog from 'src/common/dialog/CustomDialog';
+import dayjs from 'dayjs';
 
 const index = ({ apiData }) => {
   // open media drawer handler
@@ -33,8 +36,14 @@ const index = ({ apiData }) => {
     setMediaDrawerOpen(true);
   };
 
-  const columns = useTableColumns(openMediaDrawer);
+  const openDialog = (data) => {
+    setDialogOpen(true);
+    setDialogBody(data);
+  };
 
+  const columns = useTableColumns(openMediaDrawer, openDialog);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogBody, setDialogBody] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const [selectedIds, setSelectedIds] = useState('');
@@ -78,8 +87,25 @@ const index = ({ apiData }) => {
     });
   };
 
+  const showRemarksList = () => {
+    let body = dialogBody.map((item) => (
+      <p>
+        &#8594; {item.statusRemarks} ({dayjs(item.createdAt).format('DD-MM-YYYY')})
+      </p>
+    ));
+    return (
+      <CustomDialog
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        title={'Status Remarks'}
+        body={body}
+      />
+    );
+  };
+
   return (
     <div>
+      {showRemarksList()}
       {formDrawer()}
       <MaterialTable
         api={'visa-booking'}

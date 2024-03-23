@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Icon from 'src/@core/components/icon';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem, TextField } from '@mui/material';
 import PassportUploadFile from 'src/common/forms/uploadFile/PassportUploadFile';
+import CustomDialog from 'src/common/dialog/CustomDialog';
+import { useForm, Controller } from 'react-hook-form';
 //redux
 import { useDispatch } from 'react-redux';
 import { fetchVisaBooking } from 'src/store';
 //
 import { updateManyApi } from 'src/action/function';
+import MuiTextAreaHookField from 'src/common/dataEntry/MuiTextAreaHookField';
+
 const statusList = [
   'pending',
   'booked',
@@ -31,6 +35,8 @@ const NewHeaderMenuVisaBooking = ({
 }) => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState('');
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,20 +45,88 @@ const NewHeaderMenuVisaBooking = ({
     setAnchorEl(null);
   };
   const handleStatus = (status) => {
-    let data = { status, visaBookingIds: selectedIds };
-    updateManyApi({
-      data,
-      dispatch,
-      fetchData: fetchVisaBooking,
-      completeApi: 'visa-booking/update'
-    });
+    setDialogOpen(true);
+    setDialogTitle(status);
   };
   const handleSingleDrawerForm = (Form, title) => {
     SetForm({ Form, title });
     toggleDrawer();
   };
+
+  const openDialog = () => {
+    let defaultValues = {
+      visaBookingIds: selectedIds,
+      status: dialogTitle,
+      statusRemarks: ''
+    };
+    const {
+      reset,
+      control,
+      setError,
+      handleSubmit,
+      setValue,
+      getValues,
+      watch,
+      formState: { errors }
+    } = useForm({
+      defaultValues,
+      mode: 'onChange'
+    });
+    let toggle = () => {
+      reset();
+      setDialogOpen(false);
+    };
+    const handleOnSubmit = async () => {
+      setValue('status', dialogTitle);
+      setValue('visaBookingIds', selectedIds);
+      updateManyApi({
+        data: getValues(),
+        dispatch,
+        toggle,
+        fetchData: fetchVisaBooking,
+        completeApi: 'visa-booking/update'
+      });
+    };
+    const handleClose = () => {
+      reset();
+      setDialogOpen(false);
+    };
+    let dialogContent = (
+      <div>
+        <MuiTextAreaHookField
+          rows={4}
+          control={control}
+          name='statusRemarks'
+          errors={errors}
+        />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Button
+            variant='contained'
+            color='primary'
+            sx={{ mr: 3 }}
+            onClick={handleSubmit(handleOnSubmit)}
+          >
+            Submit
+          </Button>
+
+          <Button variant='tonal' color='secondary' onClick={handleClose} sx={{ mr: 3 }}>
+            Cancel
+          </Button>
+        </Box>
+      </div>
+    );
+    return (
+      <CustomDialog
+        setDialogOpen={setDialogOpen}
+        dialogOpen={dialogOpen}
+        title={<span className='text-orange-500'>Remarks For {dialogTitle}</span>}
+        body={dialogContent}
+      />
+    );
+  };
   return (
     <>
+      {openDialog()}
       <Box
         sx={{
           rowGap: 2,

@@ -23,6 +23,7 @@ const CustomHookTextField = ({ chooseFields, control, errors, item }) => {
       <>
         {textarea ? (
           <MuiTextAreaHookField
+             label={label ? label : capitalizeCamelSpace(name)}
             control={control}
             errors={errors}
             name={name}

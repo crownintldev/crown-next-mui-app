@@ -4,9 +4,12 @@ import { styled } from '@mui/system';
 import FormHelperText from '@mui/material/FormHelperText'
 import { Controller } from 'react-hook-form';
 import { capitalizeCamelSpace } from 'src/utils/helperfunction';
+import { InputLabel } from '@mui/material';
 
-const MuiTextAreaHookField = ({ control, name, placeholder, rows, errors }) => {
+const MuiTextAreaHookField = ({ control, name, placeholder,label, rows, errors }) => {
   return (
+    <>
+    <InputLabel className='!text-[0.9em]'>{label ? label : capitalizeCamelSpace(name)}</InputLabel>
     <Controller
       name={name}
       control={control}
@@ -15,8 +18,9 @@ const MuiTextAreaHookField = ({ control, name, placeholder, rows, errors }) => {
           <TextareaAutosize
             {...field}
             aria-label={placeholder}
+
             placeholder={placeholder ? placeholder : `Enter ${capitalizeCamelSpace(name)}`}
-            rows={rows}
+            minRows={rows}
             style={{ width: '100%' }} // Adjust styling as needed
           />
           {errors[name] && (
@@ -24,7 +28,9 @@ const MuiTextAreaHookField = ({ control, name, placeholder, rows, errors }) => {
           )}
         </div>
       )}
+      
     />
+    </>
   );
 };
 

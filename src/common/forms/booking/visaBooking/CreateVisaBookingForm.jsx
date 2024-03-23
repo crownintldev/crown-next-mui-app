@@ -193,14 +193,14 @@ const CreateVisaBookingForm = ({ toggle, _id, removeSelection, setFormSize }) =>
       setValue('total', visaBookingItem?.total);
       setValue('increment', visaBookingItem?.increment);
       setValue('discount', visaBookingItem?.discount);
-      setValue('supplier', visaBookingItem?.visa?.supplier);
       if (visaBookingItem?.visa) {
-        let { destination, duration, category, type } = visaBookingItem.visa;
+        let { destination, duration, category, type,supplier } = visaBookingItem.visa;
         setFindVisa({
           destination: destination?._id,
           duration: duration?._id,
           category: category?._id,
-          type: type?._id
+          type: type?._id,
+          supplier:supplier
         });
         if (visaBookingItem?.processing) {
           setValue('confirmed', undefined);

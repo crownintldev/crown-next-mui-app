@@ -84,6 +84,7 @@ const defaultValues = {
   increment: 0,
   decrease: 0,
   discount: 0,
+  statusRemarks:"",
   status: 'booked'
   // supplier: ''
 };
@@ -371,6 +372,14 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
       label: 'decrease *optional'
     }
   ];
+  const statusRemarksField = [
+    {
+      name: 'statusRemarks',
+      textarea: true,
+      placeholder: 'Status Remarks',
+      label:"Status Remarks"
+    }
+  ];
 
   //************** */ Select Visa Fee*************8
   const selectVisaId = () => {
@@ -508,7 +517,12 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
           label={'Status'}
           placeholder='Select a Status'
         />
-
+        <CustomHookTextField
+          chooseFields={statusRemarksField}
+          control={control}
+          errors={errors}
+          required={true}
+        />
         <CustomTextField
           select
           fullWidth

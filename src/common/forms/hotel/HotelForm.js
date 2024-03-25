@@ -16,7 +16,16 @@ import { Controller, useForm } from 'react-hook-form';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAgent, fetchClient, fetchCompany, fetchPaymentMethod } from 'src/store';
+import {
+  fetchAgent,
+  fetchClient,
+  fetchCompany,
+  fetchPaymentMethod,
+  fetchSupplier,
+  fetchHotelBookingCategory,
+  fetchHotelBookingDestination,
+  fetchHotelBookingRoomType
+} from 'src/store';
 
 // action
 import { createApi, updateApi } from 'src/action/function';
@@ -30,6 +39,7 @@ import SimpleSelectHookField from 'src/common/dataEntry/SimpleSelectHookField';
 import SelectHookField from 'src/common/dataEntry/SelectHookField';
 import CustomOpenDrawer from 'src/common/customButton/CustomOpenDrawer';
 import IdNameForm from '../idnameForm/IdNameForm';
+import SupplierForm from '../supplier/SupplierForm';
 const schema = yup.object().shape({
   hotelName: yup.string().required('Hotel is required')
 });
@@ -39,18 +49,18 @@ const defaultValues = {
   remarks: '',
   by: '',
   onModel: '',
-  hotelCost: '',
-  sellingPrice: '',
-  profit: '',
-  discount: '',
-  total: '',
+  hotelCost: null,
+  sellingPrice: null,
+  profit: null,
+  discount: null,
+  total: null,
   supplier: '',
-  destination: '',
-  noOfDays: '',
-  noOfNights: '',
-  noOfBeds: '',
+  noOfDays: null,
+  noOfNights: null,
+  noOfBeds: null,
   roomType: '',
-  hotelCategory: '',
+  category: '',
+  destination: '',
   hotelArea: '',
   paymentMethod: '',
   files: [],
@@ -70,23 +80,35 @@ const HotelBookingForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
-  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // states
   const [files, setFiles] = useState([]);
   const [previousFiles, setPreviousFiles] = useState([]);
   const [removeFiles, setRemoveFiles] = useState([]);
-  // onModel
+  //redux selectors
+  // for onModel
   const clients = useSelector((state) => state.client?.data);
   const company = useSelector((state) => state.company?.data);
   const agents = useSelector((state) => state.agent?.data);
+  //
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
+  const hotelBookingCategory = useSelector((state) => state?.hotelBookingCategory?.data);
+  const hotelBookingDestination = useSelector(
+    (state) => state?.hotelBookingDestination?.data
+  );
+  const hotelBookingRoomType = useSelector((state) => state?.hotelBookingRoomType?.data);
+  const supplier = useSelector((state) => state?.supplier?.data);
 
   useEffect(() => {
     setFormSize(400);
     dispatch(fetchAgent({ limit: 1000 }));
     dispatch(fetchClient({ limit: 1000 }));
     dispatch(fetchCompany({ limit: 1000 }));
+    dispatch(fetchSupplier({ limit: 1000 }));
     dispatch(fetchPaymentMethod({ limit: 1000 }));
+    dispatch(fetchHotelBookingCategory({ limit: 1000 }));
+    dispatch(fetchHotelBookingDestination({ limit: 1000 }));
+    dispatch(fetchHotelBookingRoomType({ limit: 1000 }));
   }, []);
 
   const {
@@ -192,27 +214,48 @@ const HotelBookingForm = ({
       label: `Hotel Name`,
       required: true
     },
+  
+
+ 
     {
-      name: 'remarks',
-      placeholder: `Enter remarks`,
-      label: `Remarks`,
-      required: true
+      name: 'noOfDays',
+      placeholder: `Enter noOfDays`,
+      label: `Number Of Days`,
+      type: 'number'
     },
     {
-      name: 'supplier',
-      placeholder: `Enter supplier`,
-      label: `Supplier`,
-      required: true
+      name: 'noOfNights',
+      placeholder: `Enter noOfNights`,
+      label: `Number Of Night`,
+      type: 'number'
     },
+    {
+      name: 'noOfBeds',
+      placeholder: `Enter noOfBeds`,
+      label: `Number Of Beds`,
+      type: 'number'
+    },
+
+    {
+      name: 'hotelArea',
+      placeholder: `Enter hotelArea`,
+      label: `Hotel Area`
+    },
+   
+  
+  ];
+  const pricingFields=[
     {
       name: 'hotelCost',
       placeholder: `Enter Hotel Cost`,
-      label: `Hotel Cost`
+      label: `Hotel Cost`,
+      type: 'number'
     },
     {
       name: 'sellingPrice',
       placeholder: `Enter Selling Price`,
-      label: `Sellling Price`
+      label: `Sellling Price`,
+      type: 'number'
     },
     {
       name: 'discount',
@@ -231,42 +274,15 @@ const HotelBookingForm = ({
       disabled: true,
       type: 'number'
     },
+  ]
+  const remarksField=[
     {
-      name: 'destination',
-      placeholder: `Enter destination`,
-      label: `Destination`
+      textarea:true,
+      name: 'remarks',
+      placeholder: `Enter remarks`,
+      label: `Remarks`,
     },
-    {
-      name: 'noOfDays',
-      placeholder: `Enter noOfDays`,
-      label: `Number Of Days`
-    },
-    {
-      name: 'noOfNights',
-      placeholder: `Enter noOfNights`,
-      label: `Number Of Night`
-    },
-    {
-      name: 'noOfBeds',
-      placeholder: `Enter noOfBeds`,
-      label: `Number Of Beds`
-    },
-    {
-      name: 'roomType',
-      placeholder: `Enter roomType`,
-      label: `Room Type`
-    },
-    {
-      name: 'hotelCategory',
-      placeholder: `Enter hotelCategory`,
-      label: `Hotel Category`
-    },
-    {
-      name: 'hotelArea',
-      placeholder: `Enter hotelArea`,
-      label: `Hotel Area`
-    }
-  ];
+  ]
 
   return (
     <div>
@@ -276,6 +292,75 @@ const HotelBookingForm = ({
           control={control}
           errors={errors}
         />
+          <CustomOpenDrawer
+          ButtonTitle='Add Supplier'
+          drawerTitle='Add Supplier Form'
+          Form={SupplierForm}
+          fetchApi={fetchSupplier}
+          formName='Supplier'
+          api='supplier'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='supplier'
+          options={supplier ?? []}
+          showValue='name'
+          label='Supplier'
+          placeholder='Choose Supplier'
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Hotel Category'
+          drawerTitle='Add Hotel Category'
+          Form={IdNameForm}
+          fetchApi={fetchHotelBookingCategory}
+          formName='Hotel Category'
+          api='hotel-booking-category'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='category'
+          options={hotelBookingCategory ?? []}
+          showValue='name'
+          label='Category'
+          placeholder='Choose Hotel Category'
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Hotel Destination'
+          drawerTitle='Add Hotel Destination'
+          Form={IdNameForm}
+          fetchApi={fetchHotelBookingDestination}
+          formName='Hotel Destination'
+          api='hotel-booking-destination'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='destination'
+          options={hotelBookingDestination ?? []}
+          showValue='name'
+          label='Destination'
+          placeholder='Choose Hotel Destination'
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Hotel Room Type'
+          drawerTitle='Add Hotel Room Type'
+          Form={IdNameForm}
+          fetchApi={fetchHotelBookingRoomType}
+          formName='Hotel Room Type'
+          api='hotel-booking-room-type'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='roomType'
+          options={hotelBookingRoomType ?? []}
+          showValue='name'
+          label='Room Type'
+          placeholder='Choose Hotel Room Type'
+        />
+
         <SimpleSelectHookField
           control={control}
           errors={errors}
@@ -293,6 +378,7 @@ const HotelBookingForm = ({
           label='Refer'
           placeholder='Choose Refer'
         />
+
         <CustomOpenDrawer
           ButtonTitle='Add Payment Method'
           drawerTitle='Add Payment Method'
@@ -309,6 +395,12 @@ const HotelBookingForm = ({
           label='Payment Method'
           placeholder='Payment Method'
         />
+<CustomHookTextField
+          chooseFields={pricingFields}
+          control={control}
+          errors={errors}
+        />
+      
         {!editId ? (
           <Box sx={{ width: '200px' }}>
             <Controller
@@ -347,6 +439,12 @@ const HotelBookingForm = ({
             />
           </Box>
         )}
+        <CustomHookTextField
+          chooseFields={remarksField}
+          control={control}
+          errors={errors}
+        />
+
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Button
             type='submit'

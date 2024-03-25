@@ -13,8 +13,6 @@ import { updateManyApi } from 'src/action/function';
 import MuiTextAreaHookField from 'src/common/dataEntry/MuiTextAreaHookField';
 
 const statusList = [
-  'pending',
-  'booked',
   'inprocess',
   'verification',
   'in Embassy',
@@ -83,6 +81,8 @@ const NewHeaderMenuVisaBooking = ({
         data: getValues(),
         dispatch,
         toggle,
+        reset,
+        removeSelection,
         fetchData: fetchVisaBooking,
         completeApi: 'visa-booking/update'
       });
@@ -104,7 +104,7 @@ const NewHeaderMenuVisaBooking = ({
             variant='contained'
             color='primary'
             sx={{ mr: 3 }}
-            onClick={handleSubmit(handleOnSubmit)}
+            onClick={handleOnSubmit}
           >
             Submit
           </Button>

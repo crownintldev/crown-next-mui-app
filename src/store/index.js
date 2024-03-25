@@ -84,6 +84,20 @@ export const fetchBusinesssetting = createFetchDataThunk(
 );
 
 export const fetchHotelBooking = createFetchDataThunk('hotelBooking', 'hotel-booking');
+export const fetchHotelBookingCategory = createFetchDataThunk(
+  'hotelBookingCategory',
+  'hotel-booking-category'
+);
+export const fetchHotelBookingDestination = createFetchDataThunk(
+  'hotelBookingDestination',
+  'hotel-booking-destination'
+);
+export const fetchHotelBookingRoomType = createFetchDataThunk(
+  'hotelBookingRoomType',
+  'hotel-booking-room-type'
+);
+
+
 export const fetchInsurance = createFetchDataThunk('insurance', 'insurance');
 export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-method');
 export const fetchSubsidiary = createFetchDataThunk('subsidiary', 'subsidiary');
@@ -170,6 +184,10 @@ const rootReducer = combineReducers({
     fetchAdditionalSupplierAccoutPaymentHistory
   ),
   myInvoice: generateReducer('myInvoice').reducer,
+  hotelBooking: generate('hotelBooking', fetchHotelBooking),
+  hotelBookingCategory:generate('hotelBookingCategory', fetchHotelBookingCategory),
+  hotelBookingDestination:generate('hotelBookingCategory', fetchHotelBookingDestination),
+  hotelBookingRoomType:generate('hotelBookingCategory', fetchHotelBookingRoomType),
   // auth
   token: generateReducer('token').reducer,
   user: generate('user', fetchUser),
@@ -177,7 +195,6 @@ const rootReducer = combineReducers({
   role: generate('role', fetchRole),
   branch: generate('branch', fetchBranch),
   businessSetting: generate('businessSetting', fetchBusinesssetting),
-  hotelBooking: generate('hotelBooking', fetchHotelBooking),
   insurance: generate('insurance', fetchInsurance)
 });
 

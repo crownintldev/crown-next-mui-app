@@ -63,7 +63,7 @@ export const useTableColumns = (openMediaDrawer) =>
         size: 100,
         Cell: defaultCellRenderer
       },
-      { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
+      { accessorKey: 'createdAt', header: 'Created At', size: 100, Cell: dateFormat }
     ],
     []
   );

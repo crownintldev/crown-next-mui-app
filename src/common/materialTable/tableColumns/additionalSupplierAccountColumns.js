@@ -27,6 +27,11 @@ export const useAdditionalSupplierAccountColumn = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
       {
+        accessorKey: 'totalVisaBooking',
+        header: 'Total Booking',
+        Cell: defaultCellUpperCase
+      },
+      {
         accessorKey: 'total',
         header: 'Total Fee',
         size: 100,
@@ -51,7 +56,7 @@ export const useAdditionalSupplierAccountColumn = (openMediaDrawer) =>
         Cell: defaultCellRenderer
       },
    
-      { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
+      { accessorKey: 'createdAt', header: 'Created At', size: 100, Cell: dateFormat }
     ],
     []
   );

@@ -23,35 +23,36 @@ export const useSupplierAccountColumn = (openMediaDrawer) =>
       {
         accessorKey: 'supplierName',
         header: 'Supplier Name',
-        size: 100,
         Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'totalVisaBooking',
+        header: 'Total Booking',
+        Cell: defaultCellUpperCase
       },
       {
         accessorKey: 'total',
         header: 'Total',
-        size: 100,
         Cell: defaultCellRenderer
       },
+     
       {
         accessorKey: 'paid',
         header: 'Paid',
-        size: 100,
         Cell: defaultCellRenderer
       },
       {
         accessorKey: 'tdiscount',
         header: 'Discount',
-        size: 100,
         Cell: defaultCellRenderer
       },
       {
         accessorKey: 'remaining',
         header: 'Remaining',
-        size: 100,
         Cell: defaultCellRenderer
       },
    
-      { accessorKey: 'updatedAt', header: 'Date', size: 100, Cell: dateFormat }
+      { accessorKey: 'createdAt', header: 'Created At', Cell: dateFormat }
     ],
     []
   );

@@ -96,16 +96,18 @@ const defaultValues = {
   eVisaReferenceNo: '',
   email: '',
   noOfPassport: '',
-  passportDetail: ''
+  passportDetail: '',
+  visaBookingId:""
 };
 
 // ------------------Passport Form-----------------------
 const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
   const dispatch = useDispatch();
   const [editId, setEditId] = useState('');
-  const passportIdFromState = useSelector(
-    (state) => state.visaBooking?.data?.find((item) => item._id === _id)?.passport
-  );
+  const visaBooking = useSelector(
+    (state) => state.visaBooking?.data?.find((item) => item._id === _id))
+   let passportIdFromState = visaBooking?.passport;
+   let status = visaBooking?.status; 
 
   // console.log('countries', countries)
   // let editId = useSelector(
@@ -153,6 +155,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
       setValue('dob', dayjs(editId.dob));
       setValue('doe', dayjs(editId.doe));
       setValue('doi', dayjs(editId.doi));
+      setValue('visaBookingId', _id);
     } else {
       reset();
     }
@@ -472,6 +475,7 @@ const PassportForm = ({ toggle, removeSelection, setFormSize, _id = '' }) => {
             watch={watch}
             toggle={toggle}
             setFiles={setFiles}
+            status={status}
             reset={reset}
             removeSelection={removeSelection}
           />

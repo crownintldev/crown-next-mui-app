@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
-import { Button } from '@mui/material'
-import toast from 'react-hot-toast'
-import FormDrawer from 'src/common/drawer/FormDrawer'
-import EditVisaBookingForm from '../visaBooking/EditVisaBookingForm'
-import { fetchVisaBooking } from 'src/store'
-import axios from 'axios'
-import { axiosErrorMessage } from 'src/utils/helperfunction'
-import axiosInstance from 'src/utils/axiosInstance'
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import toast from 'react-hot-toast';
+import FormDrawer from 'src/common/drawer/FormDrawer';
+import EditVisaBookingForm from '../visaBooking/EditVisaBookingForm';
+import { fetchVisaBooking } from 'src/store';
+import axios from 'axios';
+import { axiosErrorMessage } from 'src/utils/helperfunction';
+import axiosInstance from 'src/utils/axiosInstance';
 
+const visaWillCreate = [
+  'delivered',
+  'trash',
+  'cancelled',
+  'rejected',
+  'returned',
+  'approved'
+];
 const PassportSubmitButton = ({
   dispatch,
   watch,
@@ -15,72 +23,89 @@ const PassportSubmitButton = ({
   setFiles,
   reset,
   removeSelection,
-  editId
+  editId,
+  status
 }) => {
-  const [response, setResponse] = useState(null)
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const toggleDrawer = () => setDrawerOpen(!drawerOpen)
-  let data = watch()
-
+  const [response, setResponse] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+  let data = watch();
+  let willDataFetch = 'updateData';
   const onSubmit = async () => {
-    let formData = new FormData()
+    let confirm = false;
+    if (visaWillCreate.includes(status)) {
+      confirm = window.confirm(
+        `Are You Sure, You are creating new VisaBooking with this. Your Status is ${status}`
+      );
+    }
+    if (confirm) {
+      willDataFetch = 'newData';
+    } else {
+      willDataFetch = 'updateData';
+    }
+    if (confirm || !visaWillCreate.includes(status)) {
+      submitData();
+      confirm = false;
+    }
+  };
+  let submitData = async () => {
+    let formData = new FormData();
     try {
       Object.keys(data).forEach((key) => {
         if (key !== 'files') {
-          formData.append(key, data[key])
+          formData.append(key, data[key]);
         }
-      })
+      });
       data?.files?.forEach((file) => {
-        formData.append('files', file)
-      })
+        formData.append('files', file);
+      });
       if (data.deletedFiles.length > 0) {
         data.deletedFiles.forEach((fileId) => {
-          formData.append('deletedFiles', fileId)
-        })
+          formData.append('deletedFiles', fileId);
+        });
       }
-      let res
+      let res;
       if (!editId) {
         res = await axiosInstance.post(
           `${process.env.NEXT_PUBLIC_API}/passport/create`,
           formData
-        )
+        );
         dispatch(
           fetchVisaBooking({
             newData: res.data.data
           })
-        )
-        toast.success('Insert Successfully', { position: 'top-center' })
+        );
+        toast.success('Insert Successfully', { position: 'top-center' });
       } else {
         res = await axiosInstance.put(
           `${process.env.NEXT_PUBLIC_API}/passport/update/${editId}`,
           formData
-        )
-        toast.success('Update Successfully', { position: 'top-center' })
+        );
+        toast.success('Update Successfully', { position: 'top-center' });
         dispatch(
           fetchVisaBooking({
-            updateData: res.data.data
+            [willDataFetch]: res.data.data
           })
-        )
+        );
       }
       // console.log('backend', res)
-      setResponse(res.data.data)
+      setResponse(res.data.data);
 
-      toggle()
-      setFiles([])
+      toggle();
+      setFiles([]);
 
-      reset()
+      reset();
       if (removeSelection) {
-        removeSelection()
+        removeSelection();
       }
 
-      setDrawerOpen(true)
-      formData = new FormData()
+      setDrawerOpen(true);
+      formData = new FormData();
     } catch (err) {
-      toast.error(axiosErrorMessage(err), { position: 'top-center' })
-      formData = new FormData()
+      toast.error(axiosErrorMessage(err), { position: 'top-center' });
+      formData = new FormData();
     }
-  }
-
+  };
   return (
     <div>
       <Button variant='contained' sx={{ mr: 3 }} onClick={onSubmit}>
@@ -96,7 +121,7 @@ const PassportSubmitButton = ({
         _id={response ? [response[0]._id] : undefined}
       />
     </div>
-  )
-}
+  );
+};
 
-export default PassportSubmitButton
+export default PassportSubmitButton;

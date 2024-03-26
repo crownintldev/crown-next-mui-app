@@ -27,7 +27,6 @@ const index = ({ apiData }) => {
     Form: null
   });
 
-  
   // console.log('clg', selectedRowData)
   // open media drawer handler
   const openMediaDrawer = (row) => {
@@ -45,7 +44,13 @@ const index = ({ apiData }) => {
       removeSelection: removeSelection.removeSelection
     });
 
-  const headerMenu = ({ selectedIds, handleClose, removeSelection }) => {
+  const headerMenu = ({
+    selectedIds,
+    handleClose,
+    removeSelection,
+    selectedChildIds,
+    accountId
+  }) => {
     return HeaderMenuAccount({
       setSelectedIds,
       setRemoveSelection,
@@ -53,7 +58,9 @@ const index = ({ apiData }) => {
       toggleDrawer,
       selectedIds,
       handleClose,
-      removeSelection
+      removeSelection,
+      selectedChildIds,
+      accountId
     });
   };
 

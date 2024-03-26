@@ -216,7 +216,7 @@ const TableHeader = (props) => {
             </div>
           )} */}
           {headerMenu &&
-            headerMenu({ selectedIds, handleClose, toggle, removeSelection })}
+            headerMenu({ selectedIds, handleClose, toggle, removeSelection,selectedChildIds,accountId })}
         </Menu>
         {/* ----------Export data--------- */}
         <ExportButton table={table} tableData={tableData} />

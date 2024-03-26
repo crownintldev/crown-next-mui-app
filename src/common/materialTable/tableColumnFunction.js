@@ -68,8 +68,8 @@ export const defaultCellUpperCase = ({ row, column }) => {
 };
 
 // For Members Only
-export const conditionValue = ({ cell }) => {
-  const data = cell.getValue();
+export const conditionValue = ({ row }) => {
+  const data = row.original.by;
   return data?.fullName ? (
     <div style={{ display: 'flex' }}>
       {uppercase(data?.fullName)}&nbsp;

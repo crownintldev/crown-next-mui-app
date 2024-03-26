@@ -29,19 +29,18 @@ const useInsuranceColumns = (openMediaDrawer) =>
       { accessorKey: 'name', header: 'Name' },
       { accessorKey: 'onModel', header: 'Refer Name' },
       
-      { accessorKey: 'insuranceCompany', header: 'Insurance company', Cell: defaultCellUpperCase },
-      { accessorKey: 'insuranceType', header: 'Insurance Type', Cell: defaultCellUpperCase },
-      { accessorKey: 'insuranceCategory', header: 'Insurance Category', Cell: defaultCellUpperCase },
-      { accessorKey: 'insuranceDuration', header: 'Insurance Type', Cell: defaultCellUpperCase },
+      { accessorKey: 'insuranceCompany.name', header: 'Insurance company', Cell: defaultCellUpperCase },
+      { accessorKey: 'type.name', header: 'Insurance Type', Cell: defaultCellUpperCase },
+      { accessorKey: 'category.name', header: 'Insurance Category', Cell: defaultCellUpperCase },
+      { accessorKey: 'duration.name', header: 'Insurance Type', Cell: defaultCellUpperCase },
       //   { accessorKey: 'supplier', header: 'Supplier ID', Cell: defaultCellUpperCase },
       
       { accessorKey: 'insuranceCost', header: 'Insurance Cost', Cell: defaultCellRenderer },
       { accessorKey: 'sellingCost', header: 'Selling Price', Cell: defaultCellRenderer },
       { accessorKey: 'discount', header: 'Discount', Cell: defaultCellRenderer },
       { accessorKey: 'profit', header: 'Profit', Cell: defaultCellRenderer },
-      { accessorKey: 'total', header: 'Total', Cell: defaultCellRenderer },
       {
-          accessorKey: 'paymentMethod',
+          accessorKey: 'paymentMethod.name',
           header: 'Payment Method',
           Cell: defaultCellUpperCase
         },

@@ -53,7 +53,6 @@ const defaultValues = {
   sellingPrice: null,
   profit: null,
   discount: null,
-  total: null,
   supplier: '',
   noOfDays: null,
   noOfNights: null,

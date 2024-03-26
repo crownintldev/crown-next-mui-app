@@ -70,7 +70,7 @@ const MaterialTable = ({
   useEffect(() => {
     let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt'
     let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1
-
+console.log()
     const handleEnterPress = (event) => {
       if (event.key === 'Enter') {
         dispatch(

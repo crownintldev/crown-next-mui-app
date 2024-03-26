@@ -98,24 +98,24 @@ export const fetchHotelBookingRoomType = createFetchDataThunk(
 );
 
 export const fetchInsurance = createFetchDataThunk('insurance', 'insurance');
-export const fetchInsuranceType = createFetchDataThunk('insurance-type', 'insuranceType');
+export const fetchInsuranceType = createFetchDataThunk('insuranceType', 'insurance-type');
 export const fetchInsuranceCategory = createFetchDataThunk(
   'insuranceCategory',
-  'insurance-category',
+  'insurance-category'
 );
 export const fetchInsuranceDuration = createFetchDataThunk(
   'insuranceDuration',
-  'insurance-duration',
+  'insurance-duration'
 );
 export const fetchInsuranceCompany = createFetchDataThunk(
   'insuranceCompany',
-  'insurance-company',
+  'insurance-company'
 );
 export const fetchPaymentMethod = createFetchDataThunk('paymentMethod', 'payment-method');
 export const fetchSubsidiary = createFetchDataThunk('subsidiary', 'subsidiary');
 export const fetchSubsidiaryType = createFetchDataThunk(
   'subsidiaryType',
-  'subsidiary-type',
+  'subsidiary-type'
 );
 export const fetchAccoutPaymentHistory = createFetchDataThunk(
   'accoutPaymentHistory',
@@ -201,18 +201,17 @@ const rootReducer = combineReducers({
   hotelBookingDestination: generate('hotelBookingCategory', fetchHotelBookingDestination),
   hotelBookingRoomType: generate('hotelBookingCategory', fetchHotelBookingRoomType),
   insurance: generate('insurance', fetchInsurance),
-  insuranceCategory: generate('insurance', fetchInsuranceCategory),
-  insuranceDuration: generate('insurance', fetchInsuranceDuration),
-  insuranceType: generate('insurance', fetchInsuranceType),
-  insuranceCompany: generate('insurance', fetchInsuranceCompany),
+  insuranceCategory: generate('insuranceCategory', fetchInsuranceCategory),
+  insuranceDuration: generate('insuranceDuration', fetchInsuranceDuration),
+  insuranceType: generate('insuranceType', fetchInsuranceType),
+  insuranceCompany: generate('insuranceCompany', fetchInsuranceCompany),
   // auth
   token: generateReducer('token').reducer,
   user: generate('user', fetchUser),
   loginUser: generateReducer('loginUser').reducer,
   role: generate('role', fetchRole),
   branch: generate('branch', fetchBranch),
-  businessSetting: generate('businessSetting', fetchBusinesssetting),
-
+  businessSetting: generate('businessSetting', fetchBusinesssetting)
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

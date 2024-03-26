@@ -130,13 +130,13 @@ const EditVisaBookingForm = ({ toggle, _id: ids, removeSelection, setFormSize })
             status: item?.status,
             givenName: item?.passport?.givenName,
             _id: item?._id,
-            visa: item.visa,
-            processing: item.processing,
-            confirmed: item.confirmed,
-            total: item.total,
-            increment: item.increment,
-            decrease: item.decrease,
-            discount: item.discount
+            visa: item?.visa,
+            processing: item?.processing,
+            confirmed: item?.confirmed,
+            total: item?.total,
+            increment: item?.increment,
+            decrease: item?.decrease,
+            discount: item?.discount
           };
         })
   );

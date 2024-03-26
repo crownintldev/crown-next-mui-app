@@ -183,6 +183,14 @@ const Example = ({
       </Grid>
     );
   };
+  // console.log(columnFilters)
+  // const handleColumnFilter=(data)=>{
+  //   setColumnFilters(data=>{
+  //     data.map(column=>{
+  //       return column.id === "by" ? { ...column, id: "agent" } : column;
+  //     })
+  //   })
+  // }
 
   const table = useMaterialReactTable({
     columns,

@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 // MUI Imports
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import { IconButton } from '@mui/material';
-
+const uppercase = (value) => <div style={{ textTransform: 'uppercase' }}>{value}</div>;
 // Normal Imports
 import {
   renderStatusCell,
@@ -15,6 +15,25 @@ import {
   CellRowId
 } from 'src/common/materialTable/tableColumnFunction';
 
+ const myConditionValue = ({ row }) => {
+  const data = row.original.by;
+ 
+  return data?.fullName ? (
+    <div style={{ display: 'flex' }}>
+      {uppercase(data?.fullName)}&nbsp;
+      {data.refer && (
+        <span style={{ border: '1px solid green' }}>{data?.refer.substring(0, 2)}</span>
+      )}
+    </div>
+  ) : (
+    <>
+      {uppercase(data?.companyName)}&nbsp;
+      {data?.refer && (
+        <span style={{ border: '1px solid green' }}>{data?.refer.substring(0, 2)}</span>
+      )}
+    </>
+  );
+};
 export const useTableColumns = (openMediaDrawer) =>
   useMemo(
     () => [
@@ -30,7 +49,7 @@ export const useTableColumns = (openMediaDrawer) =>
       },
       { accessorKey: '_id', header: 'ID', size: 100, Cell: CellRowId },
       { accessorKey: 'onModel', header: 'Refer', size: 100, Cell: defaultCellRenderer },
-      { accessorKey: 'by', header: 'Refer Name', Cell: conditionValue },
+      { accessorKey: "agent.fullName",header: 'Refer Name',Cell:myConditionValue },
       { accessorKey: 'by.phone', header: 'Refer Phone #' },
       { accessorKey: 'totalPassport', header: 'Total Passport', size: 100 },
       {

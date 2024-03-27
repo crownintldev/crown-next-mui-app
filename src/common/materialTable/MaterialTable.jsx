@@ -70,7 +70,6 @@ const MaterialTable = ({
   useEffect(() => {
     let sortField = sorting.length > 0 && sorting[0].id ? sorting[0].id : 'createdAt'
     let sortOrder = sorting.length > 0 && sorting[0].desc ? 1 : -1
-console.log()
     const handleEnterPress = (event) => {
       if (event.key === 'Enter') {
         dispatch(
@@ -122,14 +121,6 @@ console.log()
   }
 
   // Conditionally render the table component based on the active tab
-  const renderTableComponent = () => {
-    if (activeTab === 'default') {
-      return <MaterialReactTable  table={table} className='custom-table-styles' />
-    } else if (activeTab === 'trash') {
-      // Pass the trashed rows to the table in the "Trash" tab
-      return <MaterialReactTable table={table} data={trashedRows} className='custom-table-styles' />
-    }
-  }
 
   //Row Selection
   const handleRemoveSelection = () => {
@@ -185,14 +176,25 @@ console.log()
 
   const tablePropsData = tableProps(theme)
 
+  const muiTableHeadCellProps = ({column}) => {
+    console.log(column)
+    // Assuming 'total' and 'paid' are direct properties of your row data
+    // Adjust as needed if these properties are nested or named differently
+    if (column.original.total === column.original.paid) {
+      return {
+        style: { backgroundColor: 'green' }
+      };
+    }
+    return {};
+  };
   // table start
   const table = useMaterialReactTable({
     columns,
     data: data,
-   
     ...tablePropsData,
     enableBottomToolbar: true,
     enableStickyHeader: true,
+    // muiTableBodyCellProps: muiTableHeadCellProps,
     enableStickyFooter: true,
     enableExpanding: hasSubRows(data),
     // muiTableContainerProps: { sx: { maxHeight: '400px' } },
@@ -231,6 +233,15 @@ console.log()
     },
     muiLinearProgressProps: muiLinearProgressProps
   })
+
+  const renderTableComponent = () => {
+    if (activeTab === 'default') {
+      return <MaterialReactTable  table={table} className='custom-table-styles' />
+    } else if (activeTab === 'trash') {
+      // Pass the trashed rows to the table in the "Trash" tab
+      return <MaterialReactTable table={table} data={trashedRows} className='custom-table-styles' />
+    }
+  }
 
   return (
     <>

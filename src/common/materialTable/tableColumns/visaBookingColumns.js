@@ -135,6 +135,16 @@ const useTableColumns = (openMediaDrawer, openDialog) =>
         header: 'Tracking Number',
         Cell: defaultCellRenderer
       },
+      {
+        accessorKey: 'total',
+        header: 'Total Amount',
+        Cell: defaultCellRenderer
+      },
+      {
+        accessorKey: 'paid',
+        header: 'Paid',
+        Cell: defaultCellRenderer
+      },
       // visa
       {
         accessorKey: 'processing.processingFee',
@@ -151,11 +161,7 @@ const useTableColumns = (openMediaDrawer, openDialog) =>
         header: 'Confirmed - Total Fee',
         Cell: defaultCellRenderer
       },
-      {
-        accessorKey: 'total',
-        header: 'Total Amount',
-        Cell: defaultCellRenderer
-      },
+    
       {
         accessorKey: 'increment',
         header: 'Increment',

@@ -208,6 +208,7 @@ const Example = ({
         }
       : undefined,
     enableRowSelection: true,
+    enableSelectAll: false,
     enableFilters: true,
     onRowSelectionChange: setRowSelection,
     initialState: { showColumnFilters: true, density: 'compact' },

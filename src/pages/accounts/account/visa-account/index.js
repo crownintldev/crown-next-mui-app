@@ -81,11 +81,11 @@ const index = ({ apiData }) => {
         tab1='/accounts/account/visa-account'
         tab2='/accounts/account/visa-account-log'
         drawerProps={{
-          editFormTitle: 'Edit Account',
-          //header buttons drawer
-          editButtonTitle: 'Edit Account',
-          // forms
-          EditForm: EditAccountForm,
+          // editFormTitle: 'Edit Account',
+          // //header buttons drawer
+          // editButtonTitle: 'Edit Account',
+          // // forms
+          // EditForm: EditAccountForm,
           multiSelected: true
         }}
       />

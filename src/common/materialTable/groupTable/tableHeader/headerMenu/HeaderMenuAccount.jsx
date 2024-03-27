@@ -6,7 +6,7 @@ import Icon from 'src/@core/components/icon';
 import PaymentHeadForm from 'src/common/forms/subsidiary/subsidiaryForm';
 import { getReducer } from 'src/store/apps/sliceActionReducer';
 import { useRouter } from 'next/router';
-import EditAccountForm from 'src/common/forms/account/EditAccountForm';
+import AccountPayForm from 'src/common/forms/account/AccountPayForm';
 
 const HeaderMenuAccount = ({
   SetForm,
@@ -72,12 +72,12 @@ const HeaderMenuAccount = ({
     handleClose();
   };
 
-  const handleSingleDrawerForm = (Form,title) => {
+  const handleSingleDrawerForm = (Form, title) => {
     if (selectedChildIds) {
-      setSelectedIds(selectedChildIds);
+      setSelectedIds({ accountId, selectedChildIds });
     }
     setRemoveSelection({ removeSelection });
-    SetForm({ Form,title });
+    SetForm({ Form, title });
     toggleDrawer();
   };
   const headerMenu = () => {
@@ -110,8 +110,8 @@ const HeaderMenuAccount = ({
         {selectedChildIds?.length > 0 && (
           <div onClick={handleClose}>
             <MenuItem
-               onClick={() => handleSingleDrawerForm(EditAccountForm,"Pay")}
-                  sx={{ py: 1, m: 0 }}
+              onClick={() => handleSingleDrawerForm(AccountPayForm, 'Pay')}
+              sx={{ py: 1, m: 0 }}
             >
               <Box
                 sx={{
@@ -123,7 +123,7 @@ const HeaderMenuAccount = ({
                 }}
               >
                 <Icon fontSize='0.8rem' icon='tabler:plus' />
-               Pay
+                Pay
               </Box>
             </MenuItem>
           </div>

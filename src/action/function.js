@@ -128,6 +128,7 @@ export const updateManyApi = async ({
   data,
   dispatch,
   fetchData,
+  fetchList,
   toggle,
   reset,
   message,
@@ -143,8 +144,11 @@ export const updateManyApi = async ({
         Authorization: `Bearer ${accessToken}`
       }
     });
-    if (response) {
-      dispatch(fetchData({ updateData: response.data.data }));
+    if (response.data) {
+      const fetchApi = fetchData
+      ? fetchData({ updateData: response.data.data })
+      : fetchList({});
+    dispatch(fetchApi);
       if (toggle) {
         toggle();
       }

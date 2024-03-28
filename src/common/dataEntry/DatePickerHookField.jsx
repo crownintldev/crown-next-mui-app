@@ -13,8 +13,9 @@ const DatePickerHookField = ({ name, placeholder, required, control, errors }) =
         rules={{ required: true }}
         render={({ field }) => (
           <DatePicker
+          format="DD-MM-YYYY"
             label={`${placeholder} ${required ? '*' : ''}`}
-            inputFormat='MM/DD/YYYY'
+            inputFormat='DD/MM/YYYY'
             {...field}
             renderInput={params => (
               <TextField

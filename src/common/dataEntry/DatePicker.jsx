@@ -10,7 +10,7 @@ const DatePickerField = ({ placeholder = '', onChange = () => {}, value = null }
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         label={`${placeholder}`}
-        inputFormat='MM/DD/YYYY'
+        inputFormat='DD/MM/YYYY'
         className='inputdate'
         value={value}
         onChange={onChange}

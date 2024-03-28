@@ -21,6 +21,7 @@ import {
   fetchClient,
   fetchCompany,
   fetchPaymentMethod,
+  fetchSupplier,
   fetchVisaType
 } from 'src/store';
 
@@ -37,6 +38,7 @@ import EditFilesUploader from 'src/common/fileUpload/EditFileUploader';
 import FilesUploader from 'src/common/fileUpload/FilesUploader';
 import dayjs from 'dayjs';
 import IdNameForm from '../../idnameForm/IdNameForm';
+import SupplierForm from '../../supplier/SupplierForm';
 
 const schema = yup.object().shape({
   // invoiceDate: yup.string().required('required'),
@@ -45,7 +47,7 @@ const schema = yup.object().shape({
 
 const defaultValues = {
   by: '',
-  onModel: '',
+  onModel: 'Agent',
   invoiceNumber: '',
   ticketNumber: '',
   invoiceDate: '',
@@ -58,6 +60,7 @@ const defaultValues = {
   balance: 0,
   sector: '',
   status: '',
+  supplier: '',
   paymentMethod: '',
   paymentDescription: '',
   files: []
@@ -78,23 +81,30 @@ const TicketBookingForm = ({
   let editId = useSelector((state) =>
     state[stateSelector]?.data?.find((item) => item._id === _id)
   );
-  // payment Method
-  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
 
   // states
   const [files, setFiles] = useState([]);
   const [previousFiles, setPreviousFiles] = useState([]);
   const [removeFiles, setRemoveFiles] = useState([]);
+  const [byItems,setByItems] = useState([]);
+  //selector redux
   // onModel
   const clients = useSelector((state) => state.client?.data);
   const company = useSelector((state) => state.company?.data);
   const agents = useSelector((state) => state.agent?.data);
+  // console.log(agents)
+  //
+  const supplier = useSelector((state) => state?.supplier?.data);
+  // payment Method
+  const paymentMethod = useSelector((state) => state?.paymentMethod?.data);
+  console.log(paymentMethod)
 
   useEffect(() => {
     setFormSize(400);
-    dispatch(fetchAgent({ limit: 100 }));
-    dispatch(fetchClient({ limit: 100 }));
-    dispatch(fetchCompany({ limit: 100 }));
+    dispatch(fetchAgent({ limit: 1000 }));
+    dispatch(fetchClient({ limit: 1000 }));
+    dispatch(fetchCompany({ limit: 1000 }));
+    dispatch(fetchSupplier({ limit: 1000 }));
     dispatch(fetchPaymentMethod({}));
   }, []);
 
@@ -146,15 +156,19 @@ const TicketBookingForm = ({
     removeSelection();
   };
 
-  let byItems = [];
+ 
   const watchedOnModel = watch('onModel');
-  if (watchedOnModel === 'Client') {
-    byItems = clients;
-  } else if (watchedOnModel === 'Agent') {
-    byItems = agents;
-  } else if (watchedOnModel === 'Company') {
-    byItems = company;
-  }
+  console.log(watchedOnModel);
+
+  useEffect(() => {
+    if (watchedOnModel === 'Client') {
+      setByItems(clients)
+    } else if (watchedOnModel === 'Agent') {
+      setByItems(agents)
+    } else if (watchedOnModel === 'Company') {
+      setByItems(company)
+    }
+  }, [watchedOnModel]);
   const byItem = byItems.map((item) => ({
     name: `${item.fullName || item.companyName} ${item.phone}`,
     _id: item._id
@@ -272,14 +286,7 @@ const TicketBookingForm = ({
           control={control}
           errors={errors}
         />
-        <CustomOpenDrawer
-          ButtonTitle='Add Payment Method'
-          drawerTitle='Add Payment Method'
-          Form={IdNameForm}
-          fetchApi={fetchPaymentMethod}
-          formName='Payment Method'
-          api='payment-method'
-        />
+
         <SimpleSelectHookField
           control={control}
           errors={errors}
@@ -288,18 +295,28 @@ const TicketBookingForm = ({
           label={'Status'}
           placeholder='Select a Status'
         />
-        <SelectHookField
-          control={control}
-          name='paymentMethod'
-          showValue='name'
-          options={paymentMethod ?? []}
-          label='Payment Method'
-          placeholder='Payment Method'
-        />
+
         <CustomHookTextField
           chooseFields={paymentDescriptionField}
           control={control}
           errors={errors}
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Supplier'
+          drawerTitle='Add Supplier Form'
+          Form={SupplierForm}
+          fetchApi={fetchSupplier}
+          formName='Supplier'
+          api='supplier'
+        />
+        <SelectHookField
+          control={control}
+          errors={errors}
+          name='supplier'
+          options={supplier ?? []}
+          showValue='name'
+          label='Supplier'
+          placeholder='Choose Supplier'
         />
         <SimpleSelectHookField
           control={control}
@@ -317,6 +334,22 @@ const TicketBookingForm = ({
           showValue='name'
           label='Refer'
           placeholder='Choose Refer'
+        />
+        <CustomOpenDrawer
+          ButtonTitle='Add Payment Method'
+          drawerTitle='Add Payment Method'
+          Form={IdNameForm}
+          fetchApi={fetchPaymentMethod}
+          formName='Payment Method'
+          api='payment-method'
+        />
+        <SelectHookField
+          control={control}
+          name='paymentMethod'
+          showValue='name'
+          options={paymentMethod ?? []}
+          label='Payment Method'
+          placeholder='Payment Method'
         />
         {!editId ? (
           <Box sx={{ width: '200px' }}>
